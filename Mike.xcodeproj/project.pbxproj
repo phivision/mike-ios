@@ -11,18 +11,32 @@
 		5E9EE731278E41A6BFDCE28A /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68B47895EF48EFA9E65034 /* AmplifyModels.swift */; };
 		661922BAC3E9493399943D1A /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
 		7E856A1F4B6F44F8AA35D746 /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
+		B69103B026381E4A005F2ACD /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = B69103AF26381E4A005F2ACD /* Amplify */; };
+		B69103B226381E4A005F2ACD /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B69103B126381E4A005F2ACD /* AWSCognitoAuthPlugin */; };
+		B69103B426381E4A005F2ACD /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B69103B326381E4A005F2ACD /* AWSS3StoragePlugin */; };
+		B69103B626381E4A005F2ACD /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B69103B526381E4A005F2ACD /* AWSAPIPlugin */; };
+		B69103B826381E4A005F2ACD /* AWSPluginsCore in Frameworks */ = {isa = PBXBuildFile; productRef = B69103B726381E4A005F2ACD /* AWSPluginsCore */; };
+		B69103BA26381E4A005F2ACD /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B69103B926381E4A005F2ACD /* AWSDataStorePlugin */; };
+		B69103D026381EC0005F2ACD /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103BD26381EC0005F2ACD /* Global.swift */; };
+		B69103D126381EC0005F2ACD /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103C026381EC0005F2ACD /* HomeViewController.xib */; };
+		B69103D226381EC0005F2ACD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103C126381EC0005F2ACD /* HomeViewController.swift */; };
+		B69103D326381EC0005F2ACD /* HomeInfoColCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103C326381EC0005F2ACD /* HomeInfoColCell.xib */; };
+		B69103D426381EC0005F2ACD /* HomeSeeAllCoursesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103C426381EC0005F2ACD /* HomeSeeAllCoursesView.xib */; };
+		B69103D526381EC0005F2ACD /* HomeBannerColListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103C526381EC0005F2ACD /* HomeBannerColListCell.xib */; };
+		B69103D626381EC0005F2ACD /* HomeTopColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103C626381EC0005F2ACD /* HomeTopColCell.swift */; };
+		B69103D726381EC0005F2ACD /* HomeBannerColListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103C726381EC0005F2ACD /* HomeBannerColListCell.swift */; };
+		B69103D826381EC0005F2ACD /* HomeSeeAllCoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103C826381EC0005F2ACD /* HomeSeeAllCoursesView.swift */; };
+		B69103D926381EC0005F2ACD /* HomeInfoColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103C926381EC0005F2ACD /* HomeInfoColCell.swift */; };
+		B69103DA26381EC0005F2ACD /* HomeTopColCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103CA26381EC0005F2ACD /* HomeTopColCell.xib */; };
+		B69103DB26381EC0005F2ACD /* LoginSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103CC26381EC0005F2ACD /* LoginSecondViewController.swift */; };
+		B69103DC26381EC0005F2ACD /* LoginSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103CD26381EC0005F2ACD /* LoginSecondViewController.xib */; };
+		B69103DD26381EC0005F2ACD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103CE26381EC0005F2ACD /* LoginViewController.xib */; };
+		B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103CF26381EC0005F2ACD /* LoginViewController.swift */; };
 		C1DEDD772637460700F66A7C /* MikeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEDD762637460700F66A7C /* MikeApp.swift */; };
-		C1DEDD792637460700F66A7C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEDD782637460700F66A7C /* ContentView.swift */; };
 		C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD7A2637460900F66A7C /* Assets.xcassets */; };
 		C1DEDD7E2637460900F66A7C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD7D2637460900F66A7C /* Preview Assets.xcassets */; };
 		C1DEDD89263746CB00F66A7C /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */; };
 		C1DEDD8A263746CB00F66A7C /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
-		C1DEDD9026374C2600F66A7C /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = C1DEDD8F26374C2600F66A7C /* Amplify */; };
-		C1DEDD9226374C2600F66A7C /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = C1DEDD9126374C2600F66A7C /* AWSCognitoAuthPlugin */; };
-		C1DEDD9426374C2600F66A7C /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = C1DEDD9326374C2600F66A7C /* AWSS3StoragePlugin */; };
-		C1DEDD9626374C2600F66A7C /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = C1DEDD9526374C2600F66A7C /* AWSAPIPlugin */; };
-		C1DEDD9826374C2600F66A7C /* AWSPluginsCore in Frameworks */ = {isa = PBXBuildFile; productRef = C1DEDD9726374C2600F66A7C /* AWSPluginsCore */; };
-		C1DEDD9A26374C2600F66A7C /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = C1DEDD9926374C2600F66A7C /* AWSDataStorePlugin */; };
 		C1DEDD9E2637524D00F66A7C /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEDD9D2637524D00F66A7C /* Backend.swift */; };
 		CB02F7E746244ECC95ED67D5 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8F3BF2867A4D8294FB8222 /* UserProfile.swift */; };
 /* End PBXBuildFile section */
@@ -34,9 +48,23 @@
 		5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "UserProfile+Schema.swift"; path = "amplify/generated/models/UserProfile+Schema.swift"; sourceTree = "<group>"; };
 		9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = UserContent.swift; path = amplify/generated/models/UserContent.swift; sourceTree = "<group>"; };
 		ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "UserContent+Schema.swift"; path = "amplify/generated/models/UserContent+Schema.swift"; sourceTree = "<group>"; };
+		B69103BD26381EC0005F2ACD /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		B69103C026381EC0005F2ACD /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		B69103C126381EC0005F2ACD /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		B69103C326381EC0005F2ACD /* HomeInfoColCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeInfoColCell.xib; sourceTree = "<group>"; };
+		B69103C426381EC0005F2ACD /* HomeSeeAllCoursesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeSeeAllCoursesView.xib; sourceTree = "<group>"; };
+		B69103C526381EC0005F2ACD /* HomeBannerColListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeBannerColListCell.xib; sourceTree = "<group>"; };
+		B69103C626381EC0005F2ACD /* HomeTopColCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTopColCell.swift; sourceTree = "<group>"; };
+		B69103C726381EC0005F2ACD /* HomeBannerColListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeBannerColListCell.swift; sourceTree = "<group>"; };
+		B69103C826381EC0005F2ACD /* HomeSeeAllCoursesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSeeAllCoursesView.swift; sourceTree = "<group>"; };
+		B69103C926381EC0005F2ACD /* HomeInfoColCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeInfoColCell.swift; sourceTree = "<group>"; };
+		B69103CA26381EC0005F2ACD /* HomeTopColCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTopColCell.xib; sourceTree = "<group>"; };
+		B69103CC26381EC0005F2ACD /* LoginSecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSecondViewController.swift; sourceTree = "<group>"; };
+		B69103CD26381EC0005F2ACD /* LoginSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginSecondViewController.xib; sourceTree = "<group>"; };
+		B69103CE26381EC0005F2ACD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		B69103CF26381EC0005F2ACD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C1DEDD732637460700F66A7C /* Mike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1DEDD762637460700F66A7C /* MikeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MikeApp.swift; sourceTree = "<group>"; };
-		C1DEDD782637460700F66A7C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C1DEDD7A2637460900F66A7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1DEDD7D2637460900F66A7C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C1DEDD7F2637460900F66A7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -51,12 +79,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1DEDD9626374C2600F66A7C /* AWSAPIPlugin in Frameworks */,
-				C1DEDD9026374C2600F66A7C /* Amplify in Frameworks */,
-				C1DEDD9226374C2600F66A7C /* AWSCognitoAuthPlugin in Frameworks */,
-				C1DEDD9A26374C2600F66A7C /* AWSDataStorePlugin in Frameworks */,
-				C1DEDD9426374C2600F66A7C /* AWSS3StoragePlugin in Frameworks */,
-				C1DEDD9826374C2600F66A7C /* AWSPluginsCore in Frameworks */,
+				B69103B626381E4A005F2ACD /* AWSAPIPlugin in Frameworks */,
+				B69103B026381E4A005F2ACD /* Amplify in Frameworks */,
+				B69103B226381E4A005F2ACD /* AWSCognitoAuthPlugin in Frameworks */,
+				B69103BA26381E4A005F2ACD /* AWSDataStorePlugin in Frameworks */,
+				B69103B426381E4A005F2ACD /* AWSS3StoragePlugin in Frameworks */,
+				B69103B826381E4A005F2ACD /* AWSPluginsCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +99,67 @@
 			);
 			name = AmplifyConfig;
 			path = .;
+			sourceTree = "<group>";
+		};
+		B69103BC26381EC0005F2ACD /* Macros */ = {
+			isa = PBXGroup;
+			children = (
+				B69103BD26381EC0005F2ACD /* Global.swift */,
+			);
+			path = Macros;
+			sourceTree = "<group>";
+		};
+		B69103BE26381EC0005F2ACD /* Functions */ = {
+			isa = PBXGroup;
+			children = (
+				B69103BF26381EC0005F2ACD /* Home */,
+				B69103CB26381EC0005F2ACD /* Login */,
+			);
+			path = Functions;
+			sourceTree = "<group>";
+		};
+		B69103BF26381EC0005F2ACD /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				B69103C026381EC0005F2ACD /* HomeViewController.xib */,
+				B69103C126381EC0005F2ACD /* HomeViewController.swift */,
+				B69103C226381EC0005F2ACD /* Cell */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		B69103C226381EC0005F2ACD /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B69103C326381EC0005F2ACD /* HomeInfoColCell.xib */,
+				B69103C426381EC0005F2ACD /* HomeSeeAllCoursesView.xib */,
+				B69103C526381EC0005F2ACD /* HomeBannerColListCell.xib */,
+				B69103C626381EC0005F2ACD /* HomeTopColCell.swift */,
+				B69103C726381EC0005F2ACD /* HomeBannerColListCell.swift */,
+				B69103C826381EC0005F2ACD /* HomeSeeAllCoursesView.swift */,
+				B69103C926381EC0005F2ACD /* HomeInfoColCell.swift */,
+				B69103CA26381EC0005F2ACD /* HomeTopColCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B69103CB26381EC0005F2ACD /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				B69103CC26381EC0005F2ACD /* LoginSecondViewController.swift */,
+				B69103CD26381EC0005F2ACD /* LoginSecondViewController.xib */,
+				B69103CF26381EC0005F2ACD /* LoginViewController.swift */,
+				B69103CE26381EC0005F2ACD /* LoginViewController.xib */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		B69103E52638229A005F2ACD /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				C1DEDD9D2637524D00F66A7C /* Backend.swift */,
+			);
+			path = Backend;
 			sourceTree = "<group>";
 		};
 		C1DEDD6A2637460700F66A7C = {
@@ -96,12 +185,13 @@
 		C1DEDD752637460700F66A7C /* Mike */ = {
 			isa = PBXGroup;
 			children = (
+				B69103E52638229A005F2ACD /* Backend */,
+				B69103BE26381EC0005F2ACD /* Functions */,
+				B69103BC26381EC0005F2ACD /* Macros */,
 				C1DEDD762637460700F66A7C /* MikeApp.swift */,
-				C1DEDD782637460700F66A7C /* ContentView.swift */,
 				C1DEDD7A2637460900F66A7C /* Assets.xcassets */,
 				C1DEDD7F2637460900F66A7C /* Info.plist */,
 				C1DEDD7C2637460900F66A7C /* Preview Content */,
-				C1DEDD9D2637524D00F66A7C /* Backend.swift */,
 			);
 			path = Mike;
 			sourceTree = "<group>";
@@ -144,12 +234,12 @@
 			);
 			name = Mike;
 			packageProductDependencies = (
-				C1DEDD8F26374C2600F66A7C /* Amplify */,
-				C1DEDD9126374C2600F66A7C /* AWSCognitoAuthPlugin */,
-				C1DEDD9326374C2600F66A7C /* AWSS3StoragePlugin */,
-				C1DEDD9526374C2600F66A7C /* AWSAPIPlugin */,
-				C1DEDD9726374C2600F66A7C /* AWSPluginsCore */,
-				C1DEDD9926374C2600F66A7C /* AWSDataStorePlugin */,
+				B69103AF26381E4A005F2ACD /* Amplify */,
+				B69103B126381E4A005F2ACD /* AWSCognitoAuthPlugin */,
+				B69103B326381E4A005F2ACD /* AWSS3StoragePlugin */,
+				B69103B526381E4A005F2ACD /* AWSAPIPlugin */,
+				B69103B726381E4A005F2ACD /* AWSPluginsCore */,
+				B69103B926381E4A005F2ACD /* AWSDataStorePlugin */,
 			);
 			productName = Mike;
 			productReference = C1DEDD732637460700F66A7C /* Mike.app */;
@@ -179,7 +269,7 @@
 			);
 			mainGroup = C1DEDD6A2637460700F66A7C;
 			packageReferences = (
-				C1DEDD8E26374C2600F66A7C /* XCRemoteSwiftPackageReference "amplify-ios" */,
+				B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */,
 			);
 			productRefGroup = C1DEDD742637460700F66A7C /* Products */;
 			projectDirPath = "";
@@ -197,7 +287,14 @@
 			files = (
 				C1DEDD8A263746CB00F66A7C /* awsconfiguration.json in Resources */,
 				C1DEDD7E2637460900F66A7C /* Preview Assets.xcassets in Resources */,
+				B69103DD26381EC0005F2ACD /* LoginViewController.xib in Resources */,
+				B69103DA26381EC0005F2ACD /* HomeTopColCell.xib in Resources */,
+				B69103D126381EC0005F2ACD /* HomeViewController.xib in Resources */,
+				B69103D526381EC0005F2ACD /* HomeBannerColListCell.xib in Resources */,
+				B69103D326381EC0005F2ACD /* HomeInfoColCell.xib in Resources */,
+				B69103DC26381EC0005F2ACD /* LoginSecondViewController.xib in Resources */,
 				C1DEDD89263746CB00F66A7C /* amplifyconfiguration.json in Resources */,
+				B69103D426381EC0005F2ACD /* HomeSeeAllCoursesView.xib in Resources */,
 				C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,13 +307,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1DEDD9E2637524D00F66A7C /* Backend.swift in Sources */,
-				C1DEDD792637460700F66A7C /* ContentView.swift in Sources */,
+				B69103D926381EC0005F2ACD /* HomeInfoColCell.swift in Sources */,
 				C1DEDD772637460700F66A7C /* MikeApp.swift in Sources */,
+				B69103DB26381EC0005F2ACD /* LoginSecondViewController.swift in Sources */,
+				B69103D726381EC0005F2ACD /* HomeBannerColListCell.swift in Sources */,
 				5E9EE731278E41A6BFDCE28A /* AmplifyModels.swift in Sources */,
 				661922BAC3E9493399943D1A /* UserContent.swift in Sources */,
+				B69103D826381EC0005F2ACD /* HomeSeeAllCoursesView.swift in Sources */,
+				B69103D226381EC0005F2ACD /* HomeViewController.swift in Sources */,
 				503E02E0497E4EFF9D9BD770 /* UserContent+Schema.swift in Sources */,
 				CB02F7E746244ECC95ED67D5 /* UserProfile.swift in Sources */,
+				B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */,
 				7E856A1F4B6F44F8AA35D746 /* UserProfile+Schema.swift in Sources */,
+				B69103D626381EC0005F2ACD /* HomeTopColCell.swift in Sources */,
+				B69103D026381EC0005F2ACD /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,45 +511,45 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C1DEDD8E26374C2600F66A7C /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
+		B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aws-amplify/amplify-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.8.1;
+				minimumVersion = 1.9.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C1DEDD8F26374C2600F66A7C /* Amplify */ = {
+		B69103AF26381E4A005F2ACD /* Amplify */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C1DEDD8E26374C2600F66A7C /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = Amplify;
 		};
-		C1DEDD9126374C2600F66A7C /* AWSCognitoAuthPlugin */ = {
+		B69103B126381E4A005F2ACD /* AWSCognitoAuthPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C1DEDD8E26374C2600F66A7C /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSCognitoAuthPlugin;
 		};
-		C1DEDD9326374C2600F66A7C /* AWSS3StoragePlugin */ = {
+		B69103B326381E4A005F2ACD /* AWSS3StoragePlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C1DEDD8E26374C2600F66A7C /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSS3StoragePlugin;
 		};
-		C1DEDD9526374C2600F66A7C /* AWSAPIPlugin */ = {
+		B69103B526381E4A005F2ACD /* AWSAPIPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C1DEDD8E26374C2600F66A7C /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSAPIPlugin;
 		};
-		C1DEDD9726374C2600F66A7C /* AWSPluginsCore */ = {
+		B69103B726381E4A005F2ACD /* AWSPluginsCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C1DEDD8E26374C2600F66A7C /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSPluginsCore;
 		};
-		C1DEDD9926374C2600F66A7C /* AWSDataStorePlugin */ = {
+		B69103B926381E4A005F2ACD /* AWSDataStorePlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C1DEDD8E26374C2600F66A7C /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSDataStorePlugin;
 		};
 /* End XCSwiftPackageProductDependency section */

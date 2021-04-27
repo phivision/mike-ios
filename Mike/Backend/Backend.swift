@@ -91,10 +91,10 @@ class Backend {
 
     // change our internal state, this triggers an UI update on the main thread
     func updateUserData(withSignInStatus status : Bool) {
-        DispatchQueue.main.async() {
-            let userData : UserData = .shared
-            userData.isSignedIn = status
-        }
+//        DispatchQueue.main.async() {
+//            let userData : UserData = .shared
+//            userData.isSignedIn = status
+//        }
     }
 }
 
