@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HomeBannerColListCell" customModule="MikeIOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="215" height="204"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="215" height="204"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testimg" translatesAutoresizingMaskIntoConstraints="NO" id="kkx-F8-LAE">
+                        <rect key="frame" x="0.0" y="0.0" width="215" height="204"/>
+                        <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="with Elizabeth john" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="APp-lY-YkC">
+                        <rect key="frame" x="20" y="122" width="175" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INTRO TO CARDIO!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WRn-p2-91r">
+                        <rect key="frame" x="20" y="52" width="175" height="60"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="WRn-p2-91r" firstAttribute="leading" secondItem="APp-lY-YkC" secondAttribute="leading" id="49Z-2T-Wqp"/>
+                <constraint firstItem="WRn-p2-91r" firstAttribute="centerX" secondItem="kkx-F8-LAE" secondAttribute="centerX" id="BaZ-2i-Xkx"/>
+                <constraint firstItem="WRn-p2-91r" firstAttribute="trailing" secondItem="APp-lY-YkC" secondAttribute="trailing" id="Ehg-Jr-ZWK"/>
+                <constraint firstItem="kkx-F8-LAE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="He4-fl-CMf"/>
+                <constraint firstAttribute="trailing" secondItem="kkx-F8-LAE" secondAttribute="trailing" id="Pv7-JO-fga"/>
+                <constraint firstItem="APp-lY-YkC" firstAttribute="top" secondItem="WRn-p2-91r" secondAttribute="bottom" constant="10" id="R8a-PE-AEY"/>
+                <constraint firstAttribute="bottom" secondItem="kkx-F8-LAE" secondAttribute="bottom" id="aEv-Ft-1o7"/>
+                <constraint firstItem="kkx-F8-LAE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oZ5-Ld-i9g"/>
+                <constraint firstItem="WRn-p2-91r" firstAttribute="leading" secondItem="kkx-F8-LAE" secondAttribute="leading" constant="20" id="pWK-0l-GR4"/>
+                <constraint firstItem="WRn-p2-91r" firstAttribute="centerY" secondItem="kkx-F8-LAE" secondAttribute="centerY" constant="-20" id="rSg-iY-9aH"/>
+            </constraints>
+            <size key="customSize" width="215" height="204"/>
+            <connections>
+                <outlet property="bgImg" destination="kkx-F8-LAE" id="IhT-uI-zmI"/>
+                <outlet property="subTitleLab" destination="APp-lY-YkC" id="Vhb-Nn-ieW"/>
+                <outlet property="titleLab" destination="WRn-p2-91r" id="hic-mO-PKG"/>
+            </connections>
+            <point key="canvasLocation" x="241.30434782608697" y="175.44642857142856"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="testimg" width="633.5" height="422.5"/>
+    </resources>
+</document>
