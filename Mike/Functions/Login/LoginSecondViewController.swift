@@ -47,10 +47,16 @@ class LoginSecondViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func loginBtnPressed(){
-//        let homeVC:HomeViewController = HomeViewController()
-//        let navVC:UINavigationController = UINavigationController(rootViewController: homeVC)
-//        keyWindow?.rootViewController = navVC;
-        Backend.shared.signIn()
+        Backend.shared.login(userName: "1103720832@qq.com", pwd: "Test2021!") {
+            DispatchQueue.main.async {
+                let homeVC:HomeViewController = HomeViewController()
+                let navVC:UINavigationController = UINavigationController(rootViewController: homeVC)
+                keyWindow?.rootViewController = navVC;
+            }
+        } fail: { error in
+            
+        }
+
     }
     /*
     // MARK: - Navigation

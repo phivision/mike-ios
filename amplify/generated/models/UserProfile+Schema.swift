@@ -24,6 +24,8 @@ extension UserProfile {
     case Biography
     case Favorites
     case Contents
+    case Subscriptions
+    case Users
   }
   
   public static let keys = CodingKeys.self
@@ -56,8 +58,10 @@ extension UserProfile {
       .field(userProfile.Weight, is: .optional, ofType: .double),
       .field(userProfile.Description, is: .optional, ofType: .string),
       .field(userProfile.Biography, is: .optional, ofType: .string),
-      .hasMany(userProfile.Favorites, is: .optional, ofType: UserContent.self, associatedWith: UserContent.keys.userProfileFavoritesId),
-      .hasMany(userProfile.Contents, is: .optional, ofType: UserContent.self, associatedWith: UserContent.keys.Creator)
+      .hasMany(userProfile.Favorites, is: .optional, ofType: UserFavoriteContent.self, associatedWith: UserFavoriteContent.keys.User),
+      .hasMany(userProfile.Contents, is: .optional, ofType: UserContent.self, associatedWith: UserContent.keys.Creator),
+      .hasMany(userProfile.Subscriptions, is: .optional, ofType: UserSubscriptionTrainer.self, associatedWith: UserSubscriptionTrainer.keys.User),
+      .hasMany(userProfile.Users, is: .optional, ofType: UserSubscriptionTrainer.self, associatedWith: UserSubscriptionTrainer.keys.Trainer)
     )
     }
 }

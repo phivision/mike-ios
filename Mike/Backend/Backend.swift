@@ -7,6 +7,11 @@
 import UIKit
 import Amplify
 import AWSCognitoAuthPlugin
+import AWSMobileClientXCF
+import AWSAPIPlugin
+import AWSPinpointAnalyticsPlugin
+import AWSPluginsCore
+import AWSS3StoragePlugin
 
 class Backend {
     static let shared = Backend()
@@ -17,6 +22,8 @@ class Backend {
       // initialize amplify
       do {
         try Amplify.add(plugin: AWSCognitoAuthPlugin())
+        try Amplify.add(plugin: AWSAPIPlugin(modelRegistration: AmplifyModels()))
+        try Amplify.add(plugin: AWSS3StoragePlugin())
         try Amplify.configure()
         print("Initialized Amplify");
         // listen to auth events
@@ -38,7 +45,8 @@ class Backend {
                 self.updateUserData(withSignInStatus: false)
 
             default:
-                //print("==HUB== \(payload)")
+                self.updateUserData(withSignInStatus: true)
+//                print("==HUB== \(payload)")
                 break
             }
         }
@@ -74,6 +82,20 @@ class Backend {
             }
         }
     }
+    
+    public func login(userName:String!,pwd:String!,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+//        signOut()
+        _ = Amplify.Auth.signIn(username: userName, password: pwd) { result in
+            switch result {
+            case .success:
+                print("Sign in succeeded \(result)")
+                self.getSession(suc: suc, fail: fail)
+            case .failure(let error):
+                print("Sign in failed \(error)")
+                self.getSession(suc: suc, fail: fail)
+            }
+        }
+    }
 
     // signout
     public func signOut() {
@@ -90,9 +112,125 @@ class Backend {
 
     // change our internal state, this triggers an UI update on the main thread
     func updateUserData(withSignInStatus status : Bool) {
-//        DispatchQueue.main.async() {
-//            let userData : UserData = .shared
-//            userData.isSignedIn = status
-//        }
+        DispatchQueue.main.async() {
+            LoginTools.sharedTools.isLogin = status
+        }
+    }
+    public func getSession(suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.Auth.fetchAuthSession { result in
+            do {
+                let session = try result.get()
+
+                // Get user sub or identity id
+                if let identityProvider = session as? AuthCognitoIdentityProvider {
+                    let usersub = try identityProvider.getUserSub().get()
+                    let identityId = try identityProvider.getIdentityId().get()
+                    print("User sub - \(usersub) and identity id \(identityId)")
+//                    self.getUserProfile(userId: usersub,suc: suc,fail: fail)
+//                    self.getUserContentList(userId: usersub)
+                    self.testGraphQL(userId: usersub)
+                }
+
+//                // Get aws credentials
+//                if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
+//                    let credentials = try awsCredentialsProvider.getAWSCredentials().get()
+//                    print("Access key - \(credentials.accessKey) ")
+//                }
+//
+//                // Get cognito user pool token
+//                if let cognitoTokenProvider = session as? AuthCognitoTokensProvider {
+//                    let tokens = try cognitoTokenProvider.getCognitoTokens().get()
+//                    print("Id token - \(tokens.idToken) ")
+//                }
+
+            } catch {
+                print("Fetch auth session failed with error - \(error)")
+            }
+        }
+    }
+    public func getUserProfile(userId:String,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .get(UserProfile.self, byId: userId)){ event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let profile):
+                    guard let profileModel = profile else {
+                        print("Could not find todo")
+                        return
+                    }
+                    LoginTools.sharedTools.userProfile = profileModel;
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    suc()
+                    print("Successfully retrieved todo")
+                case .failure(let error):
+                    fail("Got failed result with \(error.errorDescription)")
+                    print("Got failed result with \(error.errorDescription)")
+                }
+            case .failure(let error):
+                fail("Got failed result with \(error)")
+                print("Got failed event with error \(error)")
+            }
+        }
+    }
+    func fetchUserIcon(imageKey:String!){
+        Amplify.Storage.getURL(key: "banner1.jpg") { event in
+            switch event {
+            case let .success(url):
+                print("Completed: \(url)")
+            case let .failure(storageError):
+                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+            default:
+                break
+            }
+        }
+    }
+    public func fetchUserContent(cotentId:String,suc:@escaping (_ userContent:UserContent)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .get(UserContent.self, byId: cotentId)){ event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let userContent):
+                    guard let contentModel = userContent else {
+                        print("Could not find todo")
+                        return
+                    }
+                    suc(contentModel)
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    print("Successfully retrieved todo")
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("Got failed result with \(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("Got failed event with error \(error)")
+            }
+        }
+    }
+    func testGraphQL(userId:String?){
+        Amplify.API.query(request: .getWithoutDescription(byId: userId ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    if let postData = try? JSONEncoder().encode(data) {
+                        if let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) {
+                            let dic = d as! NSDictionary
+                            if let subDic = dic["getUserProfile"] as? NSDictionary{
+                                if let thirddic = subDic["Subscriptions"] as? NSDictionary{
+                                    print(thirddic["items"])
+                                }
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+            }
+        }
     }
 }

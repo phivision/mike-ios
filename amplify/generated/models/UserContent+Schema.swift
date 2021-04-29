@@ -15,7 +15,7 @@ extension UserContent {
     case Thumbnail
     case Preview
     case Creator
-    case userProfileFavoritesId
+    case FavoriteUser
   }
   
   public static let keys = CodingKeys.self
@@ -41,7 +41,7 @@ extension UserContent {
       .field(userContent.Thumbnail, is: .optional, ofType: .string),
       .field(userContent.Preview, is: .optional, ofType: .string),
       .belongsTo(userContent.Creator, is: .optional, ofType: UserProfile.self, targetName: "CreatorID"),
-      .field(userContent.userProfileFavoritesId, is: .optional, ofType: .string)
+      .hasMany(userContent.FavoriteUser, is: .optional, ofType: UserFavoriteContent.self, associatedWith: UserFavoriteContent.keys.Content)
     )
     }
 }

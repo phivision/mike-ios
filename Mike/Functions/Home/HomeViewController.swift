@@ -17,6 +17,12 @@ class HomeViewController: UIViewController {
         configNav();
         configCollectionView()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.isNavigationBarHidden = false
+        let rotation : UIInterfaceOrientationMask = [.portrait]
+        kAppdelegate?.blockRotation = rotation
+    }
     func configNav(){
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
@@ -144,6 +150,17 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        Backend.shared.fetchUserContent(cotentId: "08268d9d-eff8-47ea-9058-bb5cea829e42") { content in
+//
+//        } fail: { error in
+//
+//        }
+        let rotation : UIInterfaceOrientationMask = [.landscapeLeft]
+                kAppdelegate?.blockRotation = rotation
+        let videoVC = VideoViewController()
+        videoVC.videoName = "IMG4215b2a4a4004f4f44dabfa88b5030c8da9c.MOV";
+        videoVC.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.pushViewController(videoVC, animated: true)
         
     }
 

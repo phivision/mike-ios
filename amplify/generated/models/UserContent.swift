@@ -13,7 +13,7 @@ public struct UserContent: Model {
   public var Thumbnail: String?
   public var Preview: String?
   public var Creator: UserProfile?
-  public var userProfileFavoritesId: String?
+  public var FavoriteUser: List<UserFavoriteContent>?
   
   public init(id: String = UUID().uuidString,
       ContentName: String,
@@ -25,7 +25,7 @@ public struct UserContent: Model {
       Thumbnail: String? = nil,
       Preview: String? = nil,
       Creator: UserProfile? = nil,
-      userProfileFavoritesId: String? = nil) {
+      FavoriteUser: List<UserFavoriteContent>? = []) {
       self.id = id
       self.ContentName = ContentName
       self.Description = Description
@@ -36,6 +36,6 @@ public struct UserContent: Model {
       self.Thumbnail = Thumbnail
       self.Preview = Preview
       self.Creator = Creator
-      self.userProfileFavoritesId = userProfileFavoritesId
+      self.FavoriteUser = FavoriteUser
   }
 }

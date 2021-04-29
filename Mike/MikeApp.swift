@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Amplify
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
     var window: UIWindow?
@@ -13,12 +14,76 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // initialize Amplify
         let _ = Backend.initialize()
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let loginVC:LoginViewController = LoginViewController()
-        let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
-        navVC.isNavigationBarHidden = true
-        self.window?.backgroundColor = .white
-        self.window?.rootViewController = navVC
-        self.window?.makeKeyAndVisible()
+//        let loginVC:LoginViewController = LoginViewController()
+//        let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
+//        navVC.isNavigationBarHidden = true
+//        self.window?.rootViewController = navVC
+//        self.window?.backgroundColor = .white
+//        self.window?.makeKeyAndVisible()
+        _ = Amplify.Auth.fetchAuthSession { (result) in
+            do {
+                let session = try result.get()
+                DispatchQueue.main.async {
+                    if session.isSignedIn == true{
+                        let homeVC:HomeViewController = HomeViewController()
+                        let navVC:UINavigationController  = UINavigationController(rootViewController: homeVC)
+                        navVC.isNavigationBarHidden = true
+                        self.window?.rootViewController = navVC
+                        self.window?.backgroundColor = .white
+                        self.window?.makeKeyAndVisible()
+                    }else{
+                        let loginVC:LoginViewController = LoginViewController()
+                        let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
+                        navVC.isNavigationBarHidden = true
+                        self.window?.rootViewController = navVC
+                        self.window?.backgroundColor = .white
+                        self.window?.makeKeyAndVisible()
+                    }
+                }
+
+            } catch {
+                 print("Fetch auth session failed with error - \(error)")
+                DispatchQueue.main.async {
+                    let loginVC:LoginViewController = LoginViewController()
+                    let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
+                    navVC.isNavigationBarHidden = true
+                    self.window?.rootViewController = navVC
+                    self.window?.backgroundColor = .white
+                    self.window?.makeKeyAndVisible()
+                }
+           }
+       }
+//        if LoginTools.sharedTools.isLogin == true {
+//            let homeVC:HomeViewController = HomeViewController()
+//            let navVC:UINavigationController  = UINavigationController(rootViewController: homeVC)
+//            navVC.isNavigationBarHidden = true
+//            self.window?.rootViewController = navVC
+//        }else{
+//            let loginVC:LoginViewController = LoginViewController()
+//            let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
+//            navVC.isNavigationBarHidden = true
+//            self.window?.rootViewController = navVC
+//        }
+        
         return true
+    }
+    var blockRotation: UIInterfaceOrientationMask = .portrait{
+            didSet{
+                if blockRotation.contains(.portrait){
+                    //强制设置成竖屏
+                    UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+                }else{
+                    //强制设置成横屏
+                    UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+
+                }
+            }
+        }
+}
+extension AppDelegate{
+
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+
+        return blockRotation
     }
 }
