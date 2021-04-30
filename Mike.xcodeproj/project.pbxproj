@@ -25,6 +25,7 @@
 		B68262D1263BC7A900A32D5C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262CE263BC7A900A32D5C /* UserManager.swift */; };
 		B68262D2263BC7A900A32D5C /* ArchiveTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262CF263BC7A900A32D5C /* ArchiveTool.swift */; };
 		B68262D3263BC7A900A32D5C /* LoginTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262D0263BC7A900A32D5C /* LoginTools.swift */; };
+		B68262D6263BD90500A32D5C /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = B68262D5263BD90500A32D5C /* SDWebImage */; };
 		B69103B026381E4A005F2ACD /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = B69103AF26381E4A005F2ACD /* Amplify */; };
 		B69103B226381E4A005F2ACD /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B69103B126381E4A005F2ACD /* AWSCognitoAuthPlugin */; };
 		B69103B426381E4A005F2ACD /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B69103B326381E4A005F2ACD /* AWSS3StoragePlugin */; };
@@ -114,6 +115,7 @@
 			files = (
 				B69103B626381E4A005F2ACD /* AWSAPIPlugin in Frameworks */,
 				B69103B026381E4A005F2ACD /* Amplify in Frameworks */,
+				B68262D6263BD90500A32D5C /* SDWebImage in Frameworks */,
 				B69103B226381E4A005F2ACD /* AWSCognitoAuthPlugin in Frameworks */,
 				B69103BA26381E4A005F2ACD /* AWSDataStorePlugin in Frameworks */,
 				B69103B426381E4A005F2ACD /* AWSS3StoragePlugin in Frameworks */,
@@ -213,8 +215,8 @@
 		B69103C226381EC0005F2ACD /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B69103C426381EC0005F2ACD /* HomeSeeAllCoursesView.xib */,
 				B69103C826381EC0005F2ACD /* HomeSeeAllCoursesView.swift */,
+				B69103C426381EC0005F2ACD /* HomeSeeAllCoursesView.xib */,
 				B69103C626381EC0005F2ACD /* HomeTopColCell.swift */,
 				B69103CA26381EC0005F2ACD /* HomeTopColCell.xib */,
 				B69103C726381EC0005F2ACD /* HomeBannerColListCell.swift */,
@@ -339,6 +341,7 @@
 				B69103B726381E4A005F2ACD /* AWSPluginsCore */,
 				B69103B926381E4A005F2ACD /* AWSDataStorePlugin */,
 				B69103EF26385732005F2ACD /* AWSPinpointAnalyticsPlugin */,
+				B68262D5263BD90500A32D5C /* SDWebImage */,
 			);
 			productName = Mike;
 			productReference = C1DEDD732637460700F66A7C /* Mike.app */;
@@ -369,6 +372,7 @@
 			mainGroup = C1DEDD6A2637460700F66A7C;
 			packageReferences = (
 				B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */,
+				B68262D4263BD90500A32D5C /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = C1DEDD742637460700F66A7C /* Products */;
 			projectDirPath = "";
@@ -626,6 +630,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B68262D4263BD90500A32D5C /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.1;
+			};
+		};
 		B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aws-amplify/amplify-ios";
@@ -637,6 +649,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B68262D5263BD90500A32D5C /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B68262D4263BD90500A32D5C /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
 		B69103AF26381E4A005F2ACD /* Amplify */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B69103AE26381E4A005F2ACD /* XCRemoteSwiftPackageReference "amplify-ios" */;

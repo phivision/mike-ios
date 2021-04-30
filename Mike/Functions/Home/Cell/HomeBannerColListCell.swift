@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class HomeBannerColListCell: UICollectionViewCell {
     @IBOutlet weak var bgImg:UIImageView!
     @IBOutlet weak var titleLab:UILabel!
