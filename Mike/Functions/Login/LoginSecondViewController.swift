@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginSecondViewController: UIViewController {
+class LoginSecondViewController: BaseViewController {
     @IBOutlet weak var loginBtn:UIButton!
     @IBOutlet weak var userNameBg:UIImageView!
     @IBOutlet weak var pwdBg:UIImageView!
@@ -47,14 +47,27 @@ class LoginSecondViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func loginBtnPressed(){
-        Backend.shared.login(userName: "1103720832@qq.com", pwd: "Test2021!") {
+        if StringUtils.isBlank(value: self.userNameText.text) {
+            ToastHUD.showMsg(msg:"Please Input Username", controller: self)
+            return
+        }
+        if StringUtils.isBlank(value: self.pwdText.text) {
+            ToastHUD.showMsg(msg:"Please Input Password", controller: self)
+            return
+        }
+        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        Backend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
             DispatchQueue.main.async {
+                hud.hide(animated: true)
                 let homeVC:HomeViewController = HomeViewController()
                 let navVC:UINavigationController = UINavigationController(rootViewController: homeVC)
-                keyWindow?.rootViewController = navVC;
+                self.changeRootController(controller: navVC)
             }
         } fail: { error in
-            
+            DispatchQueue.main.async {
+                hud.hide(animated: true)
+                ToastHUD.showMsg(msg:error, controller: self)
+            }
         }
 
     }

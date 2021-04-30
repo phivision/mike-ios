@@ -79,18 +79,21 @@ class Backend {
                 self.fetchSession(suc: suc, fail: fail)
             case .failure(let error):
                 print("Sign in failed \(error)")
+                fail(error.errorDescription)
             }
         }
     }
 
     //  - signout
-    public func signOut() {
+    public func signOut(suc:@escaping ()->Void,fail:@escaping ()->Void) {
         _ = Amplify.Auth.signOut() { (result) in
             switch result {
             case .success:
                 print("Successfully signed out")
+                suc()
             case .failure(let error):
                 print("Sign out failed with error \(error)")
+                fail()
             }
         }
     }

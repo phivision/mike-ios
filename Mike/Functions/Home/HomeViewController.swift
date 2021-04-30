@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: BaseViewController {
     @IBOutlet weak var mainCollection:UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +27,7 @@ class HomeViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         self.navigationController?.navigationBar.barTintColor = HexRGBAlpha(0xff5ccacb,1.0)
+        self.setNavRightBtn(imageName: "logout")
     }
     func configCollectionView(){
         self.mainCollection.delegate = self
@@ -37,6 +38,21 @@ class HomeViewController: UIViewController {
         self.mainCollection.register(UINib(nibName: "HomeTopColCell",bundle:nil), forCellWithReuseIdentifier: "HomeTopColCell")
         self.mainCollection.register(UINib(nibName: "HomeInfoColCell", bundle: nil), forCellWithReuseIdentifier: "HomeInfoColCell")
         self.mainCollection.register(UINib(nibName: "HomeSeeAllCoursesView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HomeSeeAllCoursesView")
+    }
+    
+    //MARK: - 退出登录
+    override func rightButtonPressed() {
+        Backend.shared.signOut {
+            LoginTools.sharedTools.removeUserInfo()
+            DispatchQueue.main.async {
+                let loginVC:LoginViewController = LoginViewController()
+                let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
+                navVC.isNavigationBarHidden = true
+                self.changeRootController(controller: navVC)
+            }
+        } fail: {
+            
+        }
     }
 
     /*
@@ -163,5 +179,4 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         self.navigationController?.pushViewController(videoVC, animated: true)
         
     }
-
 }

@@ -26,6 +26,9 @@
 		B68262D2263BC7A900A32D5C /* ArchiveTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262CF263BC7A900A32D5C /* ArchiveTool.swift */; };
 		B68262D3263BC7A900A32D5C /* LoginTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262D0263BC7A900A32D5C /* LoginTools.swift */; };
 		B68262D6263BD90500A32D5C /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = B68262D5263BD90500A32D5C /* SDWebImage */; };
+		B68262DB263BFFEF00A32D5C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B68262D9263BFFEF00A32D5C /* MBProgressHUD.m */; };
+		B68262E5263C05CB00A32D5C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262E4263C05CB00A32D5C /* BaseViewController.swift */; };
+		B68262E7263C088900A32D5C /* ToastHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262E6263C088900A32D5C /* ToastHUD.swift */; };
 		B69103B026381E4A005F2ACD /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = B69103AF26381E4A005F2ACD /* Amplify */; };
 		B69103B226381E4A005F2ACD /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B69103B126381E4A005F2ACD /* AWSCognitoAuthPlugin */; };
 		B69103B426381E4A005F2ACD /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B69103B326381E4A005F2ACD /* AWSS3StoragePlugin */; };
@@ -81,6 +84,11 @@
 		B68262CE263BC7A900A32D5C /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		B68262CF263BC7A900A32D5C /* ArchiveTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveTool.swift; sourceTree = "<group>"; };
 		B68262D0263BC7A900A32D5C /* LoginTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTools.swift; sourceTree = "<group>"; };
+		B68262D9263BFFEF00A32D5C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		B68262DA263BFFEF00A32D5C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		B68262E0263C024200A32D5C /* Mike-bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mike-bridging-Header.h"; sourceTree = "<group>"; };
+		B68262E4263C05CB00A32D5C /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		B68262E6263C088900A32D5C /* ToastHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastHUD.swift; sourceTree = "<group>"; };
 		B69103BD26381EC0005F2ACD /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		B69103C026381EC0005F2ACD /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		B69103C126381EC0005F2ACD /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +191,32 @@
 			path = Tools;
 			sourceTree = "<group>";
 		};
+		B68262D7263BFFC000A32D5C /* ThirdPartSDK */ = {
+			isa = PBXGroup;
+			children = (
+				B68262D8263BFFEF00A32D5C /* MBProgressHUD */,
+			);
+			path = ThirdPartSDK;
+			sourceTree = "<group>";
+		};
+		B68262D8263BFFEF00A32D5C /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				B68262DA263BFFEF00A32D5C /* MBProgressHUD.h */,
+				B68262D9263BFFEF00A32D5C /* MBProgressHUD.m */,
+				B68262E6263C088900A32D5C /* ToastHUD.swift */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		B68262E3263C05BD00A32D5C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				B68262E4263C05CB00A32D5C /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		B69103BC26381EC0005F2ACD /* Macros */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +293,7 @@
 		C1DEDD6A2637460700F66A7C = {
 			isa = PBXGroup;
 			children = (
+				B68262E0263C024200A32D5C /* Mike-bridging-Header.h */,
 				2F497FEA72674F3DBFAB6C87 /* AmplifyConfig */,
 				F917A076CEBE4B85A3116ED7 /* AmplifyModels */,
 				C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */,
@@ -280,6 +315,8 @@
 		C1DEDD752637460700F66A7C /* Mike */ = {
 			isa = PBXGroup;
 			children = (
+				B68262E3263C05BD00A32D5C /* Base */,
+				B68262D7263BFFC000A32D5C /* ThirdPartSDK */,
 				B68262B72639B16100A32D5C /* Utils */,
 				B69103E52638229A005F2ACD /* Backend */,
 				B69103BE26381EC0005F2ACD /* Functions */,
@@ -423,6 +460,7 @@
 				B68262BF263A3E2300A32D5C /* GraphQLRequestExt.swift in Sources */,
 				B68262BC2639B16100A32D5C /* StringUtils.swift in Sources */,
 				B69103DB26381EC0005F2ACD /* LoginSecondViewController.swift in Sources */,
+				B68262E5263C05CB00A32D5C /* BaseViewController.swift in Sources */,
 				B68262BB2639B16100A32D5C /* UIColorExtension.swift in Sources */,
 				B69103D726381EC0005F2ACD /* HomeBannerColListCell.swift in Sources */,
 				B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */,
@@ -432,12 +470,14 @@
 				B69103D226381EC0005F2ACD /* HomeViewController.swift in Sources */,
 				503E02E0497E4EFF9D9BD770 /* UserContent+Schema.swift in Sources */,
 				CB02F7E746244ECC95ED67D5 /* UserProfile.swift in Sources */,
+				B68262DB263BFFEF00A32D5C /* MBProgressHUD.m in Sources */,
 				B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */,
 				7E856A1F4B6F44F8AA35D746 /* UserProfile+Schema.swift in Sources */,
 				B69103D626381EC0005F2ACD /* HomeTopColCell.swift in Sources */,
 				B69103D026381EC0005F2ACD /* Global.swift in Sources */,
 				2D300B2B0DB846128C62C062 /* UserFavoriteContent.swift in Sources */,
 				C7AE4A5E865D4D0A92465D35 /* UserFavoriteContent+Schema.swift in Sources */,
+				B68262E7263C088900A32D5C /* ToastHUD.swift in Sources */,
 				A690E02738114B2F88B979ED /* UserSubscriptionTrainer.swift in Sources */,
 				E580130BA74747999F57955C /* UserSubscriptionTrainer+Schema.swift in Sources */,
 			);
@@ -579,6 +619,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = FYang.Mike;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Mike-bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -601,6 +642,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = FYang.Mike;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Mike-bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
