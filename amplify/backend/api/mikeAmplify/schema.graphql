@@ -8,7 +8,6 @@
   Email: AWSEmail
   Gender: String
   Height: Float
-  Price: Float
   RegDate: String!
   StripeID: String
   UserImage: String
@@ -40,16 +39,19 @@
 
 # create a join model and disable query for m2m relationship
 type UserSubscriptionTrainer @model(queries: null)
-@auth(rules: [{ allow: owner, operations: [create, delete, update] }])
-{
+@auth(rules: [{ allow: owner, operations: [create, delete, update] },
+  { allow: private, operations: [read]},
+  { allow: public, provider: iam, operations: [read]}]){
   id: ID!
   Trainer: UserProfile! @connection(name: "bySubscriptedTrainer")
   User: UserProfile! @connection(name: "byUserSubscription")
+  ExpireDate: String!
 }
 
 type UserFavoriteContent @model(queries: null)
-@auth(rules: [{ allow: owner, operations: [create, delete, update] }])
-{
+@auth(rules: [{ allow: owner, operations: [create, delete, update] },
+  { allow: private, operations: [read]},
+  { allow: public, provider: iam, operations: [read]}]){
   id: ID!
   User: UserProfile! @connection(name: "byFavoriteContent")
   Content: UserContent! @connection(name: "byFavoriteUser")
@@ -68,6 +70,7 @@ type UserContent @model
   CreatorID: ID!
   ContentName: String!
   Description: String
+  Title: String
   """
   The level indicates the difficulty of the training course, e.g. 1 => easy, 2=> medium, 3=>hard
   """

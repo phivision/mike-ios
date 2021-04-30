@@ -42,20 +42,17 @@ app.post("/stripe/api/trainer/create", function (req, res) {
       type: "express",
     });
     const query = await queryName(id);
-    const product = await stripe.products.create(
-      { name: query.FirstName + " " + query.LastName },
-      { stripeAccount: account.id }
-    );
+    const product = await stripe.products.create({
+      name: query.Item.FirstName + " " + query.Item.LastName,
+    });
 
-    await stripe.prices.create(
-      {
-        unit_amount: 0,
-        currency: "usd",
-        recurring: { interval: "month" },
-        product: product.id,
-      },
-      { stripeAccount: account.id }
-    );
+    await stripe.prices.create({
+      unit_amount: 0,
+      currency: "usd",
+      recurring: { interval: "month" },
+      product: product.id,
+      lookup_key: account.id,
+    });
     return account.id;
   };
 
@@ -100,13 +97,12 @@ app.post("/stripe/api/trainer/link/onboarding", function (req, res) {
   };
 
   const onboard = async (StripeID) => {
-    const accountLinks = await stripe.accountLinks.create({
+    return await stripe.accountLinks.create({
       account: StripeID,
       refresh_url: req.body.refreshUrl,
       return_url: req.body.returnUrl,
       type: "account_onboarding",
     });
-    return accountLinks;
   };
 
   queryStripeID(req.body.id).then((p) => {
@@ -131,8 +127,7 @@ app.post("/stripe/api/trainer/link/login", function (req, res) {
   };
 
   const getLink = async (StripeID) => {
-    const accountLinks = await stripe.accounts.createLoginLink(StripeID);
-    return accountLinks;
+    return await stripe.accounts.createLoginLink(StripeID);
   };
 
   queryStripeID(req.body.id).then((p) => {
@@ -156,7 +151,7 @@ app.post("/stripe/api/trainer/get/price", function (req, res) {
   };
 
   const getPrices = async (StripeID) =>
-    await stripe.prices.list({}, { stripeAccount: StripeID });
+    await stripe.prices.list({ active: true, lookup_keys: [StripeID] });
 
   queryStripeID(req.body.id).then((p) => {
     getPrices(p.Item.StripeID)
@@ -202,31 +197,44 @@ app.post("/stripe/api/trainer/update/price", function (req, res) {
     return await docClient.get(params).promise();
   };
 
-  const getPrices = async (StripeID) =>
-    await stripe.prices.list({}, { stripeAccount: StripeID });
+  const getPrices = async (StripeID) => {
+    const prices = await stripe.prices.list({
+      active: true,
+      lookup_keys: [StripeID],
+    });
+    return prices.data[0];
+  };
 
-  const setPrice = async (StripeID, priceID, newPrice) =>
-    await stripe.prices.update(
-      priceID,
-      { unit_amount: newPrice },
-      { stripeAccount: StripeID }
+  const updatePrice = async (StripeID, priceID, newPrice, productID) => {
+    await stripe.prices.update(priceID, { active: false, lookup_key: "" });
+    return await stripe.prices.create({
+      unit_amount: newPrice,
+      currency: "usd",
+      recurring: { interval: "month" },
+      product: productID,
+      lookup_key: StripeID,
+    });
+  };
+
+  const update = async () => {
+    const query = await queryStripeID(req.body.id);
+    const price = await getPrices(query.Item.StripeID);
+    return await updatePrice(
+      query.Item.StripeID,
+      price.id,
+      req.body.newPrice,
+      price.product
     );
+  };
 
-  queryStripeID(req.body.id).then((p) => {
-    getPrices(p.Item.StripeID)
-      .then(async (p) => {
-        const response = await setPrice(
-          p.Item.StripeID,
-          p.data.data[1],
-          req.body.newPrice
-        );
-        res.json(response);
-      })
-      .catch((e) => {
-        console.log(e);
-        res.status(500).send();
-      });
-  });
+  update()
+    .then(() => {
+      res.status(200).send();
+    })
+    .catch((e) => {
+      console.log(e);
+      res.status(500).send();
+    });
 });
 
 app.post("/stripe/api/user/create", function (req, res) {
@@ -268,24 +276,25 @@ app.post("/stripe/api/user/create", function (req, res) {
     });
 });
 
-app.post("/stripe/api/user/checkout", function (req, res) {
+app.post("/stripe/api/user/create/subscription", function (req, res) {
   const query = async (id) => {
     const params = {
       TableName: process.env.TABLE_NAME,
       Key: { id: id },
     };
 
-    return await docClient.get(params).promise();
+    const query = await docClient.get(params).promise();
+    return query.Item;
   };
 
   const setPayment = async (customerID) => {
-    await stripe.paymentMethods.attach(req.body.paymentMethodID, {
+    return await stripe.paymentMethods.attach(req.body.paymentMethodID, {
       customer: customerID,
     });
   };
 
   const setInvoice = async (customerID) => {
-    await stripe.customers.update(customerID, {
+    return await stripe.customers.update(customerID, {
       invoice_settings: {
         default_payment_method: req.body.paymentMethodID,
       },
@@ -293,29 +302,35 @@ app.post("/stripe/api/user/checkout", function (req, res) {
   };
 
   const getPrices = async (StripeID) => {
-    price = await stripe.prices.list({}, { stripeAccount: StripeID });
-    return price.data.data[1];
+    price = await stripe.prices.list({ active: true, lookup_keys: [StripeID] });
+    return price.data[0];
   };
 
-  const createSubscription = async (customerID, priceID) => {
+  const createSubscription = async (customerID, priceID, trainerID) => {
     // Create the subscription
     return await stripe.subscriptions.create({
       customer: customerID,
       items: [{ price: priceID }],
       expand: ["latest_invoice.payment_intent"],
+      application_fee_percent: 10,
+      transfer_data: {
+        destination: trainerID,
+      },
     });
   };
 
   const update = async () => {
     const customer = await query(req.body.customerID);
     const trainer = await query(req.body.trainerID);
-    const priceID = await getPrices(trainer.Item.StripeID);
+    const price = await getPrices(trainer.StripeID);
 
-    setPayment(customer.Item.StripeID).then(() => {
-      setInvoice(customer.Item.StripeID).then(() => {
-        createSubscription(customer.Item.StripeID, priceID);
-      });
-    });
+    await setPayment(customer.StripeID);
+    await setInvoice(customer.StripeID);
+    return await createSubscription(
+      customer.StripeID,
+      price.id,
+      trainer.StripeID
+    );
   };
 
   update()
@@ -326,13 +341,151 @@ app.post("/stripe/api/user/checkout", function (req, res) {
     });
 });
 
+app.post("/stripe/api/user/delete/subscription", function (req, res) {
+  const queryStripeID = async (id) => {
+    const params = {
+      TableName: process.env.TABLE_NAME,
+      Key: { id: id },
+    };
+
+    return await docClient.get(params).promise();
+  };
+
+  const unsubscribe = async (subscriptionID) =>
+    await stripe.subscriptions.update(subscriptionID, {
+      cancel_at_period_end: true,
+    });
+
+  queryStripeID(req.body.id).then((p) => {
+    unsubscribe(req.body.subscriptionID)
+      .then((p) => res.json(p))
+      .catch((e) => {
+        console.log(e);
+        res.status(500).send();
+      });
+  });
+});
+
+app.post("/stripe/api/user/get/payment", function (req, res) {
+  const queryStripeID = async (id) => {
+    const params = {
+      TableName: process.env.TABLE_NAME,
+      Key: { id: id },
+    };
+
+    return await docClient.get(params).promise();
+  };
+
+  const getPaymentMethods = async (StripeID) =>
+    await stripe.paymentMethods.list({ customer: StripeID, type: "card" });
+
+  queryStripeID(req.body.id).then((p) => {
+    getPaymentMethods(p.Item.StripeID)
+      .then((p) => res.json(p))
+      .catch((e) => {
+        console.log(e);
+        res.status(500).send();
+      });
+  });
+});
+
+app.post("/stripe/api/user/get/subscriptions", function (req, res) {
+  const queryStripeID = async (id) => {
+    const params = {
+      TableName: process.env.TABLE_NAME,
+      Key: { id: id },
+    };
+
+    return await docClient.get(params).promise();
+  };
+
+  const getSubscriptions = async (StripeID) =>
+    await stripe.subscriptions.list({ customer: StripeID });
+
+  queryStripeID(req.body.id).then((p) => {
+    getSubscriptions(p.Item.StripeID)
+      .then((p) => res.json(p))
+      .catch((e) => {
+        console.log(e);
+        res.status(500).send();
+      });
+  });
+});
+
+app.post("/stripe/api/user/create/payment", function (req, res) {
+  const queryStripeID = async (id) => {
+    const params = {
+      TableName: process.env.TABLE_NAME,
+      Key: { id: id },
+    };
+
+    return await docClient.get(params).promise();
+  };
+
+  const setPayment = async (customerID) => {
+    return await stripe.paymentMethods.attach(req.body.paymentMethodID, {
+      customer: customerID,
+    });
+  };
+
+  queryStripeID(req.body.id).then((p) => {
+    setPayment(p.Item.StripeID)
+      .then((p) => res.json(p))
+      .catch((e) => {
+        console.log(e);
+        res.status(500).send();
+      });
+  });
+});
+
+app.post("/stripe/api/user/delete/payment", function (req, res) {
+  const detachPayment = async () => {
+    return await stripe.paymentMethods.detach(req.body.paymentMethodID);
+  };
+
+  detachPayment()
+    .then((p) => res.json(p))
+    .catch((e) => {
+      console.log(e);
+      res.status(500).send();
+    });
+});
+
+app.post("/stripe/api/user/update/defaultpayment", function (req, res) {
+  const queryStripeID = async (id) => {
+    const params = {
+      TableName: process.env.TABLE_NAME,
+      Key: { id: id },
+    };
+
+    return await docClient.get(params).promise();
+  };
+
+  const setInvoice = async (customerID) => {
+    return await stripe.customers.update(customerID, {
+      invoice_settings: {
+        default_payment_method: req.body.paymentMethodID,
+      },
+    });
+  };
+
+  queryStripeID(req.body.id).then((p) => {
+    setInvoice(p.Item.StripeID)
+      .then((p) => res.json(p))
+      .catch((e) => {
+        console.log(e);
+        res.status(500).send();
+      });
+  });
+});
+
 app.post("/*", function (req, res) {
-  console.log("Hello");
+  console.log("Route not found.");
   res.status(404).send();
 });
 
 app.listen(3000, function () {
-  console.log("App started");
+  console.log("App started.");
 });
 
 // Export the app object. When executing the application local this does nothing. However,

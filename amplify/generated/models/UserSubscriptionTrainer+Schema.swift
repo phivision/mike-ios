@@ -8,6 +8,7 @@ extension UserSubscriptionTrainer {
     case id
     case Trainer
     case User
+    case ExpireDate
   }
   
   public static let keys = CodingKeys.self
@@ -25,7 +26,8 @@ extension UserSubscriptionTrainer {
     model.fields(
       .id(),
       .belongsTo(userSubscriptionTrainer.Trainer, is: .required, ofType: UserProfile.self, targetName: "userSubscriptionTrainerTrainerId"),
-      .belongsTo(userSubscriptionTrainer.User, is: .required, ofType: UserProfile.self, targetName: "userSubscriptionTrainerUserId")
+      .belongsTo(userSubscriptionTrainer.User, is: .required, ofType: UserProfile.self, targetName: "userSubscriptionTrainerUserId"),
+      .field(userSubscriptionTrainer.ExpireDate, is: .required, ofType: .string)
     )
     }
 }

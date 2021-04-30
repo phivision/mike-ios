@@ -8,7 +8,6 @@ public struct UserProfile: Model {
   public var Email: String?
   public var Gender: String?
   public var Height: Double?
-  public var Price: Double?
   public var RegDate: String
   public var StripeID: String?
   public var UserImage: String?
@@ -30,7 +29,6 @@ public struct UserProfile: Model {
       Email: String? = nil,
       Gender: String? = nil,
       Height: Double? = nil,
-      Price: Double? = nil,
       RegDate: String,
       StripeID: String? = nil,
       UserImage: String? = nil,
@@ -51,7 +49,6 @@ public struct UserProfile: Model {
       self.Email = Email
       self.Gender = Gender
       self.Height = Height
-      self.Price = Price
       self.RegDate = RegDate
       self.StripeID = StripeID
       self.UserImage = UserImage

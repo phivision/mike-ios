@@ -45,22 +45,9 @@ class Backend {
                 self.updateUserData(withSignInStatus: false)
 
             default:
-                self.updateUserData(withSignInStatus: true)
+                self.updateUserData(withSignInStatus: false)
 //                print("==HUB== \(payload)")
                 break
-            }
-        }
-         
-        // let's check if user is signedIn or not
-         _ = Amplify.Auth.fetchAuthSession { (result) in
-             do {
-                 let session = try result.get()
-                        
-        // let's update UserData and the UI
-             self.updateUserData(withSignInStatus: session.isSignedIn)
-                        
-             } catch {
-                  print("Fetch auth session failed with error - \(error)")
             }
         }
       } catch {
@@ -82,24 +69,22 @@ class Backend {
             }
         }
     }
-    
+    //  login with userName and password
     public func login(userName:String!,pwd:String!,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
 //        signOut()
         _ = Amplify.Auth.signIn(username: userName, password: pwd) { result in
             switch result {
             case .success:
                 print("Sign in succeeded \(result)")
-                self.getSession(suc: suc, fail: fail)
+                self.fetchSession(suc: suc, fail: fail)
             case .failure(let error):
                 print("Sign in failed \(error)")
-                self.getSession(suc: suc, fail: fail)
             }
         }
     }
 
-    // signout
+    //  - signout
     public func signOut() {
-
         _ = Amplify.Auth.signOut() { (result) in
             switch result {
             case .success:
@@ -110,68 +95,79 @@ class Backend {
         }
     }
 
-    // change our internal state, this triggers an UI update on the main thread
+    // MARK: -  change our internal state, this triggers an UI update on the main thread
     func updateUserData(withSignInStatus status : Bool) {
         DispatchQueue.main.async() {
-            LoginTools.sharedTools.isLogin = status
+
         }
     }
-    public func getSession(suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+    /*
+     // Get aws credentials
+     if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
+         let credentials = try awsCredentialsProvider.getAWSCredentials().get()
+         print("Access key - \(credentials.accessKey) ")
+     }
+
+     // Get cognito user pool token
+     if let cognitoTokenProvider = session as? AuthCognitoTokensProvider {
+         let tokens = try cognitoTokenProvider.getCognitoTokens().get()
+         print("Id token - \(tokens.idToken) ")
+     }
+     */
+    // MARK: - Login relations API Query
+    //  fetchSession After Login Success
+    public func fetchSession(suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
         Amplify.Auth.fetchAuthSession { result in
             do {
                 let session = try result.get()
-
                 // Get user sub or identity id
                 if let identityProvider = session as? AuthCognitoIdentityProvider {
                     let usersub = try identityProvider.getUserSub().get()
                     let identityId = try identityProvider.getIdentityId().get()
                     print("User sub - \(usersub) and identity id \(identityId)")
-//                    self.getUserProfile(userId: usersub,suc: suc,fail: fail)
-//                    self.getUserContentList(userId: usersub)
-                    self.testGraphQL(userId: usersub)
+                    self.fetchUserProfile(userId: usersub, suc: suc, fail: fail)
                 }
-
-//                // Get aws credentials
-//                if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
-//                    let credentials = try awsCredentialsProvider.getAWSCredentials().get()
-//                    print("Access key - \(credentials.accessKey) ")
-//                }
-//
-//                // Get cognito user pool token
-//                if let cognitoTokenProvider = session as? AuthCognitoTokensProvider {
-//                    let tokens = try cognitoTokenProvider.getCognitoTokens().get()
-//                    print("Id token - \(tokens.idToken) ")
-//                }
-
             } catch {
                 print("Fetch auth session failed with error - \(error)")
             }
         }
     }
-    public func getUserProfile(userId:String,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
-        Amplify.API.query(request: .get(UserProfile.self, byId: userId)){ event in
+    //  fetchUserProfile After fetchSession Success
+    public func fetchUserProfile(userId:String,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchUserProfile(byId: userId)){
+            event in
             switch event {
             case .success(let result):
                 switch result {
-                case .success(let profile):
-                    guard let profileModel = profile else {
-                        print("Could not find todo")
-                        return
-                    }
-                    LoginTools.sharedTools.userProfile = profileModel;
+                case .success(let data):
 //                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
-                    suc()
-                    print("Successfully retrieved todo")
+                    if let postData = try? JSONEncoder().encode(data) {
+                        if let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) {
+                            let dic = d as! NSDictionary
+                            if let subDic = dic["getUserProfile"] as? NSDictionary{
+                                LoginTools.sharedTools.saveUserInfo(dic: subDic as! [String : Any])
+                                suc();
+                                print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(LoginTools.sharedTools.userId())");
+                            }else{
+                                fail("fetch User Profile Fail");
+                            }
+                        }else{
+                            fail("fetch User Profile Fail");
+                        }
+                    }else{
+                        fail("fetch User Profile Fail");
+                    }
                 case .failure(let error):
-                    fail("Got failed result with \(error.errorDescription)")
                     print("Got failed result with \(error.errorDescription)")
+                    fail("Got failed result with \(error.errorDescription)");
                 }
             case .failure(let error):
-                fail("Got failed result with \(error)")
                 print("Got failed event with error \(error)")
+                fail("Got failed result with \(error)");
             }
         }
     }
+    // MARK: - fetch imageUrl by imageKey for loading image in UIImageView
     func fetchUserIcon(imageKey:String!){
         Amplify.Storage.getURL(key: "banner1.jpg") { event in
             switch event {
@@ -179,34 +175,10 @@ class Backend {
                 print("Completed: \(url)")
             case let .failure(storageError):
                 print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-            default:
-                break
             }
         }
     }
-    public func fetchUserContent(cotentId:String,suc:@escaping (_ userContent:UserContent)->Void,fail:@escaping (_ msg:String)->Void){
-        Amplify.API.query(request: .get(UserContent.self, byId: cotentId)){ event in
-            switch event {
-            case .success(let result):
-                switch result {
-                case .success(let userContent):
-                    guard let contentModel = userContent else {
-                        print("Could not find todo")
-                        return
-                    }
-                    suc(contentModel)
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
-                    print("Successfully retrieved todo")
-                case .failure(let error):
-                    print("Got failed result with \(error.errorDescription)")
-                    fail("Got failed result with \(error.errorDescription)")
-                }
-            case .failure(let error):
-                print("Got failed event with error \(error)")
-                fail("Got failed event with error \(error)")
-            }
-        }
-    }
+    // MARK: - test custom GraphQL query document
     func testGraphQL(userId:String?){
         Amplify.API.query(request: .getWithoutDescription(byId: userId ?? "")){
             event in

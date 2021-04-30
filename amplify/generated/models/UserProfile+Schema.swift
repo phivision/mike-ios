@@ -10,7 +10,6 @@ extension UserProfile {
     case Email
     case Gender
     case Height
-    case Price
     case RegDate
     case StripeID
     case UserImage
@@ -46,7 +45,6 @@ extension UserProfile {
       .field(userProfile.Email, is: .optional, ofType: .string),
       .field(userProfile.Gender, is: .optional, ofType: .string),
       .field(userProfile.Height, is: .optional, ofType: .double),
-      .field(userProfile.Price, is: .optional, ofType: .double),
       .field(userProfile.RegDate, is: .required, ofType: .string),
       .field(userProfile.StripeID, is: .optional, ofType: .string),
       .field(userProfile.UserImage, is: .optional, ofType: .string),

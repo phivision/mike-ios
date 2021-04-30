@@ -9,7 +9,7 @@
 import Foundation
 
 class StringUtils:NSObject{
-    static func DYStringIsEmpty(value: String?) -> Bool {
+    static func isBlank(value: String?) -> Bool {
         //首先判断是否为nil
         if (nil == value) {
             //对象是nil，直接认为是空串

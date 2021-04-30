@@ -46,4 +46,31 @@ extension GraphQLRequest{
                                         variables: ["id": id],
                                         responseType: JSONValue.self)
         }
+    static func fetchUserProfile(byId id: String) -> GraphQLRequest<JSONValue> {
+            let document = """
+            query getUserProfile($id:ID!) {
+              getUserProfile(id:$id) {
+                id
+                Birthday
+                Email
+                Gender
+                Height
+                RegDate
+                StripeID
+                UserImage
+                BgImage
+                BgTitle
+                LastName
+                FirstName
+                UserRole
+                Weight
+                Description
+                Biography
+              }
+            }
+            """
+            return GraphQLRequest<JSONValue>(document: document,
+                                        variables: ["id": id],
+                                        responseType: JSONValue.self)
+        }
 }

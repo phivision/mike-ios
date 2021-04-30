@@ -8,6 +8,7 @@ extension UserContent {
     case id
     case ContentName
     case Description
+    case Title
     case Level
     case Length
     case IsDemo
@@ -34,6 +35,7 @@ extension UserContent {
       .id(),
       .field(userContent.ContentName, is: .required, ofType: .string),
       .field(userContent.Description, is: .optional, ofType: .string),
+      .field(userContent.Title, is: .optional, ofType: .string),
       .field(userContent.Level, is: .optional, ofType: .int),
       .field(userContent.Length, is: .optional, ofType: .double),
       .field(userContent.IsDemo, is: .optional, ofType: .bool),

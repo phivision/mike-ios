@@ -14,56 +14,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // initialize Amplify
         let _ = Backend.initialize()
         self.window = UIWindow(frame: UIScreen.main.bounds)
-//        let loginVC:LoginViewController = LoginViewController()
-//        let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
-//        navVC.isNavigationBarHidden = true
-//        self.window?.rootViewController = navVC
-//        self.window?.backgroundColor = .white
-//        self.window?.makeKeyAndVisible()
-        _ = Amplify.Auth.fetchAuthSession { (result) in
-            do {
-                let session = try result.get()
-                DispatchQueue.main.async {
-                    if session.isSignedIn == true{
-                        let homeVC:HomeViewController = HomeViewController()
-                        let navVC:UINavigationController  = UINavigationController(rootViewController: homeVC)
-                        navVC.isNavigationBarHidden = true
-                        self.window?.rootViewController = navVC
-                        self.window?.backgroundColor = .white
-                        self.window?.makeKeyAndVisible()
-                    }else{
-                        let loginVC:LoginViewController = LoginViewController()
-                        let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
-                        navVC.isNavigationBarHidden = true
-                        self.window?.rootViewController = navVC
-                        self.window?.backgroundColor = .white
-                        self.window?.makeKeyAndVisible()
-                    }
-                }
-
-            } catch {
-                 print("Fetch auth session failed with error - \(error)")
-                DispatchQueue.main.async {
-                    let loginVC:LoginViewController = LoginViewController()
-                    let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
-                    navVC.isNavigationBarHidden = true
-                    self.window?.rootViewController = navVC
-                    self.window?.backgroundColor = .white
-                    self.window?.makeKeyAndVisible()
-                }
-           }
-       }
-//        if LoginTools.sharedTools.isLogin == true {
-//            let homeVC:HomeViewController = HomeViewController()
-//            let navVC:UINavigationController  = UINavigationController(rootViewController: homeVC)
-//            navVC.isNavigationBarHidden = true
-//            self.window?.rootViewController = navVC
-//        }else{
-//            let loginVC:LoginViewController = LoginViewController()
-//            let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
-//            navVC.isNavigationBarHidden = true
-//            self.window?.rootViewController = navVC
-//        }
+        if StringUtils.isBlank(value: LoginTools.sharedTools.userId()) == false {
+            let homeVC:HomeViewController = HomeViewController()
+            let navVC:UINavigationController  = UINavigationController(rootViewController: homeVC)
+            navVC.isNavigationBarHidden = true
+            self.window?.rootViewController = navVC
+            self.window?.backgroundColor = .white
+            self.window?.makeKeyAndVisible()
+        }else{
+            let loginVC:LoginViewController = LoginViewController()
+            let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
+            navVC.isNavigationBarHidden = true
+            self.window?.rootViewController = navVC
+            self.window?.backgroundColor = .white
+            self.window?.makeKeyAndVisible()
+        }
         
         return true
     }

@@ -6,6 +6,7 @@ public struct UserContent: Model {
   public let id: String
   public var ContentName: String
   public var Description: String?
+  public var Title: String?
   public var Level: Int?
   public var Length: Double?
   public var IsDemo: Bool?
@@ -18,6 +19,7 @@ public struct UserContent: Model {
   public init(id: String = UUID().uuidString,
       ContentName: String,
       Description: String? = nil,
+      Title: String? = nil,
       Level: Int? = nil,
       Length: Double? = nil,
       IsDemo: Bool? = nil,
@@ -29,6 +31,7 @@ public struct UserContent: Model {
       self.id = id
       self.ContentName = ContentName
       self.Description = Description
+      self.Title = Title
       self.Level = Level
       self.Length = Length
       self.IsDemo = IsDemo
