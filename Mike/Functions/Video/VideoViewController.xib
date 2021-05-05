@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoViewController" customModule="Mike" customModuleProvider="target">
             <connections>
+                <outlet property="backBtn" destination="oPb-FT-Cef" id="6Gt-Xc-IrE"/>
                 <outlet property="imageView" destination="6bL-qW-uln" id="bgj-jj-GZw"/>
                 <outlet property="playerView" destination="gS3-Ss-izV" id="3f2-nP-fhH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="GJh-mz-fxJ"/>
@@ -23,35 +24,51 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B82-oh-JVs">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6bL-qW-uln" userLabel="camera">
-                    <rect key="frame" x="207" y="0.0" width="207" height="862"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gS3-Ss-izV" customClass="ZZPlayerView" customModule="Mike" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="207" height="862"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6bL-qW-uln" userLabel="camera">
+                    <rect key="frame" x="276" y="44" width="138" height="298.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPb-FT-Cef">
+                    <rect key="frame" x="10" y="44" width="44" height="44"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="0ax-L4-lBK"/>
+                        <constraint firstAttribute="width" constant="44" id="O47-zQ-aFu"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                    <state key="normal" image="navBack"/>
+                    <connections>
+                        <action selector="backBtnPressed" destination="-1" eventType="touchUpInside" id="sbh-oY-KgV"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="6bL-qW-uln" firstAttribute="trailing" secondItem="B82-oh-JVs" secondAttribute="trailing" id="5xc-BD-fDX"/>
                 <constraint firstItem="gS3-Ss-izV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6vy-q7-pxr"/>
+                <constraint firstItem="oPb-FT-Cef" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="CXj-eu-A7C"/>
                 <constraint firstAttribute="trailing" secondItem="B82-oh-JVs" secondAttribute="trailing" id="FEJ-mJ-m0z"/>
                 <constraint firstItem="gS3-Ss-izV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="FpZ-y3-erq"/>
+                <constraint firstItem="oPb-FT-Cef" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="GoA-Nu-gIi"/>
                 <constraint firstItem="B82-oh-JVs" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LQ8-MC-FwJ"/>
+                <constraint firstItem="6bL-qW-uln" firstAttribute="width" secondItem="B82-oh-JVs" secondAttribute="width" multiplier="1:3" id="P7x-hU-DSM"/>
                 <constraint firstItem="B82-oh-JVs" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Pl4-X4-29K"/>
-                <constraint firstItem="6bL-qW-uln" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="cfH-3n-gxo"/>
+                <constraint firstItem="6bL-qW-uln" firstAttribute="height" secondItem="B82-oh-JVs" secondAttribute="height" multiplier="1:3" id="TYd-F6-0u2"/>
+                <constraint firstItem="6bL-qW-uln" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="X9u-8v-ef8"/>
+                <constraint firstItem="6bL-qW-uln" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="gcE-vd-ucP"/>
                 <constraint firstItem="gS3-Ss-izV" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="hlQ-gz-x2c"/>
-                <constraint firstItem="6bL-qW-uln" firstAttribute="width" secondItem="gS3-Ss-izV" secondAttribute="width" id="nh3-by-Odt"/>
-                <constraint firstItem="6bL-qW-uln" firstAttribute="top" secondItem="B82-oh-JVs" secondAttribute="top" id="sIn-og-BLO"/>
-                <constraint firstItem="gS3-Ss-izV" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="1:2" id="sZo-aC-tF1"/>
+                <constraint firstItem="gS3-Ss-izV" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="sZo-aC-tF1"/>
                 <constraint firstAttribute="bottom" secondItem="B82-oh-JVs" secondAttribute="bottom" id="zIY-Mc-K83"/>
             </constraints>
             <point key="canvasLocation" x="139" y="105"/>
         </view>
     </objects>
     <resources>
+        <image name="navBack" width="44" height="44"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

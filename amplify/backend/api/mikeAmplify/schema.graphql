@@ -2,6 +2,7 @@
 @auth(rules: [{ allow: owner, operations: [create, delete, update] },
   { allow: private, operations: [read]},
   { allow: public, provider: iam, operations: [read]}])
+@key(name: "profilesByStripeID", fields: ["StripeID"], queryField: "profilesByStripeID")
 {
   id: ID!
   Birthday: AWSDate
@@ -45,7 +46,6 @@ type UserSubscriptionTrainer @model(queries: null)
   id: ID!
   Trainer: UserProfile! @connection(name: "bySubscriptedTrainer")
   User: UserProfile! @connection(name: "byUserSubscription")
-  ExpireDate: String!
 }
 
 type UserFavoriteContent @model(queries: null)
@@ -80,6 +80,7 @@ type UserContent @model
   ViewCount: Int
   Thumbnail: String
   Preview: String
+  Segments: AWSJSON
   Creator: UserProfile @connection(fields: ["CreatorID"])
   """
   A list of users who like this content

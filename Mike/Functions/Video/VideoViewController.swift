@@ -11,10 +11,12 @@ import AVKit
 class VideoViewController: UIViewController {
     var videoName:String?
     @IBOutlet weak var playerView:ZZPlayerView!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var backBtn:UIButton!
     var playVC:AVPlayerViewController!
     var palyerItem:AVPlayerItem!
     var captureSession:AVCaptureSession = AVCaptureSession()
-    @IBOutlet weak var imageView: UIImageView!
+    
     var isLoaded:Bool = false
 //    var player:AVPlayer!
     override func viewDidLoad() {
@@ -27,11 +29,19 @@ class VideoViewController: UIViewController {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
         if self.isLoaded == false {
+            self.configView()
             self.cameraEnable()
             self.addPlayerView()
             self.isLoaded = true
         }
         
+    }
+    func configView(){
+        self.backBtn.layer.cornerRadius = 22
+        self.backBtn.backgroundColor = HexRGBAlpha(0xffffff,0.3)
+    }
+    @IBAction func backBtnPressed(){
+        self.navigationController?.popViewController(animated: true)
     }
     /*
     // MARK: - Navigation
@@ -78,10 +88,10 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
             self.captureSession.addOutput(output)
             
             //创建一个显示用的layer
-//            let previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-//            previewLayer.videoGravity = AVLayerVideoGravity(rawValue: "AVLayerVideoGravityResizeAspect")
-//            previewLayer.frame = self.imageView.bounds
-//            self.imageView.layer.addSublayer(previewLayer)
+            let previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+            previewLayer.videoGravity = AVLayerVideoGravity(rawValue: "AVLayerVideoGravityResizeAspect")
+            previewLayer.frame = self.imageView.bounds
+            self.imageView.layer.addSublayer(previewLayer)
             
             //启动数据流
             self.captureSession.startRunning()
@@ -94,8 +104,8 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         DispatchQueue.main.async {
             // 导出照片
-            let image = self.imageConvert(sampleBuffer: sampleBuffer)
-            self.imageView.image = image
+//            let image = self.imageConvert(sampleBuffer: sampleBuffer)
+//            self.imageView.image = image
         }
     }
         

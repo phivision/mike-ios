@@ -15,18 +15,15 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     func configView(){
-        self.loginBtn.layer.cornerRadius = 30;
-        self.loginBtn.layer.shadowColor = HexRGBAlpha(0xff333333,0.5).cgColor
-        self.loginBtn.layer.shadowOffset = CGSize(width: 2, height: 2)
-        self.loginBtn.layer.shadowOpacity = 10
+        self.loginBtn.layer.cornerRadius = 20;
     }
 
     @IBAction func loginBtnPressed(){
-//        Backend.shared.signOut {
-//            
-//        } fail: {
-//            
-//        }
+        Backend.shared.signOut {
+
+        } fail: {
+
+        }
         let secondVC = LoginSecondViewController()
         self.navigationController?.pushViewController(secondVC, animated: true)
     }

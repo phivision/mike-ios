@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let _ = Backend.initialize()
         self.window = UIWindow(frame: UIScreen.main.bounds)
         if StringUtils.isBlank(value: LoginTools.sharedTools.userId()) == false {
-            let homeVC:HomeViewController = HomeViewController()
+            let homeVC:HomeTabViewController = HomeTabViewController()
             let navVC:UINavigationController  = UINavigationController(rootViewController: homeVC)
             navVC.isNavigationBarHidden = true
             self.window?.rootViewController = navVC

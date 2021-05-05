@@ -182,8 +182,48 @@ class Backend {
         }
     }
     // MARK: - test custom GraphQL query document
-    func testGraphQL(userId:String?){
-        Amplify.API.query(request: .getWithoutDescription(byId: userId ?? "")){
+    func fetchSubscriptionList(userId:String?,suc:@escaping (_ list:Array<UserSubscriptionTrainerListModel>)->Void){
+        Amplify.API.query(request: .getSubscriptionList(byId: userId ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        return
+                    }
+                    guard let thirddic = subDic["Subscriptions"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = thirddic["items"] as? NSArray else {
+                        return
+                    }
+                    print("~~~~~~~~~~~~\(itemList)")
+                    var subscriptionList = Array<UserSubscriptionTrainerListModel>()
+                    for item in itemList {
+                        if let itemDic = item as? NSDictionary {
+                            subscriptionList.append(UserSubscriptionTrainerListModel(fromDictionary: itemDic as! [String : Any]))
+                        }
+                    }
+                    suc(subscriptionList)
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+            }
+        }
+    }
+    func fetchContentList(userId:String?){
+        Amplify.API.query(request: .getContentList(byId: userId ?? "")){
             event in
             switch event {
             case .success(let result):
@@ -194,7 +234,7 @@ class Backend {
                         if let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) {
                             let dic = d as! NSDictionary
                             if let subDic = dic["getUserProfile"] as? NSDictionary{
-                                if let thirddic = subDic["Subscriptions"] as? NSDictionary{
+                                if let thirddic = subDic["Contents"] as? NSDictionary{
                                     print(thirddic["items"])
                                 }
                             }

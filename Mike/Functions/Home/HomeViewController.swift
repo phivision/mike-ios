@@ -9,19 +9,35 @@ import UIKit
 
 class HomeViewController: BaseViewController {
     @IBOutlet weak var mainCollection:UICollectionView!
+    var isRequest:Bool = false
+    lazy var coursesList:Array<UserSubscriptionTrainerListModel> = {
+        var coursesList:Array<UserSubscriptionTrainerListModel> = Array<UserSubscriptionTrainerListModel>()
+        return coursesList
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "mike"
-        
         // Do any additional setup after loading the view.
         configNav();
         configCollectionView()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = true
         let rotation : UIInterfaceOrientationMask = [.portrait]
         kAppdelegate?.blockRotation = rotation
+        if self.isRequest == false {
+            self.fetchMyCoursesList()
+            self.isRequest = true
+        }
+    }
+    func fetchMyCoursesList(){
+        Backend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+            self.coursesList.removeAll()
+            self.coursesList.append(contentsOf: subscriptionList)
+            DispatchQueue.main.async {
+                self.mainCollection.reloadData()
+            }
+        }
     }
     func configNav(){
         self.navigationController?.isNavigationBarHidden = false
@@ -79,7 +95,7 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         case 1:
             return 1
         case 2:
-            return 4
+            return self.coursesList.count
         default:
             return 0
         }
@@ -171,8 +187,8 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
 //        } fail: { error in
 //
 //        }
-        let rotation : UIInterfaceOrientationMask = [.landscapeLeft]
-                kAppdelegate?.blockRotation = rotation
+//        let rotation : UIInterfaceOrientationMask = [.landscapeLeft]
+//                kAppdelegate?.blockRotation = rotation
         let videoVC = VideoViewController()
         videoVC.videoName = "IMG4215b2a4a4004f4f44dabfa88b5030c8da9c.MOV";
         videoVC.navigationController?.isNavigationBarHidden = true
