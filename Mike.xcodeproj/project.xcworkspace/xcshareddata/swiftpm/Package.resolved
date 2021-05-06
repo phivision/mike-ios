@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "Amplify",
-        "repositoryURL": "https://github.com/aws-amplify/amplify-ios",
+        "repositoryURL": "https://gitee.com/mirrors_aws-amplify/amplify-ios.git",
         "state": {
           "branch": null,
-          "revision": "7efd809d3e0d5018d5b221b9313bcadf9ea722c6",
+          "revision": "5901499f52e9a305ef744fd74a01db799cfd1458",
           "version": "1.9.0"
         }
       },
@@ -30,11 +30,11 @@
       },
       {
         "package": "SDWebImage",
-        "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
+        "repositoryURL": "https://gitee.com/foxvail/SDWebImage.git",
         "state": {
           "branch": null,
-          "revision": "76dd4b49110b8624317fc128e7fa0d8a252018bc",
-          "version": "5.11.1"
+          "revision": "d1c75d839709b3f91c82ecf7d3c7665272090456",
+          "version": "5.11.0"
         }
       },
       {
