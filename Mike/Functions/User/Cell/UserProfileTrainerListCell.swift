@@ -15,16 +15,21 @@ class UserProfileTrainerListCell: UICollectionViewCell {
         self.avatar.layer.cornerRadius = 15
         self.avatar.clipsToBounds = true
     }
-    func setModel(model:UserSubscriptionTrainerListModel){
-        Amplify.Storage.getURL(key: model.trainer.userImage) { event in
-            switch event {
-            case let .success(url):
-                print("Completed: \(url)")
-                self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-            case let .failure(storageError):
-                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-                self.avatar.image = UIImage(named: "logo")
+    func setModel(model:UserCenterTrainer){
+        if StringUtils.isBlank(value: model.userImage) {
+            self.avatar.image = UIImage(named: "logo")
+        }else{
+            Amplify.Storage.getURL(key: model.userImage) { event in
+                switch event {
+                case let .success(url):
+                    print("Completed: \(url)")
+                    self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                case let .failure(storageError):
+                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+                    self.avatar.image = UIImage(named: "logo")
+                }
             }
         }
+        
     }
 }

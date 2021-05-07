@@ -109,4 +109,64 @@ extension GraphQLRequest{
                                         variables: ["id": id],
                                         responseType: JSONValue.self)
         }
+    static func fetchUserProfileModel(byId id: String) -> GraphQLRequest<JSONValue> {
+        let document = """
+        query getUserProfile($id:ID!) {
+          getUserProfile(id:$id) {
+            Contents {
+              nextToken
+            }
+            BgImage
+            BgTitle
+            Biography
+            Birthday
+            Description
+            Email
+            FirstName
+            Gender
+            Height
+            LastName
+            RegDate
+            UserImage
+            UserRole
+            Weight
+            createdAt
+            id
+            owner
+            updatedAt
+            Subscriptions {
+              items {
+                Trainer {
+                  UserImage
+                  id
+                }
+              }
+            }
+            Favorites {
+              items {
+                Content {
+                  ContentName
+                  Description
+                  IsDemo
+                  Length
+                  Level
+                  Preview
+                  Segments
+                  Thumbnail
+                  Title
+                  ViewCount
+                  createdAt
+                  id
+                  owner
+                  updatedAt
+                }
+              }
+            }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                    variables: ["id": id],
+                                    responseType: JSONValue.self)
+    }
 }

@@ -11,8 +11,8 @@ import Amplify
 class UserProfileViewController: BaseViewController {
     @IBOutlet weak var mainCollection:UICollectionView!
     var isRequest:Bool = false
-    lazy var subscriptionList:Array<UserSubscriptionTrainerListModel> = {
-        var subscriptionList:Array<UserSubscriptionTrainerListModel> = Array<UserSubscriptionTrainerListModel>()
+    lazy var subscriptionList:Array<UserCenterTrainer> = {
+        var subscriptionList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
         return subscriptionList
     }()
     override func viewDidLoad() {
@@ -30,13 +30,26 @@ class UserProfileViewController: BaseViewController {
         }
     }
     func fetchTrainerList(){
-        Backend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+        Backend.shared.fetchUserProfileModel(userId: LoginTools.sharedTools.userId()) { model in
+            let list:Array<UserCenterItem> = model.subscriptions.items
             self.subscriptionList.removeAll()
-            self.subscriptionList.append(contentsOf: subscriptionList)
+            for item:UserCenterItem in list{
+                self.subscriptionList.append(item.trainer)
+            }
             DispatchQueue.main.async {
                 self.mainCollection.reloadData()
             }
+        } fail: { errorMsg in
+            
         }
+
+//        Backend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+//            self.subscriptionList.removeAll()
+//            self.subscriptionList.append(contentsOf: subscriptionList)
+//            DispatchQueue.main.async {
+//                self.mainCollection.reloadData()
+//            }
+//        }
     }
     func configCollectionView(){
         let flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
