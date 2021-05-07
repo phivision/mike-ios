@@ -169,6 +169,14 @@ Parameters:
     Type: String
   
             
+      
+  parentStack:
+    Type: String
+        
+        
+  permissions:
+    Type: CommaDelimitedList
+      
   hostedUIProviderCreds:
     Type: String
   
@@ -178,14 +186,6 @@ Parameters:
   
             
             
-      
-  parentStack:
-    Type: String
-        
-        
-  permissions:
-    Type: CommaDelimitedList
-      
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
   

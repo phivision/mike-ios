@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HomeTopColCell" customModule="MikeIOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="140"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="390" height="140"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good morning,Amy!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nF-Om-jKP">
+                        <rect key="frame" x="20" y="40" width="350" height="30"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What exercise will you do today?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ap4-sh-kF0">
+                        <rect key="frame" x="20" y="80" width="350" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TcN-Jg-Gku">
+                        <rect key="frame" x="20" y="104.5" width="80" height="5"/>
+                        <color key="backgroundColor" red="0.0078431372550000003" green="0.80784313730000001" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="EXa-MZ-nrY"/>
+                            <constraint firstAttribute="height" constant="5" id="Ixd-oV-HR0"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="Ap4-sh-kF0" firstAttribute="trailing" secondItem="6nF-Om-jKP" secondAttribute="trailing" id="3Zh-K4-sOf"/>
+                <constraint firstItem="TcN-Jg-Gku" firstAttribute="top" secondItem="Ap4-sh-kF0" secondAttribute="bottom" constant="10" id="H5z-yr-jRl"/>
+                <constraint firstAttribute="trailing" secondItem="6nF-Om-jKP" secondAttribute="trailing" constant="20" id="L8y-sc-uJv"/>
+                <constraint firstItem="Ap4-sh-kF0" firstAttribute="centerX" secondItem="6nF-Om-jKP" secondAttribute="centerX" id="LQo-MZ-KKW"/>
+                <constraint firstItem="6nF-Om-jKP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="40" id="T9j-5a-bYj"/>
+                <constraint firstItem="Ap4-sh-kF0" firstAttribute="top" secondItem="6nF-Om-jKP" secondAttribute="bottom" constant="10" id="aJ0-Bg-twf"/>
+                <constraint firstItem="6nF-Om-jKP" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="fag-mp-by5"/>
+                <constraint firstItem="Ap4-sh-kF0" firstAttribute="leading" secondItem="6nF-Om-jKP" secondAttribute="leading" id="lep-5M-6F6"/>
+                <constraint firstItem="TcN-Jg-Gku" firstAttribute="leading" secondItem="Ap4-sh-kF0" secondAttribute="leading" id="vzd-Et-jQo"/>
+            </constraints>
+            <size key="customSize" width="390" height="140"/>
+            <point key="canvasLocation" x="368.11594202898556" y="154.01785714285714"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -8,7 +8,6 @@ public struct UserProfile: Model {
   public var Email: String?
   public var Gender: String?
   public var Height: Double?
-  public var Price: Double?
   public var RegDate: String
   public var StripeID: String?
   public var UserImage: String?
@@ -20,15 +19,16 @@ public struct UserProfile: Model {
   public var Weight: Double?
   public var Description: String?
   public var Biography: String?
-  public var Favorites: List<UserContent>?
+  public var Favorites: List<UserFavoriteContent>?
   public var Contents: List<UserContent>?
+  public var Subscriptions: List<UserSubscriptionTrainer>?
+  public var Users: List<UserSubscriptionTrainer>?
   
   public init(id: String = UUID().uuidString,
       Birthday: Temporal.Date? = nil,
       Email: String? = nil,
       Gender: String? = nil,
       Height: Double? = nil,
-      Price: Double? = nil,
       RegDate: String,
       StripeID: String? = nil,
       UserImage: String? = nil,
@@ -40,14 +40,15 @@ public struct UserProfile: Model {
       Weight: Double? = nil,
       Description: String? = nil,
       Biography: String? = nil,
-      Favorites: List<UserContent>? = [],
-      Contents: List<UserContent>? = []) {
+      Favorites: List<UserFavoriteContent>? = [],
+      Contents: List<UserContent>? = [],
+      Subscriptions: List<UserSubscriptionTrainer>? = [],
+      Users: List<UserSubscriptionTrainer>? = []) {
       self.id = id
       self.Birthday = Birthday
       self.Email = Email
       self.Gender = Gender
       self.Height = Height
-      self.Price = Price
       self.RegDate = RegDate
       self.StripeID = StripeID
       self.UserImage = UserImage
@@ -61,5 +62,7 @@ public struct UserProfile: Model {
       self.Biography = Biography
       self.Favorites = Favorites
       self.Contents = Contents
+      self.Subscriptions = Subscriptions
+      self.Users = Users
   }
 }
