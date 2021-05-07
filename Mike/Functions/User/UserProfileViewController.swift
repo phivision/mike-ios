@@ -46,7 +46,7 @@ class UserProfileViewController: BaseViewController {
         self.mainCollection.backgroundColor = UIColor.white
         self.mainCollection.register(UINib(nibName: "UserProfileTopCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTopCell")
         self.mainCollection.register(UINib(nibName: "UserProfileTrainerListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTrainerListCell")
-        self.mainCollection.register(UINib(nibName: "UserProfileFavoriteListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileFavoriteListCell")
+        self.mainCollection.register(UINib(nibName: "UserProfileFavHorizonListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileFavHorizonListCell")
         self.mainCollection.register(UINib(nibName: "UserProfileHealthKitListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileHealthKitListCell")
         self.mainCollection.register(UINib(nibName: "UserProfileSectionTitleView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView")
     }
@@ -123,7 +123,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
             cell.setModel(model: self.subscriptionList[indexPath.row])
             return cell
         case 2:
-            let cell:UserProfileFavoriteListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavoriteListCell", for: indexPath) as! UserProfileFavoriteListCell
+            let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
             cell.contentView.backgroundColor = UIColor.white
             return cell
         case 3:
@@ -143,7 +143,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 1:
             return CGSize.init(width: 54, height: 54)
         case 2:
-            return CGSize.init(width: kScreenWidth, height: 234)
+            return CGSize.init(width: kScreenWidth, height: 260)
         case 3:
             return CGSize.init(width: 152, height: 210)
         default:
@@ -156,7 +156,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 1:
             return UIEdgeInsets.init(top: 0, left: 25, bottom: 0, right: 25)
         case 2:
-            return UIEdgeInsets.init(top: 0, left: 25, bottom: 0, right: 25)
+            return .zero
         case 3:
             return UIEdgeInsets.init(top: 0, left: 25, bottom: 0, right: 25)
         default:

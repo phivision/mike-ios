@@ -17,6 +17,8 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 	var title : String!
 	var viewCount : Int!
 	var id : String!
+    var createdAt: String!
+    var updatedAt: String!
 
 
 	/**
@@ -33,6 +35,8 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 		title = dictionary["Title"] as? String
 		viewCount = dictionary["ViewCount"] as? Int
 		id = dictionary["id"] as? String
+        createdAt = dictionary["createdAt"] as? String
+        updatedAt = dictionary["updatedAt"] as? String
 	}
 
 	/**
@@ -71,6 +75,12 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 		if id != nil{
 			dictionary["id"] = id
 		}
+        if createdAt != nil {
+            dictionary["createdAt"] = createdAt
+        }
+        if updatedAt != nil {
+            dictionary["updatedAt"] = updatedAt
+        }
 		return dictionary
 	}
 
@@ -90,6 +100,8 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
          title = aDecoder.decodeObject(forKey: "Title") as? String
          viewCount = aDecoder.decodeObject(forKey: "ViewCount") as? Int
          id = aDecoder.decodeObject(forKey: "id") as? String
+        createdAt = aDecoder.decodeObject(forKey: "createdAt") as? String
+        updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
 
 	}
 
@@ -129,6 +141,12 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 		if id != nil{
 			aCoder.encode(id, forKey: "id")
 		}
+        if createdAt != nil {
+            aCoder.encode(createdAt, forKey: "createdAt")
+        }
+        if updatedAt != nil {
+            aCoder.encode(updatedAt, forKey: "updatedAt")
+        }
 
 	}
 

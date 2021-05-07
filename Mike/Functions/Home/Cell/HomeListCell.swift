@@ -44,6 +44,19 @@ class HomeListCell: UITableViewCell {
                 self.avatar.image = UIImage(named: "logo")
             }
         }
+        let inFormatter = DateFormatter()
+        inFormatter.locale = Locale(identifier: "en_US_POSIX")
+        inFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+
+        let outFormatter = DateFormatter()
+        outFormatter.locale = Locale(identifier: "en_US_POSIX")
+        outFormatter.dateFormat = "MM.dd.yy"
+
+        let inStr = "\(model.createdAt ?? "")"
+        let date = inFormatter.date(from: inStr)
+        let outStr = outFormatter.string(from: date ?? Date())
+        self.timeLab.text = "\(outStr)"
+        print(outStr)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

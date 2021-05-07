@@ -34,6 +34,8 @@
 		B63749A72644FA0F00502913 /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B63749A62644FA0F00502913 /* AWSDataStorePlugin */; };
 		B63749A92644FA0F00502913 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B63749A82644FA0F00502913 /* AWSAPIPlugin */; };
 		B63749AC2644FA2D00502913 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = B63749AB2644FA2D00502913 /* SDWebImage */; };
+		B63749E42645820300502913 /* UserProfileFavHorizonListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749E22645820300502913 /* UserProfileFavHorizonListCell.swift */; };
+		B63749E52645820300502913 /* UserProfileFavHorizonListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63749E32645820300502913 /* UserProfileFavHorizonListCell.xib */; };
 		B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262AB2639A3F000A32D5C /* ApiMacro.swift */; };
 		B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262B02639AB7200A32D5C /* VideoViewController.swift */; };
 		B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68262B12639AB7200A32D5C /* VideoViewController.xib */; };
@@ -125,6 +127,8 @@
 		B6374975264447AE00502913 /* UserProfileHealthKitListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileHealthKitListCell.xib; sourceTree = "<group>"; };
 		B637497826444D9F00502913 /* UserProfileTopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTopCell.swift; sourceTree = "<group>"; };
 		B637497926444D9F00502913 /* UserProfileTopCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileTopCell.xib; sourceTree = "<group>"; };
+		B63749E22645820300502913 /* UserProfileFavHorizonListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileFavHorizonListCell.swift; sourceTree = "<group>"; };
+		B63749E32645820300502913 /* UserProfileFavHorizonListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileFavHorizonListCell.xib; sourceTree = "<group>"; };
 		B68262AB2639A3F000A32D5C /* ApiMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiMacro.swift; sourceTree = "<group>"; };
 		B68262B02639AB7200A32D5C /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		B68262B12639AB7200A32D5C /* VideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -244,6 +248,8 @@
 				B6374975264447AE00502913 /* UserProfileHealthKitListCell.xib */,
 				B637497826444D9F00502913 /* UserProfileTopCell.swift */,
 				B637497926444D9F00502913 /* UserProfileTopCell.xib */,
+				B63749E22645820300502913 /* UserProfileFavHorizonListCell.swift */,
+				B63749E32645820300502913 /* UserProfileFavHorizonListCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -627,6 +633,7 @@
 				B682631F26424C6A00A32D5C /* OFL.txt in Resources */,
 				B69103DA26381EC0005F2ACD /* HomeTopColCell.xib in Resources */,
 				B682631726424C6A00A32D5C /* Nunito-Regular.ttf in Resources */,
+				B63749E52645820300502913 /* UserProfileFavHorizonListCell.xib in Resources */,
 				B682631A26424C6A00A32D5C /* Nunito-BoldItalic.ttf in Resources */,
 				B682631C26424C6A00A32D5C /* Nunito-ExtraLight.ttf in Resources */,
 				B6374977264447AE00502913 /* UserProfileHealthKitListCell.xib in Resources */,
@@ -664,6 +671,7 @@
 				C1DEDD9E2637524D00F66A7C /* Backend.swift in Sources */,
 				B68262FE264247B800A32D5C /* UserProfileViewController.swift in Sources */,
 				B682632D264280EE00A32D5C /* DateExtention.swift in Sources */,
+				B63749E42645820300502913 /* UserProfileFavHorizonListCell.swift in Sources */,
 				B68262CC263BC7A200A32D5C /* LoginInfoModel.swift in Sources */,
 				B69103D926381EC0005F2ACD /* HomeInfoColCell.swift in Sources */,
 				B68262BD2639B16100A32D5C /* UIViewExtension.swift in Sources */,
