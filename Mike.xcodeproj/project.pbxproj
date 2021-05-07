@@ -13,14 +13,6 @@
 		661922BAC3E9493399943D1A /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
 		7E856A1F4B6F44F8AA35D746 /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
 		A690E02738114B2F88B979ED /* UserSubscriptionTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */; };
-		B6374845264433C100502913 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = B6374844264433C100502913 /* Amplify */; };
-		B6374847264433C100502913 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B6374846264433C100502913 /* AWSCognitoAuthPlugin */; };
-		B6374849264433C100502913 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B6374848264433C100502913 /* AWSS3StoragePlugin */; };
-		B637484B264433C100502913 /* AWSPluginsCore in Frameworks */ = {isa = PBXBuildFile; productRef = B637484A264433C100502913 /* AWSPluginsCore */; };
-		B637484D264433C100502913 /* AWSPinpointAnalyticsPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B637484C264433C100502913 /* AWSPinpointAnalyticsPlugin */; };
-		B637484F264433C100502913 /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B637484E264433C100502913 /* AWSDataStorePlugin */; };
-		B6374851264433C100502913 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B6374850264433C100502913 /* AWSAPIPlugin */; };
-		B637496626443E5800502913 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = B637496526443E5800502913 /* SDWebImage */; };
 		B637496A264446A800502913 /* UserProfileTrainerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6374968264446A800502913 /* UserProfileTrainerListCell.swift */; };
 		B637496B264446A800502913 /* UserProfileTrainerListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6374969264446A800502913 /* UserProfileTrainerListCell.xib */; };
 		B637496E264446CE00502913 /* UserProfileSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B637496C264446CE00502913 /* UserProfileSectionTitleView.swift */; };
@@ -31,6 +23,17 @@
 		B6374977264447AE00502913 /* UserProfileHealthKitListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6374975264447AE00502913 /* UserProfileHealthKitListCell.xib */; };
 		B637497A26444D9F00502913 /* UserProfileTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B637497826444D9F00502913 /* UserProfileTopCell.swift */; };
 		B637497B26444D9F00502913 /* UserProfileTopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B637497926444D9F00502913 /* UserProfileTopCell.xib */; };
+		B637498F2644F83400502913 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = B637498E2644F83400502913 /* SQLite */; };
+		B63749972644F9CB00502913 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = B63749962644F9CB00502913 /* Starscream */; };
+		B637499A2644F9E000502913 /* AppSyncRealTimeClient in Frameworks */ = {isa = PBXBuildFile; productRef = B63749992644F9E000502913 /* AppSyncRealTimeClient */; };
+		B637499D2644FA0F00502913 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = B637499C2644FA0F00502913 /* Amplify */; };
+		B637499F2644FA0F00502913 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B637499E2644FA0F00502913 /* AWSCognitoAuthPlugin */; };
+		B63749A12644FA0F00502913 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B63749A02644FA0F00502913 /* AWSS3StoragePlugin */; };
+		B63749A32644FA0F00502913 /* AWSPluginsCore in Frameworks */ = {isa = PBXBuildFile; productRef = B63749A22644FA0F00502913 /* AWSPluginsCore */; };
+		B63749A52644FA0F00502913 /* AWSPinpointAnalyticsPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B63749A42644FA0F00502913 /* AWSPinpointAnalyticsPlugin */; };
+		B63749A72644FA0F00502913 /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B63749A62644FA0F00502913 /* AWSDataStorePlugin */; };
+		B63749A92644FA0F00502913 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B63749A82644FA0F00502913 /* AWSAPIPlugin */; };
+		B63749AC2644FA2D00502913 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = B63749AB2644FA2D00502913 /* SDWebImage */; };
 		B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262AB2639A3F000A32D5C /* ApiMacro.swift */; };
 		B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262B02639AB7200A32D5C /* VideoViewController.swift */; };
 		B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68262B12639AB7200A32D5C /* VideoViewController.xib */; };
@@ -201,14 +204,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B637484B264433C100502913 /* AWSPluginsCore in Frameworks */,
-				B6374845264433C100502913 /* Amplify in Frameworks */,
-				B637496626443E5800502913 /* SDWebImage in Frameworks */,
-				B6374851264433C100502913 /* AWSAPIPlugin in Frameworks */,
-				B637484D264433C100502913 /* AWSPinpointAnalyticsPlugin in Frameworks */,
-				B637484F264433C100502913 /* AWSDataStorePlugin in Frameworks */,
-				B6374847264433C100502913 /* AWSCognitoAuthPlugin in Frameworks */,
-				B6374849264433C100502913 /* AWSS3StoragePlugin in Frameworks */,
+				B63749A92644FA0F00502913 /* AWSAPIPlugin in Frameworks */,
+				B637498F2644F83400502913 /* SQLite in Frameworks */,
+				B63749A32644FA0F00502913 /* AWSPluginsCore in Frameworks */,
+				B637499F2644FA0F00502913 /* AWSCognitoAuthPlugin in Frameworks */,
+				B63749A72644FA0F00502913 /* AWSDataStorePlugin in Frameworks */,
+				B637499D2644FA0F00502913 /* Amplify in Frameworks */,
+				B637499A2644F9E000502913 /* AppSyncRealTimeClient in Frameworks */,
+				B63749A52644FA0F00502913 /* AWSPinpointAnalyticsPlugin in Frameworks */,
+				B63749AC2644FA2D00502913 /* SDWebImage in Frameworks */,
+				B63749972644F9CB00502913 /* Starscream in Frameworks */,
+				B63749A12644FA0F00502913 /* AWSS3StoragePlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,14 +553,17 @@
 			);
 			name = Mike;
 			packageProductDependencies = (
-				B6374844264433C100502913 /* Amplify */,
-				B6374846264433C100502913 /* AWSCognitoAuthPlugin */,
-				B6374848264433C100502913 /* AWSS3StoragePlugin */,
-				B637484A264433C100502913 /* AWSPluginsCore */,
-				B637484C264433C100502913 /* AWSPinpointAnalyticsPlugin */,
-				B637484E264433C100502913 /* AWSDataStorePlugin */,
-				B6374850264433C100502913 /* AWSAPIPlugin */,
-				B637496526443E5800502913 /* SDWebImage */,
+				B637498E2644F83400502913 /* SQLite */,
+				B63749962644F9CB00502913 /* Starscream */,
+				B63749992644F9E000502913 /* AppSyncRealTimeClient */,
+				B637499C2644FA0F00502913 /* Amplify */,
+				B637499E2644FA0F00502913 /* AWSCognitoAuthPlugin */,
+				B63749A02644FA0F00502913 /* AWSS3StoragePlugin */,
+				B63749A22644FA0F00502913 /* AWSPluginsCore */,
+				B63749A42644FA0F00502913 /* AWSPinpointAnalyticsPlugin */,
+				B63749A62644FA0F00502913 /* AWSDataStorePlugin */,
+				B63749A82644FA0F00502913 /* AWSAPIPlugin */,
+				B63749AB2644FA2D00502913 /* SDWebImage */,
 			);
 			productName = Mike;
 			productReference = C1DEDD732637460700F66A7C /* Mike.app */;
@@ -584,8 +593,13 @@
 			);
 			mainGroup = C1DEDD6A2637460700F66A7C;
 			packageReferences = (
-				B6374843264433C100502913 /* XCRemoteSwiftPackageReference "amplify-ios" */,
-				B637496426443E5800502913 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				B637498D2644F83400502913 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				B63749932644F8C500502913 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */,
+				B63749942644F9B300502913 /* XCRemoteSwiftPackageReference "swift-nio-zlib-support" */,
+				B63749952644F9CB00502913 /* XCRemoteSwiftPackageReference "Starscream" */,
+				B63749982644F9E000502913 /* XCRemoteSwiftPackageReference "aws-appsync-realtime-client-ios" */,
+				B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */,
+				B63749AA2644FA2D00502913 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = C1DEDD742637460700F66A7C /* Products */;
 			projectDirPath = "";
@@ -888,63 +902,118 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B6374843264433C100502913 /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
+		B637498D2644F83400502913 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitee.com/hunyumiluo/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.12.2;
+			};
+		};
+		B63749932644F8C500502913 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitee.com/mirrors_aws-amplify/aws-sdk-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.24.0;
+			};
+		};
+		B63749942644F9B300502913 /* XCRemoteSwiftPackageReference "swift-nio-zlib-support" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitee.com/Zither_Chen/swift-nio-zlib-support.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		B63749952644F9CB00502913 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitee.com/apollo_graphql/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
+		B63749982644F9E000502913 /* XCRemoteSwiftPackageReference "aws-appsync-realtime-client-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitee.com/mirrors_aws-amplify/aws-appsync-realtime-client-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.4;
+			};
+		};
+		B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://gitee.com/mirrors_aws-amplify/amplify-ios.git";
 			requirement = {
-				kind = exactVersion;
-				version = 1.9.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.0;
 			};
 		};
-		B637496426443E5800502913 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+		B63749AA2644FA2D00502913 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://gitee.com/foxvail/SDWebImage.git";
 			requirement = {
-				kind = exactVersion;
-				version = 5.11.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B6374844264433C100502913 /* Amplify */ = {
+		B637498E2644F83400502913 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B6374843264433C100502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B637498D2644F83400502913 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+		B63749962644F9CB00502913 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B63749952644F9CB00502913 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+		B63749992644F9E000502913 /* AppSyncRealTimeClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B63749982644F9E000502913 /* XCRemoteSwiftPackageReference "aws-appsync-realtime-client-ios" */;
+			productName = AppSyncRealTimeClient;
+		};
+		B637499C2644FA0F00502913 /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = Amplify;
 		};
-		B6374846264433C100502913 /* AWSCognitoAuthPlugin */ = {
+		B637499E2644FA0F00502913 /* AWSCognitoAuthPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B6374843264433C100502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSCognitoAuthPlugin;
 		};
-		B6374848264433C100502913 /* AWSS3StoragePlugin */ = {
+		B63749A02644FA0F00502913 /* AWSS3StoragePlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B6374843264433C100502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSS3StoragePlugin;
 		};
-		B637484A264433C100502913 /* AWSPluginsCore */ = {
+		B63749A22644FA0F00502913 /* AWSPluginsCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B6374843264433C100502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSPluginsCore;
 		};
-		B637484C264433C100502913 /* AWSPinpointAnalyticsPlugin */ = {
+		B63749A42644FA0F00502913 /* AWSPinpointAnalyticsPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B6374843264433C100502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSPinpointAnalyticsPlugin;
 		};
-		B637484E264433C100502913 /* AWSDataStorePlugin */ = {
+		B63749A62644FA0F00502913 /* AWSDataStorePlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B6374843264433C100502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSDataStorePlugin;
 		};
-		B6374850264433C100502913 /* AWSAPIPlugin */ = {
+		B63749A82644FA0F00502913 /* AWSAPIPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B6374843264433C100502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			package = B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = AWSAPIPlugin;
 		};
-		B637496526443E5800502913 /* SDWebImage */ = {
+		B63749AB2644FA2D00502913 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B637496426443E5800502913 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			package = B63749AA2644FA2D00502913 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
