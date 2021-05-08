@@ -42,6 +42,8 @@
 		B63749EF264596EA00502913 /* UserCenterContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749EA264596EA00502913 /* UserCenterContent.swift */; };
 		B63749F0264596EA00502913 /* UserCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749EB264596EA00502913 /* UserCenterModel.swift */; };
 		B63749F2264694C800502913 /* TimeFormatUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749F1264694C800502913 /* TimeFormatUtils.swift */; };
+		B63749F526469C1700502913 /* UserProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749F326469C1700502913 /* UserProfileSettingViewController.swift */; };
+		B63749F626469C1700502913 /* UserProfileSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63749F426469C1700502913 /* UserProfileSettingViewController.xib */; };
 		B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262AB2639A3F000A32D5C /* ApiMacro.swift */; };
 		B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262B02639AB7200A32D5C /* VideoViewController.swift */; };
 		B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68262B12639AB7200A32D5C /* VideoViewController.xib */; };
@@ -141,6 +143,8 @@
 		B63749EA264596EA00502913 /* UserCenterContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCenterContent.swift; sourceTree = "<group>"; };
 		B63749EB264596EA00502913 /* UserCenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCenterModel.swift; sourceTree = "<group>"; };
 		B63749F1264694C800502913 /* TimeFormatUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatUtils.swift; sourceTree = "<group>"; };
+		B63749F326469C1700502913 /* UserProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSettingViewController.swift; sourceTree = "<group>"; };
+		B63749F426469C1700502913 /* UserProfileSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileSettingViewController.xib; sourceTree = "<group>"; };
 		B68262AB2639A3F000A32D5C /* ApiMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiMacro.swift; sourceTree = "<group>"; };
 		B68262B02639AB7200A32D5C /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		B68262B12639AB7200A32D5C /* VideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -387,6 +391,8 @@
 				B63749672644467800502913 /* Cell */,
 				B68262FC264247B800A32D5C /* UserProfileViewController.swift */,
 				B68262FD264247B800A32D5C /* UserProfileViewController.xib */,
+				B63749F326469C1700502913 /* UserProfileSettingViewController.swift */,
+				B63749F426469C1700502913 /* UserProfileSettingViewController.xib */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -666,6 +672,7 @@
 				B682631326424C6A00A32D5C /* Nunito-ExtraBoldItalic.ttf in Resources */,
 				B63749732644479C00502913 /* UserProfileFavoriteListCell.xib in Resources */,
 				B682631D26424C6A00A32D5C /* Nunito-SemiBoldItalic.ttf in Resources */,
+				B63749F626469C1700502913 /* UserProfileSettingViewController.xib in Resources */,
 				B69103D126381EC0005F2ACD /* HomeViewController.xib in Resources */,
 				B68262FF264247B800A32D5C /* UserProfileViewController.xib in Resources */,
 				B637496F264446CE00502913 /* UserProfileSectionTitleView.xib in Resources */,
@@ -741,6 +748,7 @@
 				B68263012642484B00A32D5C /* ColorConst.swift in Sources */,
 				B69103D626381EC0005F2ACD /* HomeTopColCell.swift in Sources */,
 				B69103D026381EC0005F2ACD /* Global.swift in Sources */,
+				B63749F526469C1700502913 /* UserProfileSettingViewController.swift in Sources */,
 				B637497A26444D9F00502913 /* UserProfileTopCell.swift in Sources */,
 				B682632626426FDB00A32D5C /* HomeListCell.swift in Sources */,
 				2D300B2B0DB846128C62C062 /* UserFavoriteContent.swift in Sources */,
