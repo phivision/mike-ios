@@ -41,6 +41,7 @@
 		B63749EE264596EA00502913 /* UserCenterTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749E9264596EA00502913 /* UserCenterTrainer.swift */; };
 		B63749EF264596EA00502913 /* UserCenterContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749EA264596EA00502913 /* UserCenterContent.swift */; };
 		B63749F0264596EA00502913 /* UserCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749EB264596EA00502913 /* UserCenterModel.swift */; };
+		B63749F2264694C800502913 /* TimeFormatUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749F1264694C800502913 /* TimeFormatUtils.swift */; };
 		B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262AB2639A3F000A32D5C /* ApiMacro.swift */; };
 		B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262B02639AB7200A32D5C /* VideoViewController.swift */; };
 		B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68262B12639AB7200A32D5C /* VideoViewController.xib */; };
@@ -139,6 +140,7 @@
 		B63749E9264596EA00502913 /* UserCenterTrainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCenterTrainer.swift; sourceTree = "<group>"; };
 		B63749EA264596EA00502913 /* UserCenterContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCenterContent.swift; sourceTree = "<group>"; };
 		B63749EB264596EA00502913 /* UserCenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCenterModel.swift; sourceTree = "<group>"; };
+		B63749F1264694C800502913 /* TimeFormatUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatUtils.swift; sourceTree = "<group>"; };
 		B68262AB2639A3F000A32D5C /* ApiMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiMacro.swift; sourceTree = "<group>"; };
 		B68262B02639AB7200A32D5C /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		B68262B12639AB7200A32D5C /* VideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				B68262B92639B16100A32D5C /* StringUtils.swift */,
 				B68262BA2639B16100A32D5C /* UIViewExtension.swift */,
 				B682632C264280EE00A32D5C /* DateExtention.swift */,
+				B63749F1264694C800502913 /* TimeFormatUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -722,6 +725,7 @@
 				B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */,
 				5E9EE731278E41A6BFDCE28A /* AmplifyModels.swift in Sources */,
 				B63749ED264596EA00502913 /* UserCenterFavorite.swift in Sources */,
+				B63749F2264694C800502913 /* TimeFormatUtils.swift in Sources */,
 				B68262F2263C4F4000A32D5C /* UserSubscriptionTrainerListContent.swift in Sources */,
 				B63749F0264596EA00502913 /* UserCenterModel.swift in Sources */,
 				661922BAC3E9493399943D1A /* UserContent.swift in Sources */,

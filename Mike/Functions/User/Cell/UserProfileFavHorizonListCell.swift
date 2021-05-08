@@ -9,6 +9,10 @@ import UIKit
 
 class UserProfileFavHorizonListCell: UICollectionViewCell {
     @IBOutlet weak var mainCollection:UICollectionView!
+    lazy var favList:Array<UserCenterContent> = {
+        var favList:Array<UserCenterContent> = Array<UserCenterContent>()
+        return favList
+    }()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,6 +28,11 @@ class UserProfileFavHorizonListCell: UICollectionViewCell {
         self.mainCollection.backgroundColor = UIColor.white
         self.mainCollection.register(UINib(nibName: "UserProfileFavoriteListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileFavoriteListCell")
     }
+    func setFavList(fList:Array<UserCenterContent>){
+        self.favList.removeAll()
+        self.favList.append(contentsOf: fList)
+        self.mainCollection.reloadData()
+    }
 }
 extension UserProfileFavHorizonListCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     //MARK: - collectionViewDelegate
@@ -31,11 +40,12 @@ extension UserProfileFavHorizonListCell:UICollectionViewDelegate,UICollectionVie
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return self.favList.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:UserProfileFavoriteListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavoriteListCell", for: indexPath) as! UserProfileFavoriteListCell
         cell.contentView.backgroundColor = UIColor.white
+        cell.setFavModel(favModel: self.favList[indexPath.row])
         return cell
     }
     //MARK: - layout

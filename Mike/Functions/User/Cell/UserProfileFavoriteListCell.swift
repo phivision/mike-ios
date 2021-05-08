@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Amplify
 class UserProfileFavoriteListCell: UICollectionViewCell {
     @IBOutlet weak var bgImg:UIImageView!
     @IBOutlet weak var bigImg:UIImageView!
@@ -20,6 +20,22 @@ class UserProfileFavoriteListCell: UICollectionViewCell {
         self.bgImg.layer.shadowColor = HexRGBAlpha(0xff7088D2,0.2).cgColor
         self.bgImg.layer.shadowOffset = CGSize(width: 5, height: 8)
         self.bgImg.layer.shadowOpacity = 0.5
+        
+        self.bigImg.layer.cornerRadius = 20
+        self.bigImg.clipsToBounds = true
     }
-
+    func setFavModel(favModel:UserCenterContent){
+        self.titleLab.text = "\(favModel.title ?? "")"
+        self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: favModel.createdAt))"
+        Amplify.Storage.getURL(key: favModel.thumbnail) { event in
+            switch event {
+            case let .success(url):
+                print("Completed: \(url)")
+                self.bigImg.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+            case let .failure(storageError):
+                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+                self.bigImg.image = UIImage(named: "logo")
+            }
+        }
+    }
 }

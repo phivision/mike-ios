@@ -15,6 +15,10 @@ class UserProfileViewController: BaseViewController {
         var subscriptionList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
         return subscriptionList
     }()
+    lazy var favList:Array<UserCenterContent> = {
+        var favList:Array<UserCenterContent> = Array<UserCenterContent>()
+        return favList
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configCollectionView()
@@ -35,6 +39,11 @@ class UserProfileViewController: BaseViewController {
             self.subscriptionList.removeAll()
             for item:UserCenterItem in list{
                 self.subscriptionList.append(item.trainer)
+            }
+            let flist:Array<UserCenterItem> = model.favorites.items
+            self.favList.removeAll()
+            for fitem:UserCenterItem in flist{
+                self.favList.append(fitem.content)
             }
             DispatchQueue.main.async {
                 self.mainCollection.reloadData()
@@ -138,6 +147,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 2:
             let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
             cell.contentView.backgroundColor = UIColor.white
+            cell.setFavList(fList: self.favList)
             return cell
         case 3:
             let cell:UserProfileHealthKitListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileHealthKitListCell", for: indexPath) as! UserProfileHealthKitListCell

@@ -34,6 +34,7 @@ class HomeListCell: UITableViewCell {
     
     func setItemModel(model:UserSubscriptionTrainerListItem,sectionModel:UserSubscriptionTrainerListTrainer){
         self.userName.text = "\(sectionModel.firstName ?? "") \(sectionModel.lastName ?? "")"
+        self.descText.text = "\(model.title ?? "")"
         Amplify.Storage.getURL(key: sectionModel.userImage) { event in
             switch event {
             case let .success(url):
@@ -44,19 +45,21 @@ class HomeListCell: UITableViewCell {
                 self.avatar.image = UIImage(named: "logo")
             }
         }
-        let inFormatter = DateFormatter()
-        inFormatter.locale = Locale(identifier: "en_US_POSIX")
-        inFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-
-        let outFormatter = DateFormatter()
-        outFormatter.locale = Locale(identifier: "en_US_POSIX")
-        outFormatter.dateFormat = "MM.dd.yy"
-
-        let inStr = "\(model.createdAt ?? "")"
-        let date = inFormatter.date(from: inStr)
-        let outStr = outFormatter.string(from: date ?? Date())
-        self.timeLab.text = "\(outStr)"
-        print(outStr)
+        if StringUtils.isBlank(value: model.thumbnail) {
+            self.contentImg.image = UIImage(named: "logo")
+        }else{
+            Amplify.Storage.getURL(key: model.thumbnail) { event in
+                switch event {
+                case let .success(url):
+                    print("Completed: \(url)")
+                    self.contentImg.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                case let .failure(storageError):
+                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+                    self.contentImg.image = UIImage(named: "logo")
+                }
+            }
+        }
+        self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: model.createdAt))"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
