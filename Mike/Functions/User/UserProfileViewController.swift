@@ -7,6 +7,7 @@
 
 import UIKit
 import Amplify
+import HealthKit
 
 class UserProfileViewController: BaseViewController {
     @IBOutlet weak var mainCollection:UICollectionView!
@@ -19,9 +20,16 @@ class UserProfileViewController: BaseViewController {
         var favList:Array<UserCenterContent> = Array<UserCenterContent>()
         return favList
     }()
+    let healthKitStore:HKHealthStore = HKHealthStore()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configCollectionView()
+        HealthKitTools.sharedTools.authorizeHealthKit { success, error in
+            if success == true{
+                self.getInfo()
+                self.getHeight()
+            }
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -229,4 +237,45 @@ extension UserProfileViewController:UserProfileTopCellDelegate{
             self.present(vc, animated: true, completion: nil)
         }
     }
+}
+extension UserProfileViewController{
+    func getInfo(){
+            let healthKitStore = HKHealthStore()
+            do {
+                let unwrappedBiologicalSex = try  healthKitStore.biologicalSex()
+                switch unwrappedBiologicalSex.biologicalSex {
+                case .notSet:
+                     print("Gender:Not set")
+                    break
+                case .female:
+                    print("Gender:female")
+                    break
+                case .male:
+                    print("Gender:male")
+                    break
+                default:
+                   print("Gender:other")
+                    break
+                }
+                
+                let birthDate = try  healthKitStore.dateOfBirthComponents()
+                print("birthday：\(birthDate.year!)-\(birthDate.month!)-\(birthDate.day!)")
+            } catch let error {
+                print("No permission to fetch the data\(error)")
+            }
+        }
+        func getHeight(){
+            HealthKitTools.sharedTools.getHeight { (success, height, error) in
+                print("Here is the height：\(height) m")
+            }
+            HealthKitTools.sharedTools.getBodyMass { success, weight, error in
+                print("Here's the weight：\(weight) kg")
+            }
+            HealthKitTools.sharedTools.getWater { success, water, error in
+                print("Here's the water：\(water) ml")
+            }
+            HealthKitTools.sharedTools.getStepCount { success, stepCount, error in
+                print("Here are the steps for today：\(stepCount) steps")
+            }
+        }
 }

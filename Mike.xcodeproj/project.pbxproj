@@ -44,6 +44,8 @@
 		B63749F2264694C800502913 /* TimeFormatUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749F1264694C800502913 /* TimeFormatUtils.swift */; };
 		B63749F526469C1700502913 /* UserProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749F326469C1700502913 /* UserProfileSettingViewController.swift */; };
 		B63749F626469C1700502913 /* UserProfileSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63749F426469C1700502913 /* UserProfileSettingViewController.xib */; };
+		B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B641F8072646AD1000FE8C56 /* HealthKit.framework */; };
+		B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */; };
 		B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262AB2639A3F000A32D5C /* ApiMacro.swift */; };
 		B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262B02639AB7200A32D5C /* VideoViewController.swift */; };
 		B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68262B12639AB7200A32D5C /* VideoViewController.xib */; };
@@ -145,6 +147,9 @@
 		B63749F1264694C800502913 /* TimeFormatUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatUtils.swift; sourceTree = "<group>"; };
 		B63749F326469C1700502913 /* UserProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSettingViewController.swift; sourceTree = "<group>"; };
 		B63749F426469C1700502913 /* UserProfileSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileSettingViewController.xib; sourceTree = "<group>"; };
+		B641F8062646AD0F00FE8C56 /* Mike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mike.entitlements; sourceTree = "<group>"; };
+		B641F8072646AD1000FE8C56 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTools.swift; sourceTree = "<group>"; };
 		B68262AB2639A3F000A32D5C /* ApiMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiMacro.swift; sourceTree = "<group>"; };
 		B68262B02639AB7200A32D5C /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		B68262B12639AB7200A32D5C /* VideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -233,6 +238,7 @@
 				B637499A2644F9E000502913 /* AppSyncRealTimeClient in Frameworks */,
 				B63749A52644FA0F00502913 /* AWSPinpointAnalyticsPlugin in Frameworks */,
 				B63749AC2644FA2D00502913 /* SDWebImage in Frameworks */,
+				B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */,
 				B63749972644F9CB00502913 /* Starscream in Frameworks */,
 				B63749A12644FA0F00502913 /* AWSS3StoragePlugin in Frameworks */,
 			);
@@ -308,6 +314,7 @@
 				B68262BA2639B16100A32D5C /* UIViewExtension.swift */,
 				B682632C264280EE00A32D5C /* DateExtention.swift */,
 				B63749F1264694C800502913 /* TimeFormatUtils.swift */,
+				B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -505,6 +512,7 @@
 		B69103EE26385732005F2ACD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B641F8072646AD1000FE8C56 /* HealthKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -534,6 +542,7 @@
 		C1DEDD752637460700F66A7C /* Mike */ = {
 			isa = PBXGroup;
 			children = (
+				B641F8062646AD0F00FE8C56 /* Mike.entitlements */,
 				B682630226424C5B00A32D5C /* Fonts */,
 				B68262E3263C05BD00A32D5C /* Base */,
 				B68262D7263BFFC000A32D5C /* ThirdPartSDK */,
@@ -719,6 +728,7 @@
 				B68262D2263BC7A900A32D5C /* ArchiveTool.swift in Sources */,
 				B68262D3263BC7A900A32D5C /* LoginTools.swift in Sources */,
 				B68262B62639B05600A32D5C /* ZZPlayerView.swift in Sources */,
+				B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */,
 				B682632B2642729200A32D5C /* HomeListViewController.swift in Sources */,
 				B68262EA263C4AAD00A32D5C /* UserContentListModel.swift in Sources */,
 				B68262F1263C4F4000A32D5C /* UserSubscriptionTrainerListItem.swift in Sources */,
@@ -885,6 +895,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = DD77NQH849;
@@ -908,6 +919,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = DD77NQH849;
