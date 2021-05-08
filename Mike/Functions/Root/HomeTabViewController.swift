@@ -18,13 +18,14 @@ class HomeTabViewController:UITabBarController{
     
     func addChildControllers() {
         self.viewControllers = [
-            addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H")),
-            addChildVC(childVC: UserProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"))
+            addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
+            addChildVC(childVC: UserProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
         ];
     }
     
-    func addChildVC(childVC:BaseViewController,title:String?,imageNormal:UIImage?,imageSelect:UIImage?) -> UINavigationController{
+    func addChildVC(childVC:BaseViewController,title:String?,imageNormal:UIImage?,imageSelect:UIImage?,showNavBar:Bool) -> UINavigationController{
         let navVC = UINavigationController(rootViewController: childVC)
+        navVC.isNavigationBarHidden = !showNavBar
         navVC.tabBarItem.title = title
         navVC.tabBarItem.image = imageNormal
         navVC.tabBarItem.selectedImage = imageSelect?.withRenderingMode(.alwaysOriginal)

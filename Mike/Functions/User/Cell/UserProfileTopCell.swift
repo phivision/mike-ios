@@ -7,11 +7,15 @@
 
 import UIKit
 import Amplify
+@objc protocol UserProfileTopCellDelegate {
+    @objc optional func settingBtnClicked()
+}
 class UserProfileTopCell: UICollectionViewCell {
     @IBOutlet weak var contentBg:UIImageView!
     @IBOutlet weak var avatar:UIImageView!
     @IBOutlet weak var userName:UILabel!
     @IBOutlet weak var userDesc:UILabel!
+    weak var delegate:UserProfileTopCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
     
@@ -36,5 +40,7 @@ class UserProfileTopCell: UICollectionViewCell {
         self.userName.text = "\(LoginTools.sharedTools.userInfo().firstName ?? "") \(LoginTools.sharedTools.userInfo().lastName ?? "")"
         self.userDesc.text = "\(LoginTools.sharedTools.userInfo().descriptionField ?? "")"
     }
-
+    @IBAction func settingBtnPressed(){
+        self.delegate?.settingBtnClicked?()
+    }
 }

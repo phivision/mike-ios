@@ -8,13 +8,32 @@
 import UIKit
 
 class UserProfileSettingViewController: BaseViewController {
-
+    @IBOutlet weak var signOutBtn:UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        self.configView()
     }
-
+    func configView(){
+        self.signOutBtn.layer.cornerRadius = 20
+        self.signOutBtn.clipsToBounds = true
+    }
+    @IBAction func dismissVC(){
+        self.dismiss(animated: true, completion: nil)
+    }
+    @IBAction func signOut(){
+        Backend.shared.signOut {
+            LoginTools.sharedTools.removeUserInfo()
+            DispatchQueue.main.async {
+                let loginVC:LoginViewController = LoginViewController()
+                let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
+                navVC.isNavigationBarHidden = true
+                self.changeRootController(controller: navVC)
+            }
+        } fail: {
+            
+        }
+    }
 
     /*
     // MARK: - Navigation

@@ -45,6 +45,9 @@
                             <constraint firstAttribute="height" constant="44" id="LYe-i4-Xmq"/>
                         </constraints>
                         <state key="normal" image="icon_setting"/>
+                        <connections>
+                            <action selector="settingBtnPressed" destination="gTV-IL-0wX" eventType="touchUpInside" id="lXr-oW-kNb"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6f-g6-N2K">
                         <rect key="frame" x="28" y="225" width="54" height="27.5"/>

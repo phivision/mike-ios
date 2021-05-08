@@ -138,6 +138,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         switch indexPath.section {
         case 0:
             let cell:UserProfileTopCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileTopCell", for: indexPath) as! UserProfileTopCell
+            cell.delegate = self
             return cell
         case 1:
             let cell:UserProfileTrainerListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileTrainerListCell", for: indexPath) as! UserProfileTrainerListCell
@@ -218,5 +219,14 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         label.text = text
         label.sizeToFit()
         return label.frame.height
+    }
+}
+extension UserProfileViewController:UserProfileTopCellDelegate{
+    func settingBtnClicked() {
+        let vc:UserProfileSettingViewController = UserProfileSettingViewController()
+//        nav.modalPresentationStyle = .fullScreen
+        DispatchQueue.main.async {
+            self.present(vc, animated: true, completion: nil)
+        }
     }
 }

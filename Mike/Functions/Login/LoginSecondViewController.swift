@@ -58,8 +58,7 @@ class LoginSecondViewController: BaseViewController {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 let homeVC:HomeTabViewController = HomeTabViewController()
-                let navVC:UINavigationController = UINavigationController(rootViewController: homeVC)
-                self.changeRootController(controller: navVC)
+                self.changeRootController(controller: homeVC)
             }
         } fail: { error in
             DispatchQueue.main.async {
