@@ -46,6 +46,7 @@
 		B63749F626469C1700502913 /* UserProfileSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63749F426469C1700502913 /* UserProfileSettingViewController.xib */; };
 		B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B641F8072646AD1000FE8C56 /* HealthKit.framework */; };
 		B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */; };
+		B67716072647DE3C0035A50C /* UserMatricsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716062647DE3C0035A50C /* UserMatricsListModel.swift */; };
 		B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262AB2639A3F000A32D5C /* ApiMacro.swift */; };
 		B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262B02639AB7200A32D5C /* VideoViewController.swift */; };
 		B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68262B12639AB7200A32D5C /* VideoViewController.xib */; };
@@ -150,6 +151,7 @@
 		B641F8062646AD0F00FE8C56 /* Mike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mike.entitlements; sourceTree = "<group>"; };
 		B641F8072646AD1000FE8C56 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTools.swift; sourceTree = "<group>"; };
+		B67716062647DE3C0035A50C /* UserMatricsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMatricsListModel.swift; sourceTree = "<group>"; };
 		B68262AB2639A3F000A32D5C /* ApiMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiMacro.swift; sourceTree = "<group>"; };
 		B68262B02639AB7200A32D5C /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		B68262B12639AB7200A32D5C /* VideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 		B63749E6264596DB00502913 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B67716062647DE3C0035A50C /* UserMatricsListModel.swift */,
 				B63749EA264596EA00502913 /* UserCenterContent.swift */,
 				B63749E8264596EA00502913 /* UserCenterFavorite.swift */,
 				B63749E7264596EA00502913 /* UserCenterItem.swift */,
@@ -765,6 +768,7 @@
 				C7AE4A5E865D4D0A92465D35 /* UserFavoriteContent+Schema.swift in Sources */,
 				B68262E7263C088900A32D5C /* ToastHUD.swift in Sources */,
 				A690E02738114B2F88B979ED /* UserSubscriptionTrainer.swift in Sources */,
+				B67716072647DE3C0035A50C /* UserMatricsListModel.swift in Sources */,
 				B63749EE264596EA00502913 /* UserCenterTrainer.swift in Sources */,
 				E580130BA74747999F57955C /* UserSubscriptionTrainer+Schema.swift in Sources */,
 				B68262F3263C4F4000A32D5C /* UserSubscriptionTrainerListTrainer.swift in Sources */,

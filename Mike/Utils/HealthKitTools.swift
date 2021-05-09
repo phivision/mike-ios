@@ -22,7 +22,7 @@ class HealthKitTools: NSObject {
             HKObjectType.characteristicType(forIdentifier: HKCharacteristicTypeIdentifier.bloodType) as Any,
             HKObjectType.characteristicType(forIdentifier: HKCharacteristicTypeIdentifier.biologicalSex) as Any,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.bodyMass) as Any,
-            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.height) as Any,
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.activeEnergyBurned) as Any,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount) as Any,
             HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater) as Any,
             HKObjectType.workoutType()
@@ -55,14 +55,14 @@ class HealthKitTools: NSObject {
             }
         };
     }
-    //获取身高
-    func getHeight(completion: ((_ success:Bool,_ height:Double, _ error:NSError?) -> Void)!){
+    //获取活动能量
+    func getCalories(completion: ((_ success:Bool,_ height:Double, _ error:NSError?) -> Void)!){
         //出事话一个HKSampleSortIdentifierEndDate为key的降序，这样会得到一个用户存储在health sore中的最新的的体重取样
         let sort:NSSortDescriptor = NSSortDescriptor.init(key: HKSampleSortIdentifierEndDate, ascending: false)
-        let query =  HKSampleQuery.init(sampleType: HKSampleType.quantityType(forIdentifier: .height)!, predicate: nil, limit: 1, sortDescriptors: [sort], resultsHandler: { (query, results, error) in
+        let query =  HKSampleQuery.init(sampleType: HKSampleType.quantityType(forIdentifier: .activeEnergyBurned)!, predicate: nil, limit: 1, sortDescriptors: [sort], resultsHandler: { (query, results, error) in
             if(results?.count ?? 0 > 0){
                 let sameple = results?[0] as! HKQuantitySample
-                let height = sameple.quantity.doubleValue(for: HKUnit.meter())
+                let height = sameple.quantity.doubleValue(for: HKUnit.init(from: "kcal"))
                 completion(true,height,nil)
             }else{
                 completion(false,0,error as NSError?)

@@ -21,16 +21,23 @@ class UserProfileViewController: BaseViewController {
         return favList
     }()
     let healthKitStore:HKHealthStore = HKHealthStore()
+    lazy var metricsList:Array<UserMatricsListModel> = {
+        var metricsList:Array<UserMatricsListModel> = Array<UserMatricsListModel>()
+        return metricsList
+    }()
+//    var caloriesValue:String = ""
+//    var weightValue:String = ""
+//    var waterValue:String = ""
+//    var stepsValue:String = ""
+//    var caloriesUpdateTimeValue:String = ""
+//    var weightUpdateTimeValue:String = ""
+//    var waterUpdateTimeValue:String = ""
+//    var stepsUpdateTimeValue:String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configCollectionView()
-        HealthKitTools.sharedTools.authorizeHealthKit { success, error in
-            if success == true{
-                self.getInfo()
-                self.getHeight()
-            }
-        }
         // Do any additional setup after loading the view.
+        self.configMetricsList()
+        self.configCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +74,38 @@ class UserProfileViewController: BaseViewController {
 //                self.mainCollection.reloadData()
 //            }
 //        }
+    }
+    func configMetricsList(){
+        for i in 0..<4 {
+            let model:UserMatricsListModel = UserMatricsListModel(fromDictionary: [:])
+            switch i {
+            case 0:
+                model.type = HealthType.calories
+                model.title = "CALORIES"
+                model.unit = "kcal"
+            case 1:
+                model.type = HealthType.weight
+                model.title = "WEIGHT"
+                model.unit = "kg"
+            case 2:
+                model.type = HealthType.water
+                model.title = "WATER"
+                model.unit = "ml"
+            case 3:
+                model.type = HealthType.steps
+                model.title = "STEPS"
+            default:
+                model.type = HealthType.calories
+                model.title = "CALORIES"
+                model.unit = "kcal"
+            }
+            self.metricsList.append(model)
+        }
+        HealthKitTools.sharedTools.authorizeHealthKit { success, error in
+            if success == true{
+                self.getHealthInfo()
+            }
+        }
     }
     func configCollectionView(){
         let flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -106,7 +145,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 2:
             return 1
         case 3:
-            return 2
+            return self.metricsList.count
         default:
             return 0
         }
@@ -161,6 +200,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 3:
             let cell:UserProfileHealthKitListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileHealthKitListCell", for: indexPath) as! UserProfileHealthKitListCell
             cell.contentView.backgroundColor = UIColor.white
+            cell.setModel(model: self.metricsList[indexPath.row])
             return cell
         default:
             return UICollectionViewCell()
@@ -177,7 +217,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 2:
             return CGSize.init(width: kScreenWidth, height: 260)
         case 3:
-            return CGSize.init(width: 152, height: 210)
+            return CGSize.init(width: (kScreenWidth-60)/2, height: ((kScreenWidth-60)/2)*210/152)
         default:
             return .zero
         }
@@ -198,6 +238,8 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat{
         switch section {
+        case 3:
+            return 10
         default:
             return 0
         }
@@ -205,6 +247,8 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat{
         switch section {
+        case 3:
+            return 10
         default:
             return 0
         }
@@ -264,18 +308,42 @@ extension UserProfileViewController{
                 print("No permission to fetch the data\(error)")
             }
         }
-        func getHeight(){
-            HealthKitTools.sharedTools.getHeight { (success, height, error) in
-                print("Here is the height：\(height) m")
+        func getHealthInfo(){
+            HealthKitTools.sharedTools.getCalories { (success, energy, error) in
+                print("Here is the energy：\(energy) kcal")
+                let model = self.metricsList[0]
+                model.contentValue = "\(energy)"
+                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
+                DispatchQueue.main.async {
+                    self.mainCollection.reloadData()
+                }
             }
             HealthKitTools.sharedTools.getBodyMass { success, weight, error in
                 print("Here's the weight：\(weight) kg")
+                let model = self.metricsList[1]
+                model.contentValue = "\(weight)"
+                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
+                DispatchQueue.main.async {
+                    self.mainCollection.reloadData()
+                }
             }
             HealthKitTools.sharedTools.getWater { success, water, error in
                 print("Here's the water：\(water) ml")
+                let model = self.metricsList[2]
+                model.contentValue = "\(water)"
+                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
+                DispatchQueue.main.async {
+                    self.mainCollection.reloadData()
+                }
             }
             HealthKitTools.sharedTools.getStepCount { success, stepCount, error in
                 print("Here are the steps for today：\(stepCount) steps")
+                let model = self.metricsList[3]
+                model.contentValue = "\(stepCount)"
+                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
+                DispatchQueue.main.async {
+                    self.mainCollection.reloadData()
+                }
             }
         }
 }
