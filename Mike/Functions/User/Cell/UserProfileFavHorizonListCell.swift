@@ -6,9 +6,12 @@
 //
 
 import UIKit
-
+@objc protocol UserProfileFavHorizonListCellDelegate{
+    @objc optional func userContentClicked(model:UserCenterContent)
+}
 class UserProfileFavHorizonListCell: UICollectionViewCell {
     @IBOutlet weak var mainCollection:UICollectionView!
+    weak var delegate:UserProfileFavHorizonListCellDelegate?
     lazy var favList:Array<UserCenterContent> = {
         var favList:Array<UserCenterContent> = Array<UserCenterContent>()
         return favList
@@ -72,6 +75,7 @@ extension UserProfileFavHorizonListCell:UICollectionViewDelegate,UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let model:UserCenterContent = self.favList[indexPath.row]
+        self.delegate?.userContentClicked?(model: model)
     }
 }

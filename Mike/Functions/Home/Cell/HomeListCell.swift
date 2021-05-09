@@ -34,7 +34,7 @@ class HomeListCell: UITableViewCell {
     
     func setItemModel(model:UserSubscriptionTrainerListItem,sectionModel:UserSubscriptionTrainerListTrainer){
         self.userName.text = "\(sectionModel.firstName ?? "") \(sectionModel.lastName ?? "")"
-        self.descText.text = "\(model.title ?? "")"
+        self.descText.text = "\(model.descriptionField ?? "")"
         Amplify.Storage.getURL(key: sectionModel.userImage) { event in
             switch event {
             case let .success(url):

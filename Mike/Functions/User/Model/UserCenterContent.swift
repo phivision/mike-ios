@@ -7,17 +7,17 @@ import Foundation
 
 class UserCenterContent : NSObject, NSCoding{
 
-	var nextToken : AnyObject!
+	var nextToken : String?
 	var contentName : String!
 	var descriptionField : String!
 	var isDemo : Bool!
 	var length : Float!
 	var level : Int!
-	var preview : AnyObject!
-	var segments : AnyObject!
+	var preview : String?
+	var segments : String?
 	var thumbnail : String!
 	var title : String!
-	var viewCount : AnyObject!
+	var viewCount : Int?
 	var createdAt : String!
 	var id : String!
 	var owner : String!
@@ -28,17 +28,17 @@ class UserCenterContent : NSObject, NSCoding{
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: [String:Any]){
-		nextToken = dictionary["nextToken"] as? AnyObject
+		nextToken = dictionary["nextToken"] as? String
 		contentName = dictionary["ContentName"] as? String
 		descriptionField = dictionary["Description"] as? String
 		isDemo = dictionary["IsDemo"] as? Bool
 		length = dictionary["Length"] as? Float
 		level = dictionary["Level"] as? Int
-		preview = dictionary["Preview"] as? AnyObject
-		segments = dictionary["Segments"] as? AnyObject
+		preview = dictionary["Preview"] as? String
+		segments = dictionary["Segments"] as? String
 		thumbnail = dictionary["Thumbnail"] as? String
 		title = dictionary["Title"] as? String
-		viewCount = dictionary["ViewCount"] as? AnyObject
+		viewCount = dictionary["ViewCount"] as? Int
 		createdAt = dictionary["createdAt"] as? String
 		id = dictionary["id"] as? String
 		owner = dictionary["owner"] as? String
@@ -105,17 +105,17 @@ class UserCenterContent : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         nextToken = aDecoder.decodeObject(forKey: "nextToken") as? AnyObject
+         nextToken = aDecoder.decodeObject(forKey: "nextToken") as? String
          contentName = aDecoder.decodeObject(forKey: "ContentName") as? String
          descriptionField = aDecoder.decodeObject(forKey: "Description") as? String
          isDemo = aDecoder.decodeObject(forKey: "IsDemo") as? Bool
          length = aDecoder.decodeObject(forKey: "Length") as? Float
          level = aDecoder.decodeObject(forKey: "Level") as? Int
-         preview = aDecoder.decodeObject(forKey: "Preview") as? AnyObject
-         segments = aDecoder.decodeObject(forKey: "Segments") as? AnyObject
+         preview = aDecoder.decodeObject(forKey: "Preview") as? String
+         segments = aDecoder.decodeObject(forKey: "Segments") as? String
          thumbnail = aDecoder.decodeObject(forKey: "Thumbnail") as? String
          title = aDecoder.decodeObject(forKey: "Title") as? String
-         viewCount = aDecoder.decodeObject(forKey: "ViewCount") as? AnyObject
+         viewCount = aDecoder.decodeObject(forKey: "ViewCount") as? Int
          createdAt = aDecoder.decodeObject(forKey: "createdAt") as? String
          id = aDecoder.decodeObject(forKey: "id") as? String
          owner = aDecoder.decodeObject(forKey: "owner") as? String

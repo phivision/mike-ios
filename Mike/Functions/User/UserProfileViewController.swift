@@ -25,14 +25,6 @@ class UserProfileViewController: BaseViewController {
         var metricsList:Array<UserMatricsListModel> = Array<UserMatricsListModel>()
         return metricsList
     }()
-//    var caloriesValue:String = ""
-//    var weightValue:String = ""
-//    var waterValue:String = ""
-//    var stepsValue:String = ""
-//    var caloriesUpdateTimeValue:String = ""
-//    var weightUpdateTimeValue:String = ""
-//    var waterUpdateTimeValue:String = ""
-//    var stepsUpdateTimeValue:String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -196,6 +188,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
             let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
             cell.contentView.backgroundColor = UIColor.white
             cell.setFavList(fList: self.favList)
+            cell.delegate = self
             return cell
         case 3:
             let cell:UserProfileHealthKitListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileHealthKitListCell", for: indexPath) as! UserProfileHealthKitListCell
@@ -346,4 +339,15 @@ extension UserProfileViewController{
                 }
             }
         }
+}
+extension UserProfileViewController:UserProfileFavHorizonListCellDelegate{
+    func userContentClicked(model: UserCenterContent) {
+        let vc:UserContentDetailViewController = UserContentDetailViewController()
+        vc.userContentModel = model
+        vc.trainerId = model.owner
+//        nav.modalPresentationStyle = .fullScreen
+        DispatchQueue.main.async {
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
 }

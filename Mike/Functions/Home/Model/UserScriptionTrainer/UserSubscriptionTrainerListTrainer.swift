@@ -12,6 +12,7 @@ class UserSubscriptionTrainerListTrainer : NSObject, NSCoding{
 	var lastName : String!
 	var userImage : String!
 	var userRole : String!
+    var id:String!
 
 
 	/**
@@ -25,6 +26,7 @@ class UserSubscriptionTrainerListTrainer : NSObject, NSCoding{
 		lastName = dictionary["LastName"] as? String
 		userImage = dictionary["UserImage"] as? String
 		userRole = dictionary["UserRole"] as? String
+        id = dictionary["id"] as? String
 	}
 
 	/**
@@ -48,6 +50,9 @@ class UserSubscriptionTrainerListTrainer : NSObject, NSCoding{
 		if userRole != nil{
 			dictionary["UserRole"] = userRole
 		}
+        if id != nil {
+            dictionary["id"] = id
+        }
 		return dictionary
 	}
 
@@ -62,7 +67,7 @@ class UserSubscriptionTrainerListTrainer : NSObject, NSCoding{
          lastName = aDecoder.decodeObject(forKey: "LastName") as? String
          userImage = aDecoder.decodeObject(forKey: "UserImage") as? String
          userRole = aDecoder.decodeObject(forKey: "UserRole") as? String
-
+        id = aDecoder.decodeObject(forKey: "id") as? String
 	}
 
     /**
@@ -86,7 +91,9 @@ class UserSubscriptionTrainerListTrainer : NSObject, NSCoding{
 		if userRole != nil{
 			aCoder.encode(userRole, forKey: "UserRole")
 		}
-
+        if id != nil {
+            aCoder.encode(id,forKey: "id")
+        }
 	}
 
 }

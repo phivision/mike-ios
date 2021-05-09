@@ -17,6 +17,7 @@ extension GraphQLRequest{
                       items {
                         id
                         Trainer {
+                          id
                           UserRole
                           UserImage
                           LastName
@@ -162,6 +163,20 @@ extension GraphQLRequest{
                 }
               }
             }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                    variables: ["id": id],
+                                    responseType: JSONValue.self)
+    }
+    static func fetchSimpleTrainerModel(byId id: String) -> GraphQLRequest<JSONValue> {
+        let document = """
+        query getUserProfile($id:ID!) {
+          getUserProfile(id:$id) {
+            LastName
+            FirstName
+            UserImage
           }
         }
         """

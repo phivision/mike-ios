@@ -47,6 +47,14 @@
 		B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B641F8072646AD1000FE8C56 /* HealthKit.framework */; };
 		B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */; };
 		B67716072647DE3C0035A50C /* UserMatricsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716062647DE3C0035A50C /* UserMatricsListModel.swift */; };
+		B677160A2647EFF90035A50C /* UserContentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716082647EFF90035A50C /* UserContentDetailViewController.swift */; };
+		B677160B2647EFF90035A50C /* UserContentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67716092647EFF90035A50C /* UserContentDetailViewController.xib */; };
+		B677160E2647F4F80035A50C /* UserContentDetailTopTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B677160C2647F4F80035A50C /* UserContentDetailTopTabCell.swift */; };
+		B677160F2647F4F80035A50C /* UserContentDetailTopTabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B677160D2647F4F80035A50C /* UserContentDetailTopTabCell.xib */; };
+		B67716122647F6190035A50C /* UserContentSegmentListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716102647F6190035A50C /* UserContentSegmentListCell.swift */; };
+		B67716132647F6190035A50C /* UserContentSegmentListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67716112647F6190035A50C /* UserContentSegmentListCell.xib */; };
+		B67716152647F8110035A50C /* UserContentSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716142647F8110035A50C /* UserContentSectionTitleView.swift */; };
+		B67716172647F81F0035A50C /* UserContentSectionTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67716162647F81F0035A50C /* UserContentSectionTitleView.xib */; };
 		B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262AB2639A3F000A32D5C /* ApiMacro.swift */; };
 		B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262B02639AB7200A32D5C /* VideoViewController.swift */; };
 		B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68262B12639AB7200A32D5C /* VideoViewController.xib */; };
@@ -152,6 +160,14 @@
 		B641F8072646AD1000FE8C56 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTools.swift; sourceTree = "<group>"; };
 		B67716062647DE3C0035A50C /* UserMatricsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMatricsListModel.swift; sourceTree = "<group>"; };
+		B67716082647EFF90035A50C /* UserContentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentDetailViewController.swift; sourceTree = "<group>"; };
+		B67716092647EFF90035A50C /* UserContentDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserContentDetailViewController.xib; sourceTree = "<group>"; };
+		B677160C2647F4F80035A50C /* UserContentDetailTopTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentDetailTopTabCell.swift; sourceTree = "<group>"; };
+		B677160D2647F4F80035A50C /* UserContentDetailTopTabCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserContentDetailTopTabCell.xib; sourceTree = "<group>"; };
+		B67716102647F6190035A50C /* UserContentSegmentListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentSegmentListCell.swift; sourceTree = "<group>"; };
+		B67716112647F6190035A50C /* UserContentSegmentListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserContentSegmentListCell.xib; sourceTree = "<group>"; };
+		B67716142647F8110035A50C /* UserContentSectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentSectionTitleView.swift; sourceTree = "<group>"; };
+		B67716162647F81F0035A50C /* UserContentSectionTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserContentSectionTitleView.xib; sourceTree = "<group>"; };
 		B68262AB2639A3F000A32D5C /* ApiMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiMacro.swift; sourceTree = "<group>"; };
 		B68262B02639AB7200A32D5C /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		B68262B12639AB7200A32D5C /* VideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -274,6 +290,12 @@
 				B637497926444D9F00502913 /* UserProfileTopCell.xib */,
 				B63749E22645820300502913 /* UserProfileFavHorizonListCell.swift */,
 				B63749E32645820300502913 /* UserProfileFavHorizonListCell.xib */,
+				B677160C2647F4F80035A50C /* UserContentDetailTopTabCell.swift */,
+				B677160D2647F4F80035A50C /* UserContentDetailTopTabCell.xib */,
+				B67716102647F6190035A50C /* UserContentSegmentListCell.swift */,
+				B67716112647F6190035A50C /* UserContentSegmentListCell.xib */,
+				B67716142647F8110035A50C /* UserContentSectionTitleView.swift */,
+				B67716162647F81F0035A50C /* UserContentSectionTitleView.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -403,6 +425,8 @@
 				B68262FD264247B800A32D5C /* UserProfileViewController.xib */,
 				B63749F326469C1700502913 /* UserProfileSettingViewController.swift */,
 				B63749F426469C1700502913 /* UserProfileSettingViewController.xib */,
+				B67716082647EFF90035A50C /* UserContentDetailViewController.swift */,
+				B67716092647EFF90035A50C /* UserContentDetailViewController.xib */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -665,10 +689,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B67716132647F6190035A50C /* UserContentSegmentListCell.xib in Resources */,
 				C1DEDD8A263746CB00F66A7C /* awsconfiguration.json in Resources */,
 				C1DEDD7E2637460900F66A7C /* Preview Assets.xcassets in Resources */,
 				B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */,
 				B682631526424C6A00A32D5C /* Nunito-ExtraLightItalic.ttf in Resources */,
+				B677160B2647EFF90035A50C /* UserContentDetailViewController.xib in Resources */,
 				B682631E26424C6A00A32D5C /* Nunito-BlackItalic.ttf in Resources */,
 				B682631826424C6A00A32D5C /* Nunito-SemiBold.ttf in Resources */,
 				B682632726426FDB00A32D5C /* HomeListCell.xib in Resources */,
@@ -688,8 +714,10 @@
 				B69103D126381EC0005F2ACD /* HomeViewController.xib in Resources */,
 				B68262FF264247B800A32D5C /* UserProfileViewController.xib in Resources */,
 				B637496F264446CE00502913 /* UserProfileSectionTitleView.xib in Resources */,
+				B677160F2647F4F80035A50C /* UserContentDetailTopTabCell.xib in Resources */,
 				B69103D526381EC0005F2ACD /* HomeBannerColListCell.xib in Resources */,
 				B682632126424C6A00A32D5C /* Nunito-LightItalic.ttf in Resources */,
+				B67716172647F81F0035A50C /* UserContentSectionTitleView.xib in Resources */,
 				B69103D326381EC0005F2ACD /* HomeInfoColCell.xib in Resources */,
 				B682632026424C6A00A32D5C /* Nunito-Italic.ttf in Resources */,
 				B69103DC26381EC0005F2ACD /* LoginSecondViewController.xib in Resources */,
@@ -733,11 +761,13 @@
 				B68262B62639B05600A32D5C /* ZZPlayerView.swift in Sources */,
 				B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */,
 				B682632B2642729200A32D5C /* HomeListViewController.swift in Sources */,
+				B677160E2647F4F80035A50C /* UserContentDetailTopTabCell.swift in Sources */,
 				B68262EA263C4AAD00A32D5C /* UserContentListModel.swift in Sources */,
 				B68262F1263C4F4000A32D5C /* UserSubscriptionTrainerListItem.swift in Sources */,
 				B68262BF263A3E2300A32D5C /* GraphQLRequestExt.swift in Sources */,
 				B68262BC2639B16100A32D5C /* StringUtils.swift in Sources */,
 				B69103DB26381EC0005F2ACD /* LoginSecondViewController.swift in Sources */,
+				B677160A2647EFF90035A50C /* UserContentDetailViewController.swift in Sources */,
 				B68262E5263C05CB00A32D5C /* BaseViewController.swift in Sources */,
 				B68262BB2639B16100A32D5C /* UIColorExtension.swift in Sources */,
 				B682632326424D2800A32D5C /* FontConst.swift in Sources */,
@@ -765,6 +795,8 @@
 				B637497A26444D9F00502913 /* UserProfileTopCell.swift in Sources */,
 				B682632626426FDB00A32D5C /* HomeListCell.swift in Sources */,
 				2D300B2B0DB846128C62C062 /* UserFavoriteContent.swift in Sources */,
+				B67716122647F6190035A50C /* UserContentSegmentListCell.swift in Sources */,
+				B67716152647F8110035A50C /* UserContentSectionTitleView.swift in Sources */,
 				C7AE4A5E865D4D0A92465D35 /* UserFavoriteContent+Schema.swift in Sources */,
 				B68262E7263C088900A32D5C /* ToastHUD.swift in Sources */,
 				A690E02738114B2F88B979ED /* UserSubscriptionTrainer.swift in Sources */,

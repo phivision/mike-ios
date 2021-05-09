@@ -92,6 +92,14 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section]
+        let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
+        let vc:UserContentDetailViewController = UserContentDetailViewController()
+        vc.userContentModel = UserCenterContent(fromDictionary: contentModel.toDictionary())
+//        nav.modalPresentationStyle = .fullScreen
+        vc.trainerId = trainerModel.trainer.id
+        DispatchQueue.main.async {
+            self.present(vc, animated: true, completion: nil)
+        }
     }
 }
