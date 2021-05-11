@@ -52,14 +52,14 @@
                         <color key="textColor" red="0.29803921570000003" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar1" translatesAutoresizingMaskIntoConstraints="NO" id="Ybp-rW-8fA">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Ybp-rW-8fA">
                         <rect key="frame" x="20" y="186" width="76" height="76"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="76" id="5Hb-9g-vOO"/>
                             <constraint firstAttribute="width" constant="76" id="EVe-bc-JCZ"/>
                         </constraints>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner" translatesAutoresizingMaskIntoConstraints="NO" id="X7k-zS-Z8X">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="X7k-zS-Z8X">
                         <rect key="frame" x="70" y="64" width="220" height="122"/>
                     </imageView>
                 </subviews>
@@ -96,7 +96,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="avatar1" width="38" height="38"/>
-        <image name="banner" width="319" height="173"/>
+        <image name="logo" width="68" height="68"/>
     </resources>
 </document>

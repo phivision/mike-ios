@@ -42,6 +42,9 @@
                 <constraint firstAttribute="bottom" secondItem="Hyd-Qt-KKG" secondAttribute="bottom" id="wWb-w7-aSn"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="titleLab" destination="xZs-tc-qpr" id="Wb2-EA-XVi"/>
+            </connections>
             <point key="canvasLocation" x="74" y="97"/>
         </view>
     </objects>

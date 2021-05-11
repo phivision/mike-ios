@@ -17,14 +17,29 @@ class UserContentDetailViewController: BaseViewController {
     var trainerId:String!
     var userContentModel:UserCenterContent!
     var trainerInfoModel:UserCenterModel?
+    lazy var segList:Array<UserContentSegmentListModel> = {
+        var segList:Array<UserContentSegmentListModel> = Array<UserContentSegmentListModel>()
+        return segList
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configView()
         self.configTableView()
+        self.configData()
         self.fetchTrainerInfo()
         // Do any additional setup after loading the view.
     }
-    
+    func configData(){
+        let segList:NSArray = JSONUtils.getArrayFromJSONString(jsonString: self.userContentModel.segments ?? "")
+        print("\(segList)");
+        for segItem in segList {
+            if let segDic = segItem as? NSDictionary {
+                let model = UserContentSegmentListModel(fromDictionary: segDic as? [String : Any] ?? [:])
+                self.segList.append(model)
+            }
+        }
+        self.mainTableView.reloadData()
+    }
     func configView(){
         self.descLab.text = "\(self.userContentModel.descriptionField ?? "")"
         
@@ -55,26 +70,33 @@ class UserContentDetailViewController: BaseViewController {
         }
     }
     func configTrainerUI(trainerModel:UserCenterModel){
-        if StringUtils.isBlank(value: trainerModel.userImage) {
-            DispatchQueue.main.async {
+        ImageCacheUtils.sharedTools.imageUrl(key: trainerModel.userImage) { imgUrl, cannotLoadUrl in
+            if cannotLoadUrl == true{
                 self.trainerAvatar.image = UIImage(named: "logo")
-            }
-        }else{
-            Amplify.Storage.getURL(key: trainerModel.userImage) { event in
-                switch event {
-                case let .success(url):
-                    print("Completed: \(url)")
-                    DispatchQueue.main.async {
-                        self.trainerAvatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-                    }
-                case let .failure(storageError):
-                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-                    DispatchQueue.main.async {
-                        self.trainerAvatar.image = UIImage(named: "logo")
-                    }
-                }
+            }else{
+                self.trainerAvatar.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
+//        if StringUtils.isBlank(value: trainerModel.userImage) {
+//            DispatchQueue.main.async {
+//                self.trainerAvatar.image = UIImage(named: "logo")
+//            }
+//        }else{
+//            Amplify.Storage.getURL(key: trainerModel.userImage) { event in
+//                switch event {
+//                case let .success(url):
+//                    print("Completed: \(url)")
+//                    DispatchQueue.main.async {
+//                        self.trainerAvatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+//                    }
+//                case let .failure(storageError):
+//                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+//                    DispatchQueue.main.async {
+//                        self.trainerAvatar.image = UIImage(named: "logo")
+//                    }
+//                }
+//            }
+//        }
         DispatchQueue.main.async {
             self.trainerNameLab.text = "\(trainerModel.firstName ?? "") \(trainerModel.lastName ?? "")"
         }
@@ -107,14 +129,15 @@ extension UserContentDetailViewController:UITableViewDelegate,UITableViewDataSou
         if section == 0 {
             return UIView()
         }
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "UserContentSectionTitleView")
+        let header:UserContentSectionTitleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "UserContentSectionTitleView") as! UserContentSectionTitleView
+        header.titleLab.text = "\(self.segList.count) Movements"
         return header
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
         }
-        return 3
+        return self.segList.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
@@ -130,6 +153,7 @@ extension UserContentDetailViewController:UITableViewDelegate,UITableViewDataSou
             return cell
         }
         let cell:UserContentSegmentListCell = tableView.dequeueReusableCell(withIdentifier: "UserContentSegmentListCell", for: indexPath) as! UserContentSegmentListCell
+        cell.setModel(model: self.segList[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

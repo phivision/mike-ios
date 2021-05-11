@@ -8,7 +8,7 @@
 import UIKit
 
 class UserContentSectionTitleView: UITableViewHeaderFooterView {
-
+    @IBOutlet weak var titleLab:UILabel!
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -16,5 +16,5 @@ class UserContentSectionTitleView: UITableViewHeaderFooterView {
         // Drawing code
     }
     */
-
+    
 }

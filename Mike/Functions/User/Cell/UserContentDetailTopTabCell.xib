@@ -32,7 +32,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="215"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner" translatesAutoresizingMaskIntoConstraints="NO" id="wbb-ar-Ixj">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="wbb-ar-Ixj">
                         <rect key="frame" x="30" y="7.5" width="260" height="144.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="wbb-ar-Ixj" secondAttribute="height" multiplier="259:144" id="d95-qo-ps8"/>
@@ -96,7 +96,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="banner" width="319" height="173"/>
         <image name="btn_play" width="35" height="39.5"/>
+        <image name="logo" width="68" height="68"/>
     </resources>
 </document>

@@ -33,14 +33,21 @@ class UserProfileTopCell: UICollectionViewCell {
         self.avatar.clipsToBounds = true
     }
     func setModel(model:UserCenterModel){
-        Amplify.Storage.getURL(key: model.userImage) { event in
-            switch event {
-            case let .success(url):
-                print("Completed: \(url)")
-                self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-            case let .failure(storageError):
-                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+//        Amplify.Storage.getURL(key: model.userImage) { event in
+//            switch event {
+//            case let .success(url):
+//                print("Completed: \(url)")
+//                self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+//            case let .failure(storageError):
+//                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+//                self.avatar.image = UIImage(named: "logo")
+//            }
+//        }
+        ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
+            if cannotLoadUrl == true{
                 self.avatar.image = UIImage(named: "logo")
+            }else{
+                self.avatar.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
         self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
@@ -49,14 +56,21 @@ class UserProfileTopCell: UICollectionViewCell {
         self.configBtn()
     }
     func setTrainerModel(model:TrainerDetailModel){
-        Amplify.Storage.getURL(key: model.userImage) { event in
-            switch event {
-            case let .success(url):
-                print("Completed: \(url)")
-                self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-            case let .failure(storageError):
-                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+//        Amplify.Storage.getURL(key: model.userImage) { event in
+//            switch event {
+//            case let .success(url):
+//                print("Completed: \(url)")
+//                self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+//            case let .failure(storageError):
+//                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+//                self.avatar.image = UIImage(named: "logo")
+//            }
+//        }
+        ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
+            if cannotLoadUrl == true{
                 self.avatar.image = UIImage(named: "logo")
+            }else{
+                self.avatar.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
         self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"

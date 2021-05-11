@@ -123,6 +123,9 @@
 		B69103DC26381EC0005F2ACD /* LoginSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103CD26381EC0005F2ACD /* LoginSecondViewController.xib */; };
 		B69103DD26381EC0005F2ACD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103CE26381EC0005F2ACD /* LoginViewController.xib */; };
 		B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103CF26381EC0005F2ACD /* LoginViewController.swift */; };
+		B6E4FFB0264AB8A40020F636 /* JSONUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFAF264AB8A40020F636 /* JSONUtils.swift */; };
+		B6E4FFB2264ABB960020F636 /* UserContentSegmentListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFB1264ABB960020F636 /* UserContentSegmentListModel.swift */; };
+		B6E4FFB4264AC01B0020F636 /* ImageCacheUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFB3264AC01B0020F636 /* ImageCacheUtils.swift */; };
 		C1DEDD772637460700F66A7C /* MikeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEDD762637460700F66A7C /* MikeApp.swift */; };
 		C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD7A2637460900F66A7C /* Assets.xcassets */; };
 		C1DEDD7E2637460900F66A7C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD7D2637460900F66A7C /* Preview Assets.xcassets */; };
@@ -246,6 +249,9 @@
 		B69103CD26381EC0005F2ACD /* LoginSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginSecondViewController.xib; sourceTree = "<group>"; };
 		B69103CE26381EC0005F2ACD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		B69103CF26381EC0005F2ACD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		B6E4FFAF264AB8A40020F636 /* JSONUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUtils.swift; sourceTree = "<group>"; };
+		B6E4FFB1264ABB960020F636 /* UserContentSegmentListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserContentSegmentListModel.swift; sourceTree = "<group>"; };
+		B6E4FFB3264AC01B0020F636 /* ImageCacheUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheUtils.swift; sourceTree = "<group>"; };
 		B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = UserSubscriptionTrainer.swift; path = amplify/generated/models/UserSubscriptionTrainer.swift; sourceTree = "<group>"; };
 		C1DEDD732637460700F66A7C /* Mike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1DEDD762637460700F66A7C /* MikeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MikeApp.swift; sourceTree = "<group>"; };
@@ -319,6 +325,7 @@
 		B63749E6264596DB00502913 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B6E4FFB1264ABB960020F636 /* UserContentSegmentListModel.swift */,
 				B67716062647DE3C0035A50C /* UserMatricsListModel.swift */,
 				B63749EA264596EA00502913 /* UserCenterContent.swift */,
 				B63749E8264596EA00502913 /* UserCenterFavorite.swift */,
@@ -387,6 +394,8 @@
 				B63749F1264694C800502913 /* TimeFormatUtils.swift */,
 				B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */,
 				B677162B264A21B20035A50C /* AgeUtils.swift */,
+				B6E4FFAF264AB8A40020F636 /* JSONUtils.swift */,
+				B6E4FFB3264AC01B0020F636 /* ImageCacheUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -804,6 +813,7 @@
 				B68262BD2639B16100A32D5C /* UIViewExtension.swift in Sources */,
 				B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */,
 				B63749722644479C00502913 /* UserProfileFavoriteListCell.swift in Sources */,
+				B6E4FFB4264AC01B0020F636 /* ImageCacheUtils.swift in Sources */,
 				C1DEDD772637460700F66A7C /* MikeApp.swift in Sources */,
 				B68262F0263C4F4000A32D5C /* UserSubscriptionTrainerListModel.swift in Sources */,
 				B68262D1263BC7A900A32D5C /* UserManager.swift in Sources */,
@@ -814,6 +824,7 @@
 				B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */,
 				B682632B2642729200A32D5C /* HomeListViewController.swift in Sources */,
 				B677160E2647F4F80035A50C /* UserContentDetailTopTabCell.swift in Sources */,
+				B6E4FFB0264AB8A40020F636 /* JSONUtils.swift in Sources */,
 				B68262EA263C4AAD00A32D5C /* UserContentListModel.swift in Sources */,
 				B6771626264A18A30035A50C /* TrainerDetailFavorite.swift in Sources */,
 				B68262F1263C4F4000A32D5C /* UserSubscriptionTrainerListItem.swift in Sources */,
@@ -855,6 +866,7 @@
 				B67716152647F8110035A50C /* UserContentSectionTitleView.swift in Sources */,
 				C7AE4A5E865D4D0A92465D35 /* UserFavoriteContent+Schema.swift in Sources */,
 				B68262E7263C088900A32D5C /* ToastHUD.swift in Sources */,
+				B6E4FFB2264ABB960020F636 /* UserContentSegmentListModel.swift in Sources */,
 				A690E02738114B2F88B979ED /* UserSubscriptionTrainer.swift in Sources */,
 				B67716072647DE3C0035A50C /* UserMatricsListModel.swift in Sources */,
 				B63749EE264596EA00502913 /* UserCenterTrainer.swift in Sources */,

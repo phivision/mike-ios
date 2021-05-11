@@ -35,30 +35,44 @@ class HomeListCell: UITableViewCell {
     func setItemModel(model:UserSubscriptionTrainerListItem,sectionModel:UserSubscriptionTrainerListTrainer){
         self.userName.text = "\(sectionModel.firstName ?? "") \(sectionModel.lastName ?? "")"
         self.descText.text = "\(model.descriptionField ?? "")"
-        Amplify.Storage.getURL(key: sectionModel.userImage) { event in
-            switch event {
-            case let .success(url):
-                print("Completed: \(url)")
-                self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-            case let .failure(storageError):
-                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+        ImageCacheUtils.sharedTools.imageUrl(key: sectionModel.userImage) { imgUrl, cannotLoadUrl in
+            if cannotLoadUrl == true{
                 self.avatar.image = UIImage(named: "logo")
+            }else{
+                self.avatar.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
-        if StringUtils.isBlank(value: model.thumbnail) {
-            self.contentImg.image = UIImage(named: "logo")
-        }else{
-            Amplify.Storage.getURL(key: model.thumbnail) { event in
-                switch event {
-                case let .success(url):
-                    print("Completed: \(url)")
-                    self.contentImg.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-                case let .failure(storageError):
-                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-                    self.contentImg.image = UIImage(named: "logo")
-                }
+        ImageCacheUtils.sharedTools.imageUrl(key: model.thumbnail) { imgUrl, cannotLoadUrl in
+            if cannotLoadUrl == true{
+                self.contentImg.image = UIImage(named: "logo")
+            }else{
+                self.contentImg.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
+//        Amplify.Storage.getURL(key: sectionModel.userImage) { event in
+//            switch event {
+//            case let .success(url):
+//                print("Completed: \(url)")
+//                self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+//            case let .failure(storageError):
+//                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+//                self.avatar.image = UIImage(named: "logo")
+//            }
+//        }
+//        if StringUtils.isBlank(value: model.thumbnail) {
+//            self.contentImg.image = UIImage(named: "logo")
+//        }else{
+//            Amplify.Storage.getURL(key: model.thumbnail) { event in
+//                switch event {
+//                case let .success(url):
+//                    print("Completed: \(url)")
+//                    self.contentImg.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+//                case let .failure(storageError):
+//                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+//                    self.contentImg.image = UIImage(named: "logo")
+//                }
+//            }
+//        }
         self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: model.createdAt))"
     }
 

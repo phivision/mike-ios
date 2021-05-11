@@ -32,7 +32,7 @@
                         <rect key="frame" x="25" y="10" width="284" height="240"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner" translatesAutoresizingMaskIntoConstraints="NO" id="CJH-4j-bO9">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="CJH-4j-bO9">
                         <rect key="frame" x="55" y="17.5" width="224" height="124.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="CJH-4j-bO9" secondAttribute="height" multiplier="259:144" id="Ocg-nu-kTd"/>
@@ -99,7 +99,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="banner" width="319" height="173"/>
         <image name="btn_play" width="35" height="39.5"/>
+        <image name="logo" width="68" height="68"/>
     </resources>
 </document>

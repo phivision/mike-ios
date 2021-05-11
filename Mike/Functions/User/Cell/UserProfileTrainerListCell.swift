@@ -20,16 +20,23 @@ class UserProfileTrainerListCell: UICollectionViewCell {
         if StringUtils.isBlank(value: model.userImage) {
             self.avatar.image = UIImage(named: "logo")
         }else{
-            Amplify.Storage.getURL(key: model.userImage) { event in
-                switch event {
-                case let .success(url):
-                    print("Completed: \(url)")
-                    self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-                case let .failure(storageError):
-                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+            ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
+                if cannotLoadUrl == true{
                     self.avatar.image = UIImage(named: "logo")
+                }else{
+                    self.avatar.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
                 }
             }
+//            Amplify.Storage.getURL(key: model.userImage) { event in
+//                switch event {
+//                case let .success(url):
+//                    print("Completed: \(url)")
+//                    self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+//                case let .failure(storageError):
+//                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+//                    self.avatar.image = UIImage(named: "logo")
+//                }
+//            }
         }
     }
 }
