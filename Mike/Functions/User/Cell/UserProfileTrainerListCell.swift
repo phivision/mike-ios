@@ -9,6 +9,7 @@ import UIKit
 import Amplify
 class UserProfileTrainerListCell: UICollectionViewCell {
     @IBOutlet weak var avatar:UIImageView!
+    var trainerModel:UserCenterTrainer!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -30,6 +31,5 @@ class UserProfileTrainerListCell: UICollectionViewCell {
                 }
             }
         }
-        
     }
 }

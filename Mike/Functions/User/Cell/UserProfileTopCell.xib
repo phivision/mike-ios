@@ -18,17 +18,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="UserProfileTopCell" customModule="Mike" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="415" height="285"/>
+            <rect key="frame" x="0.0" y="0.0" width="415" height="321"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="415" height="285"/>
+                <rect key="frame" x="0.0" y="0.0" width="415" height="321"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P77-ph-06b">
-                        <rect key="frame" x="0.0" y="0.0" width="415" height="285"/>
+                        <rect key="frame" x="0.0" y="0.0" width="415" height="321"/>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kvd-fg-b5b">
-                        <rect key="frame" x="0.0" y="125" width="415" height="160"/>
+                        <rect key="frame" x="0.0" y="125" width="415" height="196"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nis-bm-DVM">
@@ -55,12 +55,24 @@
                         <color key="textColor" red="0.1764705882" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxf-fL-YYc">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxf-fL-YYc">
                         <rect key="frame" x="28" y="281.5" width="359" height="19.5"/>
                         <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="14"/>
                         <color key="textColor" red="0.1764705882" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="27K-4j-g79">
+                        <rect key="frame" x="0.0" y="10" width="46" height="46"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="46" id="gUg-Uz-rBc"/>
+                            <constraint firstAttribute="width" constant="46" id="v0t-tC-0g5"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                        <state key="normal" image="back_white"/>
+                        <connections>
+                            <action selector="backBtnPressed" destination="gTV-IL-0wX" eventType="touchUpInside" id="J8t-MW-ewa"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -72,10 +84,12 @@
                 <constraint firstItem="P77-ph-06b" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7hn-Mc-wzb"/>
                 <constraint firstItem="i2y-Ro-0GN" firstAttribute="trailing" secondItem="kvd-fg-b5b" secondAttribute="trailing" constant="-10" id="DVO-Eo-byd"/>
                 <constraint firstAttribute="bottom" secondItem="P77-ph-06b" secondAttribute="bottom" id="EAO-ll-C7A"/>
+                <constraint firstItem="27K-4j-g79" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="Emb-zC-2s4"/>
                 <constraint firstAttribute="bottom" secondItem="kvd-fg-b5b" secondAttribute="bottom" id="IeA-tH-rGh"/>
                 <constraint firstItem="lxf-fL-YYc" firstAttribute="top" secondItem="N6f-g6-N2K" secondAttribute="bottom" constant="29" id="LhV-RM-xVn"/>
                 <constraint firstItem="kvd-fg-b5b" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="125" id="Num-0X-toN"/>
                 <constraint firstItem="lxf-fL-YYc" firstAttribute="leading" secondItem="N6f-g6-N2K" secondAttribute="leading" id="Ulk-bj-6uH"/>
+                <constraint firstItem="27K-4j-g79" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Yb3-mj-RGe"/>
                 <constraint firstItem="nis-bm-DVM" firstAttribute="leading" secondItem="kvd-fg-b5b" secondAttribute="leading" constant="28" id="ZcO-se-uiK"/>
                 <constraint firstItem="N6f-g6-N2K" firstAttribute="leading" secondItem="nis-bm-DVM" secondAttribute="leading" id="bNI-Sj-JPq"/>
                 <constraint firstItem="N6f-g6-N2K" firstAttribute="top" secondItem="nis-bm-DVM" secondAttribute="bottom" constant="12" id="hK2-RM-tmd"/>
@@ -84,17 +98,20 @@
                 <constraint firstItem="i2y-Ro-0GN" firstAttribute="top" secondItem="kvd-fg-b5b" secondAttribute="top" constant="10" id="xIv-WK-eee"/>
                 <constraint firstItem="lxf-fL-YYc" firstAttribute="trailing" secondItem="kvd-fg-b5b" secondAttribute="trailing" constant="-28" id="zIm-Ba-eDF"/>
             </constraints>
-            <size key="customSize" width="415" height="285"/>
+            <size key="customSize" width="415" height="321"/>
             <connections>
                 <outlet property="avatar" destination="nis-bm-DVM" id="WVb-MJ-3Ov"/>
+                <outlet property="backBtn" destination="27K-4j-g79" id="vSV-nL-3AB"/>
                 <outlet property="contentBg" destination="kvd-fg-b5b" id="IvN-Yb-rbS"/>
+                <outlet property="settingBtn" destination="i2y-Ro-0GN" id="4d0-6e-zFp"/>
                 <outlet property="userDesc" destination="lxf-fL-YYc" id="sdj-GS-1PN"/>
                 <outlet property="userName" destination="N6f-g6-N2K" id="zuF-QD-PC2"/>
             </connections>
-            <point key="canvasLocation" x="338.40579710144931" y="170.42410714285714"/>
+            <point key="canvasLocation" x="338.40579710144931" y="182.47767857142856"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="back_white" width="88" height="88"/>
         <image name="icon_setting" width="24" height="24"/>
     </resources>
 </document>

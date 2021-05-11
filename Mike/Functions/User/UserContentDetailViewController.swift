@@ -79,6 +79,9 @@ class UserContentDetailViewController: BaseViewController {
             self.trainerNameLab.text = "\(trainerModel.firstName ?? "") \(trainerModel.lastName ?? "")"
         }
     }
+    @IBAction func dismissBtnClicked(){
+        self.dismiss(animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

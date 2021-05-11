@@ -1,32 +1,29 @@
 //
-//	UserCenterModel.swift
+//	TrainerDetailModel.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class UserCenterModel : NSObject, NSCoding{
+class TrainerDetailModel : NSObject, NSCoding{
 
-	var bgImage : String?
+	var bgImage : String!
 	var bgTitle : String?
-	var biography : String?
+	var biography : String!
 	var birthday : String?
-	var contents : UserCenterContent!
-	var descriptionField : String?
+	var contents : TrainerDetailContent!
+	var descriptionField : String!
 	var email : String!
-	var favorites : UserCenterFavorite!
+	var favorites : TrainerDetailFavorite!
 	var firstName : String!
 	var gender : String!
 	var height : Int!
 	var lastName : String!
 	var regDate : String!
-	var subscriptions : UserCenterFavorite!
 	var userImage : String!
 	var userRole : String!
 	var weight : Int!
-	var createdAt : String!
-	var id : String!
-	var owner : String!
+	var createdAt : String?
 	var updatedAt : String!
 
 
@@ -39,27 +36,22 @@ class UserCenterModel : NSObject, NSCoding{
 		biography = dictionary["Biography"] as? String
 		birthday = dictionary["Birthday"] as? String
 		if let contentsData = dictionary["Contents"] as? [String:Any]{
-			contents = UserCenterContent(fromDictionary: contentsData)
+			contents = TrainerDetailContent(fromDictionary: contentsData)
 		}
 		descriptionField = dictionary["Description"] as? String
 		email = dictionary["Email"] as? String
 		if let favoritesData = dictionary["Favorites"] as? [String:Any]{
-			favorites = UserCenterFavorite(fromDictionary: favoritesData)
+			favorites = TrainerDetailFavorite(fromDictionary: favoritesData)
 		}
 		firstName = dictionary["FirstName"] as? String
 		gender = dictionary["Gender"] as? String
 		height = dictionary["Height"] as? Int
 		lastName = dictionary["LastName"] as? String
 		regDate = dictionary["RegDate"] as? String
-		if let subscriptionsData = dictionary["Subscriptions"] as? [String:Any]{
-			subscriptions = UserCenterFavorite(fromDictionary: subscriptionsData)
-		}
 		userImage = dictionary["UserImage"] as? String
 		userRole = dictionary["UserRole"] as? String
 		weight = dictionary["Weight"] as? Int
 		createdAt = dictionary["createdAt"] as? String
-		id = dictionary["id"] as? String
-		owner = dictionary["owner"] as? String
 		updatedAt = dictionary["updatedAt"] as? String
 	}
 
@@ -108,9 +100,6 @@ class UserCenterModel : NSObject, NSCoding{
 		if regDate != nil{
 			dictionary["RegDate"] = regDate
 		}
-		if subscriptions != nil{
-			dictionary["Subscriptions"] = subscriptions.toDictionary()
-		}
 		if userImage != nil{
 			dictionary["UserImage"] = userImage
 		}
@@ -122,12 +111,6 @@ class UserCenterModel : NSObject, NSCoding{
 		}
 		if createdAt != nil{
 			dictionary["createdAt"] = createdAt
-		}
-		if id != nil{
-			dictionary["id"] = id
-		}
-		if owner != nil{
-			dictionary["owner"] = owner
 		}
 		if updatedAt != nil{
 			dictionary["updatedAt"] = updatedAt
@@ -145,22 +128,19 @@ class UserCenterModel : NSObject, NSCoding{
          bgTitle = aDecoder.decodeObject(forKey: "BgTitle") as? String
          biography = aDecoder.decodeObject(forKey: "Biography") as? String
          birthday = aDecoder.decodeObject(forKey: "Birthday") as? String
-         contents = aDecoder.decodeObject(forKey: "Contents") as? UserCenterContent
+         contents = aDecoder.decodeObject(forKey: "Contents") as? TrainerDetailContent
          descriptionField = aDecoder.decodeObject(forKey: "Description") as? String
          email = aDecoder.decodeObject(forKey: "Email") as? String
-         favorites = aDecoder.decodeObject(forKey: "Favorites") as? UserCenterFavorite
+         favorites = aDecoder.decodeObject(forKey: "Favorites") as? TrainerDetailFavorite
          firstName = aDecoder.decodeObject(forKey: "FirstName") as? String
          gender = aDecoder.decodeObject(forKey: "Gender") as? String
          height = aDecoder.decodeObject(forKey: "Height") as? Int
          lastName = aDecoder.decodeObject(forKey: "LastName") as? String
          regDate = aDecoder.decodeObject(forKey: "RegDate") as? String
-         subscriptions = aDecoder.decodeObject(forKey: "Subscriptions") as? UserCenterFavorite
          userImage = aDecoder.decodeObject(forKey: "UserImage") as? String
          userRole = aDecoder.decodeObject(forKey: "UserRole") as? String
          weight = aDecoder.decodeObject(forKey: "Weight") as? Int
          createdAt = aDecoder.decodeObject(forKey: "createdAt") as? String
-         id = aDecoder.decodeObject(forKey: "id") as? String
-         owner = aDecoder.decodeObject(forKey: "owner") as? String
          updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
 
 	}
@@ -210,9 +190,6 @@ class UserCenterModel : NSObject, NSCoding{
 		if regDate != nil{
 			aCoder.encode(regDate, forKey: "RegDate")
 		}
-		if subscriptions != nil{
-			aCoder.encode(subscriptions, forKey: "Subscriptions")
-		}
 		if userImage != nil{
 			aCoder.encode(userImage, forKey: "UserImage")
 		}
@@ -224,12 +201,6 @@ class UserCenterModel : NSObject, NSCoding{
 		}
 		if createdAt != nil{
 			aCoder.encode(createdAt, forKey: "createdAt")
-		}
-		if id != nil{
-			aCoder.encode(id, forKey: "id")
-		}
-		if owner != nil{
-			aCoder.encode(owner, forKey: "owner")
 		}
 		if updatedAt != nil{
 			aCoder.encode(updatedAt, forKey: "updatedAt")

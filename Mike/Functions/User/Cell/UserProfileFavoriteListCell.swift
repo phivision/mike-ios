@@ -26,15 +26,19 @@ class UserProfileFavoriteListCell: UICollectionViewCell {
     }
     func setFavModel(favModel:UserCenterContent){
         self.titleLab.text = "\(favModel.title ?? "")"
-        self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: favModel.createdAt))"
-        Amplify.Storage.getURL(key: favModel.thumbnail) { event in
-            switch event {
-            case let .success(url):
-                print("Completed: \(url)")
-                self.bigImg.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-            case let .failure(storageError):
-                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-                self.bigImg.image = UIImage(named: "logo")
+        self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: favModel.createdAt ?? ""))"
+        if StringUtils.isBlank(value: favModel.thumbnail) {
+            self.bigImg.image = UIImage(named: "logo")
+        }else{
+            Amplify.Storage.getURL(key: favModel.thumbnail) { event in
+                switch event {
+                case let .success(url):
+                    print("Completed: \(url)")
+                    self.bigImg.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                case let .failure(storageError):
+                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+                    self.bigImg.image = UIImage(named: "logo")
+                }
             }
         }
     }

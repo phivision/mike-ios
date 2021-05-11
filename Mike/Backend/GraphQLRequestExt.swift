@@ -184,4 +184,71 @@ extension GraphQLRequest{
                                     variables: ["id": id],
                                     responseType: JSONValue.self)
     }
+    static func fetchTrainerDetail(byId id: String) -> GraphQLRequest<JSONValue>{
+        let document = """
+            query MyQuery($id:ID!) {
+              getUserProfile(id:$id) {
+                Contents {
+                  items {
+                    ContentName
+                    CreatorID
+                    Description
+                    IsDemo
+                    Length
+                    Level
+                    Preview
+                    Segments
+                    Thumbnail
+                    Title
+                    ViewCount
+                    createdAt
+                    id
+                    owner
+                    updatedAt
+                  }
+                }
+                Favorites {
+                  items {
+                    Content {
+                      ContentName
+                      CreatorID
+                      Description
+                      IsDemo
+                      Length
+                      Level
+                      Preview
+                      Segments
+                      Thumbnail
+                      Title
+                      ViewCount
+                      createdAt
+                      id
+                      owner
+                      updatedAt
+                    }
+                  }
+                }
+                BgImage
+                BgTitle
+                Biography
+                Birthday
+                Description
+                Email
+                Gender
+                FirstName
+                Height
+                LastName
+                RegDate
+                UserImage
+                UserRole
+                Weight
+                createdAt
+                updatedAt
+              }
+            }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                    variables: ["id": id],
+                                    responseType: JSONValue.self)
+    }
 }

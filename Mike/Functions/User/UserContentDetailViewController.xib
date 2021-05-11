@@ -36,6 +36,9 @@
                     </constraints>
                     <inset key="imageEdgeInsets" minX="25" minY="25" maxX="0.0" maxY="0.0"/>
                     <state key="normal" image="icon-arrowdown"/>
+                    <connections>
+                        <action selector="dismissBtnClicked" destination="-1" eventType="touchUpInside" id="VWL-Q3-ypu"/>
+                    </connections>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LrR-gY-gjY">
                     <rect key="frame" x="40" y="104" width="45" height="45"/>

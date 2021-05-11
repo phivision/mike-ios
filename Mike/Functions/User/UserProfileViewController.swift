@@ -25,6 +25,7 @@ class UserProfileViewController: BaseViewController {
         var metricsList:Array<UserMatricsListModel> = Array<UserMatricsListModel>()
         return metricsList
     }()
+    var userProfileModel:UserCenterModel?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -42,6 +43,7 @@ class UserProfileViewController: BaseViewController {
     }
     func fetchTrainerList(){
         Backend.shared.fetchUserProfileModel(userId: LoginTools.sharedTools.userId()) { model in
+            self.userProfileModel = model
             let list:Array<UserCenterItem> = model.subscriptions.items
             self.subscriptionList.removeAll()
             for item:UserCenterItem in list{
@@ -178,6 +180,9 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 0:
             let cell:UserProfileTopCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileTopCell", for: indexPath) as! UserProfileTopCell
             cell.delegate = self
+            if let model = self.userProfileModel {
+                cell.setModel(model: model)
+            }
             return cell
         case 1:
             let cell:UserProfileTrainerListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileTrainerListCell", for: indexPath) as! UserProfileTrainerListCell
@@ -203,8 +208,12 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         switch indexPath.section {
         case 0:
-            let descHeight = heightForView(text: LoginTools.sharedTools.userInfo().descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-            return CGSize.init(width: kScreenWidth, height: 265 + descHeight)
+            if let model = self.userProfileModel {
+                let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
+                return CGSize.init(width: kScreenWidth, height: 265 + descHeight)
+            }else{
+                return CGSize.init(width: kScreenWidth, height: 265)
+            }
         case 1:
             return CGSize.init(width: 54, height: 54)
         case 2:
@@ -248,7 +257,23 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        switch indexPath.section {
+        case 0:
+            break;
+        case 1:
+            let model:UserCenterTrainer = self.subscriptionList[indexPath.row];
+            let vc:TrainerDetailViewController = TrainerDetailViewController()
+            vc.trainerId = model.id
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        default:
+            break;
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

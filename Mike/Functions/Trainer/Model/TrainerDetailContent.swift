@@ -1,24 +1,25 @@
 //
-//	UserCenterContent.swift
+//	TrainerDetailContent.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class UserCenterContent : NSObject, NSCoding{
+class TrainerDetailContent : NSObject, NSCoding{
 
-	var nextToken : String?
+	var items : [UserCenterContent]!
 	var contentName : String!
+	var creatorID : String!
 	var descriptionField : String!
 	var isDemo : Bool!
-	var length : Float!
+	var length : Int!
 	var level : Int!
 	var preview : String?
-	var segments : String?
+	var segments : String!
 	var thumbnail : String!
 	var title : String!
 	var viewCount : Int?
-	var createdAt : String?
+	var createdAt : String!
 	var id : String!
 	var owner : String!
 	var updatedAt : String!
@@ -28,11 +29,18 @@ class UserCenterContent : NSObject, NSCoding{
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: [String:Any]){
-		nextToken = dictionary["nextToken"] as? String
+		items = [UserCenterContent]()
+		if let itemsArray = dictionary["items"] as? [[String:Any]]{
+			for dic in itemsArray{
+				let value = UserCenterContent(fromDictionary: dic)
+				items.append(value)
+			}
+		}
 		contentName = dictionary["ContentName"] as? String
+		creatorID = dictionary["CreatorID"] as? String
 		descriptionField = dictionary["Description"] as? String
 		isDemo = dictionary["IsDemo"] as? Bool
-		length = dictionary["Length"] as? Float
+		length = dictionary["Length"] as? Int
 		level = dictionary["Level"] as? Int
 		preview = dictionary["Preview"] as? String
 		segments = dictionary["Segments"] as? String
@@ -51,11 +59,18 @@ class UserCenterContent : NSObject, NSCoding{
 	func toDictionary() -> [String:Any]
 	{
 		var dictionary = [String:Any]()
-		if nextToken != nil{
-			dictionary["nextToken"] = nextToken
+		if items != nil{
+			var dictionaryElements = [[String:Any]]()
+			for itemsElement in items {
+				dictionaryElements.append(itemsElement.toDictionary())
+			}
+			dictionary["items"] = dictionaryElements
 		}
 		if contentName != nil{
 			dictionary["ContentName"] = contentName
+		}
+		if creatorID != nil{
+			dictionary["CreatorID"] = creatorID
 		}
 		if descriptionField != nil{
 			dictionary["Description"] = descriptionField
@@ -105,11 +120,12 @@ class UserCenterContent : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         nextToken = aDecoder.decodeObject(forKey: "nextToken") as? String
+         items = aDecoder.decodeObject(forKey :"items") as? [UserCenterContent]
          contentName = aDecoder.decodeObject(forKey: "ContentName") as? String
+         creatorID = aDecoder.decodeObject(forKey: "CreatorID") as? String
          descriptionField = aDecoder.decodeObject(forKey: "Description") as? String
          isDemo = aDecoder.decodeObject(forKey: "IsDemo") as? Bool
-         length = aDecoder.decodeObject(forKey: "Length") as? Float
+         length = aDecoder.decodeObject(forKey: "Length") as? Int
          level = aDecoder.decodeObject(forKey: "Level") as? Int
          preview = aDecoder.decodeObject(forKey: "Preview") as? String
          segments = aDecoder.decodeObject(forKey: "Segments") as? String
@@ -129,11 +145,14 @@ class UserCenterContent : NSObject, NSCoding{
     */
     @objc func encode(with aCoder: NSCoder)
 	{
-		if nextToken != nil{
-			aCoder.encode(nextToken, forKey: "nextToken")
+		if items != nil{
+			aCoder.encode(items, forKey: "items")
 		}
 		if contentName != nil{
 			aCoder.encode(contentName, forKey: "ContentName")
+		}
+		if creatorID != nil{
+			aCoder.encode(creatorID, forKey: "CreatorID")
 		}
 		if descriptionField != nil{
 			aCoder.encode(descriptionField, forKey: "Description")

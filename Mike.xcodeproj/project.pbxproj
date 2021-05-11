@@ -55,6 +55,14 @@
 		B67716132647F6190035A50C /* UserContentSegmentListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67716112647F6190035A50C /* UserContentSegmentListCell.xib */; };
 		B67716152647F8110035A50C /* UserContentSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716142647F8110035A50C /* UserContentSectionTitleView.swift */; };
 		B67716172647F81F0035A50C /* UserContentSectionTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67716162647F81F0035A50C /* UserContentSectionTitleView.xib */; };
+		B677161D264A18760035A50C /* TrainerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B677161B264A18760035A50C /* TrainerDetailViewController.swift */; };
+		B677161E264A18760035A50C /* TrainerDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B677161C264A18760035A50C /* TrainerDetailViewController.xib */; };
+		B6771624264A18A30035A50C /* TrainerDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6771620264A18A30035A50C /* TrainerDetailModel.swift */; };
+		B6771625264A18A30035A50C /* TrainerDetailContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6771621264A18A30035A50C /* TrainerDetailContent.swift */; };
+		B6771626264A18A30035A50C /* TrainerDetailFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6771622264A18A30035A50C /* TrainerDetailFavorite.swift */; };
+		B6771629264A1A350035A50C /* TrainerBaseInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6771627264A1A350035A50C /* TrainerBaseInfoCell.swift */; };
+		B677162A264A1A350035A50C /* TrainerBaseInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6771628264A1A350035A50C /* TrainerBaseInfoCell.xib */; };
+		B677162C264A21B20035A50C /* AgeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B677162B264A21B20035A50C /* AgeUtils.swift */; };
 		B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262AB2639A3F000A32D5C /* ApiMacro.swift */; };
 		B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262B02639AB7200A32D5C /* VideoViewController.swift */; };
 		B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68262B12639AB7200A32D5C /* VideoViewController.xib */; };
@@ -168,6 +176,14 @@
 		B67716112647F6190035A50C /* UserContentSegmentListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserContentSegmentListCell.xib; sourceTree = "<group>"; };
 		B67716142647F8110035A50C /* UserContentSectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentSectionTitleView.swift; sourceTree = "<group>"; };
 		B67716162647F81F0035A50C /* UserContentSectionTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserContentSectionTitleView.xib; sourceTree = "<group>"; };
+		B677161B264A18760035A50C /* TrainerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerDetailViewController.swift; sourceTree = "<group>"; };
+		B677161C264A18760035A50C /* TrainerDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainerDetailViewController.xib; sourceTree = "<group>"; };
+		B6771620264A18A30035A50C /* TrainerDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainerDetailModel.swift; sourceTree = "<group>"; };
+		B6771621264A18A30035A50C /* TrainerDetailContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainerDetailContent.swift; sourceTree = "<group>"; };
+		B6771622264A18A30035A50C /* TrainerDetailFavorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainerDetailFavorite.swift; sourceTree = "<group>"; };
+		B6771627264A1A350035A50C /* TrainerBaseInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerBaseInfoCell.swift; sourceTree = "<group>"; };
+		B6771628264A1A350035A50C /* TrainerBaseInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainerBaseInfoCell.xib; sourceTree = "<group>"; };
+		B677162B264A21B20035A50C /* AgeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeUtils.swift; sourceTree = "<group>"; };
 		B68262AB2639A3F000A32D5C /* ApiMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiMacro.swift; sourceTree = "<group>"; };
 		B68262B02639AB7200A32D5C /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		B68262B12639AB7200A32D5C /* VideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -313,6 +329,36 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B6771618264A18460035A50C /* Trainer */ = {
+			isa = PBXGroup;
+			children = (
+				B677161A264A18570035A50C /* Cell */,
+				B6771619264A184E0035A50C /* Model */,
+				B677161B264A18760035A50C /* TrainerDetailViewController.swift */,
+				B677161C264A18760035A50C /* TrainerDetailViewController.xib */,
+			);
+			path = Trainer;
+			sourceTree = "<group>";
+		};
+		B6771619264A184E0035A50C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B6771621264A18A30035A50C /* TrainerDetailContent.swift */,
+				B6771622264A18A30035A50C /* TrainerDetailFavorite.swift */,
+				B6771620264A18A30035A50C /* TrainerDetailModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B677161A264A18570035A50C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B6771627264A1A350035A50C /* TrainerBaseInfoCell.swift */,
+				B6771628264A1A350035A50C /* TrainerBaseInfoCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		B68262AF2639AB5B00A32D5C /* Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +386,7 @@
 				B682632C264280EE00A32D5C /* DateExtention.swift */,
 				B63749F1264694C800502913 /* TimeFormatUtils.swift */,
 				B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */,
+				B677162B264A21B20035A50C /* AgeUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -475,6 +522,7 @@
 		B69103BE26381EC0005F2ACD /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				B6771618264A18460035A50C /* Trainer */,
 				B68262FB2642479900A32D5C /* User */,
 				B68262F8264245AA00A32D5C /* Root */,
 				B68262AF2639AB5B00A32D5C /* Video */,
@@ -689,6 +737,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B677162A264A1A350035A50C /* TrainerBaseInfoCell.xib in Resources */,
 				B67716132647F6190035A50C /* UserContentSegmentListCell.xib in Resources */,
 				C1DEDD8A263746CB00F66A7C /* awsconfiguration.json in Resources */,
 				C1DEDD7E2637460900F66A7C /* Preview Assets.xcassets in Resources */,
@@ -728,6 +777,7 @@
 				B637497B26444D9F00502913 /* UserProfileTopCell.xib in Resources */,
 				B69103D426381EC0005F2ACD /* HomeSeeAllCoursesView.xib in Resources */,
 				B682631626424C6A00A32D5C /* Nunito-Light.ttf in Resources */,
+				B677161E264A18760035A50C /* TrainerDetailViewController.xib in Resources */,
 				C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */,
 				B682632A2642729200A32D5C /* HomeListViewController.xib in Resources */,
 			);
@@ -740,10 +790,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6771625264A18A30035A50C /* TrainerDetailContent.swift in Sources */,
 				B63749EF264596EA00502913 /* UserCenterContent.swift in Sources */,
 				B637496A264446A800502913 /* UserProfileTrainerListCell.swift in Sources */,
 				C1DEDD9E2637524D00F66A7C /* Backend.swift in Sources */,
 				B63749EC264596EA00502913 /* UserCenterItem.swift in Sources */,
+				B677162C264A21B20035A50C /* AgeUtils.swift in Sources */,
 				B68262FE264247B800A32D5C /* UserProfileViewController.swift in Sources */,
 				B682632D264280EE00A32D5C /* DateExtention.swift in Sources */,
 				B63749E42645820300502913 /* UserProfileFavHorizonListCell.swift in Sources */,
@@ -763,14 +815,17 @@
 				B682632B2642729200A32D5C /* HomeListViewController.swift in Sources */,
 				B677160E2647F4F80035A50C /* UserContentDetailTopTabCell.swift in Sources */,
 				B68262EA263C4AAD00A32D5C /* UserContentListModel.swift in Sources */,
+				B6771626264A18A30035A50C /* TrainerDetailFavorite.swift in Sources */,
 				B68262F1263C4F4000A32D5C /* UserSubscriptionTrainerListItem.swift in Sources */,
 				B68262BF263A3E2300A32D5C /* GraphQLRequestExt.swift in Sources */,
 				B68262BC2639B16100A32D5C /* StringUtils.swift in Sources */,
+				B6771629264A1A350035A50C /* TrainerBaseInfoCell.swift in Sources */,
 				B69103DB26381EC0005F2ACD /* LoginSecondViewController.swift in Sources */,
 				B677160A2647EFF90035A50C /* UserContentDetailViewController.swift in Sources */,
 				B68262E5263C05CB00A32D5C /* BaseViewController.swift in Sources */,
 				B68262BB2639B16100A32D5C /* UIColorExtension.swift in Sources */,
 				B682632326424D2800A32D5C /* FontConst.swift in Sources */,
+				B6771624264A18A30035A50C /* TrainerDetailModel.swift in Sources */,
 				B69103D726381EC0005F2ACD /* HomeBannerColListCell.swift in Sources */,
 				B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */,
 				5E9EE731278E41A6BFDCE28A /* AmplifyModels.swift in Sources */,
@@ -778,6 +833,7 @@
 				B63749F2264694C800502913 /* TimeFormatUtils.swift in Sources */,
 				B68262F2263C4F4000A32D5C /* UserSubscriptionTrainerListContent.swift in Sources */,
 				B63749F0264596EA00502913 /* UserCenterModel.swift in Sources */,
+				B677161D264A18760035A50C /* TrainerDetailViewController.swift in Sources */,
 				661922BAC3E9493399943D1A /* UserContent.swift in Sources */,
 				B637496E264446CE00502913 /* UserProfileSectionTitleView.swift in Sources */,
 				B69103D826381EC0005F2ACD /* HomeSeeAllCoursesView.swift in Sources */,

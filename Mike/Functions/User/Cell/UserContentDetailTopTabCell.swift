@@ -26,7 +26,7 @@ class UserContentDetailTopTabCell: UITableViewCell {
     }
     func setFavModel(favModel:UserCenterContent){
         self.titleLab.text = "\(favModel.title ?? "")"
-        self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: favModel.createdAt))"
+        self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: favModel.createdAt ?? ""))"
         if StringUtils.isBlank(value: favModel.thumbnail) {
             self.bigImg.image = UIImage(named: "logo")
         }else{

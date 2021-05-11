@@ -308,4 +308,34 @@ class Backend {
             }
         }
     }
+    //fetch Trainer's Profile
+    func fetchTrainerDetail(trainerId:String?,suc:@escaping (_ trainerDetail:TrainerDetailModel)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchTrainerDetail(byId: trainerId ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        return
+                    }
+                    suc(TrainerDetailModel(fromDictionary: subDic as! [String : Any]))
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("Got failed result with \(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("Got failed event with error \(error)")
+            }
+        }
+    }
 }
