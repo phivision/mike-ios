@@ -10,14 +10,41 @@ import AVKit
 
 class VideoViewController: UIViewController {
     var videoName:String?
-    @IBOutlet weak var playerView:ZZPlayerView!
+    @IBOutlet weak var standardView: UIImageView!
+    @IBOutlet weak var playerView:UIImageView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var backBtn:UIButton!
-    var playVC:AVPlayerViewController!
-    var palyerItem:AVPlayerItem!
+    var videoModel:UserCenterContent!
+//    var playVC:AVPlayerViewController!
+//    var palyerItem:AVPlayerItem!
     var captureSession:AVCaptureSession = AVCaptureSession()
-    
+    lazy var playerManager:ZFAVPlayerManager = {
+        var playerManager:ZFAVPlayerManager = ZFAVPlayerManager()
+        playerManager.shouldAutoPlay = false
+        return playerManager
+    }()
+    lazy var player:ZFPlayerController = {
+        var player:ZFPlayerController = ZFPlayerController(playerManager: self.playerManager, containerView: self.playerView)
+//        player.controlView = controlView
+        player.pauseWhenAppResignActive = true
+        return player
+    }()
+    lazy var controlView:ZFPlayerControlView = {
+        var controlView:ZFPlayerControlView = ZFPlayerControlView()
+        controlView.fastViewAnimated = true
+        controlView.autoHiddenTimeInterval = 5
+        controlView.autoFadeTimeInterval = 0.5
+        controlView.prepareShowLoading = true
+        controlView.prepareShowControlView = false
+        controlView.fullScreenMode = .portrait
+        return controlView
+    }()
+    @IBOutlet weak var videoHeightRatio:NSLayoutConstraint!
+    @IBOutlet weak var cameraHeightRatio:NSLayoutConstraint!
+    @IBOutlet weak var playBtn:UIButton!
+    @IBOutlet weak var controlArea:UIView!
     var isLoaded:Bool = false
+    var showCamera:Bool = false
 //    var player:AVPlayer!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,20 +56,62 @@ class VideoViewController: UIViewController {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
         if self.isLoaded == false {
-            self.configView()
             self.cameraEnable()
-            self.addPlayerView()
+            self.configVideoView()
             self.isLoaded = true
         }
         
     }
-    func configView(){
-        self.backBtn.layer.cornerRadius = 22
-        self.backBtn.backgroundColor = HexRGBAlpha(0xffffff,0.3)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        self.playerManager.stop()
+    }
+    func configVideoView(){
+        self.controlArea.layer.cornerRadius = 10
+        self.controlArea.clipsToBounds = true
+        self.videoHeightRatio.constant = self.standardView.height
+        self.cameraHeightRatio.constant = 0
+        self.playBtn.layer.cornerRadius = 10
+        self.player.orientationDidChanged = { player,isFullScreen in
+            
+        }
+        self.player.playerDidToEnd = { asset in
+            self.playerManager.pause()
+            self.playBtn.isSelected = false
+        }
+        self.player.playerPlayTimeChanged = { asset,curTime,duration in
+            
+        }
+        self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
     }
     @IBAction func backBtnPressed(){
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
+    @IBAction func playBtnPressed(){
+        if self.playerManager.isPlaying == true {
+            self.playBtn.isSelected = false
+            self.playerManager.pause()
+        }else{
+            self.playBtn.isSelected = true
+            self.playerManager.play()
+        }
+    }
+    @IBAction func cameraBtnPressed(){
+        if self.showCamera == false {
+            self.showCamera = true
+            UIView.animate(withDuration: 0.3) {
+                self.videoHeightRatio.constant = self.standardView.height/2
+                self.cameraHeightRatio.constant = self.standardView.height/2
+            }
+        }else{
+            self.showCamera = false
+            UIView.animate(withDuration: 0.3) {
+                self.videoHeightRatio.constant = self.standardView.height
+                self.cameraHeightRatio.constant = 0
+            }
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -87,10 +156,10 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
             //添加到session
             self.captureSession.addOutput(output)
             
-            //创建一个显示用的layer
+//            创建一个显示用的layer
             let previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
             previewLayer.videoGravity = AVLayerVideoGravity(rawValue: "AVLayerVideoGravityResizeAspect")
-            previewLayer.frame = self.imageView.bounds
+            previewLayer.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: self.standardView.height/2)
             self.imageView.layer.addSublayer(previewLayer)
             
             //启动数据流
@@ -118,37 +187,5 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
     }
 }
 extension VideoViewController{
-    func addPlayerView(){
-        //通知拿到播放结束的时间节点并且继续play
-        NotificationCenter.default.addObserver(self, selector: #selector(goBackFinished), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-//
-        
-        self.palyerItem = AVPlayerItem(url: NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL)
-        
-        self.playVC = AVPlayerViewController()
-        self.playVC.view.frame = CGRect(x: 0, y: 0, width: self.playerView.width, height: self.playerView.height)
-        self.playVC.showsPlaybackControls = true
-        self.playVC.player = AVPlayer.init(playerItem: self.palyerItem);
-        self.playerView.addSubview(self.playVC.view)
-        self.playerView.playerLayer?.videoGravity = .resizeAspectFill
-        //创建ACplayer：负责视频播放
-//        self.player = AVPlayer.init(playerItem: self.palyerItem)
-//        self.player.rate = 1.0//播放速度 播放前设置
-        //创建显示视频的图层
-//        let playerLayer = AVPlayerLayer.init(player: self.player)
-//        playerLayer.videoGravity = .resizeAspect
-//        playerLayer.frame = self.view.bounds
-//        self.playerView.playerLayer = playerLayer;
-        //播放
-        self.playVC.player?.play()
-    }
     
-    @objc func goBackFinished() {
-        replay()
-    }
-    
-    func replay() {
-        self.playVC.player?.seek(to: CMTimeMake(value: 0, timescale: 1))
-        self.playVC.player?.pause()
-    }
 }

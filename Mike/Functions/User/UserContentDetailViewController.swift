@@ -14,6 +14,7 @@ class UserContentDetailViewController: BaseViewController {
     @IBOutlet weak var descLab:UILabel!
     @IBOutlet weak var contentView:UIView!
     @IBOutlet weak var mainTableView:UITableView!
+    typealias BlackName = ()
     var trainerId:String!
     var userContentModel:UserCenterContent!
     var trainerInfoModel:UserCenterModel?
@@ -157,6 +158,13 @@ extension UserContentDetailViewController:UITableViewDelegate,UITableViewDataSou
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if indexPath.section == 0 {
+            DispatchQueue.main.async {
+                let vc:VideoViewController = VideoViewController()
+                vc.videoModel = self.userContentModel
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
     }
 }

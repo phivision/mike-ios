@@ -8,3 +8,4 @@
 import Foundation
 
 let kVideoHostUrl = "https://dtl1jse5ko1yc.cloudfront.net/output/hls/"
+
