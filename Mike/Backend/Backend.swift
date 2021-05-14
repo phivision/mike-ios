@@ -129,9 +129,13 @@ class Backend {
                     let identityId = try identityProvider.getIdentityId().get()
                     print("User sub - \(usersub) and identity id \(identityId)")
                     self.fetchUserProfile(userId: usersub, suc: suc, fail: fail)
+                }else{
+                    print("Fetch auth session failed")
+                    fail("Fetch auth session failed")
                 }
             } catch {
                 print("Fetch auth session failed with error - \(error)")
+                fail("\(error)")
             }
         }
     }

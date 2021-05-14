@@ -190,7 +190,6 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
 //        let rotation : UIInterfaceOrientationMask = [.landscapeLeft]
 //                kAppdelegate?.blockRotation = rotation
         let videoVC = VideoViewController()
-        videoVC.videoName = "IMG4215b2a4a4004f4f44dabfa88b5030c8da9c.MOV";
         videoVC.navigationController?.isNavigationBarHidden = true
         self.navigationController?.pushViewController(videoVC, animated: true)
         

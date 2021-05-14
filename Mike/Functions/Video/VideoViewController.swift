@@ -7,26 +7,50 @@
 
 import UIKit
 import AVKit
-
+enum VideoPlayType {
+    case stop
+    case pause
+    case play
+    case end
+}
 class VideoViewController: UIViewController {
-    var videoName:String?
-    @IBOutlet weak var standardView: UIImageView!
-    @IBOutlet weak var playerView:UIImageView!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var backBtn:UIButton!
+    //model for before controller
     var videoModel:UserCenterContent!
-//    var playVC:AVPlayerViewController!
-//    var palyerItem:AVPlayerItem!
-    var captureSession:AVCaptureSession = AVCaptureSession()
+    //standardView
+    @IBOutlet weak var standardView: UIImageView!
+    //split video and cameraView
+    @IBOutlet weak var playerView:UIImageView!
+    @IBOutlet weak var cameraView: UIImageView!
+    //split video and camera height layoutconstraint
+    @IBOutlet weak var videoHeightRatio:NSLayoutConstraint!
+    @IBOutlet weak var cameraHeightRatio:NSLayoutConstraint!
+    //back btn for poping
+    @IBOutlet weak var backBtn:UIButton!
+    //control view
+    @IBOutlet weak var controlArea:UIView!
+    @IBOutlet weak var playBtn:UIButton!
+    @IBOutlet weak var segmentTitle:UILabel!
+    @IBOutlet weak var segmentTime:UILabel!
+    //video state
+    var videoState:VideoPlayType = .stop
+    lazy var segList:Array<UserContentSegmentListModel> = {
+        var segList:Array<UserContentSegmentListModel> = Array<UserContentSegmentListModel>()
+        return segList
+    }()
+    lazy var segTimeList:Array<Int> = {
+        var segTimeList:Array<Int> = Array<Int>()
+        return segTimeList
+    }()
     lazy var playerManager:ZFAVPlayerManager = {
         var playerManager:ZFAVPlayerManager = ZFAVPlayerManager()
-        playerManager.shouldAutoPlay = false
+        playerManager.shouldAutoPlay = true
         return playerManager
     }()
     lazy var player:ZFPlayerController = {
         var player:ZFPlayerController = ZFPlayerController(playerManager: self.playerManager, containerView: self.playerView)
-//        player.controlView = controlView
+        player.controlView = controlView
         player.pauseWhenAppResignActive = true
+        player.allowOrentitaionRotation = false
         return player
     }()
     lazy var controlView:ZFPlayerControlView = {
@@ -35,28 +59,35 @@ class VideoViewController: UIViewController {
         controlView.autoHiddenTimeInterval = 5
         controlView.autoFadeTimeInterval = 0.5
         controlView.prepareShowLoading = true
-        controlView.prepareShowControlView = false
+        controlView.prepareShowControlView = true
         controlView.fullScreenMode = .portrait
+        controlView.portraitControlView.fullScreenBtn.isHidden = true
+        controlView.portraitControlView.bottomToolView.isHidden = true
         return controlView
     }()
-    @IBOutlet weak var videoHeightRatio:NSLayoutConstraint!
-    @IBOutlet weak var cameraHeightRatio:NSLayoutConstraint!
-    @IBOutlet weak var playBtn:UIButton!
-    @IBOutlet weak var controlArea:UIView!
+    //cameraLayer relation property
+    private let captureSession = AVCaptureSession()
+    private var videoPreviewLayer: AVCaptureVideoPreviewLayer! = nil
+    private let videoDataOutput = AVCaptureVideoDataOutput()
+    private let videoDataOutputQueue = DispatchQueue(label: "VideoDataOutput", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
+    private var videoFrameSize: CGSize = .zero
+    //is loaded
     var isLoaded:Bool = false
+    //show camera
     var showCamera:Bool = false
+    
 //    var player:AVPlayer!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
         if self.isLoaded == false {
-            self.cameraEnable()
+            self.configData()
+            self.configCamera()
             self.configVideoView()
             self.isLoaded = true
         }
@@ -65,6 +96,28 @@ class VideoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         self.playerManager.stop()
+        //关闭数据流
+        self.captureSession.stopRunning()
+    }
+    func configData(){
+        let segList:NSArray = JSONUtils.getArrayFromJSONString(jsonString: self.videoModel.segments ?? "")
+        print("\(segList)");
+        for segItem in segList {
+            if let segDic = segItem as? NSDictionary {
+                let model = UserContentSegmentListModel(fromDictionary: segDic as? [String : Any] ?? [:])
+                self.segList.append(model)
+                var finalTime:Int = 0
+                let timeArr = model.timestamp.components(separatedBy: ":")
+                if timeArr.count > 1 {
+                    finalTime += (Int(timeArr[0]) ?? 0)*60
+                    finalTime += Int(timeArr[1]) ?? 0
+                }else{
+                    finalTime += Int(timeArr[0]) ?? 0
+                }
+                self.segTimeList.append(finalTime)
+            }
+        }
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(self.segTimeList)");
     }
     func configVideoView(){
         self.controlArea.layer.cornerRadius = 10
@@ -72,39 +125,59 @@ class VideoViewController: UIViewController {
         self.videoHeightRatio.constant = self.standardView.height
         self.cameraHeightRatio.constant = 0
         self.playBtn.layer.cornerRadius = 10
-        self.player.orientationDidChanged = { player,isFullScreen in
-            
-        }
         self.player.playerDidToEnd = { asset in
             self.playerManager.pause()
             self.playBtn.isSelected = false
+            self.videoState = .end
+            self.handlePlayBtn(byState: self.videoState)
         }
         self.player.playerPlayTimeChanged = { asset,curTime,duration in
-            
+            self.handleSegmentTime(currentTime: curTime)
         }
-        self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
+        self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
+        self.videoState = .play
+        self.handlePlayBtn(byState: self.videoState)
+        self.playerManager.play()
+//        self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
     }
     @IBAction func backBtnPressed(){
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func playBtnPressed(){
-        if self.playerManager.isPlaying == true {
-            self.playBtn.isSelected = false
-            self.playerManager.pause()
-        }else{
-            self.playBtn.isSelected = true
+        switch self.videoState {
+        case .stop:
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
             self.playerManager.play()
+            break
+        case .pause:
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.play()
+            break
+        case .end:
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.replay()
+            break
+        case .play:
+            self.videoState = .pause
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.pause()
+            break
         }
     }
     @IBAction func cameraBtnPressed(){
         if self.showCamera == false {
             self.showCamera = true
+            self.startCapture()
             UIView.animate(withDuration: 0.3) {
                 self.videoHeightRatio.constant = self.standardView.height/2
                 self.cameraHeightRatio.constant = self.standardView.height/2
             }
         }else{
             self.showCamera = false
+            self.stopCapture()
             UIView.animate(withDuration: 0.3) {
                 self.videoHeightRatio.constant = self.standardView.height
                 self.cameraHeightRatio.constant = 0
@@ -126,66 +199,94 @@ class VideoViewController: UIViewController {
 extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
     
     //检测相机可用性
-    func cameraEnable() {
+    func configCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.camera){
             //获取提供数据的设备以及数据类型
-//            let device = AVCaptureDevice.default(for: AVMediaType.video)
-            let devices = AVCaptureDevice.devices()
-            //1.1默认获取前置摄像头
-            guard let device = devices.filter({$0.position == .front}).first else {
-                 print("get front video AVCaptureDevice  failed!")
+            guard let videoDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .front).devices.first else {
                 return
             }
-            //初始化 AVCaptureSession
-            self.captureSession.sessionPreset = AVCaptureSession.Preset.photo
+            self.captureSession.beginConfiguration()
+            self.captureSession.sessionPreset = .vga640x480
             do{
-                try self.captureSession.addInput(AVCaptureDeviceInput(device: device))
+                try self.captureSession.addInput(AVCaptureDeviceInput(device: videoDevice))
             }
             catch {
                 print("error: \(error.localizedDescription)")
             }
+            if captureSession.canAddOutput(videoDataOutput) {
+                captureSession.addOutput(videoDataOutput)
+                videoDataOutput.alwaysDiscardsLateVideoFrames = true
+                videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
+                videoDataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
+            } else {
+                print("Could not add video data output to the session")
+                captureSession.commitConfiguration()
+                return
+            }
+             
+            let captureConnection = videoDataOutput.connection(with: .video)
+            captureConnection?.isEnabled = true
+            captureConnection?.videoOrientation = .portrait
+            captureSession.commitConfiguration()
             
-            
-            //设置输出流
-            let output = AVCaptureVideoDataOutput()
-            let cameraQueue = DispatchQueue.init(label: "cameraQueue")
-            //设置代理
-            output.setSampleBufferDelegate(self, queue: cameraQueue)
-            //视频流质量设置
-            output.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
-            //添加到session
-            self.captureSession.addOutput(output)
-            
-//            创建一个显示用的layer
-            let previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-            previewLayer.videoGravity = AVLayerVideoGravity(rawValue: "AVLayerVideoGravityResizeAspect")
-            previewLayer.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: self.standardView.height/2)
-            self.imageView.layer.addSublayer(previewLayer)
-            
-            //启动数据流
-            self.captureSession.startRunning()
-            //关闭数据流
-            //self.captureSession.startRunning()
+            self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            self.videoPreviewLayer.videoGravity = .resizeAspectFill
+                    
+            videoPreviewLayer.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: self.standardView.height/2)
+            self.cameraView.layer.addSublayer(videoPreviewLayer)
         } else {
             print("不支持拍照")
         }
     }
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        DispatchQueue.main.async {
-            // 导出照片
-//            let image = self.imageConvert(sampleBuffer: sampleBuffer)
-//            self.imageView.image = image
+    func startCapture() {
+        if !captureSession.isRunning {
+            captureSession.startRunning()
         }
     }
+    func stopCapture() {
+        if captureSession.isRunning {
+            captureSession.stopRunning()
+        }
+    }
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
-    /// CMSampleBufferRef=>UIImage
-    func imageConvert(sampleBuffer:CMSampleBuffer?) -> UIImage? {
-        guard sampleBuffer != nil && CMSampleBufferIsValid(sampleBuffer!) == true else { return nil }
-        let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer!)
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer!)
-        return UIImage(ciImage: ciImage)
     }
 }
 extension VideoViewController{
-    
+   func handlePlayBtn(byState:VideoPlayType){
+        switch byState {
+        case .stop:
+            self.playBtn.setImage(UIImage(named: "icon-play"), for: .normal)
+            break
+        case .pause:
+            self.playBtn.setImage(UIImage(named: "icon-play"), for: .normal)
+            break
+        case .end:
+            self.playBtn.setImage(UIImage(named: "icon-replay"), for: .normal)
+            break
+        case .play:
+            self.playBtn.setImage(UIImage(named: "icon-pause"), for: .normal)
+            break
+        }
+    }
+    func handleSegmentTime(currentTime:TimeInterval){
+        if self.segList.count > 0 {
+            var selectIndex = 0
+            for i in 0 ..< self.segTimeList.count {
+                let segTime:Int = self.segTimeList[i]
+                if currentTime > Double(segTime) && i < self.segTimeList.count - 1 {
+                    continue
+                }else{
+                    selectIndex = i
+                    break
+                }
+            }
+            let model:UserContentSegmentListModel = self.segList[selectIndex]
+            self.segmentTitle.text = "\(model.name ?? "")"
+            self.segmentTime.text = "\(model.timestamp ?? "")"
+        }else{
+            self.segmentTitle.text = "No Segments"
+            self.segmentTime.text = ""
+        }
+    }
 }
