@@ -37,15 +37,19 @@ class TrainerDetailViewController: BaseViewController {
     func fetchTrainerList(){
         Backend.shared.fetchTrainerDetail(trainerId:self.trainerId ?? "") { model in
             self.trainerModel = model
-            let list:[UserCenterContent] = model.contents.items
-            self.contentList.removeAll()
-            for item:UserCenterContent in list{
-                self.contentList.append(item)
+            if let contentModel = model.contents{
+                let list:[UserCenterContent] = contentModel.items
+                self.contentList.removeAll()
+                for item:UserCenterContent in list{
+                    self.contentList.append(item)
+                }
             }
-            let flist:[UserCenterItem] = model.favorites.items
-            self.favList.removeAll()
-            for fitem:UserCenterItem in flist{
-                self.favList.append(fitem.content)
+            if let favModel = model.favorites{
+                let flist:[UserCenterItem] = favModel.items
+                self.favList.removeAll()
+                for fitem:UserCenterItem in flist{
+                    self.favList.append(fitem.content)
+                }
             }
             DispatchQueue.main.async {
                 self.mainCollection.reloadData()

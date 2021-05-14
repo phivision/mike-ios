@@ -282,6 +282,49 @@ class Backend {
             }
         }
     }
+    // MARK: - fetch FavList for user profile page
+    func fetchUserFavList(userId:String?,suc:@escaping (_ contentList:Array<UserCenterContent>)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchUserFavList(byId: userId ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        return
+                    }
+                    guard let favDic = subDic["Favorites"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = favDic["items"] as? NSArray else {
+                        return
+                    }
+                    print("~~~~~~~~~~~~\(itemList)")
+                    var contentList = Array<UserCenterContent>()
+                    for item in itemList {
+                        if let itemDic = item as? NSDictionary {
+                            contentList.append(UserCenterContent(fromDictionary: itemDic["Content"] as! [String : Any]))
+                        }
+                    }
+                    suc(contentList)
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("Got failed result with \(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("Got failed event with error \(error)")
+            }
+        }
+    }
     //fetch UserProfile For Trainer Simple Info
     func fetchTrainerSimpleInfo(userId:String?,suc:@escaping (_ userCenterModel:UserCenterModel)->Void,fail:@escaping (_ msg:String)->Void){
         Amplify.API.query(request: .fetchSimpleTrainerModel(byId: userId ?? "")){

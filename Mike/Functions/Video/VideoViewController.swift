@@ -24,6 +24,7 @@ class VideoViewController: UIViewController {
     //split video and camera height layoutconstraint
     @IBOutlet weak var videoHeightRatio:NSLayoutConstraint!
     @IBOutlet weak var cameraHeightRatio:NSLayoutConstraint!
+    @IBOutlet weak var controlViewLeftMargin:NSLayoutConstraint!
     //back btn for poping
     @IBOutlet weak var backBtn:UIButton!
     //control view
@@ -60,7 +61,7 @@ class VideoViewController: UIViewController {
         controlView.autoFadeTimeInterval = 0.5
         controlView.prepareShowLoading = true
         controlView.prepareShowControlView = true
-        controlView.fullScreenMode = .portrait
+//        controlView.fullScreenMode = .portrait
         controlView.portraitControlView.fullScreenBtn.isHidden = true
         controlView.portraitControlView.bottomToolView.isHidden = true
         return controlView
@@ -98,6 +99,8 @@ class VideoViewController: UIViewController {
         self.playerManager.stop()
         //关闭数据流
         self.captureSession.stopRunning()
+        let rotation : UIInterfaceOrientationMask = [.portrait]
+        kAppdelegate?.blockRotation = rotation
     }
     func configData(){
         let segList:NSArray = JSONUtils.getArrayFromJSONString(jsonString: self.videoModel.segments ?? "")
@@ -122,7 +125,7 @@ class VideoViewController: UIViewController {
     func configVideoView(){
         self.controlArea.layer.cornerRadius = 10
         self.controlArea.clipsToBounds = true
-        self.videoHeightRatio.constant = self.standardView.height
+        self.videoHeightRatio.constant = self.standardView.width
         self.cameraHeightRatio.constant = 0
         self.playBtn.layer.cornerRadius = 10
         self.player.playerDidToEnd = { asset in
@@ -171,15 +174,21 @@ class VideoViewController: UIViewController {
         if self.showCamera == false {
             self.showCamera = true
             self.startCapture()
+            let rotation : UIInterfaceOrientationMask = [.landscapeLeft]
+            kAppdelegate?.blockRotation = rotation
             UIView.animate(withDuration: 0.3) {
-                self.videoHeightRatio.constant = self.standardView.height/2
-                self.cameraHeightRatio.constant = self.standardView.height/2
+                self.controlViewLeftMargin.constant = self.standardView.width/2 + 28
+                self.videoHeightRatio.constant = self.standardView.width/2
+                self.cameraHeightRatio.constant = self.standardView.width/2
             }
         }else{
             self.showCamera = false
             self.stopCapture()
+            let rotation : UIInterfaceOrientationMask = [.portrait]
+            kAppdelegate?.blockRotation = rotation
             UIView.animate(withDuration: 0.3) {
-                self.videoHeightRatio.constant = self.standardView.height
+                self.controlViewLeftMargin.constant = 28
+                self.videoHeightRatio.constant = self.standardView.width
                 self.cameraHeightRatio.constant = 0
             }
         }
@@ -226,14 +235,14 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
              
             let captureConnection = videoDataOutput.connection(with: .video)
             captureConnection?.isEnabled = true
-            captureConnection?.videoOrientation = .portrait
+            captureConnection?.videoOrientation = .landscapeLeft
             captureSession.commitConfiguration()
             
             self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             self.videoPreviewLayer.videoGravity = .resizeAspectFill
                     
-            videoPreviewLayer.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: self.standardView.height/2)
-            self.cameraView.layer.addSublayer(videoPreviewLayer)
+//            videoPreviewLayer.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: self.standardView.height/2)
+//            self.cameraView.layer.addSublayer(videoPreviewLayer)
         } else {
             print("不支持拍照")
         }
@@ -248,9 +257,25 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
             captureSession.stopRunning()
         }
     }
+//    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+//
+//    }
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        
+        DispatchQueue.main.async {
+            // 导出照片
+            let image = self.imageConvert(sampleBuffer: sampleBuffer)
+            self.cameraView.image = image
+        }
     }
+
+    /// CMSampleBufferRef=>UIImage
+    func imageConvert(sampleBuffer:CMSampleBuffer?) -> UIImage? {
+        guard sampleBuffer != nil && CMSampleBufferIsValid(sampleBuffer!) == true else { return nil }
+        let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer!)
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer!)
+        return UIImage(ciImage: ciImage)
+    }
+
 }
 extension VideoViewController{
    func handlePlayBtn(byState:VideoPlayType){

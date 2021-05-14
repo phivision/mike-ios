@@ -24,7 +24,7 @@ class UserProfileTrainerListCell: UICollectionViewCell {
                 if cannotLoadUrl == true{
                     self.avatar.image = UIImage(named: "logo")
                 }else{
-                    self.avatar.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                    self.avatar.sd_setImage(with: URL(string: imgUrl ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
                 }
             }
 //            Amplify.Storage.getURL(key: model.userImage) { event in

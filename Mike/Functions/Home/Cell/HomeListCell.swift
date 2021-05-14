@@ -39,14 +39,14 @@ class HomeListCell: UITableViewCell {
             if cannotLoadUrl == true{
                 self.avatar.image = UIImage(named: "logo")
             }else{
-                self.avatar.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
         ImageCacheUtils.sharedTools.imageUrl(key: model.thumbnail) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
                 self.contentImg.image = UIImage(named: "logo")
             }else{
-                self.contentImg.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.contentImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
 //        Amplify.Storage.getURL(key: sectionModel.userImage) { event in

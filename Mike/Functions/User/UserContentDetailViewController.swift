@@ -75,7 +75,7 @@ class UserContentDetailViewController: BaseViewController {
             if cannotLoadUrl == true{
                 self.trainerAvatar.image = UIImage(named: "logo")
             }else{
-                self.trainerAvatar.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.trainerAvatar.sd_setImage(with: URL(string: imgUrl ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
 //        if StringUtils.isBlank(value: trainerModel.userImage) {

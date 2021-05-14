@@ -110,6 +110,7 @@ extension GraphQLRequest{
                                         variables: ["id": id],
                                         responseType: JSONValue.self)
         }
+    
     static func fetchUserProfileModel(byId id: String) -> GraphQLRequest<JSONValue> {
         let document = """
         query getUserProfile($id:ID!) {
@@ -143,6 +144,17 @@ extension GraphQLRequest{
                 }
               }
             }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                    variables: ["id": id],
+                                    responseType: JSONValue.self)
+    }
+    static func fetchUserFavList(byId id: String) -> GraphQLRequest<JSONValue> {
+        let document = """
+        query getUserProfile($id:ID!) {
+          getUserProfile(id:$id) {
             Favorites {
               items {
                 Content {

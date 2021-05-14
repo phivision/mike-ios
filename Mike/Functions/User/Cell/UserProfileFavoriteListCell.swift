@@ -31,7 +31,7 @@ class UserProfileFavoriteListCell: UICollectionViewCell {
             if cannotLoadUrl == true{
                 self.bigImg.image = UIImage(named: "logo")
             }else{
-                self.bigImg.sd_setImage(with: URL(string: imgUrl)!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.bigImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
 //        if StringUtils.isBlank(value: favModel.thumbnail) {

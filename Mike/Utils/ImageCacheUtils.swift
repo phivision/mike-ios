@@ -13,7 +13,7 @@ class ImageCacheUtils: NSObject {
     private override init() {
         super.init()
     }
-    func imageUrl(key:String?,imgUrlCompletion:@escaping (_ img:String,_ urlIsNull:Bool)->Void){
+    func imageUrl(key:String?,imgUrlCompletion:@escaping (_ img:String?,_ urlIsNull:Bool)->Void){
         if StringUtils.isBlank(value: key) {
             imgUrlCompletion("",true)
         }else{
