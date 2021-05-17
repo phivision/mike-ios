@@ -66,9 +66,10 @@
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="714-5o-yNw">
                             <rect key="frame" x="10" y="10" width="344" height="547"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="714-5o-yNw" firstAttribute="top" secondItem="MH0-fm-H0c" secondAttribute="top" constant="10" id="A9B-20-eUN"/>
                         <constraint firstAttribute="bottom" secondItem="714-5o-yNw" secondAttribute="bottom" constant="10" id="VKd-b5-yX3"/>
@@ -78,7 +79,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="MH0-fm-H0c" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="3qX-CN-MAi"/>
                 <constraint firstItem="MH0-fm-H0c" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-50" id="5Yc-am-eSL"/>

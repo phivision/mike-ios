@@ -45,6 +45,7 @@ class HomeListViewController: BaseViewController {
     func configTableView(){
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
+        self.mainTableView.backgroundColor = .white
         self.mainTableView.register(UINib(nibName: "HomeListCell", bundle: nil), forCellReuseIdentifier: "HomeListCell")
         self.mainTableView.estimatedRowHeight = 88;
         self.mainTableView.separatorStyle = .none

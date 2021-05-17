@@ -30,15 +30,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>使用相机来矫正姿势</string>
+	<string>Use the camera to correct the posture</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>request healthkit permission</string>
+	<string>Using healthkit to display health data</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>request healthkit permission</string>
+	<string>Using healthkit to display health data</string>
 	<key>Privacy – Health Share Usage Description</key>
-	<string>request healthkit permission</string>
+	<string>Using healthkit to display health data</string>
 	<key>Privacy – Health Update Usage Description</key>
-	<string>request healthkit permission</string>
+	<string>Using healthkit to display health data</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Nunito-Black.ttf</string>

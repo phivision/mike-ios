@@ -63,6 +63,7 @@
                         <rect key="frame" x="70" y="64" width="220" height="122"/>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="Yta-3a-5ZU" firstAttribute="leading" secondItem="CXc-FS-SXy" secondAttribute="leading" constant="10" id="8Kp-tj-zRs"/>
                     <constraint firstItem="Yta-3a-5ZU" firstAttribute="top" secondItem="CXc-FS-SXy" secondAttribute="top" constant="10" id="8tT-CW-AmC"/>

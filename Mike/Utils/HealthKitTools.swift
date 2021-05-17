@@ -77,7 +77,7 @@ class HealthKitTools: NSObject {
         let query =  HKSampleQuery.init(sampleType: HKSampleType.quantityType(forIdentifier: .bodyMass)!, predicate: nil, limit: 1, sortDescriptors: [sort], resultsHandler: { (query, results, error) in
             if(results?.count ?? 0 > 0){
                 let sameple = results?[0] as! HKQuantitySample
-                let bodyMass = sameple.quantity.doubleValue(for: HKUnit.init(from: "kg"))
+                let bodyMass = sameple.quantity.doubleValue(for: HKUnit.init(from: "lb"))
                 completion(true,bodyMass,nil)
             }else{
                 completion(false,0,error as NSError?)

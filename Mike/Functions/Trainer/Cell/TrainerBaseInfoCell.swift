@@ -16,7 +16,7 @@ class TrainerBaseInfoCell: UICollectionViewCell {
         // Initialization code
     }
     func setModel(model:TrainerDetailModel){
-        self.heightLab.text = String(describing: model.height ?? 0)
+        self.heightLab.text = HeightUtils.getHeightForInch(height: String(describing: model.height ?? 0))
         self.weightLab.text = String(describing: model.weight ?? 0)
         self.ageLab.text = String(describing: AgeUtils.getAge(birthdayStr:"\(model.birthday ?? "")"))
     }

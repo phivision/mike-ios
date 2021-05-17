@@ -29,7 +29,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self.window?.backgroundColor = .white
             self.window?.makeKeyAndVisible()
         }
-        
+        self.window?.overrideUserInterfaceStyle = .light
         return true
     }
     var blockRotation: UIInterfaceOrientationMask = .portrait{

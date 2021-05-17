@@ -93,7 +93,7 @@ class UserProfileViewController: BaseViewController {
             case 1:
                 model.type = HealthType.weight
                 model.title = "WEIGHT"
-                model.unit = "kg"
+                model.unit = "lb"
             case 2:
                 model.type = HealthType.water
                 model.title = "WATER"
@@ -350,9 +350,9 @@ extension UserProfileViewController{
                 }
             }
             HealthKitTools.sharedTools.getBodyMass { success, weight, error in
-                print("Here's the weight：\(weight) kg")
+                print("Here's the weight：\(weight) lb")
                 let model = self.metricsList[1]
-                model.contentValue = "\(weight)"
+                model.contentValue = String(format: "%.2f", weight)
                 model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
                 DispatchQueue.main.async {
                     self.mainCollection.reloadData()
