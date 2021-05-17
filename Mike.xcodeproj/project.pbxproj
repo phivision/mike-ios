@@ -124,6 +124,11 @@
 		B69103DD26381EC0005F2ACD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103CE26381EC0005F2ACD /* LoginViewController.xib */; };
 		B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103CF26381EC0005F2ACD /* LoginViewController.swift */; };
 		B6BFDE0C264F411D004FC2F1 /* HeightUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE0B264F411D004FC2F1 /* HeightUtils.swift */; };
+		B6BFDE2126526602004FC2F1 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE1F26526602004FC2F1 /* RegisterViewController.swift */; };
+		B6BFDE2226526602004FC2F1 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */; };
+		B6BFDE25265268EB004FC2F1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFDE24265268EB004FC2F1 /* IQKeyboardManagerSwift */; };
+		B6BFDE2826526FCD004FC2F1 /* RegisterConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE2626526FCC004FC2F1 /* RegisterConfirmViewController.swift */; };
+		B6BFDE2926526FCD004FC2F1 /* RegisterConfirmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6BFDE2726526FCC004FC2F1 /* RegisterConfirmViewController.xib */; };
 		B6E40000264C0C510020F636 /* ZFPresentTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCB264C0C510020F636 /* ZFPresentTransition.m */; };
 		B6E40001264C0C510020F636 /* ZFFloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCC264C0C510020F636 /* ZFFloatView.m */; };
 		B6E40002264C0C510020F636 /* ZFPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCF264C0C510020F636 /* ZFPlayerView.m */; };
@@ -281,6 +286,10 @@
 		B69103CE26381EC0005F2ACD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		B69103CF26381EC0005F2ACD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B6BFDE0B264F411D004FC2F1 /* HeightUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightUtils.swift; sourceTree = "<group>"; };
+		B6BFDE1F26526602004FC2F1 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		B6BFDE2626526FCC004FC2F1 /* RegisterConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterConfirmViewController.swift; sourceTree = "<group>"; };
+		B6BFDE2726526FCC004FC2F1 /* RegisterConfirmViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterConfirmViewController.xib; sourceTree = "<group>"; };
 		B6E4001E264C15E40020F636 /* ZFAVPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFAVPlayerManager.m; sourceTree = "<group>"; };
 		B6E4001F264C15E40020F636 /* ZFAVPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFAVPlayerManager.h; sourceTree = "<group>"; };
 		B6E4FFAF264AB8A40020F636 /* JSONUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUtils.swift; sourceTree = "<group>"; };
@@ -372,6 +381,7 @@
 				B637499A2644F9E000502913 /* AppSyncRealTimeClient in Frameworks */,
 				B63749A52644FA0F00502913 /* AWSPinpointAnalyticsPlugin in Frameworks */,
 				B63749AC2644FA2D00502913 /* SDWebImage in Frameworks */,
+				B6BFDE25265268EB004FC2F1 /* IQKeyboardManagerSwift in Frameworks */,
 				B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */,
 				B63749972644F9CB00502913 /* Starscream in Frameworks */,
 				B63749A12644FA0F00502913 /* AWSS3StoragePlugin in Frameworks */,
@@ -676,6 +686,10 @@
 				B69103CD26381EC0005F2ACD /* LoginSecondViewController.xib */,
 				B69103CF26381EC0005F2ACD /* LoginViewController.swift */,
 				B69103CE26381EC0005F2ACD /* LoginViewController.xib */,
+				B6BFDE1F26526602004FC2F1 /* RegisterViewController.swift */,
+				B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */,
+				B6BFDE2626526FCC004FC2F1 /* RegisterConfirmViewController.swift */,
+				B6BFDE2726526FCC004FC2F1 /* RegisterConfirmViewController.xib */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -892,6 +906,7 @@
 				B63749A62644FA0F00502913 /* AWSDataStorePlugin */,
 				B63749A82644FA0F00502913 /* AWSAPIPlugin */,
 				B63749AB2644FA2D00502913 /* SDWebImage */,
+				B6BFDE24265268EB004FC2F1 /* IQKeyboardManagerSwift */,
 			);
 			productName = Mike;
 			productReference = C1DEDD732637460700F66A7C /* Mike.app */;
@@ -928,6 +943,7 @@
 				B63749982644F9E000502913 /* XCRemoteSwiftPackageReference "aws-appsync-realtime-client-ios" */,
 				B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */,
 				B63749AA2644FA2D00502913 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				B6BFDE23265268EB004FC2F1 /* XCRemoteSwiftPackageReference "iqkeyboardmanager" */,
 			);
 			productRefGroup = C1DEDD742637460700F66A7C /* Products */;
 			projectDirPath = "";
@@ -959,6 +975,7 @@
 				B69103DA26381EC0005F2ACD /* HomeTopColCell.xib in Resources */,
 				B682631726424C6A00A32D5C /* Nunito-Regular.ttf in Resources */,
 				B63749E52645820300502913 /* UserProfileFavHorizonListCell.xib in Resources */,
+				B6BFDE2926526FCD004FC2F1 /* RegisterConfirmViewController.xib in Resources */,
 				B682631A26424C6A00A32D5C /* Nunito-BoldItalic.ttf in Resources */,
 				B682631C26424C6A00A32D5C /* Nunito-ExtraLight.ttf in Resources */,
 				B6374977264447AE00502913 /* UserProfileHealthKitListCell.xib in Resources */,
@@ -984,6 +1001,7 @@
 				B637497B26444D9F00502913 /* UserProfileTopCell.xib in Resources */,
 				B69103D426381EC0005F2ACD /* HomeSeeAllCoursesView.xib in Resources */,
 				B682631626424C6A00A32D5C /* Nunito-Light.ttf in Resources */,
+				B6BFDE2226526602004FC2F1 /* RegisterViewController.xib in Resources */,
 				B677161E264A18760035A50C /* TrainerDetailViewController.xib in Resources */,
 				C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */,
 				B682632A2642729200A32D5C /* HomeListViewController.xib in Resources */,
@@ -1060,6 +1078,7 @@
 				B68262F2263C4F4000A32D5C /* UserSubscriptionTrainerListContent.swift in Sources */,
 				B63749F0264596EA00502913 /* UserCenterModel.swift in Sources */,
 				B677161D264A18760035A50C /* TrainerDetailViewController.swift in Sources */,
+				B6BFDE2826526FCD004FC2F1 /* RegisterConfirmViewController.swift in Sources */,
 				661922BAC3E9493399943D1A /* UserContent.swift in Sources */,
 				B637496E264446CE00502913 /* UserProfileSectionTitleView.swift in Sources */,
 				B69103D826381EC0005F2ACD /* HomeSeeAllCoursesView.swift in Sources */,
@@ -1072,6 +1091,7 @@
 				B68262DB263BFFEF00A32D5C /* MBProgressHUD.m in Sources */,
 				B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */,
 				B6E4FFFD264C0C510020F636 /* ZFPersentInteractiveTransition.m in Sources */,
+				B6BFDE2126526602004FC2F1 /* RegisterViewController.swift in Sources */,
 				B6E40004264C0C510020F636 /* ZFKVOController.m in Sources */,
 				B6E4000F264C0C510020F636 /* ZFSliderView.m in Sources */,
 				7E856A1F4B6F44F8AA35D746 /* UserProfile+Schema.swift in Sources */,
@@ -1358,6 +1378,14 @@
 				minimumVersion = 5.11.0;
 			};
 		};
+		B6BFDE23265268EB004FC2F1 /* XCRemoteSwiftPackageReference "iqkeyboardmanager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitee.com/mirrors/iqkeyboardmanager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1415,6 +1443,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B63749AA2644FA2D00502913 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
+		};
+		B6BFDE24265268EB004FC2F1 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFDE23265268EB004FC2F1 /* XCRemoteSwiftPackageReference "iqkeyboardmanager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

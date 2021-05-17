@@ -83,8 +83,42 @@ class Backend {
             }
         }
     }
+    
+    //MARK: - register
+    func signUp(username: String, password: String, email: String,phone:String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
+        let userAttributes = [AuthUserAttribute(.email, value: email),AuthUserAttribute(.phoneNumber, value: phone)]
+        let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
+        Amplify.Auth.signUp(username: username, password: password, options: options) { result in
+            switch result {
+            case .success(let signUpResult):
+                if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
+                    print("Delivery details \(String(describing: deliveryDetails))")
+                    needConfirm()
+                } else {
+                    print("SignUp Complete")
+                    suc()
+                }
+            case .failure(let error):
+                print("An error occurred while registering a user \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    // confirmSignUp
+    func confirmSignUp(for username: String, with confirmationCode: String,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
+        Amplify.Auth.confirmSignUp(for: username, confirmationCode: confirmationCode) { result in
+            switch result {
+            case .success:
+                print("Confirm signUp succeeded")
+                suc()
+            case .failure(let error):
+                print("An error occurred while confirming sign up \(error)")
+                fail("\(error)")
+            }
+        }
+    }
 
-    //  - signout
+    //MARK:  - signout
     public func signOut(suc:@escaping ()->Void,fail:@escaping ()->Void) {
         _ = Amplify.Auth.signOut() { (result) in
             switch result {
@@ -166,11 +200,11 @@ class Backend {
                     }
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
-                    fail("Got failed result with \(error.errorDescription)");
+                    fail("\(error.errorDescription)");
                 }
             case .failure(let error):
                 print("Got failed event with error \(error)")
-                fail("Got failed result with \(error)");
+                fail("\(error)");
             }
         }
     }
@@ -226,32 +260,6 @@ class Backend {
             }
         }
     }
-    func fetchContentList(userId:String?){
-        Amplify.API.query(request: .getContentList(byId: userId ?? "")){
-            event in
-            switch event {
-            case .success(let result):
-                switch result {
-                case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
-                    if let postData = try? JSONEncoder().encode(data) {
-                        if let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) {
-                            let dic = d as! NSDictionary
-                            if let subDic = dic["getUserProfile"] as? NSDictionary{
-                                if let thirddic = subDic["Contents"] as? NSDictionary{
-                                    print(thirddic["items"])
-                                }
-                            }
-                        }
-                    }
-                case .failure(let error):
-                    print("Got failed result with \(error.errorDescription)")
-                }
-            case .failure(let error):
-                print("Got failed event with error \(error)")
-            }
-        }
-    }
     // MARK: - fetch UserProfile for user profile page,get trainerList and favoriteList
     func fetchUserProfileModel(userId:String?,suc:@escaping (_ userCenterModel:UserCenterModel)->Void,fail:@escaping (_ msg:String)->Void){
         Amplify.API.query(request: .fetchUserProfileModel(byId: userId ?? "")){
@@ -278,7 +286,7 @@ class Backend {
                 }
             case .failure(let error):
                 print("Got failed event with error \(error)")
-                fail("Got failed event with error \(error)")
+                fail("\(error)")
             }
         }
     }
@@ -317,11 +325,11 @@ class Backend {
                     suc(contentList)
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
-                    fail("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
                 }
             case .failure(let error):
                 print("Got failed event with error \(error)")
-                fail("Got failed event with error \(error)")
+                fail("\(error)")
             }
         }
     }
@@ -347,11 +355,11 @@ class Backend {
                     suc(UserCenterModel(fromDictionary: subDic as! [String : Any]))
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
-                    fail("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
                 }
             case .failure(let error):
                 print("Got failed event with error \(error)")
-                fail("Got failed event with error \(error)")
+                fail("\(error)")
             }
         }
     }
@@ -377,11 +385,11 @@ class Backend {
                     suc(TrainerDetailModel(fromDictionary: subDic as! [String : Any]))
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
-                    fail("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
                 }
             case .failure(let error):
                 print("Got failed event with error \(error)")
-                fail("Got failed event with error \(error)")
+                fail("\(error)")
             }
         }
     }

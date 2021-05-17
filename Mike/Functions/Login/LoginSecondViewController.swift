@@ -54,6 +54,7 @@ class LoginSecondViewController: BaseViewController {
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        
         Backend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
@@ -61,12 +62,20 @@ class LoginSecondViewController: BaseViewController {
                 self.changeRootController(controller: homeVC)
             }
         } fail: { error in
+            self.logOut()
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg:error, controller: self)
             }
         }
 
+    }
+    func logOut(){
+        Backend.shared.signOut {
+            
+        } fail: {
+
+        }
     }
     /*
     // MARK: - Navigation

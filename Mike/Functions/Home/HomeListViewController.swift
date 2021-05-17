@@ -10,6 +10,12 @@ import UIKit
 
 class HomeListViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
+    lazy var refreshControl:UIRefreshControl = {
+        var refreshControl:UIRefreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to Refresh")
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return refreshControl
+    }()
     @IBOutlet weak var userName:UILabel!
     @IBOutlet weak var timeLab:UILabel!
     lazy var subscriptionList:Array<UserSubscriptionTrainerListModel> = {
@@ -50,13 +56,20 @@ class HomeListViewController: BaseViewController {
         self.mainTableView.estimatedRowHeight = 88;
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
+        self.mainTableView.addSubview(self.refreshControl)
+        self.mainTableView.sendSubviewToBack(self.refreshControl)
+    }
+    
+    @objc func refreshData(){
+        self.subscriptionList.removeAll()
+        self.fetchSpeakerList()
     }
     
     func fetchSpeakerList(){
         Backend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
-            self.subscriptionList.removeAll()
             self.subscriptionList.append(contentsOf: subscriptionList)
             DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
                 self.mainTableView.reloadData()
             }
         }

@@ -7,6 +7,7 @@
 
 import UIKit
 import Amplify
+import IQKeyboardManagerSwift
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
     var window: UIWindow?
@@ -30,6 +31,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self.window?.makeKeyAndVisible()
         }
         self.window?.overrideUserInterfaceStyle = .light
+        self.configKeyBoard()
         return true
     }
     var blockRotation: UIInterfaceOrientationMask = .portrait{
@@ -44,6 +46,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 }
             }
         }
+    func configKeyBoard(){
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+    }
 }
 extension AppDelegate{
 

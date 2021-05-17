@@ -27,6 +27,10 @@ class LoginViewController: UIViewController {
         let secondVC = LoginSecondViewController()
         self.navigationController?.pushViewController(secondVC, animated: true)
     }
+    @IBAction func registerBtnPressed(){
+        let secondVC = RegisterViewController()
+        self.navigationController?.pushViewController(secondVC, animated: true)
+    }
     /*
     // MARK: - Navigation
 

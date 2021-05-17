@@ -236,6 +236,7 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
             let captureConnection = videoDataOutput.connection(with: .video)
             captureConnection?.isEnabled = true
             captureConnection?.videoOrientation = .landscapeLeft
+            captureConnection?.isVideoMirrored = true
             captureSession.commitConfiguration()
             
             self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
