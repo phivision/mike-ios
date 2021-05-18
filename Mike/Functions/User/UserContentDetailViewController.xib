@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="contentView" destination="MH0-fm-H0c" id="hQz-qy-cb5"/>
                 <outlet property="descLab" destination="qrQ-ib-EOc" id="jWN-v8-waJ"/>
+                <outlet property="favBtn" destination="g0n-7I-Yrj" id="9qw-vH-eRm"/>
                 <outlet property="mainTableView" destination="714-5o-yNw" id="R0C-U5-cax"/>
                 <outlet property="trainerAvatar" destination="LrR-gY-gjY" id="P1b-vL-smu"/>
                 <outlet property="trainerNameLab" destination="Ab1-bq-HUU" id="aXG-ro-TuY"/>
@@ -77,17 +78,31 @@
                         <constraint firstAttribute="trailing" secondItem="714-5o-yNw" secondAttribute="trailing" constant="10" id="qaB-9l-rvm"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g0n-7I-Yrj">
+                    <rect key="frame" x="343" y="104" width="46" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="46" id="4Bh-2E-RLQ"/>
+                        <constraint firstAttribute="height" constant="46" id="MMm-PC-BLm"/>
+                    </constraints>
+                    <state key="normal" image="icon_heart_N"/>
+                    <state key="selected" image="icon_heart_H"/>
+                    <connections>
+                        <action selector="favBtnPressed" destination="-1" eventType="touchUpInside" id="nzx-xE-bTW"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="MH0-fm-H0c" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="3qX-CN-MAi"/>
+                <constraint firstItem="g0n-7I-Yrj" firstAttribute="trailing" secondItem="MH0-fm-H0c" secondAttribute="trailing" id="4k0-Ut-KfW"/>
                 <constraint firstItem="MH0-fm-H0c" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-50" id="5Yc-am-eSL"/>
                 <constraint firstItem="MH0-fm-H0c" firstAttribute="top" secondItem="qrQ-ib-EOc" secondAttribute="bottom" constant="50" id="CxO-3x-fQj"/>
                 <constraint firstItem="LrR-gY-gjY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="60" id="Eh9-49-K3r"/>
                 <constraint firstItem="jCg-Pz-O0r" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="GWH-dZ-IvN"/>
                 <constraint firstItem="LrR-gY-gjY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="KSc-xz-KXr"/>
                 <constraint firstItem="jCg-Pz-O0r" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="NpW-nt-5Rm"/>
+                <constraint firstItem="g0n-7I-Yrj" firstAttribute="top" secondItem="LrR-gY-gjY" secondAttribute="top" id="QBe-qT-Xhb"/>
                 <constraint firstItem="qrQ-ib-EOc" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-49" id="Zm0-72-0fR"/>
                 <constraint firstItem="Ab1-bq-HUU" firstAttribute="leading" secondItem="LrR-gY-gjY" secondAttribute="trailing" constant="10" id="Zrr-D3-XRD"/>
                 <constraint firstItem="qrQ-ib-EOc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="49" id="cn8-pC-F0N"/>
@@ -101,6 +116,8 @@
     </objects>
     <resources>
         <image name="icon-arrowdown" width="24" height="24"/>
+        <image name="icon_heart_H" width="23.5" height="23.5"/>
+        <image name="icon_heart_N" width="23.5" height="23.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

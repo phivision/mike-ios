@@ -129,6 +129,13 @@
 		B6BFDE25265268EB004FC2F1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFDE24265268EB004FC2F1 /* IQKeyboardManagerSwift */; };
 		B6BFDE2826526FCD004FC2F1 /* RegisterConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE2626526FCC004FC2F1 /* RegisterConfirmViewController.swift */; };
 		B6BFDE2926526FCD004FC2F1 /* RegisterConfirmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6BFDE2726526FCC004FC2F1 /* RegisterConfirmViewController.xib */; };
+		B6BFDE2C2652A952004FC2F1 /* FogotPwdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE2A2652A952004FC2F1 /* FogotPwdViewController.swift */; };
+		B6BFDE2D2652A952004FC2F1 /* FogotPwdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6BFDE2B2652A952004FC2F1 /* FogotPwdViewController.xib */; };
+		B6BFDE302652ABB9004FC2F1 /* FogotConfirmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6BFDE2E2652ABB9004FC2F1 /* FogotConfirmViewController.xib */; };
+		B6BFDE312652ABB9004FC2F1 /* FogotConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE2F2652ABB9004FC2F1 /* FogotConfirmViewController.swift */; };
+		B6BFDE492653B22D004FC2F1 /* UserProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE472653B22D004FC2F1 /* UserProfileEditViewController.swift */; };
+		B6BFDE4A2653B22D004FC2F1 /* UserProfileEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6BFDE482653B22D004FC2F1 /* UserProfileEditViewController.xib */; };
+		B6BFDE4C2653CE18004FC2F1 /* NotificationConstMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE4B2653CE18004FC2F1 /* NotificationConstMacro.swift */; };
 		B6E40000264C0C510020F636 /* ZFPresentTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCB264C0C510020F636 /* ZFPresentTransition.m */; };
 		B6E40001264C0C510020F636 /* ZFFloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCC264C0C510020F636 /* ZFFloatView.m */; };
 		B6E40002264C0C510020F636 /* ZFPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCF264C0C510020F636 /* ZFPlayerView.m */; };
@@ -162,6 +169,21 @@
 		B6E4FFFD264C0C510020F636 /* ZFPersentInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFC5264C0C510020F636 /* ZFPersentInteractiveTransition.m */; };
 		B6E4FFFE264C0C510020F636 /* UIScrollView+ZFPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFC7264C0C510020F636 /* UIScrollView+ZFPlayer.m */; };
 		B6E4FFFF264C0C510020F636 /* ZFPlayerNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCA264C0C510020F636 /* ZFPlayerNotification.m */; };
+		B6F365392653FCE300539B5E /* TZAlbumPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3652A2653FCE200539B5E /* TZAlbumPickerController.swift */; };
+		B6F3653A2653FCE300539B5E /* TZExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3652B2653FCE200539B5E /* TZExtension.swift */; };
+		B6F3653B2653FCE300539B5E /* TZProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3652C2653FCE200539B5E /* TZProgressView.swift */; };
+		B6F3653C2653FCE300539B5E /* TZLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3652D2653FCE200539B5E /* TZLocationManager.swift */; };
+		B6F3653D2653FCE300539B5E /* TZImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B6F3652E2653FCE200539B5E /* TZImagePickerController.bundle */; };
+		B6F3653E2653FCE300539B5E /* TZImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3652F2653FCE200539B5E /* TZImageManager.swift */; };
+		B6F3653F2653FCE300539B5E /* TZAssetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365302653FCE200539B5E /* TZAssetModel.swift */; };
+		B6F365402653FCE300539B5E /* TZAssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365312653FCE200539B5E /* TZAssetCell.swift */; };
+		B6F365412653FCE300539B5E /* TZImageCropManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365322653FCE200539B5E /* TZImageCropManager.swift */; };
+		B6F365422653FCE300539B5E /* TZVideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365332653FCE200539B5E /* TZVideoPlayerController.swift */; };
+		B6F365432653FCE300539B5E /* TZPhotoPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365342653FCE200539B5E /* TZPhotoPreviewCell.swift */; };
+		B6F365442653FCE300539B5E /* TZPhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365352653FCE200539B5E /* TZPhotoPickerController.swift */; };
+		B6F365452653FCE300539B5E /* TZGifPhotoPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365362653FCE200539B5E /* TZGifPhotoPreviewController.swift */; };
+		B6F365462653FCE300539B5E /* TZImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365372653FCE200539B5E /* TZImagePickerController.swift */; };
+		B6F365472653FCE300539B5E /* TZPhotoPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365382653FCE200539B5E /* TZPhotoPreviewController.swift */; };
 		C1DEDD772637460700F66A7C /* MikeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEDD762637460700F66A7C /* MikeApp.swift */; };
 		C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD7A2637460900F66A7C /* Assets.xcassets */; };
 		C1DEDD7E2637460900F66A7C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD7D2637460900F66A7C /* Preview Assets.xcassets */; };
@@ -290,6 +312,13 @@
 		B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
 		B6BFDE2626526FCC004FC2F1 /* RegisterConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterConfirmViewController.swift; sourceTree = "<group>"; };
 		B6BFDE2726526FCC004FC2F1 /* RegisterConfirmViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterConfirmViewController.xib; sourceTree = "<group>"; };
+		B6BFDE2A2652A952004FC2F1 /* FogotPwdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FogotPwdViewController.swift; sourceTree = "<group>"; };
+		B6BFDE2B2652A952004FC2F1 /* FogotPwdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FogotPwdViewController.xib; sourceTree = "<group>"; };
+		B6BFDE2E2652ABB9004FC2F1 /* FogotConfirmViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FogotConfirmViewController.xib; sourceTree = "<group>"; };
+		B6BFDE2F2652ABB9004FC2F1 /* FogotConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FogotConfirmViewController.swift; sourceTree = "<group>"; };
+		B6BFDE472653B22D004FC2F1 /* UserProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileEditViewController.swift; sourceTree = "<group>"; };
+		B6BFDE482653B22D004FC2F1 /* UserProfileEditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileEditViewController.xib; sourceTree = "<group>"; };
+		B6BFDE4B2653CE18004FC2F1 /* NotificationConstMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationConstMacro.swift; sourceTree = "<group>"; };
 		B6E4001E264C15E40020F636 /* ZFAVPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFAVPlayerManager.m; sourceTree = "<group>"; };
 		B6E4001F264C15E40020F636 /* ZFAVPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFAVPlayerManager.h; sourceTree = "<group>"; };
 		B6E4FFAF264AB8A40020F636 /* JSONUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUtils.swift; sourceTree = "<group>"; };
@@ -355,6 +384,21 @@
 		B6E4FFF5264C0C510020F636 /* UIImageView+ZFCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+ZFCache.m"; sourceTree = "<group>"; };
 		B6E4FFF6264C0C510020F636 /* ZFNetworkSpeedMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFNetworkSpeedMonitor.h; sourceTree = "<group>"; };
 		B6E4FFF7264C0C510020F636 /* ZFLandScapeControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFLandScapeControlView.h; sourceTree = "<group>"; };
+		B6F3652A2653FCE200539B5E /* TZAlbumPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZAlbumPickerController.swift; sourceTree = "<group>"; };
+		B6F3652B2653FCE200539B5E /* TZExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZExtension.swift; sourceTree = "<group>"; };
+		B6F3652C2653FCE200539B5E /* TZProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZProgressView.swift; sourceTree = "<group>"; };
+		B6F3652D2653FCE200539B5E /* TZLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZLocationManager.swift; sourceTree = "<group>"; };
+		B6F3652E2653FCE200539B5E /* TZImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TZImagePickerController.bundle; sourceTree = "<group>"; };
+		B6F3652F2653FCE200539B5E /* TZImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZImageManager.swift; sourceTree = "<group>"; };
+		B6F365302653FCE200539B5E /* TZAssetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZAssetModel.swift; sourceTree = "<group>"; };
+		B6F365312653FCE200539B5E /* TZAssetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZAssetCell.swift; sourceTree = "<group>"; };
+		B6F365322653FCE200539B5E /* TZImageCropManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZImageCropManager.swift; sourceTree = "<group>"; };
+		B6F365332653FCE200539B5E /* TZVideoPlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZVideoPlayerController.swift; sourceTree = "<group>"; };
+		B6F365342653FCE200539B5E /* TZPhotoPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZPhotoPreviewCell.swift; sourceTree = "<group>"; };
+		B6F365352653FCE200539B5E /* TZPhotoPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZPhotoPickerController.swift; sourceTree = "<group>"; };
+		B6F365362653FCE200539B5E /* TZGifPhotoPreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZGifPhotoPreviewController.swift; sourceTree = "<group>"; };
+		B6F365372653FCE200539B5E /* TZImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZImagePickerController.swift; sourceTree = "<group>"; };
+		B6F365382653FCE200539B5E /* TZPhotoPreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TZPhotoPreviewController.swift; sourceTree = "<group>"; };
 		B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = UserSubscriptionTrainer.swift; path = amplify/generated/models/UserSubscriptionTrainer.swift; sourceTree = "<group>"; };
 		C1DEDD732637460700F66A7C /* Mike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1DEDD762637460700F66A7C /* MikeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MikeApp.swift; sourceTree = "<group>"; };
@@ -501,6 +545,7 @@
 				B6E4FFAF264AB8A40020F636 /* JSONUtils.swift */,
 				B6E4FFB3264AC01B0020F636 /* ImageCacheUtils.swift */,
 				B6BFDE0B264F411D004FC2F1 /* HeightUtils.swift */,
+				B6BFDE4B2653CE18004FC2F1 /* NotificationConstMacro.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -526,6 +571,7 @@
 		B68262D7263BFFC000A32D5C /* ThirdPartSDK */ = {
 			isa = PBXGroup;
 			children = (
+				B6F365292653FCE200539B5E /* TZImagePickerController */,
 				B6E4FFB5264C0C510020F636 /* ZFPlayer */,
 				B68262D8263BFFEF00A32D5C /* MBProgressHUD */,
 			);
@@ -589,6 +635,8 @@
 				B63749F426469C1700502913 /* UserProfileSettingViewController.xib */,
 				B67716082647EFF90035A50C /* UserContentDetailViewController.swift */,
 				B67716092647EFF90035A50C /* UserContentDetailViewController.xib */,
+				B6BFDE472653B22D004FC2F1 /* UserProfileEditViewController.swift */,
+				B6BFDE482653B22D004FC2F1 /* UserProfileEditViewController.xib */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -690,6 +738,10 @@
 				B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */,
 				B6BFDE2626526FCC004FC2F1 /* RegisterConfirmViewController.swift */,
 				B6BFDE2726526FCC004FC2F1 /* RegisterConfirmViewController.xib */,
+				B6BFDE2A2652A952004FC2F1 /* FogotPwdViewController.swift */,
+				B6BFDE2B2652A952004FC2F1 /* FogotPwdViewController.xib */,
+				B6BFDE2F2652ABB9004FC2F1 /* FogotConfirmViewController.swift */,
+				B6BFDE2E2652ABB9004FC2F1 /* FogotConfirmViewController.xib */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -810,6 +862,28 @@
 				B6E4FFF7264C0C510020F636 /* ZFLandScapeControlView.h */,
 			);
 			path = ControlView;
+			sourceTree = "<group>";
+		};
+		B6F365292653FCE200539B5E /* TZImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				B6F3652A2653FCE200539B5E /* TZAlbumPickerController.swift */,
+				B6F3652B2653FCE200539B5E /* TZExtension.swift */,
+				B6F3652C2653FCE200539B5E /* TZProgressView.swift */,
+				B6F3652D2653FCE200539B5E /* TZLocationManager.swift */,
+				B6F3652E2653FCE200539B5E /* TZImagePickerController.bundle */,
+				B6F3652F2653FCE200539B5E /* TZImageManager.swift */,
+				B6F365302653FCE200539B5E /* TZAssetModel.swift */,
+				B6F365312653FCE200539B5E /* TZAssetCell.swift */,
+				B6F365322653FCE200539B5E /* TZImageCropManager.swift */,
+				B6F365332653FCE200539B5E /* TZVideoPlayerController.swift */,
+				B6F365342653FCE200539B5E /* TZPhotoPreviewCell.swift */,
+				B6F365352653FCE200539B5E /* TZPhotoPickerController.swift */,
+				B6F365362653FCE200539B5E /* TZGifPhotoPreviewController.swift */,
+				B6F365372653FCE200539B5E /* TZImagePickerController.swift */,
+				B6F365382653FCE200539B5E /* TZPhotoPreviewController.swift */,
+			);
+			path = TZImagePickerController;
 			sourceTree = "<group>";
 		};
 		C1DEDD6A2637460700F66A7C = {
@@ -965,6 +1039,8 @@
 				C1DEDD7E2637460900F66A7C /* Preview Assets.xcassets in Resources */,
 				B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */,
 				B682631526424C6A00A32D5C /* Nunito-ExtraLightItalic.ttf in Resources */,
+				B6BFDE302652ABB9004FC2F1 /* FogotConfirmViewController.xib in Resources */,
+				B6F3653D2653FCE300539B5E /* TZImagePickerController.bundle in Resources */,
 				B677160B2647EFF90035A50C /* UserContentDetailViewController.xib in Resources */,
 				B682631E26424C6A00A32D5C /* Nunito-BlackItalic.ttf in Resources */,
 				B682631826424C6A00A32D5C /* Nunito-SemiBold.ttf in Resources */,
@@ -975,6 +1051,7 @@
 				B69103DA26381EC0005F2ACD /* HomeTopColCell.xib in Resources */,
 				B682631726424C6A00A32D5C /* Nunito-Regular.ttf in Resources */,
 				B63749E52645820300502913 /* UserProfileFavHorizonListCell.xib in Resources */,
+				B6BFDE4A2653B22D004FC2F1 /* UserProfileEditViewController.xib in Resources */,
 				B6BFDE2926526FCD004FC2F1 /* RegisterConfirmViewController.xib in Resources */,
 				B682631A26424C6A00A32D5C /* Nunito-BoldItalic.ttf in Resources */,
 				B682631C26424C6A00A32D5C /* Nunito-ExtraLight.ttf in Resources */,
@@ -1002,6 +1079,7 @@
 				B69103D426381EC0005F2ACD /* HomeSeeAllCoursesView.xib in Resources */,
 				B682631626424C6A00A32D5C /* Nunito-Light.ttf in Resources */,
 				B6BFDE2226526602004FC2F1 /* RegisterViewController.xib in Resources */,
+				B6BFDE2D2652A952004FC2F1 /* FogotPwdViewController.xib in Resources */,
 				B677161E264A18760035A50C /* TrainerDetailViewController.xib in Resources */,
 				C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */,
 				B682632A2642729200A32D5C /* HomeListViewController.xib in Resources */,
@@ -1026,17 +1104,23 @@
 				B6E4000D264C0C510020F636 /* ZFNetworkSpeedMonitor.m in Sources */,
 				B677162C264A21B20035A50C /* AgeUtils.swift in Sources */,
 				B68262FE264247B800A32D5C /* UserProfileViewController.swift in Sources */,
+				B6F365412653FCE300539B5E /* TZImageCropManager.swift in Sources */,
 				B682632D264280EE00A32D5C /* DateExtention.swift in Sources */,
 				B63749E42645820300502913 /* UserProfileFavHorizonListCell.swift in Sources */,
 				B68262CC263BC7A200A32D5C /* LoginInfoModel.swift in Sources */,
+				B6F365472653FCE300539B5E /* TZPhotoPreviewController.swift in Sources */,
 				B69103D926381EC0005F2ACD /* HomeInfoColCell.swift in Sources */,
 				B68262BD2639B16100A32D5C /* UIViewExtension.swift in Sources */,
 				B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */,
+				B6F3653E2653FCE300539B5E /* TZImageManager.swift in Sources */,
+				B6F365392653FCE300539B5E /* TZAlbumPickerController.swift in Sources */,
+				B6F365432653FCE300539B5E /* TZPhotoPreviewCell.swift in Sources */,
 				B63749722644479C00502913 /* UserProfileFavoriteListCell.swift in Sources */,
 				B6E4FFB4264AC01B0020F636 /* ImageCacheUtils.swift in Sources */,
 				C1DEDD772637460700F66A7C /* MikeApp.swift in Sources */,
 				B68262F0263C4F4000A32D5C /* UserSubscriptionTrainerListModel.swift in Sources */,
 				B6E40005264C0C510020F636 /* ZFLandscapeViewController.m in Sources */,
+				B6F365452653FCE300539B5E /* TZGifPhotoPreviewController.swift in Sources */,
 				B68262D1263BC7A900A32D5C /* UserManager.swift in Sources */,
 				B68262FA2642461400A32D5C /* HomeTabViewController.swift in Sources */,
 				B68262D2263BC7A900A32D5C /* ArchiveTool.swift in Sources */,
@@ -1044,6 +1128,7 @@
 				B6E40011264C0C510020F636 /* ZFSmallFloatControlView.m in Sources */,
 				B6E4FFF9264C0C510020F636 /* ZFPlayerController.m in Sources */,
 				B68262B62639B05600A32D5C /* ZZPlayerView.swift in Sources */,
+				B6F3653A2653FCE300539B5E /* TZExtension.swift in Sources */,
 				B6E40013264C0C510020F636 /* ZFSpeedLoadingView.m in Sources */,
 				B6E4FFFC264C0C510020F636 /* ZFPlayerLogManager.m in Sources */,
 				B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */,
@@ -1054,10 +1139,13 @@
 				B6771626264A18A30035A50C /* TrainerDetailFavorite.swift in Sources */,
 				B68262F1263C4F4000A32D5C /* UserSubscriptionTrainerListItem.swift in Sources */,
 				B6E4000C264C0C510020F636 /* ZFLandScapeControlView.m in Sources */,
+				B6F3653F2653FCE300539B5E /* TZAssetModel.swift in Sources */,
+				B6F365422653FCE300539B5E /* TZVideoPlayerController.swift in Sources */,
 				B68262BF263A3E2300A32D5C /* GraphQLRequestExt.swift in Sources */,
 				B68262BC2639B16100A32D5C /* StringUtils.swift in Sources */,
 				B6771629264A1A350035A50C /* TrainerBaseInfoCell.swift in Sources */,
 				B69103DB26381EC0005F2ACD /* LoginSecondViewController.swift in Sources */,
+				B6F3653B2653FCE300539B5E /* TZProgressView.swift in Sources */,
 				B6E40001264C0C510020F636 /* ZFFloatView.m in Sources */,
 				B677160A2647EFF90035A50C /* UserContentDetailViewController.swift in Sources */,
 				B68262E5263C05CB00A32D5C /* BaseViewController.swift in Sources */,
@@ -1065,6 +1153,7 @@
 				B6E40015264C0C510020F636 /* UIImageView+ZFCache.m in Sources */,
 				B6BFDE0C264F411D004FC2F1 /* HeightUtils.swift in Sources */,
 				B682632326424D2800A32D5C /* FontConst.swift in Sources */,
+				B6F365462653FCE300539B5E /* TZImagePickerController.swift in Sources */,
 				B6771624264A18A30035A50C /* TrainerDetailModel.swift in Sources */,
 				B69103D726381EC0005F2ACD /* HomeBannerColListCell.swift in Sources */,
 				B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */,
@@ -1072,6 +1161,7 @@
 				B6E4FFFB264C0C510020F636 /* ZFOrientationObserver.m in Sources */,
 				B6E40000264C0C510020F636 /* ZFPresentTransition.m in Sources */,
 				5E9EE731278E41A6BFDCE28A /* AmplifyModels.swift in Sources */,
+				B6F3653C2653FCE300539B5E /* TZLocationManager.swift in Sources */,
 				B6E4000A264C0C510020F636 /* UIView+ZFFrame.m in Sources */,
 				B63749ED264596EA00502913 /* UserCenterFavorite.swift in Sources */,
 				B63749F2264694C800502913 /* TimeFormatUtils.swift in Sources */,
@@ -1084,6 +1174,7 @@
 				B69103D826381EC0005F2ACD /* HomeSeeAllCoursesView.swift in Sources */,
 				B69103D226381EC0005F2ACD /* HomeViewController.swift in Sources */,
 				B6374976264447AE00502913 /* UserProfileHealthKitListCell.swift in Sources */,
+				B6BFDE312652ABB9004FC2F1 /* FogotConfirmViewController.swift in Sources */,
 				B6E4FFFA264C0C510020F636 /* ZFLandscapeWindow.m in Sources */,
 				503E02E0497E4EFF9D9BD770 /* UserContent+Schema.swift in Sources */,
 				CB02F7E746244ECC95ED67D5 /* UserProfile.swift in Sources */,
@@ -1091,6 +1182,7 @@
 				B68262DB263BFFEF00A32D5C /* MBProgressHUD.m in Sources */,
 				B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */,
 				B6E4FFFD264C0C510020F636 /* ZFPersentInteractiveTransition.m in Sources */,
+				B6BFDE2C2652A952004FC2F1 /* FogotPwdViewController.swift in Sources */,
 				B6BFDE2126526602004FC2F1 /* RegisterViewController.swift in Sources */,
 				B6E40004264C0C510020F636 /* ZFKVOController.m in Sources */,
 				B6E4000F264C0C510020F636 /* ZFSliderView.m in Sources */,
@@ -1098,12 +1190,15 @@
 				B68263012642484B00A32D5C /* ColorConst.swift in Sources */,
 				B6E40002264C0C510020F636 /* ZFPlayerView.m in Sources */,
 				B69103D626381EC0005F2ACD /* HomeTopColCell.swift in Sources */,
+				B6BFDE4C2653CE18004FC2F1 /* NotificationConstMacro.swift in Sources */,
 				B69103D026381EC0005F2ACD /* Global.swift in Sources */,
 				B6E40020264C15E40020F636 /* ZFAVPlayerManager.m in Sources */,
 				B63749F526469C1700502913 /* UserProfileSettingViewController.swift in Sources */,
+				B6F365442653FCE300539B5E /* TZPhotoPickerController.swift in Sources */,
 				B6E4FFFE264C0C510020F636 /* UIScrollView+ZFPlayer.m in Sources */,
 				B637497A26444D9F00502913 /* UserProfileTopCell.swift in Sources */,
 				B6E4FFFF264C0C510020F636 /* ZFPlayerNotification.m in Sources */,
+				B6BFDE492653B22D004FC2F1 /* UserProfileEditViewController.swift in Sources */,
 				B682632626426FDB00A32D5C /* HomeListCell.swift in Sources */,
 				2D300B2B0DB846128C62C062 /* UserFavoriteContent.swift in Sources */,
 				B67716122647F6190035A50C /* UserContentSegmentListCell.swift in Sources */,
@@ -1115,6 +1210,7 @@
 				A690E02738114B2F88B979ED /* UserSubscriptionTrainer.swift in Sources */,
 				B67716072647DE3C0035A50C /* UserMatricsListModel.swift in Sources */,
 				B63749EE264596EA00502913 /* UserCenterTrainer.swift in Sources */,
+				B6F365402653FCE300539B5E /* TZAssetCell.swift in Sources */,
 				B6E40010264C0C510020F636 /* ZFPlayerControlView.m in Sources */,
 				B6E40009264C0C510020F636 /* ZFUtilities.m in Sources */,
 				B6E4000B264C0C510020F636 /* ZFVolumeBrightnessView.m in Sources */,

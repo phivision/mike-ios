@@ -7,7 +7,9 @@
 
 import UIKit
 import Amplify
-
+@objc protocol HomeListCellDelegate{
+    @objc optional func homeListAvatarClicked(model:UserSubscriptionTrainerListTrainer)
+}
 class HomeListCell: UITableViewCell {
     @IBOutlet weak var contentBg:UIImageView!
     @IBOutlet weak var avatar:UIImageView!
@@ -15,6 +17,8 @@ class HomeListCell: UITableViewCell {
     @IBOutlet weak var descText:UILabel!
     @IBOutlet weak var userName:UILabel!
     @IBOutlet weak var timeLab:UILabel!
+    weak var delegate:HomeListCellDelegate?
+    var curModel:UserSubscriptionTrainerListTrainer!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -33,6 +37,7 @@ class HomeListCell: UITableViewCell {
     }
     
     func setItemModel(model:UserSubscriptionTrainerListItem,sectionModel:UserSubscriptionTrainerListTrainer){
+        self.curModel = sectionModel
         self.userName.text = "\(sectionModel.firstName ?? "") \(sectionModel.lastName ?? "")"
         self.descText.text = "\(model.descriptionField ?? "")"
         ImageCacheUtils.sharedTools.imageUrl(key: sectionModel.userImage) { imgUrl, cannotLoadUrl in
@@ -49,31 +54,11 @@ class HomeListCell: UITableViewCell {
                 self.contentImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
-//        Amplify.Storage.getURL(key: sectionModel.userImage) { event in
-//            switch event {
-//            case let .success(url):
-//                print("Completed: \(url)")
-//                self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-//            case let .failure(storageError):
-//                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-//                self.avatar.image = UIImage(named: "logo")
-//            }
-//        }
-//        if StringUtils.isBlank(value: model.thumbnail) {
-//            self.contentImg.image = UIImage(named: "logo")
-//        }else{
-//            Amplify.Storage.getURL(key: model.thumbnail) { event in
-//                switch event {
-//                case let .success(url):
-//                    print("Completed: \(url)")
-//                    self.contentImg.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-//                case let .failure(storageError):
-//                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-//                    self.contentImg.image = UIImage(named: "logo")
-//                }
-//            }
-//        }
         self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: model.createdAt))"
+    }
+    
+    @IBAction func avatarClicked(){
+        self.delegate?.homeListAvatarClicked?(model: self.curModel)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

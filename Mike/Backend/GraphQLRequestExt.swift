@@ -263,4 +263,71 @@ extension GraphQLRequest{
                                     variables: ["id": id],
                                     responseType: JSONValue.self)
     }
+    //MARK: - Favorite
+    //fetch favorite user list
+    static func fetchUserList(byContentId id: String) -> GraphQLRequest<JSONValue>{
+        let document = """
+        query MyQuery($id:ID!) {
+          getUserContent(id:$id) {
+            FavoriteUser {
+              items {
+                User {
+                  id
+                }
+              }
+            }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                    variables: ["id": id],
+                                    responseType: JSONValue.self)
+    }
+    //add favorite to user
+    static func addFav(byContentId id: String) -> GraphQLRequest<JSONValue>{
+        let document = """
+        mutation MyMutation($id:ID!,$userid:ID!){
+          createUserFavoriteContent(input: {userFavoriteContentUserId: $userid, userFavoriteContentContentId: $id}) {
+            id
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                       variables: ["id": id,"userid":LoginTools.sharedTools.userId()],
+                                    responseType: JSONValue.self)
+    }
+    //del favorite by fav relationId
+    static func delFav(byFavRelationId id: String) -> GraphQLRequest<JSONValue>{
+        let document = """
+        mutation MyMutation($id:ID!){
+          deleteUserFavoriteContent(input: {id: $id}) {
+            id
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                       variables: ["id": id],
+                                    responseType: JSONValue.self)
+    }
+    //fetch user fav relationship id list
+    static func fetchFavRelationIdList() -> GraphQLRequest<JSONValue>{
+        let document = """
+            query MyQuery($id:ID!) {
+              getUserProfile(id:$id){
+                Favorites {
+                  items {
+                    id
+                    Content {
+                      id
+                    }
+                  }
+                }
+              }
+            }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": LoginTools.sharedTools.userId()],
+                                    responseType: JSONValue.self)
+    }
+    
 }

@@ -85,8 +85,8 @@ class Backend {
     }
     
     //MARK: - register
-    func signUp(username: String, password: String, email: String,phone:String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
-        let userAttributes = [AuthUserAttribute(.email, value: email),AuthUserAttribute(.phoneNumber, value: phone)]
+    func signUp(username: String, password: String, firstName: String,lastName: String,phone:String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
+        let userAttributes = [AuthUserAttribute(.email, value: username),AuthUserAttribute(.phoneNumber, value: phone),AuthUserAttribute(.familyName, value: lastName),AuthUserAttribute(.givenName, value: firstName)]
         let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
         Amplify.Auth.signUp(username: username, password: password, options: options) { result in
             switch result {
@@ -117,7 +117,50 @@ class Backend {
             }
         }
     }
-
+    
+    //MARK: - fogotPwd
+    func resetPassword(username: String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
+        Amplify.Auth.resetPassword(for: username) { result in
+                do {
+                    let resetResult = try result.get()
+                    switch resetResult.nextStep {
+                    case .confirmResetPasswordWithCode(let deliveryDetails, let info):
+                        print("Confirm reset password with code send to - \(deliveryDetails) \(String(describing: info))")
+                        needConfirm()
+                    case .done:
+                        print("Reset completed")
+                        suc()
+                    }
+                } catch {
+                    print("Reset password failed with error \(error)")
+                    fail("\(error)")
+                }
+            }
+    }
+    
+    func confirmResetPassword(
+        username: String,
+        newPassword: String,
+        confirmationCode: String,
+        suc:@escaping ()->Void,
+        fail:@escaping (_ msg:String)->Void
+    ) {
+        Amplify.Auth.confirmResetPassword(
+            for: username,
+            with: newPassword,
+            confirmationCode: confirmationCode
+        ) { result in
+            switch result {
+            case .success:
+                print("Password reset confirmed")
+                suc()
+            case .failure(let error):
+                print("Reset password failed with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    
     //MARK:  - signout
     public func signOut(suc:@escaping ()->Void,fail:@escaping ()->Void) {
         _ = Amplify.Auth.signOut() { (result) in
@@ -383,6 +426,174 @@ class Backend {
                         return
                     }
                     suc(TrainerDetailModel(fromDictionary: subDic as! [String : Any]))
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    
+    //MARK: - favorite
+    //favUserList by ContentId
+    func fetchContentIsFav(contentId:String?,suc:@escaping (_ isFav:Bool)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchUserList(byContentId: contentId ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserContent"] as? NSDictionary else {
+                        return
+                    }
+                    guard let contentDic = subDic["FavoriteUser"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = contentDic["items"] as? NSArray else {
+                        return
+                    }
+                    print("\(itemList)")
+                    var userList = Array<String>()
+                    for item in itemList {
+                        guard let itemDic = item as? NSDictionary else{
+                            continue
+                        }
+                        guard let userDic = itemDic["User"] as? NSDictionary else {
+                            continue
+                        }
+                        userList.append("\(userDic["id"] ?? "")")
+                    }
+                    suc(userList.contains(LoginTools.sharedTools.userId()))
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    //add fav
+    func addContentToFav(contentId:String?,suc:@escaping (_ isSuc:Bool)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.mutate(request: .addFav(byContentId: contentId ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        fail("Failed")
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        fail("Failed")
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["createUserFavoriteContent"] as? NSDictionary {
+                        print("\(subDic)")
+                        suc(true)
+                    }else {
+                        fail("Failed")
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    //del fav
+    func delContentToFav(favRelationId:String?,suc:@escaping (_ isSuc:Bool)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.mutate(request: .delFav(byFavRelationId: favRelationId ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        fail("Failed")
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        fail("Failed")
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["deleteUserFavoriteContent"] as? NSDictionary {
+                        print("\(subDic)")
+                        suc(true)
+                    }else {
+                        fail("Failed")
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    func fetchFavIdList(suc:@escaping (_ relationDic:[String:Any])->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchFavRelationIdList()){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        return
+                    }
+                    guard let contentDic = subDic["Favorites"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = contentDic["items"] as? NSArray else {
+                        return
+                    }
+                    var relationDic:[String:Any] = [:]
+                    for item in itemList {
+                        guard let itemDic = item as? NSDictionary else{
+                            continue
+                        }
+                        guard let userDic = itemDic["Content"] as? NSDictionary else {
+                            continue
+                        }
+                        guard let favId = itemDic["id"] as? String else {
+                            continue
+                        }
+                        guard let contentId = userDic["id"] as? String else {
+                            continue
+                        }
+                        relationDic[contentId] = favId
+                    }
+                    suc(relationDic)
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
                     fail("\(error.errorDescription)")

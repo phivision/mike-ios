@@ -39,6 +39,8 @@
 	<string>Using healthkit to display health data</string>
 	<key>Privacy – Health Update Usage Description</key>
 	<string>Using healthkit to display health data</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Using photoKit to select avatar</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Nunito-Black.ttf</string>

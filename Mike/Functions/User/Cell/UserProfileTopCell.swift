@@ -10,8 +10,10 @@ import Amplify
 @objc protocol UserProfileTopCellDelegate {
     @objc optional func settingBtnClicked()
     @objc optional func backBtnClicked()
+    @objc optional func avatarBtnClicked()
 }
 class UserProfileTopCell: UICollectionViewCell {
+    @IBOutlet weak var topBg:UIImageView!
     @IBOutlet weak var contentBg:UIImageView!
     @IBOutlet weak var avatar:UIImageView!
     @IBOutlet weak var userName:UILabel!
@@ -32,7 +34,7 @@ class UserProfileTopCell: UICollectionViewCell {
         self.avatar.layer.cornerRadius = 20
         self.avatar.clipsToBounds = true
     }
-    func setModel(model:UserCenterModel){
+    func setModel(model:UserCenterModel,isOtherUser:Bool){
 //        Amplify.Storage.getURL(key: model.userImage) { event in
 //            switch event {
 //            case let .success(url):
@@ -53,7 +55,7 @@ class UserProfileTopCell: UICollectionViewCell {
         self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         self.userDesc.text = "\(model.descriptionField ?? "")"
         self.isTrainer = false
-        self.configBtn()
+        self.configBtn(showBack: isOtherUser)
     }
     func setTrainerModel(model:TrainerDetailModel){
 //        Amplify.Storage.getURL(key: model.userImage) { event in
@@ -76,10 +78,10 @@ class UserProfileTopCell: UICollectionViewCell {
         self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         self.userDesc.text = "\(model.descriptionField ?? "")"
         self.isTrainer = true
-        self.configBtn()
+        self.configBtn(showBack: true)
     }
-    func configBtn(){
-        if self.isTrainer == true {
+    func configBtn(showBack:Bool){
+        if showBack == true {
             self.settingBtn.isHidden = true
             self.backBtn.isHidden = false
         }else{
@@ -92,5 +94,8 @@ class UserProfileTopCell: UICollectionViewCell {
     }
     @IBAction func backBtnPressed(){
         self.delegate?.backBtnClicked?()
+    }
+    @IBAction func avatarBtnPressed(){
+        self.delegate?.avatarBtnClicked?()
     }
 }

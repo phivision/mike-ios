@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TrainerDetailViewController: BaseViewController {
+class TrainerDetailViewController: BaseViewController{
     @IBOutlet weak var mainCollection:UICollectionView!
     var isRequest:Bool = false
     lazy var contentList:Array<UserCenterContent> = {
@@ -25,7 +25,6 @@ class TrainerDetailViewController: BaseViewController {
         // Do any additional setup after loading the view.
         self.configCollectionView()
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
@@ -63,7 +62,8 @@ class TrainerDetailViewController: BaseViewController {
         self.mainCollection.collectionViewLayout = flowLayout
         self.mainCollection.delegate = self
         self.mainCollection.dataSource = self
-        self.mainCollection.backgroundColor = UIColor.white
+        self.mainCollection.backgroundColor = UIColor.clear
+        self.mainCollection.clipsToBounds = false
         self.mainCollection.register(UINib(nibName: "UserProfileTopCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTopCell")
         self.mainCollection.register(UINib(nibName: "UserProfileFavHorizonListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileFavHorizonListCell")
         self.mainCollection.register(UINib(nibName: "TrainerBaseInfoCell", bundle: nil), forCellWithReuseIdentifier: "TrainerBaseInfoCell")
@@ -91,7 +91,7 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
         case 0:
             return 1
         case 1:
-            return 1
+            return 0
         case 2:
             return 1
         case 3:
@@ -141,12 +141,13 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
             }
             return cell
         case 1:
-            let cell:TrainerBaseInfoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrainerBaseInfoCell", for: indexPath) as! TrainerBaseInfoCell
-            cell.contentView.backgroundColor = UIColor.white
-            if let model = self.trainerModel {
-                cell.setModel(model: model)
-            }
-            return cell
+            return UICollectionViewCell()
+//            let cell:TrainerBaseInfoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrainerBaseInfoCell", for: indexPath) as! TrainerBaseInfoCell
+//            cell.contentView.backgroundColor = UIColor.white
+//            if let model = self.trainerModel {
+//                cell.setModel(model: model)
+//            }
+//            return cell
         case 2:
             let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
             cell.contentView.backgroundColor = UIColor.white
@@ -173,13 +174,14 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
         case 0:
             if let model = self.trainerModel {
                 let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                return CGSize.init(width: kScreenWidth, height: 265 + descHeight)
+                return CGSize.init(width: kScreenWidth, height: 309 + descHeight)
             }else{
-                return CGSize.init(width: kScreenWidth, height: 265)
+                return CGSize.init(width: kScreenWidth, height: 309)
             }
             
         case 1:
-            return CGSize.init(width: kScreenWidth, height: 100)
+//            return CGSize.init(width: kScreenWidth, height: 100)
+            return CGSize.zero
         case 2:
             return CGSize.init(width: kScreenWidth, height: 260)
         case 3:

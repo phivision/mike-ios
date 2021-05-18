@@ -39,13 +39,13 @@ class HomeListViewController: BaseViewController {
     }
     
     func configTopView(){
-        self.userName.text = "Hi,\(LoginTools.sharedTools.userInfo().firstName ?? "")"
+        self.userName.text = "Hi, \(LoginTools.sharedTools.userInfo().firstName ?? "")"
         let date = Date()
         let timeFormatter = DateFormatter()
         //日期显示格式，可按自己需求显示
-        timeFormatter.dateFormat = "dd MM"
+        timeFormatter.dateFormat = "EEE dd MMM"
         let strNowTime = timeFormatter.string(from: date) as String
-        self.timeLab.text = "\(NSDate().dayOfWeek()) \(strNowTime)"
+        self.timeLab.text = "\(strNowTime)"
     }
     
     func configTableView(){
@@ -103,6 +103,7 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
         let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section]
         let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
         cell.setItemModel(model: contentModel,sectionModel: trainerModel.trainer)
+        cell.delegate = self
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -115,5 +116,13 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
         }
+    }
+}
+extension HomeListViewController:HomeListCellDelegate{
+    func homeListAvatarClicked(model: UserSubscriptionTrainerListTrainer) {
+        let vc:TrainerDetailViewController = TrainerDetailViewController()
+        vc.trainerId = model.id
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

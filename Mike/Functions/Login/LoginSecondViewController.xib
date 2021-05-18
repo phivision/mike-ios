@@ -107,9 +107,12 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RR4-nT-zhK">
                     <rect key="frame" x="63" y="617" width="288" height="37"/>
                     <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="18"/>
-                    <state key="normal" title="Log in online">
+                    <state key="normal" title="Reset Password">
                         <color key="titleColor" red="0.21176470589999999" green="0.1960784314" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="fogotPwdBtnPressed" destination="-1" eventType="touchUpInside" id="Vb0-I4-POa"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

@@ -11,6 +11,7 @@ import HealthKit
 
 class UserProfileViewController: BaseViewController {
     @IBOutlet weak var mainCollection:UICollectionView!
+    var curUserId:String?
     var isRequest:Bool = false
     lazy var subscriptionList:Array<UserCenterTrainer> = {
         var subscriptionList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
@@ -29,8 +30,9 @@ class UserProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.configMetricsList()
+        self.configUserId()
         self.configCollectionView()
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchFavList), name: NSNotification.Name(rawValue:refreshFavList), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,12 +40,13 @@ class UserProfileViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         if self.isRequest == false {
             self.fetchTrainerList()
-            self.fetchFavList();
             self.isRequest = true
         }
+        self.fetchFavList();
     }
-    func fetchFavList(){
-        Backend.shared.fetchUserFavList(userId: LoginTools.sharedTools.userId()) { contentList in
+    @objc func fetchFavList(){
+        Backend.shared.fetchUserFavList(userId: self.curUserId) { contentList in
+            self.favList.removeAll()
             self.favList.append(contentsOf: contentList)
             DispatchQueue.main.async {
                 self.mainCollection.reloadData()
@@ -53,7 +56,7 @@ class UserProfileViewController: BaseViewController {
         }
     }
     func fetchTrainerList(){
-        Backend.shared.fetchUserProfileModel(userId: LoginTools.sharedTools.userId()) { model in
+        Backend.shared.fetchUserProfileModel(userId: self.curUserId) { model in
             self.userProfileModel = model
             let list:Array<UserCenterItem> = model.subscriptions.items
             self.subscriptionList.removeAll()
@@ -73,32 +76,30 @@ class UserProfileViewController: BaseViewController {
         } fail: { errorMsg in
             
         }
-
-//        Backend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
-//            self.subscriptionList.removeAll()
-//            self.subscriptionList.append(contentsOf: subscriptionList)
-//            DispatchQueue.main.async {
-//                self.mainCollection.reloadData()
-//            }
-//        }
+    }
+    func configUserId(){
+        if StringUtils.isBlank(value: self.curUserId) {
+            self.curUserId = LoginTools.sharedTools.userId()
+            self.configMetricsList()
+        }
     }
     func configMetricsList(){
-        for i in 0..<4 {
+        for i in 0..<2 {
             let model:UserMatricsListModel = UserMatricsListModel(fromDictionary: [:])
             switch i {
             case 0:
                 model.type = HealthType.calories
                 model.title = "CALORIES"
                 model.unit = "kcal"
+//            case 1:
+//                model.type = HealthType.weight
+//                model.title = "WEIGHT"
+//                model.unit = "lb"
+//            case 2:
+//                model.type = HealthType.water
+//                model.title = "WATER"
+//                model.unit = "ml"
             case 1:
-                model.type = HealthType.weight
-                model.title = "WEIGHT"
-                model.unit = "lb"
-            case 2:
-                model.type = HealthType.water
-                model.title = "WATER"
-                model.unit = "ml"
-            case 3:
                 model.type = HealthType.steps
                 model.title = "STEPS"
             default:
@@ -167,7 +168,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
                 case 2:
                     header.sectionTitle.text = "Favorite Workouts"
                 case 3:
-                    header.sectionTitle.text = "Metrics"
+                    header.sectionTitle.text = self.metricsList.count > 0 ? "Metrics" : ""
                 default:
                     header.sectionTitle.text = ""
                 }
@@ -194,7 +195,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
             let cell:UserProfileTopCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileTopCell", for: indexPath) as! UserProfileTopCell
             cell.delegate = self
             if let model = self.userProfileModel {
-                cell.setModel(model: model)
+                cell.setModel(model: model,isOtherUser: self.curUserId != LoginTools.sharedTools.userId())
             }
             return cell
         case 1:
@@ -223,9 +224,9 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 0:
             if let model = self.userProfileModel {
                 let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                return CGSize.init(width: kScreenWidth, height: 265 + descHeight)
+                return CGSize.init(width: kScreenWidth, height: 309 + descHeight)
             }else{
-                return CGSize.init(width: kScreenWidth, height: 265)
+                return CGSize.init(width: kScreenWidth, height: 309)
             }
         case 1:
             return CGSize.init(width: 54, height: 54)
@@ -312,6 +313,18 @@ extension UserProfileViewController:UserProfileTopCellDelegate{
             self.present(vc, animated: true, completion: nil)
         }
     }
+    func backBtnClicked() {
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    func avatarBtnClicked() {
+        let vc:UserProfileEditViewController = UserProfileEditViewController()
+        vc.hidesBottomBarWhenPushed = true
+        DispatchQueue.main.async {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 extension UserProfileViewController{
     func getInfo(){
@@ -349,27 +362,27 @@ extension UserProfileViewController{
                     self.mainCollection.reloadData()
                 }
             }
-            HealthKitTools.sharedTools.getBodyMass { success, weight, error in
-                print("Here's the weight：\(weight) lb")
-                let model = self.metricsList[1]
-                model.contentValue = String(format: "%.2f", weight)
-                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
-                DispatchQueue.main.async {
-                    self.mainCollection.reloadData()
-                }
-            }
-            HealthKitTools.sharedTools.getWater { success, water, error in
-                print("Here's the water：\(water) ml")
-                let model = self.metricsList[2]
-                model.contentValue = "\(water)"
-                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
-                DispatchQueue.main.async {
-                    self.mainCollection.reloadData()
-                }
-            }
+//            HealthKitTools.sharedTools.getBodyMass { success, weight, error in
+//                print("Here's the weight：\(weight) lb")
+//                let model = self.metricsList[1]
+//                model.contentValue = String(format: "%.2f", weight)
+//                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
+//                DispatchQueue.main.async {
+//                    self.mainCollection.reloadData()
+//                }
+//            }
+//            HealthKitTools.sharedTools.getWater { success, water, error in
+//                print("Here's the water：\(water) ml")
+//                let model = self.metricsList[2]
+//                model.contentValue = "\(water)"
+//                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
+//                DispatchQueue.main.async {
+//                    self.mainCollection.reloadData()
+//                }
+//            }
             HealthKitTools.sharedTools.getStepCount { success, stepCount, error in
                 print("Here are the steps for today：\(stepCount) steps")
-                let model = self.metricsList[3]
+                let model = self.metricsList[1]
                 model.contentValue = "\(stepCount)"
                 model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
                 DispatchQueue.main.async {

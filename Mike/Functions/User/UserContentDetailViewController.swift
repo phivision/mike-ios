@@ -14,6 +14,8 @@ class UserContentDetailViewController: BaseViewController {
     @IBOutlet weak var descLab:UILabel!
     @IBOutlet weak var contentView:UIView!
     @IBOutlet weak var mainTableView:UITableView!
+    @IBOutlet weak var favBtn:UIButton!
+    var isFav:Bool = false
     typealias BlackName = ()
     var trainerId:String!
     var userContentModel:UserCenterContent!
@@ -22,12 +24,17 @@ class UserContentDetailViewController: BaseViewController {
         var segList:Array<UserContentSegmentListModel> = Array<UserContentSegmentListModel>()
         return segList
     }()
+    // 修复侧滑丢失
+    private var naDelegate: UIGestureRecognizerDelegate?
+    var favRelationDic:[String:Any] = [:]
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configView()
         self.configTableView()
         self.configData()
         self.fetchTrainerInfo()
+        self.fetchIsFav()
+        self.fetchFavRelationIdList()
         // Do any additional setup after loading the view.
     }
     func configData(){
@@ -63,6 +70,32 @@ class UserContentDetailViewController: BaseViewController {
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
     }
+    func fetchFavRelationIdList() {
+        Backend.shared.fetchFavIdList { relationDic in
+            print("\(relationDic)")
+            self.favRelationDic = relationDic
+        } fail: {error in
+            
+        }
+    }
+    func fetchIsFav(){
+        Backend.shared.fetchContentIsFav(contentId: self.userContentModel.id) { suc in
+            if(suc == true){
+                self.isFav = true
+            }else{
+                self.isFav = false
+            }
+            self.handleFavBtnState()
+        } fail: { error in
+            self.isFav = false
+            self.handleFavBtnState()
+        }
+    }
+    func handleFavBtnState(){
+        DispatchQueue.main.async {
+            self.favBtn.isSelected = self.isFav
+        }
+    }
     func fetchTrainerInfo(){
         Backend.shared.fetchTrainerSimpleInfo(userId: self.trainerId) { trainerModel in
             self.configTrainerUI(trainerModel: trainerModel)
@@ -78,28 +111,36 @@ class UserContentDetailViewController: BaseViewController {
                 self.trainerAvatar.sd_setImage(with: URL(string: imgUrl ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
-//        if StringUtils.isBlank(value: trainerModel.userImage) {
-//            DispatchQueue.main.async {
-//                self.trainerAvatar.image = UIImage(named: "logo")
-//            }
-//        }else{
-//            Amplify.Storage.getURL(key: trainerModel.userImage) { event in
-//                switch event {
-//                case let .success(url):
-//                    print("Completed: \(url)")
-//                    DispatchQueue.main.async {
-//                        self.trainerAvatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-//                    }
-//                case let .failure(storageError):
-//                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-//                    DispatchQueue.main.async {
-//                        self.trainerAvatar.image = UIImage(named: "logo")
-//                    }
-//                }
-//            }
-//        }
         DispatchQueue.main.async {
             self.trainerNameLab.text = "\(trainerModel.firstName ?? "") \(trainerModel.lastName ?? "")"
+        }
+    }
+    @IBAction func favBtnPressed(){
+        if self.isFav == true {
+            let favRelationId:String = self.favRelationDic[self.userContentModel.id ?? ""] as? String ?? ""
+            Backend.shared.delContentToFav(favRelationId: favRelationId) { isSuc in
+                DispatchQueue.main.async {
+                    ToastHUD.showMsg(msg: "Delete Favorite Success", controller: self)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshFavList), object: nil)
+                self.fetchIsFav()
+            } fail: { error in
+                DispatchQueue.main.async {
+                    ToastHUD.showMsg(msg: error, controller: self)
+                }
+            }
+        }else{
+            Backend.shared.addContentToFav(contentId: self.userContentModel.id) { isSuc in
+                DispatchQueue.main.async {
+                    ToastHUD.showMsg(msg: "Add Favorite Success", controller: self)
+                }
+                self.fetchIsFav()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshFavList), object: nil)
+            } fail: { error in
+                DispatchQueue.main.async {
+                    ToastHUD.showMsg(msg: error, controller: self)
+                }
+            }
         }
     }
     @IBAction func dismissBtnClicked(){

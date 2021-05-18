@@ -76,6 +76,8 @@ class VideoViewController: UIViewController {
     var isLoaded:Bool = false
     //show camera
     var showCamera:Bool = false
+    //并发队列
+    let concurrent = DispatchQueue(label: "serial",attributes: .concurrent)
     
 //    var player:AVPlayer!
     override func viewDidLoad() {
@@ -97,8 +99,7 @@ class VideoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         self.playerManager.stop()
-        //关闭数据流
-        self.captureSession.stopRunning()
+        self.stopCapture()
         let rotation : UIInterfaceOrientationMask = [.portrait]
         kAppdelegate?.blockRotation = rotation
     }
@@ -141,7 +142,7 @@ class VideoViewController: UIViewController {
         self.videoState = .play
         self.handlePlayBtn(byState: self.videoState)
         self.playerManager.play()
-//        self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
+        self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
     }
     @IBAction func backBtnPressed(){
         self.dismiss(animated: true, completion: nil)
@@ -188,7 +189,7 @@ class VideoViewController: UIViewController {
             kAppdelegate?.blockRotation = rotation
             UIView.animate(withDuration: 0.3) {
                 self.controlViewLeftMargin.constant = 28
-                self.videoHeightRatio.constant = self.standardView.width
+                self.videoHeightRatio.constant = kScreenWidth//self.standardView.width
                 self.cameraHeightRatio.constant = 0
             }
         }
@@ -249,13 +250,17 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
         }
     }
     func startCapture() {
-        if !captureSession.isRunning {
-            captureSession.startRunning()
+        self.concurrent.async {
+            if !self.captureSession.isRunning {
+                self.captureSession.startRunning()
+            }
         }
     }
     func stopCapture() {
-        if captureSession.isRunning {
-            captureSession.stopRunning()
+        self.concurrent.async {
+            if self.captureSession.isRunning {
+                self.captureSession.stopRunning()
+            }
         }
     }
 //    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {

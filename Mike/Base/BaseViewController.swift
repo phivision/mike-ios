@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+class BaseViewController: UIViewController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +17,8 @@ class BaseViewController: UIViewController {
 //            setNavLeftBtn(imageName: "backBtn")
             self.navigationItem.backButtonTitle = ""
             self.navigationController?.navigationItem.hidesBackButton = false
+            self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         }else{
             self.navigationController?.navigationItem.hidesBackButton = true
         }

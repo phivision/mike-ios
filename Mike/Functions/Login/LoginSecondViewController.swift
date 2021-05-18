@@ -70,6 +70,10 @@ class LoginSecondViewController: BaseViewController {
         }
 
     }
+    @IBAction func fogotPwdBtnPressed(){
+        let vc = FogotPwdViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     func logOut(){
         Backend.shared.signOut {
             
@@ -77,6 +81,7 @@ class LoginSecondViewController: BaseViewController {
 
         }
     }
+    
     /*
     // MARK: - Navigation
 
