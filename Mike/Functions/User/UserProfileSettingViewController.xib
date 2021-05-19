@@ -45,7 +45,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Wz-cF-2ik">
-                    <rect key="frame" x="77" y="231" width="260" height="60"/>
+                    <rect key="frame" x="77" y="296" width="260" height="60"/>
                     <color key="backgroundColor" red="0.44705882349999998" green="0.39607843139999999" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="260" id="9AM-7u-c4V"/>
@@ -59,6 +59,19 @@
                         <action selector="signOut" destination="-1" eventType="touchUpInside" id="lh5-ru-rsE"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NqJ-M8-rI1">
+                    <rect key="frame" x="25" y="206" width="364" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="uHt-eH-TB4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="20"/>
+                    <state key="normal" title="Edit User Profile">
+                        <color key="titleColor" red="0.1764705882" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="editProfile" destination="-1" eventType="touchUpInside" id="Jfg-W2-maA"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -68,7 +81,10 @@
                 <constraint firstItem="1cr-gY-uwk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="B8f-Qs-z3f"/>
                 <constraint firstItem="1cr-gY-uwk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="QyR-uv-MZ0"/>
                 <constraint firstItem="6Wz-cF-2ik" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="bgY-e9-qFX"/>
-                <constraint firstItem="6Wz-cF-2ik" firstAttribute="top" secondItem="UNH-aT-pZW" secondAttribute="bottom" constant="65" id="fgc-gy-rxz"/>
+                <constraint firstItem="6Wz-cF-2ik" firstAttribute="top" secondItem="NqJ-M8-rI1" secondAttribute="bottom" constant="40" id="fgc-gy-rxz"/>
+                <constraint firstItem="NqJ-M8-rI1" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-25" id="knr-Jb-o9o"/>
+                <constraint firstItem="NqJ-M8-rI1" firstAttribute="top" secondItem="UNH-aT-pZW" secondAttribute="bottom" constant="40" id="qgn-gH-SLX"/>
+                <constraint firstItem="NqJ-M8-rI1" firstAttribute="leading" secondItem="UNH-aT-pZW" secondAttribute="leading" id="y5Z-fW-yRp"/>
             </constraints>
             <point key="canvasLocation" x="74" y="94"/>
         </view>

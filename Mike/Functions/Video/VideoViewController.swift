@@ -142,7 +142,10 @@ class VideoViewController: UIViewController {
         self.videoState = .play
         self.handlePlayBtn(byState: self.videoState)
         self.playerManager.play()
-        self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
+//        self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
+        
+        self.segmentTitle.text = ""
+        self.segmentTime.text = ""
     }
     @IBAction func backBtnPressed(){
         self.dismiss(animated: true, completion: nil)
@@ -316,7 +319,7 @@ extension VideoViewController{
             self.segmentTitle.text = "\(model.name ?? "")"
             self.segmentTime.text = "\(model.timestamp ?? "")"
         }else{
-            self.segmentTitle.text = "No Segments"
+            self.segmentTitle.text = ""
             self.segmentTime.text = ""
         }
     }

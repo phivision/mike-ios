@@ -8,4 +8,5 @@
 import Foundation
 
 let refreshFavList:String = "refreshFavList"
+let refreshProfile:String = "refreshUserProfile"
 

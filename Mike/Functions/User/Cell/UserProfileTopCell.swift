@@ -45,29 +45,33 @@ class UserProfileTopCell: UICollectionViewCell {
 //                self.avatar.image = UIImage(named: "logo")
 //            }
 //        }
-        ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
-            if cannotLoadUrl == true{
-                self.avatar.image = UIImage(named: "logo")
-            }else{
-                self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+        if isOtherUser == true {
+            ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
+                if cannotLoadUrl == true{
+                    self.avatar.image = UIImage(named: "logo")
+                }else{
+                    self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                }
             }
+            self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
+            self.userDesc.text = "\(model.descriptionField ?? "")"
+            self.isTrainer = false
+            self.configBtn(showBack: isOtherUser)
+        }else{
+            ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.userInfo().userImage) { imgUrl, cannotLoadUrl in
+                if cannotLoadUrl == true{
+                    self.avatar.image = UIImage(named: "logo")
+                }else{
+                    self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                }
+            }
+            self.userName.text = "\(LoginTools.sharedTools.userInfo().firstName ?? "") \(LoginTools.sharedTools.userInfo().lastName ?? "")"
+            self.userDesc.text = "\(LoginTools.sharedTools.userInfo().descriptionField ?? "")"
+            self.isTrainer = false
+            self.configBtn(showBack: isOtherUser)
         }
-        self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
-        self.userDesc.text = "\(model.descriptionField ?? "")"
-        self.isTrainer = false
-        self.configBtn(showBack: isOtherUser)
     }
     func setTrainerModel(model:TrainerDetailModel){
-//        Amplify.Storage.getURL(key: model.userImage) { event in
-//            switch event {
-//            case let .success(url):
-//                print("Completed: \(url)")
-//                self.avatar.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-//            case let .failure(storageError):
-//                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-//                self.avatar.image = UIImage(named: "logo")
-//            }
-//        }
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
                 self.avatar.image = UIImage(named: "logo")

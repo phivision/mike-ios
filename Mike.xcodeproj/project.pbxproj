@@ -46,6 +46,7 @@
 		B63749F626469C1700502913 /* UserProfileSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63749F426469C1700502913 /* UserProfileSettingViewController.xib */; };
 		B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B641F8072646AD1000FE8C56 /* HealthKit.framework */; };
 		B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */; };
+		B66377D526555A93001AB98B /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = B66377D326555A93001AB98B /* UITextView+Placeholder.m */; };
 		B67716072647DE3C0035A50C /* UserMatricsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716062647DE3C0035A50C /* UserMatricsListModel.swift */; };
 		B677160A2647EFF90035A50C /* UserContentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716082647EFF90035A50C /* UserContentDetailViewController.swift */; };
 		B677160B2647EFF90035A50C /* UserContentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67716092647EFF90035A50C /* UserContentDetailViewController.xib */; };
@@ -184,6 +185,7 @@
 		B6F365452653FCE300539B5E /* TZGifPhotoPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365362653FCE200539B5E /* TZGifPhotoPreviewController.swift */; };
 		B6F365462653FCE300539B5E /* TZImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365372653FCE200539B5E /* TZImagePickerController.swift */; };
 		B6F365472653FCE300539B5E /* TZPhotoPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F365382653FCE200539B5E /* TZPhotoPreviewController.swift */; };
+		B6F3655526553DBF00539B5E /* PullToRefreshKit in Frameworks */ = {isa = PBXBuildFile; productRef = B6F3655426553DBF00539B5E /* PullToRefreshKit */; };
 		C1DEDD772637460700F66A7C /* MikeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEDD762637460700F66A7C /* MikeApp.swift */; };
 		C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD7A2637460900F66A7C /* Assets.xcassets */; };
 		C1DEDD7E2637460900F66A7C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD7D2637460900F66A7C /* Preview Assets.xcassets */; };
@@ -228,6 +230,8 @@
 		B641F8062646AD0F00FE8C56 /* Mike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mike.entitlements; sourceTree = "<group>"; };
 		B641F8072646AD1000FE8C56 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTools.swift; sourceTree = "<group>"; };
+		B66377D326555A93001AB98B /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
+		B66377D426555A93001AB98B /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		B67716062647DE3C0035A50C /* UserMatricsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMatricsListModel.swift; sourceTree = "<group>"; };
 		B67716082647EFF90035A50C /* UserContentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentDetailViewController.swift; sourceTree = "<group>"; };
 		B67716092647EFF90035A50C /* UserContentDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserContentDetailViewController.xib; sourceTree = "<group>"; };
@@ -417,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B63749A92644FA0F00502913 /* AWSAPIPlugin in Frameworks */,
+				B6F3655526553DBF00539B5E /* PullToRefreshKit in Frameworks */,
 				B637498F2644F83400502913 /* SQLite in Frameworks */,
 				B63749A32644FA0F00502913 /* AWSPluginsCore in Frameworks */,
 				B637499F2644FA0F00502913 /* AWSCognitoAuthPlugin in Frameworks */,
@@ -535,6 +540,8 @@
 		B68262B72639B16100A32D5C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B66377D426555A93001AB98B /* UITextView+Placeholder.h */,
+				B66377D326555A93001AB98B /* UITextView+Placeholder.m */,
 				B68262B82639B16100A32D5C /* UIColorExtension.swift */,
 				B68262B92639B16100A32D5C /* StringUtils.swift */,
 				B68262BA2639B16100A32D5C /* UIViewExtension.swift */,
@@ -981,6 +988,7 @@
 				B63749A82644FA0F00502913 /* AWSAPIPlugin */,
 				B63749AB2644FA2D00502913 /* SDWebImage */,
 				B6BFDE24265268EB004FC2F1 /* IQKeyboardManagerSwift */,
+				B6F3655426553DBF00539B5E /* PullToRefreshKit */,
 			);
 			productName = Mike;
 			productReference = C1DEDD732637460700F66A7C /* Mike.app */;
@@ -1018,6 +1026,7 @@
 				B637499B2644FA0F00502913 /* XCRemoteSwiftPackageReference "amplify-ios" */,
 				B63749AA2644FA2D00502913 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				B6BFDE23265268EB004FC2F1 /* XCRemoteSwiftPackageReference "iqkeyboardmanager" */,
+				B6F3655326553DBF00539B5E /* XCRemoteSwiftPackageReference "PullToRefreshKit" */,
 			);
 			productRefGroup = C1DEDD742637460700F66A7C /* Products */;
 			projectDirPath = "";
@@ -1120,6 +1129,7 @@
 				C1DEDD772637460700F66A7C /* MikeApp.swift in Sources */,
 				B68262F0263C4F4000A32D5C /* UserSubscriptionTrainerListModel.swift in Sources */,
 				B6E40005264C0C510020F636 /* ZFLandscapeViewController.m in Sources */,
+				B66377D526555A93001AB98B /* UITextView+Placeholder.m in Sources */,
 				B6F365452653FCE300539B5E /* TZGifPhotoPreviewController.swift in Sources */,
 				B68262D1263BC7A900A32D5C /* UserManager.swift in Sources */,
 				B68262FA2642461400A32D5C /* HomeTabViewController.swift in Sources */,
@@ -1482,6 +1492,14 @@
 				minimumVersion = 6.5.6;
 			};
 		};
+		B6F3655326553DBF00539B5E /* XCRemoteSwiftPackageReference "PullToRefreshKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitee.com/qianka-ops/PullToRefreshKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1544,6 +1562,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B6BFDE23265268EB004FC2F1 /* XCRemoteSwiftPackageReference "iqkeyboardmanager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		B6F3655426553DBF00539B5E /* PullToRefreshKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F3655326553DBF00539B5E /* XCRemoteSwiftPackageReference "PullToRefreshKit" */;
+			productName = PullToRefreshKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

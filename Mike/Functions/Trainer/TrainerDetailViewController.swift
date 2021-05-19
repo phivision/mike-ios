@@ -174,7 +174,7 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
         case 0:
             if let model = self.trainerModel {
                 let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                return CGSize.init(width: kScreenWidth, height: 309 + descHeight)
+                return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40)
             }else{
                 return CGSize.init(width: kScreenWidth, height: 309)
             }

@@ -33,6 +33,7 @@ class UserProfileViewController: BaseViewController {
         self.configUserId()
         self.configCollectionView()
         NotificationCenter.default.addObserver(self, selector: #selector(fetchFavList), name: NSNotification.Name(rawValue:refreshFavList), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshUserProfile), name: NSNotification.Name(rawValue:refreshProfile), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +44,9 @@ class UserProfileViewController: BaseViewController {
             self.isRequest = true
         }
         self.fetchFavList();
+    }
+    @objc func refreshUserProfile(){
+        self.mainCollection.reloadData()
     }
     @objc func fetchFavList(){
         Backend.shared.fetchUserFavList(userId: self.curUserId) { contentList in
@@ -222,16 +226,22 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         switch indexPath.section {
         case 0:
-            if let model = self.userProfileModel {
-                let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                return CGSize.init(width: kScreenWidth, height: 309 + descHeight)
+            if self.curUserId != LoginTools.sharedTools.userId() {
+                if let model = self.userProfileModel {
+                    let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
+                    return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40)
+                }else{
+                    return CGSize.init(width: kScreenWidth, height: 309)
+                }
             }else{
-                return CGSize.init(width: kScreenWidth, height: 309)
+                let descHeight = heightForView(text: LoginTools.sharedTools.userInfo().descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
+                return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40)
             }
+            
         case 1:
-            return CGSize.init(width: 54, height: 54)
+            return CGSize.init(width: 64, height: 64)
         case 2:
-            return CGSize.init(width: kScreenWidth, height: 260)
+            return CGSize.init(width: kScreenWidth, height: self.favList.count == 0 ? 40 : 260)
         case 3:
             return CGSize.init(width: (kScreenWidth-60)/2, height: ((kScreenWidth-60)/2)*210/152)
         default:
@@ -319,11 +329,11 @@ extension UserProfileViewController:UserProfileTopCellDelegate{
         }
     }
     func avatarBtnClicked() {
-        let vc:UserProfileEditViewController = UserProfileEditViewController()
-        vc.hidesBottomBarWhenPushed = true
-        DispatchQueue.main.async {
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+//        let vc:UserProfileEditViewController = UserProfileEditViewController()
+//        vc.hidesBottomBarWhenPushed = true
+//        DispatchQueue.main.async {
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }
     }
 }
 extension UserProfileViewController{

@@ -29,9 +29,9 @@ class UserContentDetailViewController: BaseViewController {
     var favRelationDic:[String:Any] = [:]
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configData()
         self.configView()
         self.configTableView()
-        self.configData()
         self.fetchTrainerInfo()
         self.fetchIsFav()
         self.fetchFavRelationIdList()
@@ -54,11 +54,13 @@ class UserContentDetailViewController: BaseViewController {
         self.trainerAvatar.layer.cornerRadius = 10
         self.trainerAvatar.clipsToBounds = true
         
-        self.contentView.layer.cornerRadius = 15
-        self.contentView.layer.shadowColor = HexRGBAlpha(0xff7088D2,0.2).cgColor
-        self.contentView.layer.shadowOffset = CGSize(width: 0, height: 8)
-        self.contentView.layer.shadowOpacity = 10
-        self.contentView.layer.shadowRadius = 20
+        if self.segList.count != 0 {
+            self.contentView.layer.cornerRadius = 15
+            self.contentView.layer.shadowColor = HexRGBAlpha(0xff7088D2,0.2).cgColor
+            self.contentView.layer.shadowOffset = CGSize(width: 0, height: 8)
+            self.contentView.layer.shadowOpacity = 10
+            self.contentView.layer.shadowRadius = 20
+        }
     }
     func configTableView(){
         self.mainTableView.delegate = self
@@ -116,29 +118,34 @@ class UserContentDetailViewController: BaseViewController {
         }
     }
     @IBAction func favBtnPressed(){
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         if self.isFav == true {
             let favRelationId:String = self.favRelationDic[self.userContentModel.id ?? ""] as? String ?? ""
             Backend.shared.delContentToFav(favRelationId: favRelationId) { isSuc in
                 DispatchQueue.main.async {
+                    hud.hide(animated: true)
                     ToastHUD.showMsg(msg: "Delete Favorite Success", controller: self)
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshFavList), object: nil)
                 self.fetchIsFav()
             } fail: { error in
                 DispatchQueue.main.async {
-                    ToastHUD.showMsg(msg: error, controller: self)
+                    hud.hide(animated: true)
+                    ToastHUD.showMsg(msg:"\(error)", controller: self)
                 }
             }
         }else{
             Backend.shared.addContentToFav(contentId: self.userContentModel.id) { isSuc in
                 DispatchQueue.main.async {
+                    hud.hide(animated: true)
                     ToastHUD.showMsg(msg: "Add Favorite Success", controller: self)
                 }
                 self.fetchIsFav()
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshFavList), object: nil)
             } fail: { error in
                 DispatchQueue.main.async {
-                    ToastHUD.showMsg(msg: error, controller: self)
+                    hud.hide(animated: true)
+                    ToastHUD.showMsg(msg:"\(error)", controller: self)
                 }
             }
         }
@@ -172,7 +179,11 @@ extension UserContentDetailViewController:UITableViewDelegate,UITableViewDataSou
             return UIView()
         }
         let header:UserContentSectionTitleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "UserContentSectionTitleView") as! UserContentSectionTitleView
-        header.titleLab.text = "\(self.segList.count) Movements"
+        if self.segList.count == 0 {
+            header.titleLab.text = ""
+        }else{
+            header.titleLab.text = "\(self.segList.count) Movements"
+        }
         return header
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -191,7 +202,7 @@ extension UserContentDetailViewController:UITableViewDelegate,UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell:UserContentDetailTopTabCell = tableView.dequeueReusableCell(withIdentifier: "UserContentDetailTopTabCell", for: indexPath) as! UserContentDetailTopTabCell
-            cell.setFavModel(favModel: self.userContentModel)
+            cell.setFavModel(favModel: self.userContentModel,segListCount: self.segList.count)
             return cell
         }
         let cell:UserContentSegmentListCell = tableView.dequeueReusableCell(withIdentifier: "UserContentSegmentListCell", for: indexPath) as! UserContentSegmentListCell

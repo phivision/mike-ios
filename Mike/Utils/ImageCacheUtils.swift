@@ -44,4 +44,12 @@ class ImageCacheUtils: NSObject {
         }
         
     }
+    func clearAllUserDefaultsData(){
+       let userDefaults = UserDefaults.standard
+       let dics = userDefaults.dictionaryRepresentation()
+       for key in dics {
+           userDefaults.removeObject(forKey: key.key)
+       }
+       userDefaults.synchronize()
+    }
 }

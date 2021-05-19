@@ -16,12 +16,18 @@ class UserProfileEditViewController: BaseViewController {
     
     @IBOutlet weak var firstNameBg:UIImageView!
     @IBOutlet weak var lastNameBg:UIImageView!
+    @IBOutlet weak var descBg:UIImageView!
     
     @IBOutlet weak var firstNameText:UITextField!
     @IBOutlet weak var lastNameText:UITextField!
+    @IBOutlet weak var descText:UITextView!
+    var hud:MBProgressHUD?
     
-    var firstName:String = ""
-    var lastName:String = ""
+    var firstName:String?
+    var lastName:String?
+    var descValue:String?
+    var curAvatar:UIImage?
+    var userImage:String?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,9 +40,12 @@ class UserProfileEditViewController: BaseViewController {
         
         self.firstNameText.delegate = self
         self.lastNameText.delegate = self
+        self.descText.delegate = self
+        self.descText.placeholder = "Description"
         
         self.hanldeBgCornerAndShadow(bgView: self.firstNameBg)
         self.hanldeBgCornerAndShadow(bgView: self.lastNameBg)
+        self.hanldeBgCornerAndShadow(bgView: self.descBg)
         
         self.saveBtn.layer.cornerRadius = 20
         self.saveBtn.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
@@ -48,13 +57,16 @@ class UserProfileEditViewController: BaseViewController {
             if cannotLoadUrl == true{
                 self.avatarImg.image = UIImage(named: "logo")
             }else{
-                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .fromCacheOnly, completed: nil)
             }
         }
         self.firstNameText.text = "\(userModel.firstName ?? "")"
         self.lastNameText.text = "\(userModel.lastName ?? "")"
+        self.descText.text = "\(userModel.descriptionField ?? "")"
         self.firstName = userModel.firstName
         self.lastName = userModel.lastName
+        self.descValue = userModel.descriptionField
+        self.userImage = userModel.userImage
     }
     
     func hanldeBgCornerAndShadow(bgView:UIImageView){
@@ -83,7 +95,7 @@ class UserProfileEditViewController: BaseViewController {
         }
     }
     @IBAction func back(){
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation
@@ -101,10 +113,23 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
         if photos.count == 0 {
             return
         }
-        let data = photos.first!.pngData()!
-        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        self.curAvatar = photos.first!
+        self.avatarImg.image = self.curAvatar
+    }
+    func uploadAvatar(){
+        if let userImageKey = LoginTools.sharedTools.userInfo().userImage {
+            if StringUtils.isBlank(value: userImageKey) {
+                self.userImage = "UserImage\(LoginTools.sharedTools.userId())"
+            }else{
+                self.userImage = userImageKey
+            }
+        }else{
+            self.userImage = "UserImage\(LoginTools.sharedTools.userId())"
+        }
+        let data = self.curAvatar!.jpegData(compressionQuality: 0.2)!
+        self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         Amplify.Storage.uploadData(
-            key: "ExampleKey",
+            key: self.userImage!,
             data: data,
             progressListener: { progress in
                 print("Progress: \(progress)")
@@ -113,24 +138,60 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
                 case .success(let data):
                     print("Completed: \(data)")
                     DispatchQueue.main.async {
-                        hud.hide(animated: true)
                         ToastHUD.showMsg(msg:"Upload Avatar Success", controller: self)
-                        self.avatarImg.image = photos.first!
+                        UserDefaults.standard.removeObject(forKey: self.userImage!)
+                        self.editUserProfile()
                     }
                 case .failure(let storageError):
                     print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
                     DispatchQueue.main.async {
-                        hud.hide(animated: true)
+                        self.hud?.hide(animated: true)
                         ToastHUD.showMsg(msg:"\(storageError.errorDescription)", controller: self)
                     }
                 }
             }
         )
     }
+    @IBAction func submit(){
+        if let _ = self.curAvatar {
+            self.uploadAvatar()
+        }else{
+            self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            self.editUserProfile()
+        }
+    }
+    func editUserProfile(){
+        Backend.shared.editUserProfile(firstname: self.firstName, lastname: self.lastName, descValue: self.descValue, userImage: self.userImage) { isSuc in
+            self.refreshUserProfile()
+        } fail: { error in
+            DispatchQueue.main.async {
+                self.hud?.hide(animated: true)
+                ToastHUD.showMsg(msg:"\(error)", controller: self)
+            }
+        }
+    }
+    func refreshUserProfile(){
+        Backend.shared.fetchUserProfile(userId: LoginTools.sharedTools.userId()) {
+            DispatchQueue.main.async {
+                self.hud?.hide(animated: true)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshUserProfile"), object: nil)
+                self.dismiss(animated: true, completion: nil)
+            }
+        } fail: { error in
+            DispatchQueue.main.async {
+                self.hud?.hide(animated: true)
+                ToastHUD.showMsg(msg:"\(error)", controller: self)
+            }
+        }
+
+    }
 }
-extension UserProfileEditViewController:UITextFieldDelegate{
+extension UserProfileEditViewController:UITextFieldDelegate,UITextViewDelegate{
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         return true
+    }
+    func textViewDidChange(_ textView: UITextView) {
+        self.descValue = textView.text ?? ""
     }
 }
 

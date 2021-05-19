@@ -329,5 +329,19 @@ extension GraphQLRequest{
                                          variables: ["id": LoginTools.sharedTools.userId()],
                                     responseType: JSONValue.self)
     }
+    //mutation user profile
+    static func editUserProfile(byFirstName firstName:String,LastName lastName:String,Description desc:String,UserImage userImage:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+                mutation MyMutation($id:ID!,$firstname:String!,$lastname:String!,$desc:String!,$userImage:String!) {
+                  updateUserProfile(input: {LastName: $lastname, FirstName: $firstname, Description: $desc, UserImage: $userImage, id: $id}) {
+                    id
+                  }
+                }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": LoginTools.sharedTools.userId(),"firstname":firstName,"lastname":lastName,"desc":desc,"userImage":userImage],
+                                    responseType: JSONValue.self)
+        
+    }
     
 }

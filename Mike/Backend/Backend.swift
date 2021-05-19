@@ -604,4 +604,38 @@ class Backend {
             }
         }
     }
+    //edit profile
+    func editUserProfile(firstname:String?,lastname:String?,descValue:String?,userImage:String?,suc:@escaping (_ isSuc:Bool)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.mutate(request: .editUserProfile(byFirstName: firstname ?? "", LastName: lastname ?? "", Description: descValue ?? "", UserImage: userImage ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        fail("Failed")
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        fail("Failed")
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["updateUserProfile"] as? NSDictionary {
+                        print("\(subDic)")
+                        suc(true)
+                    }else {
+                        fail("Failed")
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
 }

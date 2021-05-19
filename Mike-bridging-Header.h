@@ -14,4 +14,5 @@
 #import <ZFPlayer/ZFAVPlayerManager.h>
 #else
 #import "ZFAVPlayerManager.h"
+#import "UITextView+Placeholder.h"
 #endif

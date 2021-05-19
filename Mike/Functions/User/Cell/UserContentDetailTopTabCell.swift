@@ -8,6 +8,7 @@
 import UIKit
 import Amplify
 class UserContentDetailTopTabCell: UITableViewCell {
+    @IBOutlet weak var backImg:UIImageView!
     @IBOutlet weak var bgImg:UIImageView!
     @IBOutlet weak var bigImg:UIImageView!
     @IBOutlet weak var titleLab:UILabel!
@@ -24,7 +25,7 @@ class UserContentDetailTopTabCell: UITableViewCell {
         self.bigImg.layer.cornerRadius = 20
         self.bigImg.clipsToBounds = true
     }
-    func setFavModel(favModel:UserCenterContent){
+    func setFavModel(favModel:UserCenterContent,segListCount:Int){
         self.titleLab.text = "\(favModel.title ?? "")"
         self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: favModel.createdAt ?? ""))"
         ImageCacheUtils.sharedTools.imageUrl(key: favModel.thumbnail) { imgUrl, cannotLoadUrl in
@@ -34,20 +35,14 @@ class UserContentDetailTopTabCell: UITableViewCell {
                 self.bigImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
-//        if StringUtils.isBlank(value: favModel.thumbnail) {
-//            self.bigImg.image = UIImage(named: "logo")
-//        }else{
-//            Amplify.Storage.getURL(key: favModel.thumbnail) { event in
-//                switch event {
-//                case let .success(url):
-//                    print("Completed: \(url)")
-//                    self.bigImg.sd_setImage(with: url, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-//                case let .failure(storageError):
-//                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-//                    self.bigImg.image = UIImage(named: "logo")
-//                }
-//            }
-//        }
+        if segListCount == 0{
+            self.backImg.clipsToBounds = false
+            self.backImg.layer.cornerRadius = 15
+            self.backImg.layer.shadowColor = HexRGBAlpha(0xff7088D2,0.2).cgColor
+            self.backImg.layer.shadowOffset = CGSize(width: 0, height: 4)
+            self.backImg.layer.shadowOpacity = 4
+            self.backImg.layer.shadowRadius = 6
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

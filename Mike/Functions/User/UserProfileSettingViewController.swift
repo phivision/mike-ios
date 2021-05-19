@@ -34,6 +34,13 @@ class UserProfileSettingViewController: BaseViewController {
             
         }
     }
+    @IBAction func editProfile(){
+        let vc:UserProfileEditViewController = UserProfileEditViewController()
+        vc.modalPresentationStyle = .fullScreen
+        DispatchQueue.main.async {
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
 
     /*
     // MARK: - Navigation

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import PullToRefreshKit
 class HomeListViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     lazy var refreshControl:UIRefreshControl = {
@@ -33,7 +33,8 @@ class HomeListViewController: BaseViewController {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
         if self.isRequest == false {
-            fetchSpeakerList()
+//            fetchSpeakerList()
+            self.mainTableView.switchRefreshHeader(to: .refreshing)
             self.isRequest = true
         }
     }
@@ -43,7 +44,7 @@ class HomeListViewController: BaseViewController {
         let date = Date()
         let timeFormatter = DateFormatter()
         //日期显示格式，可按自己需求显示
-        timeFormatter.dateFormat = "EEE dd MMM"
+        timeFormatter.dateFormat = "EEEE MMM dd"
         let strNowTime = timeFormatter.string(from: date) as String
         self.timeLab.text = "\(strNowTime)"
     }
@@ -56,8 +57,10 @@ class HomeListViewController: BaseViewController {
         self.mainTableView.estimatedRowHeight = 88;
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
-        self.mainTableView.addSubview(self.refreshControl)
-        self.mainTableView.sendSubviewToBack(self.refreshControl)
+        let header = ElasticRefreshHeader()
+        self.mainTableView.configRefreshHeader(with: header,container:self){ [weak self] in
+            self?.fetchSpeakerList()
+        }
     }
     
     @objc func refreshData(){
@@ -67,9 +70,10 @@ class HomeListViewController: BaseViewController {
     
     func fetchSpeakerList(){
         Backend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+            self.subscriptionList.removeAll()
             self.subscriptionList.append(contentsOf: subscriptionList)
             DispatchQueue.main.async {
-                self.refreshControl.endRefreshing()
+                self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
                 self.mainTableView.reloadData()
             }
         }
