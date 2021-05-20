@@ -85,8 +85,8 @@ class Backend {
     }
     
     //MARK: - register
-    func signUp(username: String, password: String, firstName: String,lastName: String,phone:String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
-        let userAttributes = [AuthUserAttribute(.email, value: username),AuthUserAttribute(.phoneNumber, value: phone),AuthUserAttribute(.familyName, value: lastName),AuthUserAttribute(.givenName, value: firstName)]
+    func signUp(username: String, password: String, firstName: String,lastName: String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
+        let userAttributes = [AuthUserAttribute(.email, value: username),AuthUserAttribute(.familyName, value: lastName),AuthUserAttribute(.givenName, value: firstName)]
         let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
         Amplify.Auth.signUp(username: username, password: password, options: options) { result in
             switch result {
@@ -225,21 +225,29 @@ class Backend {
                 switch result {
                 case .success(let data):
 //                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
-                    if let postData = try? JSONEncoder().encode(data) {
-                        if let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) {
-                            let dic = d as! NSDictionary
-                            if let subDic = dic["getUserProfile"] as? NSDictionary{
-                                LoginTools.sharedTools.saveUserInfo(dic: subDic as! [String : Any])
-                                suc();
-                                print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(LoginTools.sharedTools.userId())");
-                            }else{
-                                fail("fetch User Profile Fail");
-                            }
-                        }else{
-                            fail("fetch User Profile Fail");
-                        }
-                    }else{
+                    guard let postData = try? JSONEncoder().encode(data) else {
                         fail("fetch User Profile Fail");
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        fail("fetch User Profile Fail");
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        fail("fetch User Profile Fail");
+                        return
+                    }
+                    guard let userRole = subDic["UserRole"] as? String else {
+                        fail("fetch User Profile Fail");
+                        return
+                    }
+                    if userRole.elementsEqual("trainer") {
+                        fail("Trainer Should Sign in Later");
+                    }else{
+                        LoginTools.sharedTools.saveUserInfo(dic: subDic as! [String : Any])
+                        suc();
+                        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(LoginTools.sharedTools.userId())");
                     }
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")

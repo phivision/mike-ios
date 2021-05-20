@@ -19,6 +19,8 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 	var id : String!
     var createdAt: String!
     var updatedAt: String!
+    var creatorId: String!
+    var segments : String!
 
 
 	/**
@@ -37,6 +39,8 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 		id = dictionary["id"] as? String
         createdAt = dictionary["createdAt"] as? String
         updatedAt = dictionary["updatedAt"] as? String
+        creatorId = dictionary["CreatorID"] as? String
+        segments = dictionary["Segments"] as? String
 	}
 
 	/**
@@ -81,6 +85,12 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
         if updatedAt != nil {
             dictionary["updatedAt"] = updatedAt
         }
+        if creatorId != nil {
+            dictionary["CreatorID"] = creatorId
+        }
+        if segments != nil{
+            dictionary["Segments"] = segments
+        }
 		return dictionary
 	}
 
@@ -102,7 +112,8 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
          id = aDecoder.decodeObject(forKey: "id") as? String
         createdAt = aDecoder.decodeObject(forKey: "createdAt") as? String
         updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
-
+        creatorId = aDecoder.decodeObject(forKey: "CreatorID") as? String
+        segments = aDecoder.decodeObject(forKey: "Segments") as? String
 	}
 
     /**
@@ -147,7 +158,12 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
         if updatedAt != nil {
             aCoder.encode(updatedAt, forKey: "updatedAt")
         }
-
+        if creatorId != nil {
+            aCoder.encode(creatorId,forKey: "CreatorID")
+        }
+        if segments != nil{
+            aCoder.encode(segments, forKey: "Segments")
+        }
 	}
 
 }

@@ -14,17 +14,14 @@ class RegisterViewController: BaseViewController {
     @IBOutlet weak var pwdBg:UIImageView!
     @IBOutlet weak var firstNameBg:UIImageView!
     @IBOutlet weak var lastNameBg:UIImageView!
-    @IBOutlet weak var phoneBg:UIImageView!
     @IBOutlet weak var userNameText:UITextField!
     @IBOutlet weak var pwdText:UITextField!
     @IBOutlet weak var firstNameText:UITextField!
     @IBOutlet weak var lastNameText:UITextField!
-    @IBOutlet weak var phoneText:UITextField!
     var userName:String = ""
     var pwd:String = ""
     var firstName:String = ""
     var lastName:String = ""
-    var phone:String  = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -32,17 +29,18 @@ class RegisterViewController: BaseViewController {
     }
     
     func configView(){
+        self.pwdText.textContentType = .newPassword;
+        self.pwdText.passwordRules =  UITextInputPasswordRules(descriptor: "required: lower; required: upper; allowe: digit; required: [-]; minlength: 5;")//[UITextInputPasswordRules passwordRulesWithDescriptor:@""];
+        
         self.userNameText.delegate = self
         self.pwdText.delegate = self
         self.firstNameText.delegate = self
         self.lastNameText.delegate = self
-        self.phoneText.delegate = self
         
         self.hanldeBgCornerAndShadow(bgView: self.userNameBg)
         self.hanldeBgCornerAndShadow(bgView: self.pwdBg)
         self.hanldeBgCornerAndShadow(bgView: self.firstNameBg)
         self.hanldeBgCornerAndShadow(bgView: self.lastNameBg)
-        self.hanldeBgCornerAndShadow(bgView: self.phoneBg)
         
         self.registerBtn.layer.cornerRadius = 20
         self.registerBtn.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
@@ -78,12 +76,8 @@ class RegisterViewController: BaseViewController {
             ToastHUD.showMsg(msg:"Please Input Last Name", controller: self)
             return
         }
-        if StringUtils.isBlank(value: self.phone) {
-            ToastHUD.showMsg(msg:"Please Input Phone", controller: self)
-            return
-        }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-        Backend.shared.signUp(username: self.userName, password: self.pwd, firstName: self.firstName,lastName: self.lastName, phone: self.phone) {
+        Backend.shared.signUp(username: self.userName, password: self.pwd, firstName: self.firstName,lastName: self.lastName) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg:"Verification code has been sent to your email, please check！", controller: self)
@@ -114,8 +108,6 @@ class RegisterViewController: BaseViewController {
             self.firstName = textfield.text ?? ""
         }else if textfield == self.lastNameText{
             self.lastName = textfield.text ?? ""
-        }else if textfield == self.phoneText{
-            self.phone = textfield.text ?? ""
         }
     }
     /*

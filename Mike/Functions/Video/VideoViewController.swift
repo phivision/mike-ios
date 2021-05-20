@@ -104,6 +104,8 @@ class VideoViewController: UIViewController {
         kAppdelegate?.blockRotation = rotation
     }
     func configData(){
+        self.segmentTitle.text = ""
+        self.segmentTime.text = ""
         let segList:NSArray = JSONUtils.getArrayFromJSONString(jsonString: self.videoModel.segments ?? "")
         print("\(segList)");
         for segItem in segList {
@@ -122,6 +124,7 @@ class VideoViewController: UIViewController {
             }
         }
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(self.segTimeList)");
+        self.handleSegmentTime(currentTime: 0)
     }
     func configVideoView(){
         self.controlArea.layer.cornerRadius = 10
@@ -138,14 +141,11 @@ class VideoViewController: UIViewController {
         self.player.playerPlayTimeChanged = { asset,curTime,duration in
             self.handleSegmentTime(currentTime: curTime)
         }
-        self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
+//        self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
+                self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
         self.videoState = .play
         self.handlePlayBtn(byState: self.videoState)
         self.playerManager.play()
-//        self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
-        
-        self.segmentTitle.text = ""
-        self.segmentTime.text = ""
     }
     @IBAction func backBtnPressed(){
         self.dismiss(animated: true, completion: nil)

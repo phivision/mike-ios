@@ -85,13 +85,40 @@ class UserProfileEditViewController: BaseViewController {
         }
     }
     @IBAction func selectAvatar(){
-        let vc:TZImagePickerController = TZImagePickerController(delegate: self, maxImagesCount: 1, columnNumber: 4, pushPhotoPickerVc: true)
-        vc.allowPickingImage = true
-        vc.allowTakePicture = true
-        vc.allowPickingVideo = false
-        vc.pickerDelegate = self
+        let alertController = UIAlertController(title: "Choose Image", message: "",
+                                                preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cameraAction = UIAlertAction(title:  "Camera", style: .default) { (alertAction) in
+            let imagePicker:UIImagePickerController = UIImagePickerController()
+            imagePicker.sourceType = .camera
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            DispatchQueue.main.async {
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }
+        let photoAction = UIAlertAction(title:  "Photo Library", style: .default) { (alertAction) in
+            let imagePicker:UIImagePickerController = UIImagePickerController()
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            DispatchQueue.main.async {
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+//            let vc:TZImagePickerController = TZImagePickerController(delegate: self, maxImagesCount: 1, columnNumber: 4, pushPhotoPickerVc: true)
+//            vc.allowPickingImage = true
+//            vc.allowTakePicture = false
+//            vc.allowPickingVideo = false
+//            vc.pickerDelegate = self
+//            DispatchQueue.main.async {
+//                self.present(vc, animated: true, completion: nil)
+//            }
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(cameraAction)
+        alertController.addAction(photoAction)
         DispatchQueue.main.async {
-            self.present(vc, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     @IBAction func back(){
@@ -184,6 +211,24 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
             }
         }
 
+    }
+}
+extension UserProfileEditViewController:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        var image : UIImage!
+        if picker.sourceType == .camera {
+            image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage ?? UIImage()
+        }else{
+            image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage ?? UIImage()
+        }
+        self.curAvatar = image
+        self.avatarImg.image = self.curAvatar
+        picker.dismiss(animated: true, completion: nil)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: {
+
+        })
     }
 }
 extension UserProfileEditViewController:UITextFieldDelegate,UITextViewDelegate{

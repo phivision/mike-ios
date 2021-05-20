@@ -405,7 +405,7 @@ extension UserProfileViewController:UserProfileFavHorizonListCellDelegate{
     func userContentClicked(model: UserCenterContent) {
         let vc:UserContentDetailViewController = UserContentDetailViewController()
         vc.userContentModel = model
-        vc.trainerId = model.owner
+        vc.trainerId = model.creatorId
 //        nav.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)

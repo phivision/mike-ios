@@ -36,6 +36,8 @@ extension GraphQLRequest{
                                 Preview
                                 createdAt
                                 updatedAt
+                                CreatorID
+                                Segments
                             }
                           }
                         }
@@ -74,6 +76,8 @@ extension GraphQLRequest{
                         ViewCount
                         Thumbnail
                         Preview
+                        CreatorID
+                        Segments
                       }
                     }
               }
@@ -158,6 +162,7 @@ extension GraphQLRequest{
             Favorites {
               items {
                 Content {
+                  CreatorID
                   ContentName
                   Description
                   IsDemo

@@ -22,6 +22,7 @@ class UserCenterContent : NSObject, NSCoding{
 	var id : String!
 	var owner : String!
 	var updatedAt : String!
+    var creatorId : String!
 
 
 	/**
@@ -43,6 +44,7 @@ class UserCenterContent : NSObject, NSCoding{
 		id = dictionary["id"] as? String
 		owner = dictionary["owner"] as? String
 		updatedAt = dictionary["updatedAt"] as? String
+        creatorId = dictionary["CreatorID"] as? String
 	}
 
 	/**
@@ -96,6 +98,9 @@ class UserCenterContent : NSObject, NSCoding{
 		if updatedAt != nil{
 			dictionary["updatedAt"] = updatedAt
 		}
+        if creatorId != nil {
+            dictionary["CreatorID"] = creatorId
+        }
 		return dictionary
 	}
 
@@ -120,7 +125,7 @@ class UserCenterContent : NSObject, NSCoding{
          id = aDecoder.decodeObject(forKey: "id") as? String
          owner = aDecoder.decodeObject(forKey: "owner") as? String
          updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
-
+        creatorId = aDecoder.decodeObject(forKey: "CreatorID") as? String
 	}
 
     /**
@@ -174,6 +179,9 @@ class UserCenterContent : NSObject, NSCoding{
 		if updatedAt != nil{
 			aCoder.encode(updatedAt, forKey: "updatedAt")
 		}
+        if creatorId != nil {
+            aCoder.encode(creatorId,forKey: "CreatorID")
+        }
 
 	}
 
