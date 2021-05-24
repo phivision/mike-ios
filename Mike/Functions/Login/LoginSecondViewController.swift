@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Amplify
 class LoginSecondViewController: BaseViewController {
     @IBOutlet weak var loginBtn:UIButton!
     @IBOutlet weak var userNameBg:UIImageView!
@@ -54,7 +54,8 @@ class LoginSecondViewController: BaseViewController {
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-        
+//        Backend.shared.resultProfile(userName: self.userNameText.text)
+
         Backend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)

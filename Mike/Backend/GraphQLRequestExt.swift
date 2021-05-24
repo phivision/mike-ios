@@ -162,21 +162,7 @@ extension GraphQLRequest{
             Favorites {
               items {
                 Content {
-                  CreatorID
-                  ContentName
-                  Description
-                  IsDemo
-                  Length
-                  Level
-                  Preview
-                  Segments
-                  Thumbnail
-                  Title
-                  ViewCount
-                  createdAt
                   id
-                  owner
-                  updatedAt
                 }
               }
             }

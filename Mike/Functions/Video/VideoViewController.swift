@@ -22,8 +22,10 @@ class VideoViewController: UIViewController {
     @IBOutlet weak var playerView:UIImageView!
     @IBOutlet weak var cameraView: UIImageView!
     //split video and camera height layoutconstraint
-    @IBOutlet weak var videoHeightRatio:NSLayoutConstraint!
-    @IBOutlet weak var cameraHeightRatio:NSLayoutConstraint!
+    @IBOutlet weak var videoHeight:NSLayoutConstraint!
+    @IBOutlet weak var videoWidth:NSLayoutConstraint!
+    @IBOutlet weak var cameraHeight:NSLayoutConstraint!
+    @IBOutlet weak var cameraWidth:NSLayoutConstraint!
     @IBOutlet weak var controlViewLeftMargin:NSLayoutConstraint!
     //back btn for poping
     @IBOutlet weak var backBtn:UIButton!
@@ -76,15 +78,86 @@ class VideoViewController: UIViewController {
     var isLoaded:Bool = false
     //show camera
     var showCamera:Bool = false
-    //并发队列
+    //concurrent queue
     let concurrent = DispatchQueue(label: "serial",attributes: .concurrent)
+    // videoOrientation
+    var videoOrientation:UIDeviceOrientation = .portrait
     
 //    var player:AVPlayer!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
-
+    @objc func receiverNotification(){
+            let orient = UIDevice.current.orientation
+        self.videoOrientation = orient
+            switch orient {
+            case .portrait :
+                print("屏幕正常竖向")
+                self.backBtn.isHidden = false
+                self.orientationPortraitConfig()
+                break
+            case .portraitUpsideDown:
+                self.backBtn.isHidden = true
+                self.orientationPortraitConfig()
+                print("屏幕倒立")
+                break
+            case .landscapeLeft:
+                self.backBtn.isHidden = true
+                self.orientationLandScapeConfig()
+                print("屏幕左旋转")
+                break
+            case .landscapeRight:
+                print("屏幕右旋转")
+                self.backBtn.isHidden = true
+                self.orientationLandScapeConfig()
+                break
+            default:
+                break
+            }
+        }
+    func orientationPortraitConfig(){
+        if self.showCamera  != true {
+            UIView.animate(withDuration: 0.3) {
+                self.controlViewLeftMargin.constant = 28
+                self.videoWidth.constant = kScreenWidth//self.standardView.width
+                self.videoHeight.constant = self.standardView.height
+                self.cameraWidth.constant = 0
+                self.cameraHeight.constant = 0
+            }
+        }else{
+            self.resetCaptureOrientation()
+            UIView.animate(withDuration: 0.3) {
+                self.controlViewLeftMargin.constant = 28
+                self.videoWidth.constant = kScreenWidth//self.standardView.width
+                self.videoHeight.constant = self.standardView.height/2
+                self.cameraWidth.constant = kScreenWidth
+                self.cameraHeight.constant = self.standardView.height/2
+            }
+        }
+    }
+    func orientationLandScapeConfig(){
+        if self.showCamera  != true {
+            UIView.animate(withDuration: 0.3) {
+                self.controlViewLeftMargin.constant = 28
+                self.videoWidth.constant = self.standardView.width//self.standardView.width
+                self.videoHeight.constant = self.standardView.height
+                self.cameraWidth.constant = 0
+                self.cameraHeight.constant = 0
+            }
+        }else{
+            self.resetCaptureOrientation()
+            UIView.animate(withDuration: 0.3) {
+                self.controlViewLeftMargin.constant = self.standardView.width/2 + 28
+                self.videoWidth.constant = self.standardView.width/2
+                self.videoHeight.constant = self.standardView.height
+                self.cameraWidth.constant = self.standardView.width/2
+                self.cameraHeight.constant = self.standardView.height
+                
+            }
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
@@ -129,8 +202,10 @@ class VideoViewController: UIViewController {
     func configVideoView(){
         self.controlArea.layer.cornerRadius = 10
         self.controlArea.clipsToBounds = true
-        self.videoHeightRatio.constant = self.standardView.width
-        self.cameraHeightRatio.constant = 0
+        self.videoWidth.constant = self.standardView.width
+        self.videoHeight.constant = self.standardView.height
+        self.cameraWidth.constant = 0
+        self.cameraHeight.constant = 0
         self.playBtn.layer.cornerRadius = 10
         self.player.playerDidToEnd = { asset in
             self.playerManager.pause()
@@ -141,11 +216,16 @@ class VideoViewController: UIViewController {
         self.player.playerPlayTimeChanged = { asset,curTime,duration in
             self.handleSegmentTime(currentTime: curTime)
         }
+        let strArr:Array<String> = (self.videoModel.contentName ?? "").components(separatedBy: ".")
+        if strArr.count > 0 {
+            let videoUrl:String = strArr.first ?? ""
+            self.playerManager.assetURL = NSURL(string: String(format: "%@%@.m3u8", kVideoHostUrl,videoUrl))! as URL
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.play()
+        }
 //        self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
-                self.playerManager.assetURL = NSURL(string: String(format: "%@%@", kVideoHostUrl,(self.videoModel.contentName ?? "").replacingOccurrences(of: "MOV", with: "m3u8")))! as URL
-        self.videoState = .play
-        self.handlePlayBtn(byState: self.videoState)
-        self.playerManager.play()
+                
     }
     @IBAction func backBtnPressed(){
         self.dismiss(animated: true, completion: nil)
@@ -177,23 +257,38 @@ class VideoViewController: UIViewController {
     @IBAction func cameraBtnPressed(){
         if self.showCamera == false {
             self.showCamera = true
+            self.resetCaptureOrientation()
             self.startCapture()
-            let rotation : UIInterfaceOrientationMask = [.landscapeLeft]
-            kAppdelegate?.blockRotation = rotation
-            UIView.animate(withDuration: 0.3) {
-                self.controlViewLeftMargin.constant = self.standardView.width/2 + 28
-                self.videoHeightRatio.constant = self.standardView.width/2
-                self.cameraHeightRatio.constant = self.standardView.width/2
+//            let rotation : UIInterfaceOrientationMask = [.landscapeLeft]
+//            kAppdelegate?.blockRotation = rotation
+            if self.videoOrientation == .portrait || self.videoOrientation == .portraitUpsideDown {
+                UIView.animate(withDuration: 0.3) {
+                    self.controlViewLeftMargin.constant = 28
+                    self.videoWidth.constant = kScreenWidth//self.standardView.width
+                    self.videoHeight.constant = self.standardView.height/2
+                    self.cameraWidth.constant = kScreenWidth
+                    self.cameraHeight.constant = self.standardView.height/2
+                }
+            }else{
+                UIView.animate(withDuration: 0.3) {
+                    self.controlViewLeftMargin.constant = 28
+                    self.videoWidth.constant = self.standardView.width/2//self.standardView.width
+                    self.videoHeight.constant = self.standardView.height
+                    self.cameraWidth.constant = self.standardView.width/2
+                    self.cameraHeight.constant = self.standardView.height
+                }
             }
         }else{
             self.showCamera = false
             self.stopCapture()
-            let rotation : UIInterfaceOrientationMask = [.portrait]
-            kAppdelegate?.blockRotation = rotation
+//            let rotation : UIInterfaceOrientationMask = [.portrait]
+//            kAppdelegate?.blockRotation = rotation
             UIView.animate(withDuration: 0.3) {
                 self.controlViewLeftMargin.constant = 28
-                self.videoHeightRatio.constant = kScreenWidth//self.standardView.width
-                self.cameraHeightRatio.constant = 0
+                self.videoWidth.constant = self.standardView.width//self.standardView.width
+                self.videoHeight.constant = self.standardView.height
+                self.cameraWidth.constant = 0
+                self.cameraHeight.constant = 0
             }
         }
     }
@@ -239,7 +334,7 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
              
             let captureConnection = videoDataOutput.connection(with: .video)
             captureConnection?.isEnabled = true
-            captureConnection?.videoOrientation = .landscapeLeft
+            self.configCaptureOrientation(captureConnection: captureConnection)
             captureConnection?.isVideoMirrored = true
             captureSession.commitConfiguration()
             
@@ -264,6 +359,31 @@ extension VideoViewController:AVCaptureVideoDataOutputSampleBufferDelegate{
             if self.captureSession.isRunning {
                 self.captureSession.stopRunning()
             }
+        }
+    }
+    func resetCaptureOrientation(){
+        let captureConnection = videoDataOutput.connection(with: .video)
+        captureConnection?.isEnabled = true
+        self.configCaptureOrientation(captureConnection: captureConnection)
+        captureConnection?.isVideoMirrored = true
+        captureSession.commitConfiguration()
+    }
+    func configCaptureOrientation(captureConnection:AVCaptureConnection?){
+        switch self.videoOrientation {
+        case .portrait:
+            captureConnection?.videoOrientation = .portrait
+            break
+        case .portraitUpsideDown:
+            captureConnection?.videoOrientation = .portraitUpsideDown
+            break
+        case .landscapeLeft:
+            captureConnection?.videoOrientation = .landscapeRight
+            break
+        case .landscapeRight:
+            captureConnection?.videoOrientation = .landscapeLeft
+            break
+        default:
+            break
         }
     }
 //    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -322,5 +442,20 @@ extension VideoViewController{
             self.segmentTitle.text = ""
             self.segmentTime.text = ""
         }
+    }
+}
+
+extension VideoViewController{
+    override var shouldAutorotate: Bool{
+        return true
+    }
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+        return [.portrait,.landscapeRight,.landscapeLeft]
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .default
+    }
+    override var prefersStatusBarHidden: Bool{
+        return false
     }
 }

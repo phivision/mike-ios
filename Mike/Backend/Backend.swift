@@ -24,6 +24,7 @@ class Backend {
         try Amplify.add(plugin: AWSCognitoAuthPlugin())
         try Amplify.add(plugin: AWSAPIPlugin(modelRegistration: AmplifyModels()))
         try Amplify.add(plugin: AWSS3StoragePlugin())
+//        try Amplify.add(plugin: AWSPinpointAnalyticsPlugin())
         try Amplify.configure()
         print("Initialized Amplify");
         // listen to auth events
@@ -86,7 +87,11 @@ class Backend {
     
     //MARK: - register
     func signUp(username: String, password: String, firstName: String,lastName: String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
-        let userAttributes = [AuthUserAttribute(.email, value: username),AuthUserAttribute(.familyName, value: lastName),AuthUserAttribute(.givenName, value: firstName)]
+        let userAttributes = [
+            AuthUserAttribute(.custom("role"),value: "student"),
+            AuthUserAttribute(.custom("first_name"), value: firstName),
+            AuthUserAttribute(.custom("last_name"), value: lastName),
+        ]
         let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
         Amplify.Auth.signUp(username: username, password: password, options: options) { result in
             switch result {
@@ -116,6 +121,14 @@ class Backend {
                 fail("\(error)")
             }
         }
+    }
+    //result profile
+    func resultProfile(userName:String?){
+        let properties: AnalyticsProperties = ["Email": userName ?? "", "FirstName": "Dan","LastName":"Yin","UserRole":"student"]
+
+        let userProfile = AnalyticsUserProfile(name: "Dan Yin",location: nil, properties: properties)
+
+        Amplify.Analytics.identifyUser("432289c0-6a40-492d-93dc-cc3c48c0d027", withProfile: userProfile)
     }
     
     //MARK: - fogotPwd
@@ -375,8 +388,8 @@ class Backend {
                     }
                     suc(contentList)
                 case .failure(let error):
-                    print("Got failed result with \(error.errorDescription)")
-                    fail("\(error.errorDescription)")
+                    print("Got failed result with \(error)")
+                    fail("\(error)")
                 }
             case .failure(let error):
                 print("Got failed event with error \(error)")
