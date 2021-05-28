@@ -44,6 +44,8 @@
 		B63749F2264694C800502913 /* TimeFormatUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749F1264694C800502913 /* TimeFormatUtils.swift */; };
 		B63749F526469C1700502913 /* UserProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749F326469C1700502913 /* UserProfileSettingViewController.swift */; };
 		B63749F626469C1700502913 /* UserProfileSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63749F426469C1700502913 /* UserProfileSettingViewController.xib */; };
+		B63C3F1526611BEA00A3D08C /* SegmentSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63C3F1326611BEA00A3D08C /* SegmentSectionHeaderView.xib */; };
+		B63C3F1626611BEA00A3D08C /* SegmentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */; };
 		B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B641F8072646AD1000FE8C56 /* HealthKit.framework */; };
 		B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */; };
 		B66377D526555A93001AB98B /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = B66377D326555A93001AB98B /* UITextView+Placeholder.m */; };
@@ -109,6 +111,20 @@
 		B682632A2642729200A32D5C /* HomeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68263282642729200A32D5C /* HomeListViewController.xib */; };
 		B682632B2642729200A32D5C /* HomeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68263292642729200A32D5C /* HomeListViewController.swift */; };
 		B682632D264280EE00A32D5C /* DateExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = B682632C264280EE00A32D5C /* DateExtention.swift */; };
+		B685E7CD265FCF55008246A2 /* TrainerProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7CB265FCF55008246A2 /* TrainerProfileViewController.swift */; };
+		B685E7CE265FCF55008246A2 /* TrainerProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7CC265FCF55008246A2 /* TrainerProfileViewController.xib */; };
+		B685E7D1265FD255008246A2 /* ContentUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7CF265FD255008246A2 /* ContentUploadViewController.swift */; };
+		B685E7D2265FD255008246A2 /* ContentUploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7D0265FD255008246A2 /* ContentUploadViewController.xib */; };
+		B685E7D5265FD619008246A2 /* VideoUploadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7D3265FD619008246A2 /* VideoUploadCell.swift */; };
+		B685E7D6265FD619008246A2 /* VideoUploadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7D4265FD619008246A2 /* VideoUploadCell.xib */; };
+		B685E7D926607E6C008246A2 /* ContentInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7D726607E6C008246A2 /* ContentInputCell.swift */; };
+		B685E7DA26607E6C008246A2 /* ContentInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7D826607E6C008246A2 /* ContentInputCell.xib */; };
+		B685E7DD2660800F008246A2 /* CheckBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7DB2660800F008246A2 /* CheckBoxCell.swift */; };
+		B685E7DE2660800F008246A2 /* CheckBoxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7DC2660800F008246A2 /* CheckBoxCell.xib */; };
+		B685E7E1266084B2008246A2 /* SingleBtnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7DF266084B2008246A2 /* SingleBtnCell.swift */; };
+		B685E7E2266084B2008246A2 /* SingleBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7E0266084B2008246A2 /* SingleBtnCell.xib */; };
+		B685E7E52660987D008246A2 /* SelectVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7E32660987D008246A2 /* SelectVideoCell.swift */; };
+		B685E7E62660987D008246A2 /* SelectVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7E42660987D008246A2 /* SelectVideoCell.xib */; };
 		B69103D026381EC0005F2ACD /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103BD26381EC0005F2ACD /* Global.swift */; };
 		B69103D126381EC0005F2ACD /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103C026381EC0005F2ACD /* HomeViewController.xib */; };
 		B69103D226381EC0005F2ACD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103C126381EC0005F2ACD /* HomeViewController.swift */; };
@@ -137,6 +153,8 @@
 		B6BFDE492653B22D004FC2F1 /* UserProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE472653B22D004FC2F1 /* UserProfileEditViewController.swift */; };
 		B6BFDE4A2653B22D004FC2F1 /* UserProfileEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6BFDE482653B22D004FC2F1 /* UserProfileEditViewController.xib */; };
 		B6BFDE4C2653CE18004FC2F1 /* NotificationConstMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE4B2653CE18004FC2F1 /* NotificationConstMacro.swift */; };
+		B6CDCFCC26610C9D0096875B /* ContentUploadSectionConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CDCFCA26610C9D0096875B /* ContentUploadSectionConfigViewController.swift */; };
+		B6CDCFCD26610C9D0096875B /* ContentUploadSectionConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6CDCFCB26610C9D0096875B /* ContentUploadSectionConfigViewController.xib */; };
 		B6E40000264C0C510020F636 /* ZFPresentTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCB264C0C510020F636 /* ZFPresentTransition.m */; };
 		B6E40001264C0C510020F636 /* ZFFloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCC264C0C510020F636 /* ZFFloatView.m */; };
 		B6E40002264C0C510020F636 /* ZFPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E4FFCF264C0C510020F636 /* ZFPlayerView.m */; };
@@ -227,6 +245,8 @@
 		B63749F1264694C800502913 /* TimeFormatUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatUtils.swift; sourceTree = "<group>"; };
 		B63749F326469C1700502913 /* UserProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSettingViewController.swift; sourceTree = "<group>"; };
 		B63749F426469C1700502913 /* UserProfileSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileSettingViewController.xib; sourceTree = "<group>"; };
+		B63C3F1326611BEA00A3D08C /* SegmentSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmentSectionHeaderView.xib; sourceTree = "<group>"; };
+		B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentSectionHeaderView.swift; sourceTree = "<group>"; };
 		B641F8062646AD0F00FE8C56 /* Mike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mike.entitlements; sourceTree = "<group>"; };
 		B641F8072646AD1000FE8C56 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTools.swift; sourceTree = "<group>"; };
@@ -296,6 +316,20 @@
 		B68263282642729200A32D5C /* HomeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeListViewController.xib; sourceTree = "<group>"; };
 		B68263292642729200A32D5C /* HomeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeListViewController.swift; sourceTree = "<group>"; };
 		B682632C264280EE00A32D5C /* DateExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtention.swift; sourceTree = "<group>"; };
+		B685E7CB265FCF55008246A2 /* TrainerProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerProfileViewController.swift; sourceTree = "<group>"; };
+		B685E7CC265FCF55008246A2 /* TrainerProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainerProfileViewController.xib; sourceTree = "<group>"; };
+		B685E7CF265FD255008246A2 /* ContentUploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentUploadViewController.swift; sourceTree = "<group>"; };
+		B685E7D0265FD255008246A2 /* ContentUploadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentUploadViewController.xib; sourceTree = "<group>"; };
+		B685E7D3265FD619008246A2 /* VideoUploadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoUploadCell.swift; sourceTree = "<group>"; };
+		B685E7D4265FD619008246A2 /* VideoUploadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoUploadCell.xib; sourceTree = "<group>"; };
+		B685E7D726607E6C008246A2 /* ContentInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInputCell.swift; sourceTree = "<group>"; };
+		B685E7D826607E6C008246A2 /* ContentInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentInputCell.xib; sourceTree = "<group>"; };
+		B685E7DB2660800F008246A2 /* CheckBoxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxCell.swift; sourceTree = "<group>"; };
+		B685E7DC2660800F008246A2 /* CheckBoxCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckBoxCell.xib; sourceTree = "<group>"; };
+		B685E7DF266084B2008246A2 /* SingleBtnCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBtnCell.swift; sourceTree = "<group>"; };
+		B685E7E0266084B2008246A2 /* SingleBtnCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleBtnCell.xib; sourceTree = "<group>"; };
+		B685E7E32660987D008246A2 /* SelectVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectVideoCell.swift; sourceTree = "<group>"; };
+		B685E7E42660987D008246A2 /* SelectVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectVideoCell.xib; sourceTree = "<group>"; };
 		B69103BD26381EC0005F2ACD /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		B69103C026381EC0005F2ACD /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		B69103C126381EC0005F2ACD /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -323,6 +357,8 @@
 		B6BFDE472653B22D004FC2F1 /* UserProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileEditViewController.swift; sourceTree = "<group>"; };
 		B6BFDE482653B22D004FC2F1 /* UserProfileEditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileEditViewController.xib; sourceTree = "<group>"; };
 		B6BFDE4B2653CE18004FC2F1 /* NotificationConstMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationConstMacro.swift; sourceTree = "<group>"; };
+		B6CDCFCA26610C9D0096875B /* ContentUploadSectionConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentUploadSectionConfigViewController.swift; sourceTree = "<group>"; };
+		B6CDCFCB26610C9D0096875B /* ContentUploadSectionConfigViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentUploadSectionConfigViewController.xib; sourceTree = "<group>"; };
 		B6E4001E264C15E40020F636 /* ZFAVPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFAVPlayerManager.m; sourceTree = "<group>"; };
 		B6E4001F264C15E40020F636 /* ZFAVPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFAVPlayerManager.h; sourceTree = "<group>"; };
 		B6E4FFAF264AB8A40020F636 /* JSONUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUtils.swift; sourceTree = "<group>"; };
@@ -496,6 +532,12 @@
 				B6771619264A184E0035A50C /* Model */,
 				B677161B264A18760035A50C /* TrainerDetailViewController.swift */,
 				B677161C264A18760035A50C /* TrainerDetailViewController.xib */,
+				B685E7CB265FCF55008246A2 /* TrainerProfileViewController.swift */,
+				B685E7CC265FCF55008246A2 /* TrainerProfileViewController.xib */,
+				B685E7CF265FD255008246A2 /* ContentUploadViewController.swift */,
+				B685E7D0265FD255008246A2 /* ContentUploadViewController.xib */,
+				B6CDCFCA26610C9D0096875B /* ContentUploadSectionConfigViewController.swift */,
+				B6CDCFCB26610C9D0096875B /* ContentUploadSectionConfigViewController.xib */,
 			);
 			path = Trainer;
 			sourceTree = "<group>";
@@ -513,8 +555,20 @@
 		B677161A264A18570035A50C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */,
+				B63C3F1326611BEA00A3D08C /* SegmentSectionHeaderView.xib */,
 				B6771627264A1A350035A50C /* TrainerBaseInfoCell.swift */,
 				B6771628264A1A350035A50C /* TrainerBaseInfoCell.xib */,
+				B685E7D3265FD619008246A2 /* VideoUploadCell.swift */,
+				B685E7D4265FD619008246A2 /* VideoUploadCell.xib */,
+				B685E7D726607E6C008246A2 /* ContentInputCell.swift */,
+				B685E7D826607E6C008246A2 /* ContentInputCell.xib */,
+				B685E7DB2660800F008246A2 /* CheckBoxCell.swift */,
+				B685E7DC2660800F008246A2 /* CheckBoxCell.xib */,
+				B685E7DF266084B2008246A2 /* SingleBtnCell.swift */,
+				B685E7E0266084B2008246A2 /* SingleBtnCell.xib */,
+				B685E7E32660987D008246A2 /* SelectVideoCell.swift */,
+				B685E7E42660987D008246A2 /* SelectVideoCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1051,7 +1105,10 @@
 				B6BFDE302652ABB9004FC2F1 /* FogotConfirmViewController.xib in Resources */,
 				B6F3653D2653FCE300539B5E /* TZImagePickerController.bundle in Resources */,
 				B677160B2647EFF90035A50C /* UserContentDetailViewController.xib in Resources */,
+				B6CDCFCD26610C9D0096875B /* ContentUploadSectionConfigViewController.xib in Resources */,
 				B682631E26424C6A00A32D5C /* Nunito-BlackItalic.ttf in Resources */,
+				B685E7E62660987D008246A2 /* SelectVideoCell.xib in Resources */,
+				B685E7D6265FD619008246A2 /* VideoUploadCell.xib in Resources */,
 				B682631826424C6A00A32D5C /* Nunito-SemiBold.ttf in Resources */,
 				B682632726426FDB00A32D5C /* HomeListCell.xib in Resources */,
 				B69103DD26381EC0005F2ACD /* LoginViewController.xib in Resources */,
@@ -1076,21 +1133,27 @@
 				B69103D526381EC0005F2ACD /* HomeBannerColListCell.xib in Resources */,
 				B682632126424C6A00A32D5C /* Nunito-LightItalic.ttf in Resources */,
 				B67716172647F81F0035A50C /* UserContentSectionTitleView.xib in Resources */,
+				B685E7DE2660800F008246A2 /* CheckBoxCell.xib in Resources */,
 				B69103D326381EC0005F2ACD /* HomeInfoColCell.xib in Resources */,
 				B682632026424C6A00A32D5C /* Nunito-Italic.ttf in Resources */,
 				B6E4000E264C0C510020F636 /* ZFPlayer.bundle in Resources */,
 				B69103DC26381EC0005F2ACD /* LoginSecondViewController.xib in Resources */,
 				B637496B264446A800502913 /* UserProfileTrainerListCell.xib in Resources */,
+				B685E7D2265FD255008246A2 /* ContentUploadViewController.xib in Resources */,
 				C1DEDD89263746CB00F66A7C /* amplifyconfiguration.json in Resources */,
 				B682631B26424C6A00A32D5C /* Nunito-Black.ttf in Resources */,
 				B682631426424C6A00A32D5C /* Nunito-ExtraBold.ttf in Resources */,
 				B637497B26444D9F00502913 /* UserProfileTopCell.xib in Resources */,
 				B69103D426381EC0005F2ACD /* HomeSeeAllCoursesView.xib in Resources */,
 				B682631626424C6A00A32D5C /* Nunito-Light.ttf in Resources */,
+				B63C3F1526611BEA00A3D08C /* SegmentSectionHeaderView.xib in Resources */,
+				B685E7E2266084B2008246A2 /* SingleBtnCell.xib in Resources */,
 				B6BFDE2226526602004FC2F1 /* RegisterViewController.xib in Resources */,
 				B6BFDE2D2652A952004FC2F1 /* FogotPwdViewController.xib in Resources */,
 				B677161E264A18760035A50C /* TrainerDetailViewController.xib in Resources */,
 				C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */,
+				B685E7CE265FCF55008246A2 /* TrainerProfileViewController.xib in Resources */,
+				B685E7DA26607E6C008246A2 /* ContentInputCell.xib in Resources */,
 				B682632A2642729200A32D5C /* HomeListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1116,9 +1179,11 @@
 				B6F365412653FCE300539B5E /* TZImageCropManager.swift in Sources */,
 				B682632D264280EE00A32D5C /* DateExtention.swift in Sources */,
 				B63749E42645820300502913 /* UserProfileFavHorizonListCell.swift in Sources */,
+				B685E7E52660987D008246A2 /* SelectVideoCell.swift in Sources */,
 				B68262CC263BC7A200A32D5C /* LoginInfoModel.swift in Sources */,
 				B6F365472653FCE300539B5E /* TZPhotoPreviewController.swift in Sources */,
 				B69103D926381EC0005F2ACD /* HomeInfoColCell.swift in Sources */,
+				B685E7D1265FD255008246A2 /* ContentUploadViewController.swift in Sources */,
 				B68262BD2639B16100A32D5C /* UIViewExtension.swift in Sources */,
 				B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */,
 				B6F3653E2653FCE300539B5E /* TZImageManager.swift in Sources */,
@@ -1143,6 +1208,7 @@
 				B6E4FFFC264C0C510020F636 /* ZFPlayerLogManager.m in Sources */,
 				B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */,
 				B682632B2642729200A32D5C /* HomeListViewController.swift in Sources */,
+				B6CDCFCC26610C9D0096875B /* ContentUploadSectionConfigViewController.swift in Sources */,
 				B677160E2647F4F80035A50C /* UserContentDetailTopTabCell.swift in Sources */,
 				B6E4FFB0264AB8A40020F636 /* JSONUtils.swift in Sources */,
 				B68262EA263C4AAD00A32D5C /* UserContentListModel.swift in Sources */,
@@ -1156,6 +1222,7 @@
 				B6771629264A1A350035A50C /* TrainerBaseInfoCell.swift in Sources */,
 				B69103DB26381EC0005F2ACD /* LoginSecondViewController.swift in Sources */,
 				B6F3653B2653FCE300539B5E /* TZProgressView.swift in Sources */,
+				B685E7CD265FCF55008246A2 /* TrainerProfileViewController.swift in Sources */,
 				B6E40001264C0C510020F636 /* ZFFloatView.m in Sources */,
 				B677160A2647EFF90035A50C /* UserContentDetailViewController.swift in Sources */,
 				B68262E5263C05CB00A32D5C /* BaseViewController.swift in Sources */,
@@ -1164,6 +1231,7 @@
 				B6BFDE0C264F411D004FC2F1 /* HeightUtils.swift in Sources */,
 				B682632326424D2800A32D5C /* FontConst.swift in Sources */,
 				B6F365462653FCE300539B5E /* TZImagePickerController.swift in Sources */,
+				B685E7D5265FD619008246A2 /* VideoUploadCell.swift in Sources */,
 				B6771624264A18A30035A50C /* TrainerDetailModel.swift in Sources */,
 				B69103D726381EC0005F2ACD /* HomeBannerColListCell.swift in Sources */,
 				B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */,
@@ -1181,6 +1249,7 @@
 				B6BFDE2826526FCD004FC2F1 /* RegisterConfirmViewController.swift in Sources */,
 				661922BAC3E9493399943D1A /* UserContent.swift in Sources */,
 				B637496E264446CE00502913 /* UserProfileSectionTitleView.swift in Sources */,
+				B685E7E1266084B2008246A2 /* SingleBtnCell.swift in Sources */,
 				B69103D826381EC0005F2ACD /* HomeSeeAllCoursesView.swift in Sources */,
 				B69103D226381EC0005F2ACD /* HomeViewController.swift in Sources */,
 				B6374976264447AE00502913 /* UserProfileHealthKitListCell.swift in Sources */,
@@ -1191,6 +1260,8 @@
 				B6E40006264C0C510020F636 /* ZFReachabilityManager.m in Sources */,
 				B68262DB263BFFEF00A32D5C /* MBProgressHUD.m in Sources */,
 				B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */,
+				B685E7D926607E6C008246A2 /* ContentInputCell.swift in Sources */,
+				B63C3F1626611BEA00A3D08C /* SegmentSectionHeaderView.swift in Sources */,
 				B6E4FFFD264C0C510020F636 /* ZFPersentInteractiveTransition.m in Sources */,
 				B6BFDE2C2652A952004FC2F1 /* FogotPwdViewController.swift in Sources */,
 				B6BFDE2126526602004FC2F1 /* RegisterViewController.swift in Sources */,
@@ -1209,6 +1280,7 @@
 				B637497A26444D9F00502913 /* UserProfileTopCell.swift in Sources */,
 				B6E4FFFF264C0C510020F636 /* ZFPlayerNotification.m in Sources */,
 				B6BFDE492653B22D004FC2F1 /* UserProfileEditViewController.swift in Sources */,
+				B685E7DD2660800F008246A2 /* CheckBoxCell.swift in Sources */,
 				B682632626426FDB00A32D5C /* HomeListCell.swift in Sources */,
 				2D300B2B0DB846128C62C062 /* UserFavoriteContent.swift in Sources */,
 				B67716122647F6190035A50C /* UserContentSegmentListCell.swift in Sources */,

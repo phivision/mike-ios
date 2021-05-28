@@ -17,10 +17,17 @@ class HomeTabViewController:UITabBarController{
     }
     
     func addChildControllers() {
-        self.viewControllers = [
-            addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
-            addChildVC(childVC: UserProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
-        ];
+        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+            self.viewControllers = [
+                addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
+                addChildVC(childVC: TrainerProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
+            ];
+        }else{
+            self.viewControllers = [
+                addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
+                addChildVC(childVC: UserProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
+            ];
+        }
     }
     
     func addChildVC(childVC:BaseViewController,title:String?,imageNormal:UIImage?,imageSelect:UIImage?,showNavBar:Bool) -> UINavigationController{

@@ -7,5 +7,6 @@
 
 import Foundation
 
-let kVideoHostUrl = "https://dtl1jse5ko1yc.cloudfront.net/output/hls/"
+//let kVideoHostUrl = "https://dtl1jse5ko1yc.cloudfront.net/output/hls/"
+let kVideoHostUrl = "https://d1n1lk96owjcvm.cloudfront.net/output/hls/"
 

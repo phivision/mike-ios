@@ -12,6 +12,7 @@ import AWSAPIPlugin
 import AWSPinpointAnalyticsPlugin
 import AWSPluginsCore
 import AWSS3StoragePlugin
+import AWSS3
 
 class Backend {
     static let shared = Backend()
@@ -255,13 +256,13 @@ class Backend {
                         fail("fetch User Profile Fail");
                         return
                     }
-                    if userRole.elementsEqual("trainer") {
-                        fail("Trainer Should Sign in Later");
-                    }else{
+//                    if userRole.elementsEqual("trainer") {
+//                        fail("Trainer Should Sign in Later");
+//                    }else{
                         LoginTools.sharedTools.saveUserInfo(dic: subDic as! [String : Any])
                         suc();
                         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(LoginTools.sharedTools.userId())");
-                    }
+//                    }
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
                     fail("\(error.errorDescription)");
@@ -644,6 +645,76 @@ class Backend {
                     }
                     let dic = d as! NSDictionary
                     if let subDic = dic["updateUserProfile"] as? NSDictionary {
+                        print("\(subDic)")
+                        suc(true)
+                    }else {
+                        fail("Failed")
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    //upload video
+    func uploadVideo(videoData:Data!,videoKey:String?,progressBlock:@escaping (_ progress:Progress)->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+        let transferUtility = AWSS3TransferUtility.default()
+        let expression = AWSS3TransferUtilityUploadExpression()
+        expression.progressBlock = {(task, progress) in
+            progressBlock(progress)
+        }
+        var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
+        completionHandler = { (task, error) -> Void in
+            if error == nil {
+                suc()
+            }else{
+                fail("\(String(describing: error?.localizedDescription))")
+            }
+        }
+        transferUtility.uploadData(videoData, key: "input/\(videoKey ?? "")", contentType: "video/*", expression: expression, completionHandler: completionHandler)
+    }
+    //upload image
+    func uploadImage(imgData:Data!,imgName:String?,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.Storage.uploadData(
+            key: imgName ?? "",
+            data: imgData,
+            progressListener: { progress in
+                print("Progress: \(progress)")
+            }, resultListener: { event in
+                switch event {
+                case .success(let data):
+                    print("Completed: \(data)")
+                    suc()
+                case .failure(let storageError):
+                    print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
+                    fail("\(storageError.errorDescription)")
+                }
+            }
+        )
+    }
+    //createUserContent
+    func createUserContent(title:String!,desc:String!,isDemo:Bool!,contentName:String!,thumbnail:String!,segments:String!,suc:@escaping (_ isSuc:Bool)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.mutate(request: .createUserContent(byTitle: title, description: desc, IsDemo: isDemo, ContentName: contentName, Thumbnail: thumbnail, Segments: segments)){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        fail("Failed")
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        fail("Failed")
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["createUserContent"] as? NSDictionary {
                         print("\(subDic)")
                         suc(true)
                     }else {
