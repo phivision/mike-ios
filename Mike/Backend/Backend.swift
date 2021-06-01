@@ -458,7 +458,49 @@ class Backend {
             }
         }
     }
-    
+    //fetch Trainer's Content
+    func fetchTrainerContentList(trainerId:String?,suc:@escaping (_ list:Array<UserCenterContent>)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchTrainerContentList(byId: trainerId ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        return
+                    }
+                    guard let contentDic = subDic["Contents"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = contentDic["items"] as? NSArray else {
+                        return
+                    }
+                    print("~~~~~~~~~~~~\(itemList)")
+                    var contentList = Array<UserCenterContent>()
+                    for item in itemList {
+                        if let itemDic = item as? NSDictionary {
+                            contentList.append(UserCenterContent(fromDictionary: itemDic as! [String : Any]))
+                        }
+                    }
+                    suc(contentList)
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
     //MARK: - favorite
     //favUserList by ContentId
     func fetchContentIsFav(contentId:String?,suc:@escaping (_ isFav:Bool)->Void,fail:@escaping (_ msg:String)->Void){

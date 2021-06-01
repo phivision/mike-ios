@@ -24,6 +24,12 @@ class ContentInputCell: UITableViewCell {
         self.InputText.text = textValue
         self.index = indexPath
     }
+    func setTitle(_ title:String?,textValue:String?,indexPath:IndexPath,shouldEdit:Bool){
+        self.InputText.placeholder = title ?? ""
+        self.InputText.text = textValue
+        self.index = indexPath
+        self.InputText.isEnabled = shouldEdit
+    }
     func hanldeBgCornerAndShadow(bgView:UIImageView){
         bgView.clipsToBounds = false
         bgView.layer.cornerRadius = 20

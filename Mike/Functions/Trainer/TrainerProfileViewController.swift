@@ -88,7 +88,6 @@ class TrainerProfileViewController: BaseViewController{
         self.mainCollection.dataSource = self
         self.mainCollection.backgroundColor = UIColor.white
         self.mainCollection.register(UINib(nibName: "UserProfileTopCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTopCell")
-        self.mainCollection.register(UINib(nibName: "UserProfileTrainerListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTrainerListCell")
         self.mainCollection.register(UINib(nibName: "UserProfileFavHorizonListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileFavHorizonListCell")
         self.mainCollection.register(UINib(nibName: "UserProfileSectionTitleView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView")
     }
@@ -115,8 +114,6 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
         case 0:
             return 1
         case 1:
-            return self.subscriptionList.count
-        case 2:
             return 1
         default:
             return 0
@@ -126,10 +123,10 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
         if kind == UICollectionView.elementKindSectionHeader{
             if indexPath.section != 0 {
                 let header:UserProfileSectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView", for: indexPath) as! UserProfileSectionTitleView
-                if indexPath.section == 1 {
-                    header.sectionTitle.text = "My Trainers"
-                }else if indexPath.section == 2{
+                if indexPath.section == 1{
                     header.sectionTitle.text = "Favorite Workouts"
+                }else{
+                    header.sectionTitle.text = ""
                 }
                 return header;
             }else{
@@ -158,11 +155,6 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
             }
             return cell
         case 1:
-            let cell:UserProfileTrainerListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileTrainerListCell", for: indexPath) as! UserProfileTrainerListCell
-            cell.contentView.backgroundColor = UIColor.white
-            cell.setModel(model: self.subscriptionList[indexPath.row])
-            return cell
-        case 2:
             let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
             cell.contentView.backgroundColor = UIColor.white
             cell.setFavList(fList: self.favList)
@@ -187,10 +179,7 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
                 let descHeight = heightForView(text: LoginTools.sharedTools.userInfo().descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
                 return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40)
             }
-            
         case 1:
-            return CGSize.init(width: 64, height: 64)
-        case 2:
             return CGSize.init(width: kScreenWidth, height: self.favList.count == 0 ? 40 : 260)
         default:
             return .zero
@@ -200,8 +189,6 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets{
         switch section {
         case 1:
-            return UIEdgeInsets.init(top: 0, left: 25, bottom: 0, right: 25)
-        case 2:
             return .zero
         default:
             return .zero
@@ -221,13 +208,6 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
         case 0:
             break;
         case 1:
-            let model:UserCenterTrainer = self.subscriptionList[indexPath.row];
-            let vc:TrainerDetailViewController = TrainerDetailViewController()
-            vc.trainerId = model.id
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
-            break;
-        case 2:
             break;
         default:
             break;

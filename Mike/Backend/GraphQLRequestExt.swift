@@ -38,6 +38,7 @@ extension GraphQLRequest{
                                 updatedAt
                                 CreatorID
                                 Segments
+                                TranscodeReady
                             }
                           }
                         }
@@ -78,6 +79,7 @@ extension GraphQLRequest{
                         Preview
                         CreatorID
                         Segments
+                        TranscodeReady
                       }
                     }
               }
@@ -222,6 +224,7 @@ extension GraphQLRequest{
                     id
                     owner
                     updatedAt
+                    TranscodeReady
                   }
                 }
                 Favorites {
@@ -261,6 +264,37 @@ extension GraphQLRequest{
                 Weight
                 createdAt
                 updatedAt
+              }
+            }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                    variables: ["id": id],
+                                    responseType: JSONValue.self)
+    }
+    static func fetchTrainerContentList(byId id: String) -> GraphQLRequest<JSONValue>{
+        let document = """
+            query MyQuery($id:ID!) {
+              getUserProfile(id:$id) {
+                Contents {
+                  items {
+                    ContentName
+                    CreatorID
+                    Description
+                    IsDemo
+                    Length
+                    Level
+                    Preview
+                    Segments
+                    Thumbnail
+                    Title
+                    ViewCount
+                    createdAt
+                    id
+                    owner
+                    updatedAt
+                    TranscodeReady
+                  }
+                }
               }
             }
         """

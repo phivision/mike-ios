@@ -39,17 +39,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "67B91DAE-2875-4158-A0F0-514581A63C3A"
+            uuid = "4DA5003B-8A9A-4C0D-8276-A64A469842DF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Mike/Functions/User/UserProfileViewController.swift"
+            filePath = "Mike/Backend/Backend.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
-            landmarkName = "userContentClicked(model:)"
+            startingLineNumber = "743"
+            endingLineNumber = "743"
+            landmarkName = "createUserContent(title:desc:isDemo:contentName:thumbnail:segments:suc:fail:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4DA5003B-8A9A-4C0D-8276-A64A469842DF - 36b76d8121d2fc47"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mike.Backend.createUserContent(title: Swift.Optional&lt;Swift.String&gt;, desc: Swift.Optional&lt;Swift.String&gt;, isDemo: Swift.Optional&lt;Swift.Bool&gt;, contentName: Swift.Optional&lt;Swift.String&gt;, thumbnail: Swift.Optional&lt;Swift.String&gt;, segments: Swift.Optional&lt;Swift.String&gt;, suc: (Swift.Bool) -&gt; (), fail: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "Mike"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yindan/mike-ios/Mike/Backend/Backend.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "743"
+                  endingLineNumber = "743"
+                  offsetFromSymbolStart = "640">
+               </Location>
+               <Location
+                  uuid = "4DA5003B-8A9A-4C0D-8276-A64A469842DF - 95c11e508919f4ac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Result&lt;Amplify.JSONValue, Amplify.GraphQLResponseError&lt;Amplify.JSONValue&gt;&gt;, Amplify.APIError&gt;) -&gt; () in Mike.Backend.createUserContent(title: Swift.Optional&lt;Swift.String&gt;, desc: Swift.Optional&lt;Swift.String&gt;, isDemo: Swift.Optional&lt;Swift.Bool&gt;, contentName: Swift.Optional&lt;Swift.String&gt;, thumbnail: Swift.Optional&lt;Swift.String&gt;, segments: Swift.Optional&lt;Swift.String&gt;, suc: (Swift.Bool) -&gt; (), fail: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "Mike"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yindan/mike-ios/Mike/Backend/Backend.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "745"
+                  endingLineNumber = "745"
+                  offsetFromSymbolStart = "322">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

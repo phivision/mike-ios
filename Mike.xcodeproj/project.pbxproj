@@ -125,6 +125,8 @@
 		B685E7E2266084B2008246A2 /* SingleBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7E0266084B2008246A2 /* SingleBtnCell.xib */; };
 		B685E7E52660987D008246A2 /* SelectVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7E32660987D008246A2 /* SelectVideoCell.swift */; };
 		B685E7E62660987D008246A2 /* SelectVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7E42660987D008246A2 /* SelectVideoCell.xib */; };
+		B68EAA3C2664C14500BAF259 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EAA3A2664C14500BAF259 /* DatePickerViewController.swift */; };
+		B68EAA3D2664C14500BAF259 /* DatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68EAA3B2664C14500BAF259 /* DatePickerViewController.xib */; };
 		B69103D026381EC0005F2ACD /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103BD26381EC0005F2ACD /* Global.swift */; };
 		B69103D126381EC0005F2ACD /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103C026381EC0005F2ACD /* HomeViewController.xib */; };
 		B69103D226381EC0005F2ACD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103C126381EC0005F2ACD /* HomeViewController.swift */; };
@@ -140,6 +142,10 @@
 		B69103DC26381EC0005F2ACD /* LoginSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103CD26381EC0005F2ACD /* LoginSecondViewController.xib */; };
 		B69103DD26381EC0005F2ACD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B69103CE26381EC0005F2ACD /* LoginViewController.xib */; };
 		B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69103CF26381EC0005F2ACD /* LoginViewController.swift */; };
+		B6965A3D2664850B00173207 /* TrainerContentListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6965A3B2664850B00173207 /* TrainerContentListCell.swift */; };
+		B6965A3E2664850B00173207 /* TrainerContentListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6965A3C2664850B00173207 /* TrainerContentListCell.xib */; };
+		B6965A412664858800173207 /* TrainerContentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6965A3F2664858800173207 /* TrainerContentListViewController.swift */; };
+		B6965A422664858800173207 /* TrainerContentListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6965A402664858800173207 /* TrainerContentListViewController.xib */; };
 		B6BFDE0C264F411D004FC2F1 /* HeightUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE0B264F411D004FC2F1 /* HeightUtils.swift */; };
 		B6BFDE2126526602004FC2F1 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE1F26526602004FC2F1 /* RegisterViewController.swift */; };
 		B6BFDE2226526602004FC2F1 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */; };
@@ -330,6 +336,8 @@
 		B685E7E0266084B2008246A2 /* SingleBtnCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleBtnCell.xib; sourceTree = "<group>"; };
 		B685E7E32660987D008246A2 /* SelectVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectVideoCell.swift; sourceTree = "<group>"; };
 		B685E7E42660987D008246A2 /* SelectVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectVideoCell.xib; sourceTree = "<group>"; };
+		B68EAA3A2664C14500BAF259 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
+		B68EAA3B2664C14500BAF259 /* DatePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatePickerViewController.xib; sourceTree = "<group>"; };
 		B69103BD26381EC0005F2ACD /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		B69103C026381EC0005F2ACD /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		B69103C126381EC0005F2ACD /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -345,6 +353,10 @@
 		B69103CD26381EC0005F2ACD /* LoginSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginSecondViewController.xib; sourceTree = "<group>"; };
 		B69103CE26381EC0005F2ACD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		B69103CF26381EC0005F2ACD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		B6965A3B2664850B00173207 /* TrainerContentListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainerContentListCell.swift; sourceTree = "<group>"; };
+		B6965A3C2664850B00173207 /* TrainerContentListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainerContentListCell.xib; sourceTree = "<group>"; };
+		B6965A3F2664858800173207 /* TrainerContentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerContentListViewController.swift; sourceTree = "<group>"; };
+		B6965A402664858800173207 /* TrainerContentListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainerContentListViewController.xib; sourceTree = "<group>"; };
 		B6BFDE0B264F411D004FC2F1 /* HeightUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightUtils.swift; sourceTree = "<group>"; };
 		B6BFDE1F26526602004FC2F1 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
@@ -538,6 +550,8 @@
 				B685E7D0265FD255008246A2 /* ContentUploadViewController.xib */,
 				B6CDCFCA26610C9D0096875B /* ContentUploadSectionConfigViewController.swift */,
 				B6CDCFCB26610C9D0096875B /* ContentUploadSectionConfigViewController.xib */,
+				B6965A3F2664858800173207 /* TrainerContentListViewController.swift */,
+				B6965A402664858800173207 /* TrainerContentListViewController.xib */,
 			);
 			path = Trainer;
 			sourceTree = "<group>";
@@ -555,6 +569,8 @@
 		B677161A264A18570035A50C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B6965A3B2664850B00173207 /* TrainerContentListCell.swift */,
+				B6965A3C2664850B00173207 /* TrainerContentListCell.xib */,
 				B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */,
 				B63C3F1326611BEA00A3D08C /* SegmentSectionHeaderView.xib */,
 				B6771627264A1A350035A50C /* TrainerBaseInfoCell.swift */,
@@ -732,6 +748,15 @@
 			path = Nunito;
 			sourceTree = "<group>";
 		};
+		B68EAA392664C12500BAF259 /* Comman */ = {
+			isa = PBXGroup;
+			children = (
+				B68EAA3A2664C14500BAF259 /* DatePickerViewController.swift */,
+				B68EAA3B2664C14500BAF259 /* DatePickerViewController.xib */,
+			);
+			path = Comman;
+			sourceTree = "<group>";
+		};
 		B69103BC26381EC0005F2ACD /* Macros */ = {
 			isa = PBXGroup;
 			children = (
@@ -746,6 +771,7 @@
 		B69103BE26381EC0005F2ACD /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				B68EAA392664C12500BAF259 /* Comman */,
 				B6771618264A18460035A50C /* Trainer */,
 				B68262FB2642479900A32D5C /* User */,
 				B68262F8264245AA00A32D5C /* Root */,
@@ -1138,9 +1164,12 @@
 				B682632026424C6A00A32D5C /* Nunito-Italic.ttf in Resources */,
 				B6E4000E264C0C510020F636 /* ZFPlayer.bundle in Resources */,
 				B69103DC26381EC0005F2ACD /* LoginSecondViewController.xib in Resources */,
+				B6965A3E2664850B00173207 /* TrainerContentListCell.xib in Resources */,
 				B637496B264446A800502913 /* UserProfileTrainerListCell.xib in Resources */,
 				B685E7D2265FD255008246A2 /* ContentUploadViewController.xib in Resources */,
 				C1DEDD89263746CB00F66A7C /* amplifyconfiguration.json in Resources */,
+				B68EAA3D2664C14500BAF259 /* DatePickerViewController.xib in Resources */,
+				B6965A422664858800173207 /* TrainerContentListViewController.xib in Resources */,
 				B682631B26424C6A00A32D5C /* Nunito-Black.ttf in Resources */,
 				B682631426424C6A00A32D5C /* Nunito-ExtraBold.ttf in Resources */,
 				B637497B26444D9F00502913 /* UserProfileTopCell.xib in Resources */,
@@ -1177,6 +1206,7 @@
 				B677162C264A21B20035A50C /* AgeUtils.swift in Sources */,
 				B68262FE264247B800A32D5C /* UserProfileViewController.swift in Sources */,
 				B6F365412653FCE300539B5E /* TZImageCropManager.swift in Sources */,
+				B68EAA3C2664C14500BAF259 /* DatePickerViewController.swift in Sources */,
 				B682632D264280EE00A32D5C /* DateExtention.swift in Sources */,
 				B63749E42645820300502913 /* UserProfileFavHorizonListCell.swift in Sources */,
 				B685E7E52660987D008246A2 /* SelectVideoCell.swift in Sources */,
@@ -1242,6 +1272,7 @@
 				B6F3653C2653FCE300539B5E /* TZLocationManager.swift in Sources */,
 				B6E4000A264C0C510020F636 /* UIView+ZFFrame.m in Sources */,
 				B63749ED264596EA00502913 /* UserCenterFavorite.swift in Sources */,
+				B6965A412664858800173207 /* TrainerContentListViewController.swift in Sources */,
 				B63749F2264694C800502913 /* TimeFormatUtils.swift in Sources */,
 				B68262F2263C4F4000A32D5C /* UserSubscriptionTrainerListContent.swift in Sources */,
 				B63749F0264596EA00502913 /* UserCenterModel.swift in Sources */,
@@ -1287,6 +1318,7 @@
 				B67716152647F8110035A50C /* UserContentSectionTitleView.swift in Sources */,
 				C7AE4A5E865D4D0A92465D35 /* UserFavoriteContent+Schema.swift in Sources */,
 				B68262E7263C088900A32D5C /* ToastHUD.swift in Sources */,
+				B6965A3D2664850B00173207 /* TrainerContentListCell.swift in Sources */,
 				B6E4FFB2264ABB960020F636 /* UserContentSegmentListModel.swift in Sources */,
 				B6E40014264C0C510020F636 /* ZFPortraitControlView.m in Sources */,
 				A690E02738114B2F88B979ED /* UserSubscriptionTrainer.swift in Sources */,

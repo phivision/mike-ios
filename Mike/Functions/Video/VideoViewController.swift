@@ -187,7 +187,11 @@ class VideoViewController: UIViewController {
                 self.segList.append(model)
                 var finalTime:Int = 0
                 let timeArr = model.timestamp.components(separatedBy: ":")
-                if timeArr.count > 1 {
+                if timeArr.count > 2 {
+                    finalTime += (Int(timeArr[0]) ?? 0)*3600
+                    finalTime += (Int(timeArr[1]) ?? 0)*60
+                    finalTime += Int(timeArr[2]) ?? 0
+                }else if timeArr.count > 1 {
                     finalTime += (Int(timeArr[0]) ?? 0)*60
                     finalTime += Int(timeArr[1]) ?? 0
                 }else{

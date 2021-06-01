@@ -20,6 +20,8 @@ class ContentUploadSectionConfigViewController: BaseViewController {
     //
     var contentName:String = ""
     var thumbnail:String = ""
+    //picker index
+    var pickerSelectIndex:NSInteger = -1
     
     @IBOutlet weak var mainTableView:UITableView!
     lazy var segmentList:Array<UserContentSegmentListModel> = {
@@ -108,34 +110,51 @@ extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableVi
         case 0:
             let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
             cell.delegate = self
-            cell.setTitle("Name", textValue: model.name, indexPath: indexPath)
+            cell.setTitle("Name", textValue: model.name, indexPath: indexPath, shouldEdit: true)
             return cell
         case 1:
             let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
-            cell.delegate = self
-            cell.setTitle("TimeStamp", textValue: model.timestamp, indexPath: indexPath)
+//            cell.delegate = self
+            cell.setTitle("TimeStamp", textValue: model.timestamp, indexPath: indexPath, shouldEdit: false)
             return cell
         case 2:
             let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
             cell.delegate = self
-            cell.setTitle("Sets", textValue: model.sets, indexPath: indexPath)
+            cell.setTitle("Sets", textValue: model.sets, indexPath: indexPath, shouldEdit: true)
             return cell
         case 3:
             let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
             cell.delegate = self
-            cell.setTitle("Reps", textValue: model.reps, indexPath: indexPath)
+            cell.setTitle("Reps", textValue: model.reps, indexPath: indexPath, shouldEdit: true)
             return cell
         case 4:
             let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
             cell.delegate = self
-            cell.setTitle("RPE", textValue: model.rPE, indexPath: indexPath)
+            cell.setTitle("RPE", textValue: model.rPE, indexPath: indexPath, shouldEdit: true)
             return cell
         default:
             return UITableViewCell()
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if indexPath.row == 1 {
+            self.pickerSelectIndex = indexPath.section
+            let vc:DatePickerViewController = DatePickerViewController()
+            vc.delegate = self
+            vc.modalPresentationStyle = .overCurrentContext
+            DispatchQueue.main.async {
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+    }
+}
+extension ContentUploadSectionConfigViewController:DatePickerViewControllerDelegate{
+    func doneBtnClicked(timeValue: String) {
+        let model = self.segmentList[self.pickerSelectIndex]
+        model.timestamp = timeValue
+        DispatchQueue.main.async {
+            self.mainTableView.reloadData()
+        }
     }
 }
 extension ContentUploadSectionConfigViewController:ContentInputCellDelegate,SegmentSectionHeaderViewDelegate,SingleBtnCellDelegate{
@@ -145,9 +164,9 @@ extension ContentUploadSectionConfigViewController:ContentInputCellDelegate,Segm
         case 0:
             model.name = textValue
             break
-        case 1:
-            model.timestamp = textValue
-            break
+//        case 1:
+//            model.timestamp = textValue
+//            break
         case 2:
             model.sets = textValue
             break
@@ -173,7 +192,37 @@ extension ContentUploadSectionConfigViewController:ContentInputCellDelegate,Segm
         self.mainTableView.reloadData()
     }
     func singleBtnClicked() {
-        self.uploadVideo()
+        var canContinue = true
+        for segmentModel:UserContentSegmentListModel in self.segmentList {
+            if StringUtils.isBlank(value: segmentModel.name) {
+                canContinue = false
+                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
+                break
+            }
+            if StringUtils.isBlank(value: segmentModel.timestamp) {
+                canContinue = false
+                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
+                break
+            }
+            if StringUtils.isBlank(value: segmentModel.sets) {
+                canContinue = false
+                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
+                break
+            }
+            if StringUtils.isBlank(value: segmentModel.reps) {
+                canContinue = false
+                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
+                break
+            }
+            if StringUtils.isBlank(value: segmentModel.rPE) {
+                canContinue = false
+                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
+                break
+            }
+        }
+        if canContinue == true {
+            self.uploadVideo()
+        }
     }
 }
 extension ContentUploadSectionConfigViewController{
@@ -219,7 +268,15 @@ extension ContentUploadSectionConfigViewController{
     }
     func createUserContent(){
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        Backend.shared.createUserContent(title: self.videoTitleValue, desc: self.videoDescValue, isDemo: self.isDemoVideo, contentName: self.contentName, thumbnail: self.thumbnail, segments: "[]") { isSuc in
+        var arrayDic:Array<[String:Any]> = Array<[String:Any]>()
+        for item:UserContentSegmentListModel in self.segmentList {
+            let dic = item.toDictionary()
+            arrayDic.append(dic)
+        }
+        let jsonData = try! JSONSerialization.data(withJSONObject: arrayDic, options: .prettyPrinted)
+        let str = String(data: jsonData, encoding: .utf8) ?? ""
+        
+        Backend.shared.createUserContent(title: self.videoTitleValue, desc: self.videoDescValue, isDemo: self.isDemoVideo, contentName: self.contentName, thumbnail: self.thumbnail, segments: str) { isSuc in
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg: "Upload Success!", controller: self)
@@ -232,5 +289,4 @@ extension ContentUploadSectionConfigViewController{
             }
         }
     }
-    
 }
