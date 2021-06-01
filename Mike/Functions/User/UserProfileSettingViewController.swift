@@ -9,6 +9,8 @@ import UIKit
 
 class UserProfileSettingViewController: BaseViewController {
     @IBOutlet weak var signOutBtn:UIButton!
+    @IBOutlet weak var uploadBtn:UIButton!
+    @IBOutlet weak var editBtn:UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -17,6 +19,11 @@ class UserProfileSettingViewController: BaseViewController {
     func configView(){
         self.signOutBtn.layer.cornerRadius = 20
         self.signOutBtn.clipsToBounds = true
+        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+            self.uploadBtn.isHidden = false
+        }else{
+            self.uploadBtn.isHidden = true
+        }
     }
     @IBAction func dismissVC(){
         self.dismiss(animated: true, completion: nil)
@@ -41,7 +48,16 @@ class UserProfileSettingViewController: BaseViewController {
             self.present(vc, animated: true, completion: nil)
         }
     }
-
+    
+    @IBAction func uploadContent(){
+        let vc:ContentUploadViewController = ContentUploadViewController()
+        let nav:UINavigationController = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        nav.isNavigationBarHidden = true
+        DispatchQueue.main.async {
+            self.present(nav, animated: true, completion: nil)
+        }
+    }
     /*
     // MARK: - Navigation
 

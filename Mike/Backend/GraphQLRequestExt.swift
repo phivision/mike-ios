@@ -36,6 +36,9 @@ extension GraphQLRequest{
                                 Preview
                                 createdAt
                                 updatedAt
+                                CreatorID
+                                Segments
+                                TranscodeReady
                             }
                           }
                         }
@@ -74,6 +77,9 @@ extension GraphQLRequest{
                         ViewCount
                         Thumbnail
                         Preview
+                        CreatorID
+                        Segments
+                        TranscodeReady
                       }
                     }
               }
@@ -158,20 +164,21 @@ extension GraphQLRequest{
             Favorites {
               items {
                 Content {
-                  ContentName
-                  Description
-                  IsDemo
-                  Length
-                  Level
-                  Preview
-                  Segments
-                  Thumbnail
-                  Title
-                  ViewCount
-                  createdAt
-                  id
-                  owner
-                  updatedAt
+                    ContentName
+                    CreatorID
+                    Description
+                    IsDemo
+                    Length
+                    Level
+                    Preview
+                    Segments
+                    Thumbnail
+                    Title
+                    ViewCount
+                    createdAt
+                    id
+                    owner
+                    updatedAt
                 }
               }
             }
@@ -217,6 +224,7 @@ extension GraphQLRequest{
                     id
                     owner
                     updatedAt
+                    TranscodeReady
                   }
                 }
                 Favorites {
@@ -256,6 +264,37 @@ extension GraphQLRequest{
                 Weight
                 createdAt
                 updatedAt
+              }
+            }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                    variables: ["id": id],
+                                    responseType: JSONValue.self)
+    }
+    static func fetchTrainerContentList(byId id: String) -> GraphQLRequest<JSONValue>{
+        let document = """
+            query MyQuery($id:ID!) {
+              getUserProfile(id:$id) {
+                Contents {
+                  items {
+                    ContentName
+                    CreatorID
+                    Description
+                    IsDemo
+                    Length
+                    Level
+                    Preview
+                    Segments
+                    Thumbnail
+                    Title
+                    ViewCount
+                    createdAt
+                    id
+                    owner
+                    updatedAt
+                    TranscodeReady
+                  }
+                }
               }
             }
         """
@@ -343,5 +382,17 @@ extension GraphQLRequest{
                                     responseType: JSONValue.self)
         
     }
-    
+    //create user content
+    static func createUserContent(byTitle title:String,description desc:String,IsDemo isDemo:Bool,ContentName contentName:String,Thumbnail thumbnail:String,Segments segments:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+                mutation MyMutation($ContentName:String!,$CreatorID:ID!,$Description:String,$IsDemo:Boolean,$Segments:AWSJSON,$Thumbnail:String,$Title:String) {
+                    createUserContent(input: {ContentName:$ContentName, CreatorID:$CreatorID, Description:$Description, IsDemo:$IsDemo, Segments:$Segments, Thumbnail:$Thumbnail, Title:$Title}) {
+                        id
+                      }
+                }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["CreatorID": LoginTools.sharedTools.userId(),"ContentName":contentName,"Description":desc,"IsDemo":isDemo,"Segments":segments,"Thumbnail":thumbnail,"Title":title],
+                                    responseType: JSONValue.self)
+    }
 }

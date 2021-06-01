@@ -68,9 +68,7 @@ class BaseViewController: UIViewController, UIGestureRecognizerDelegate {
 
     }
     
-    override var prefersStatusBarHidden: Bool{
-          return false
-    }
+    
 
     /*
     // MARK: - Navigation
@@ -81,5 +79,16 @@ class BaseViewController: UIViewController, UIGestureRecognizerDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-
+    override var shouldAutorotate: Bool{
+        return false
+    }
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+        return .portrait
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .default
+    }
+    override var prefersStatusBarHidden: Bool{
+          return false
+    }
 }

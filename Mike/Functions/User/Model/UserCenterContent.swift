@@ -11,6 +11,7 @@ class UserCenterContent : NSObject, NSCoding{
 	var contentName : String!
 	var descriptionField : String!
 	var isDemo : Bool!
+    var transcodeReady:Bool!
 	var length : Float!
 	var level : Int!
 	var preview : String?
@@ -22,6 +23,7 @@ class UserCenterContent : NSObject, NSCoding{
 	var id : String!
 	var owner : String!
 	var updatedAt : String!
+    var creatorId : String!
 
 
 	/**
@@ -32,6 +34,7 @@ class UserCenterContent : NSObject, NSCoding{
 		contentName = dictionary["ContentName"] as? String
 		descriptionField = dictionary["Description"] as? String
 		isDemo = dictionary["IsDemo"] as? Bool
+        transcodeReady = dictionary["TranscodeReady"] as? Bool
 		length = dictionary["Length"] as? Float
 		level = dictionary["Level"] as? Int
 		preview = dictionary["Preview"] as? String
@@ -43,6 +46,7 @@ class UserCenterContent : NSObject, NSCoding{
 		id = dictionary["id"] as? String
 		owner = dictionary["owner"] as? String
 		updatedAt = dictionary["updatedAt"] as? String
+        creatorId = dictionary["CreatorID"] as? String
 	}
 
 	/**
@@ -63,6 +67,9 @@ class UserCenterContent : NSObject, NSCoding{
 		if isDemo != nil{
 			dictionary["IsDemo"] = isDemo
 		}
+        if transcodeReady != nil {
+            dictionary["TranscodeReady"] = transcodeReady;
+        }
 		if length != nil{
 			dictionary["Length"] = length
 		}
@@ -96,6 +103,9 @@ class UserCenterContent : NSObject, NSCoding{
 		if updatedAt != nil{
 			dictionary["updatedAt"] = updatedAt
 		}
+        if creatorId != nil {
+            dictionary["CreatorID"] = creatorId
+        }
 		return dictionary
 	}
 
@@ -109,6 +119,7 @@ class UserCenterContent : NSObject, NSCoding{
          contentName = aDecoder.decodeObject(forKey: "ContentName") as? String
          descriptionField = aDecoder.decodeObject(forKey: "Description") as? String
          isDemo = aDecoder.decodeObject(forKey: "IsDemo") as? Bool
+         transcodeReady = aDecoder.decodeObject(forKey: "TranscodeReady") as? Bool
          length = aDecoder.decodeObject(forKey: "Length") as? Float
          level = aDecoder.decodeObject(forKey: "Level") as? Int
          preview = aDecoder.decodeObject(forKey: "Preview") as? String
@@ -120,7 +131,7 @@ class UserCenterContent : NSObject, NSCoding{
          id = aDecoder.decodeObject(forKey: "id") as? String
          owner = aDecoder.decodeObject(forKey: "owner") as? String
          updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
-
+        creatorId = aDecoder.decodeObject(forKey: "CreatorID") as? String
 	}
 
     /**
@@ -141,6 +152,9 @@ class UserCenterContent : NSObject, NSCoding{
 		if isDemo != nil{
 			aCoder.encode(isDemo, forKey: "IsDemo")
 		}
+        if transcodeReady != nil {
+            aCoder.encode(transcodeReady, forKey: "TranscodeReady")
+        }
 		if length != nil{
 			aCoder.encode(length, forKey: "Length")
 		}
@@ -174,6 +188,9 @@ class UserCenterContent : NSObject, NSCoding{
 		if updatedAt != nil{
 			aCoder.encode(updatedAt, forKey: "updatedAt")
 		}
+        if creatorId != nil {
+            aCoder.encode(creatorId,forKey: "CreatorID")
+        }
 
 	}
 

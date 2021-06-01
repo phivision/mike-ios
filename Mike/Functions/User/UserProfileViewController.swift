@@ -67,13 +67,13 @@ class UserProfileViewController: BaseViewController {
             for item:UserCenterItem in list{
                 self.subscriptionList.append(item.trainer)
             }
-            if let userFavorite = model.favorites{
-                let flist:Array<UserCenterItem> = userFavorite.items
-                self.favList.removeAll()
-                for fitem:UserCenterItem in flist{
-                    self.favList.append(fitem.content)
-                }
-            }
+//            if let userFavorite = model.favorites{
+//                let flist:Array<UserCenterItem> = userFavorite.items
+//                self.favList.removeAll()
+//                for fitem:UserCenterItem in flist{
+//                    self.favList.append(fitem.content)
+//                }
+//            }
             DispatchQueue.main.async {
                 self.mainCollection.reloadData()
             }
@@ -405,7 +405,7 @@ extension UserProfileViewController:UserProfileFavHorizonListCellDelegate{
     func userContentClicked(model: UserCenterContent) {
         let vc:UserContentDetailViewController = UserContentDetailViewController()
         vc.userContentModel = model
-        vc.trainerId = model.owner
+        vc.trainerId = model.creatorId
 //        nav.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Nunito-SemiBold.ttf">
+            <string>Nunito-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContentUploadSectionConfigViewController" customModule="Mike" customModuleProvider="target">
+            <connections>
+                <outlet property="mainTableView" destination="eUF-Ja-dhk" id="U9f-5Q-jol"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profileTopBg" translatesAutoresizingMaskIntoConstraints="NO" id="K8c-Ro-KGb">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="K8c-Ro-KGb" secondAttribute="height" multiplier="1920:1080" id="xHd-sj-y1s"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPO-tE-8LB">
+                    <rect key="frame" x="10" y="44" width="46" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="46" id="Gk0-3e-3xC"/>
+                        <constraint firstAttribute="height" constant="46" id="jyw-1l-Xn1"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                    <state key="normal" image="back_white"/>
+                    <connections>
+                        <action selector="backBtn" destination="-1" eventType="touchUpInside" id="8ZA-qU-exw"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="eUF-Ja-dhk">
+                    <rect key="frame" x="0.0" y="176" width="414" height="686"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdj-OF-7Jg">
+                    <rect key="frame" x="0.0" y="132" width="414" height="44"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="zOm-h6-4Lb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Nunito-SemiBold" family="Nunito" pointSize="18"/>
+                    <state key="normal" title="Sections">
+                        <color key="titleColor" red="0.1764705882" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="addBtnClicked" destination="-1" eventType="touchUpInside" id="Z7v-bc-ybH"/>
+                    </connections>
+                </button>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_add_circle" translatesAutoresizingMaskIntoConstraints="NO" id="OmV-t5-D42">
+                    <rect key="frame" x="370" y="143" width="44" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="9Wj-lv-HZh"/>
+                        <constraint firstAttribute="width" constant="44" id="Oj6-Wg-LLj"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="K8c-Ro-KGb" firstAttribute="width" secondItem="K8c-Ro-KGb" secondAttribute="height" multiplier="1920:1080" id="Atr-HA-t5m"/>
+                <constraint firstItem="rdj-OF-7Jg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="88" id="JXu-r6-WVP"/>
+                <constraint firstItem="BPO-tE-8LB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="LIA-1t-UR1"/>
+                <constraint firstItem="OmV-t5-D42" firstAttribute="trailing" secondItem="rdj-OF-7Jg" secondAttribute="trailing" id="O9D-SG-LYh"/>
+                <constraint firstItem="eUF-Ja-dhk" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Opz-hB-c9y"/>
+                <constraint firstItem="rdj-OF-7Jg" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="VEQ-fe-MBT"/>
+                <constraint firstItem="K8c-Ro-KGb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="WCN-Yo-2Uj"/>
+                <constraint firstItem="K8c-Ro-KGb" firstAttribute="width" secondItem="K8c-Ro-KGb" secondAttribute="height" multiplier="1920:1080" id="Ygg-6g-ZBC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="BPO-tE-8LB" secondAttribute="top" id="ZwM-BZ-3ae"/>
+                <constraint firstItem="eUF-Ja-dhk" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="fQS-pP-Pd7"/>
+                <constraint firstItem="eUF-Ja-dhk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="132" id="iAQ-xi-dcZ"/>
+                <constraint firstItem="rdj-OF-7Jg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="lB4-1A-ZGV"/>
+                <constraint firstItem="eUF-Ja-dhk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="mgf-Fe-lOm"/>
+                <constraint firstAttribute="trailing" secondItem="K8c-Ro-KGb" secondAttribute="trailing" id="msr-ws-QZc"/>
+                <constraint firstItem="OmV-t5-D42" firstAttribute="centerY" secondItem="rdj-OF-7Jg" secondAttribute="centerY" id="sUd-IO-H9r"/>
+                <constraint firstItem="K8c-Ro-KGb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wLG-U5-est"/>
+            </constraints>
+            <point key="canvasLocation" x="74" y="107"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back_white" width="88" height="88"/>
+        <image name="icon_add_circle" width="22" height="22"/>
+        <image name="profileTopBg" width="640" height="360"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -53,8 +53,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 extension AppDelegate{
 
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-
-        return blockRotation
-    }
+//    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+//
+//        return blockRotation
+//    }
 }

@@ -16,8 +16,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoViewController" customModule="Mike" customModuleProvider="target">
             <connections>
                 <outlet property="backBtn" destination="oPb-FT-Cef" id="6Gt-Xc-IrE"/>
-                <outlet property="cameraHeightRatio" destination="nyE-lf-ZsI" id="PSh-wL-iv3"/>
+                <outlet property="cameraHeight" destination="5Hn-ec-lDM" id="Lb3-9G-mxf"/>
                 <outlet property="cameraView" destination="6bL-qW-uln" id="3Ey-8D-dvt"/>
+                <outlet property="cameraWidth" destination="nyE-lf-ZsI" id="Ndq-dY-9mI"/>
                 <outlet property="controlArea" destination="GJQ-FR-2ZN" id="icQ-TT-Qy8"/>
                 <outlet property="controlViewLeftMargin" destination="UfD-Rx-LXw" id="ZAM-c8-gGr"/>
                 <outlet property="playBtn" destination="K6G-h0-OBN" id="FtR-po-pey"/>
@@ -25,7 +26,8 @@
                 <outlet property="segmentTime" destination="zMs-Rm-nYB" id="tau-ro-3BI"/>
                 <outlet property="segmentTitle" destination="nEI-ne-akn" id="Jwg-yY-S8D"/>
                 <outlet property="standardView" destination="Gdn-DD-eVT" id="div-Xe-pK8"/>
-                <outlet property="videoHeightRatio" destination="SUc-3U-2gs" id="T7I-TZ-cwx"/>
+                <outlet property="videoHeight" destination="ZoT-TN-Zu1" id="fDf-HZ-qnI"/>
+                <outlet property="videoWidth" destination="SUc-3U-2gs" id="fgN-M1-kLU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="GJh-mz-fxJ"/>
             </connections>
         </placeholder>
@@ -45,6 +47,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="height" constant="818" id="5Hn-ec-lDM"/>
                         <constraint firstAttribute="width" constant="414" id="nyE-lf-ZsI"/>
                     </constraints>
                 </imageView>
@@ -52,6 +55,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="414" id="SUc-3U-2gs"/>
+                        <constraint firstAttribute="height" constant="818" id="ZoT-TN-Zu1"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPb-FT-Cef">
@@ -134,7 +138,6 @@
                 <constraint firstItem="B82-oh-JVs" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LQ8-MC-FwJ"/>
                 <constraint firstItem="B82-oh-JVs" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Pl4-X4-29K"/>
                 <constraint firstItem="kGi-Ly-088" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Q9L-gp-SMq"/>
-                <constraint firstItem="6bL-qW-uln" firstAttribute="height" secondItem="Gdn-DD-eVT" secondAttribute="height" id="Scz-IP-Kn6"/>
                 <constraint firstItem="GJQ-FR-2ZN" firstAttribute="leading" secondItem="Gdn-DD-eVT" secondAttribute="leading" constant="28" id="UfD-Rx-LXw"/>
                 <constraint firstItem="6bL-qW-uln" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="X9u-8v-ef8"/>
                 <constraint firstItem="Gdn-DD-eVT" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="ceG-2x-3GA"/>
@@ -142,7 +145,6 @@
                 <constraint firstItem="GJQ-FR-2ZN" firstAttribute="trailing" secondItem="Gdn-DD-eVT" secondAttribute="trailing" constant="-28" id="gnI-YQ-iRy"/>
                 <constraint firstItem="6bL-qW-uln" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="iAo-wK-T9I"/>
                 <constraint firstItem="Gdn-DD-eVT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="iPd-c9-vPQ"/>
-                <constraint firstItem="kGi-Ly-088" firstAttribute="height" secondItem="Gdn-DD-eVT" secondAttribute="height" id="jn6-TG-b7Q"/>
                 <constraint firstItem="kGi-Ly-088" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="uFl-nO-hax"/>
                 <constraint firstAttribute="bottom" secondItem="B82-oh-JVs" secondAttribute="bottom" id="zIY-Mc-K83"/>
             </constraints>

@@ -24,9 +24,11 @@ class UserContentDetailViewController: BaseViewController {
         var segList:Array<UserContentSegmentListModel> = Array<UserContentSegmentListModel>()
         return segList
     }()
-    // 修复侧滑丢失
+    // pan gesture
     private var naDelegate: UIGestureRecognizerDelegate?
     var favRelationDic:[String:Any] = [:]
+    // fav type
+    var favType:Int = -1
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configData()
@@ -73,11 +75,23 @@ class UserContentDetailViewController: BaseViewController {
         self.mainTableView.tableFooterView = UIView()
     }
     func fetchFavRelationIdList() {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         Backend.shared.fetchFavIdList { relationDic in
             print("\(relationDic)")
             self.favRelationDic = relationDic
+            DispatchQueue.main.async {
+                if self.favType == 0{
+                    ToastHUD.showMsg(msg: "Delete Favorite Success", controller: self)
+                }else if self.favType == 1{
+                    ToastHUD.showMsg(msg: "Add Favorite Success", controller: self)
+                }
+                hud.hide(animated: true)
+                self.favType = -1
+            }
         } fail: {error in
-            
+            DispatchQueue.main.async {
+                hud.hide(animated: true)
+            }
         }
     }
     func fetchIsFav(){
@@ -124,10 +138,13 @@ class UserContentDetailViewController: BaseViewController {
             Backend.shared.delContentToFav(favRelationId: favRelationId) { isSuc in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg: "Delete Favorite Success", controller: self)
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshFavList), object: nil)
                 self.fetchIsFav()
+                DispatchQueue.main.async {
+                    self.favType = 0
+                    self.fetchFavRelationIdList()
+                }
             } fail: { error in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
@@ -138,9 +155,12 @@ class UserContentDetailViewController: BaseViewController {
             Backend.shared.addContentToFav(contentId: self.userContentModel.id) { isSuc in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg: "Add Favorite Success", controller: self)
                 }
                 self.fetchIsFav()
+                DispatchQueue.main.async {
+                    self.favType = 1
+                    self.fetchFavRelationIdList()
+                }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshFavList), object: nil)
             } fail: { error in
                 DispatchQueue.main.async {
