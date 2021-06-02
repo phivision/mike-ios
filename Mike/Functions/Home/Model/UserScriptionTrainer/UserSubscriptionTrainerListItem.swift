@@ -10,6 +10,7 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 	var contentName : String!
 	var descriptionField : String!
 	var isDemo : Bool!
+    var TranscodeReady : Bool!
 	var length : Int!
 	var level : Int!
 	var preview : String!
@@ -30,6 +31,7 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 		contentName = dictionary["ContentName"] as? String
 		descriptionField = dictionary["Description"] as? String
 		isDemo = dictionary["IsDemo"] as? Bool
+        TranscodeReady = dictionary["TranscodeReady"] as? Bool ?? false
 		length = dictionary["Length"] as? Int
 		level = dictionary["Level"] as? Int
 		preview = dictionary["Preview"] as? String
@@ -58,6 +60,9 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 		if isDemo != nil{
 			dictionary["IsDemo"] = isDemo
 		}
+        if TranscodeReady != nil {
+            dictionary["TranscodeReady"] = TranscodeReady
+        }
 		if length != nil{
 			dictionary["Length"] = length
 		}
@@ -103,6 +108,7 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
          contentName = aDecoder.decodeObject(forKey: "ContentName") as? String
          descriptionField = aDecoder.decodeObject(forKey: "Description") as? String
          isDemo = aDecoder.decodeObject(forKey: "IsDemo") as? Bool
+        TranscodeReady = aDecoder.decodeObject(forKey: "TranscodeReady") as? Bool ?? false
          length = aDecoder.decodeObject(forKey: "Length") as? Int
          level = aDecoder.decodeObject(forKey: "Level") as? Int
          preview = aDecoder.decodeObject(forKey: "Preview") as? String
@@ -131,6 +137,9 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 		if isDemo != nil{
 			aCoder.encode(isDemo, forKey: "IsDemo")
 		}
+        if TranscodeReady != nil {
+            aCoder.encode(TranscodeReady,forKey: "TranscodeReady")
+        }
 		if length != nil{
 			aCoder.encode(length, forKey: "Length")
 		}
