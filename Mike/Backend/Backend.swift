@@ -123,15 +123,7 @@ class Backend {
             }
         }
     }
-    //result profile
-    func resultProfile(userName:String?){
-        let properties: AnalyticsProperties = ["Email": userName ?? "", "FirstName": "Dan","LastName":"Yin","UserRole":"student"]
 
-        let userProfile = AnalyticsUserProfile(name: "Dan Yin",location: nil, properties: properties)
-
-        Amplify.Analytics.identifyUser("432289c0-6a40-492d-93dc-cc3c48c0d027", withProfile: userProfile)
-    }
-    
     //MARK: - fogotPwd
     func resetPassword(username: String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
         Amplify.Auth.resetPassword(for: username) { result in
@@ -238,7 +230,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         fail("fetch User Profile Fail");
                         return
@@ -273,17 +264,6 @@ class Backend {
             }
         }
     }
-    // MARK: - fetch imageUrl by imageKey for loading image in UIImageView
-    func fetchUserIcon(imageKey:String!){
-        Amplify.Storage.getURL(key: "banner1.jpg") { event in
-            switch event {
-            case let .success(url):
-                print("Completed: \(url)")
-            case let .failure(storageError):
-                print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
-            }
-        }
-    }
     // MARK: - test custom GraphQL query document
     func fetchSubscriptionList(userId:String?,suc:@escaping (_ list:Array<UserSubscriptionTrainerListModel>)->Void){
         Amplify.API.query(request: .getSubscriptionList(byId: userId ?? "")){
@@ -292,7 +272,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         return
                     }
@@ -333,7 +312,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         return
                     }
@@ -363,7 +341,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         return
                     }
@@ -406,7 +383,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         return
                     }
@@ -436,7 +412,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         return
                     }
@@ -466,7 +441,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         return
                     }
@@ -510,7 +484,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         return
                     }
@@ -557,7 +530,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         fail("Failed")
                         return
@@ -591,7 +563,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         fail("Failed")
                         return
@@ -624,7 +595,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         return
                     }
@@ -676,7 +646,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         fail("Failed")
                         return
@@ -746,7 +715,6 @@ class Backend {
             case .success(let result):
                 switch result {
                 case .success(let data):
-//                    self.fetchUserIcon(imageKey: profileModel.UserImage ?? "")
                     guard let postData = try? JSONEncoder().encode(data) else {
                         fail("Failed")
                         return
