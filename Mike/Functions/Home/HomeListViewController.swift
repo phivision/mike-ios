@@ -36,6 +36,8 @@ class HomeListViewController: BaseViewController {
 //            fetchSpeakerList()
             self.mainTableView.switchRefreshHeader(to: .refreshing)
             self.isRequest = true
+        }else{
+            self.fetchSpeakerList()
         }
     }
     
@@ -99,13 +101,21 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
         return trainerModel.trainer.contents.items.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section]
+//        let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
+//        if contentModel.TranscodeReady == false {
+//            return 0
+//        }
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:HomeListCell = tableView.dequeueReusableCell(withIdentifier: "HomeListCell", for: indexPath) as! HomeListCell
         let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section]
         let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
+//        if contentModel.TranscodeReady == false {
+//            return UITableViewCell()
+//        }
+        let cell:HomeListCell = tableView.dequeueReusableCell(withIdentifier: "HomeListCell", for: indexPath) as! HomeListCell
         cell.setItemModel(model: contentModel,sectionModel: trainerModel.trainer)
         cell.delegate = self
         return cell
@@ -113,6 +123,9 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section]
         let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
+//        if contentModel.TranscodeReady == false {
+//           return
+//        }
         let vc:UserContentDetailViewController = UserContentDetailViewController()
         vc.userContentModel = UserCenterContent(fromDictionary: contentModel.toDictionary())
 //        nav.modalPresentationStyle = .fullScreen
