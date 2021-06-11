@@ -19,3 +19,8 @@ amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
+.DS_Store
+Mike/.DS_Store
+amplify/.DS_Store
+amplify/backend/.DS_Store
+amplify/backend/auth/.DS_Store
