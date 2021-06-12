@@ -122,7 +122,9 @@ class UserContentDetailViewController: BaseViewController {
     func configTrainerUI(trainerModel:UserCenterModel){
         ImageCacheUtils.sharedTools.imageUrl(key: trainerModel.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
-                self.trainerAvatar.image = UIImage(named: "logo")
+                DispatchQueue.main.async {
+                    self.trainerAvatar.image = UIImage(named: "logo")
+                }
             }else{
                 self.trainerAvatar.sd_setImage(with: URL(string: imgUrl ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }

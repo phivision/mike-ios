@@ -23,22 +23,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FE3AB34B-AEE9-41DC-B096-9CED8273A777"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Mike/Backend/Backend.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
-            landmarkName = "fetchTrainerSimpleInfo(userId:suc:fail:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "4DA5003B-8A9A-4C0D-8276-A64A469842DF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -46,42 +30,56 @@
             filePath = "Mike/Backend/Backend.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "743"
-            endingLineNumber = "743"
-            landmarkName = "createUserContent(title:desc:isDemo:contentName:thumbnail:segments:suc:fail:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "4DA5003B-8A9A-4C0D-8276-A64A469842DF - 36b76d8121d2fc47"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Mike.Backend.createUserContent(title: Swift.Optional&lt;Swift.String&gt;, desc: Swift.Optional&lt;Swift.String&gt;, isDemo: Swift.Optional&lt;Swift.Bool&gt;, contentName: Swift.Optional&lt;Swift.String&gt;, thumbnail: Swift.Optional&lt;Swift.String&gt;, segments: Swift.Optional&lt;Swift.String&gt;, suc: (Swift.Bool) -&gt; (), fail: (Swift.String) -&gt; ()) -&gt; ()"
-                  moduleName = "Mike"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yindan/mike-ios/Mike/Backend/Backend.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "743"
-                  endingLineNumber = "743"
-                  offsetFromSymbolStart = "640">
-               </Location>
-               <Location
-                  uuid = "4DA5003B-8A9A-4C0D-8276-A64A469842DF - 95c11e508919f4ac"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Swift.Result&lt;Amplify.JSONValue, Amplify.GraphQLResponseError&lt;Amplify.JSONValue&gt;&gt;, Amplify.APIError&gt;) -&gt; () in Mike.Backend.createUserContent(title: Swift.Optional&lt;Swift.String&gt;, desc: Swift.Optional&lt;Swift.String&gt;, isDemo: Swift.Optional&lt;Swift.Bool&gt;, contentName: Swift.Optional&lt;Swift.String&gt;, thumbnail: Swift.Optional&lt;Swift.String&gt;, segments: Swift.Optional&lt;Swift.String&gt;, suc: (Swift.Bool) -&gt; (), fail: (Swift.String) -&gt; ()) -&gt; ()"
-                  moduleName = "Mike"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yindan/mike-ios/Mike/Backend/Backend.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "745"
-                  endingLineNumber = "745"
-                  offsetFromSymbolStart = "322">
-               </Location>
-            </Locations>
+            startingLineNumber = "745"
+            endingLineNumber = "745">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BA7682E7-18F6-47C8-BAC4-5DA6E179162B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mike/Backend/Backend.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "518"
+            endingLineNumber = "518"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "307903FB-02EA-4F66-98C9-D5BED3521ABC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mike/Backend/Backend.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "522"
+            endingLineNumber = "522"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "98EC7599-6187-4058-97BE-33F2214B52BD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mike/Backend/Backend.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "543"
+            endingLineNumber = "543"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

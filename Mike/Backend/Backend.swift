@@ -514,11 +514,12 @@ class Backend {
                     suc(userList.contains(LoginTools.sharedTools.userId()))
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
-                    fail("\(error.errorDescription)")
+//                    fail("\(error.errorDescription)")
+                    suc(false)
                 }
             case .failure(let error):
                 print("Got failed event with error \(error)")
-                fail("\(error)")
+                suc(false)
             }
         }
     }
