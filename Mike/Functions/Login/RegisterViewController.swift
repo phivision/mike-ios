@@ -18,10 +18,13 @@ class RegisterViewController: BaseViewController {
     @IBOutlet weak var pwdText:UITextField!
     @IBOutlet weak var firstNameText:UITextField!
     @IBOutlet weak var lastNameText:UITextField!
+    @IBOutlet weak var userRoleTrainerBtn:UIButton!
+    @IBOutlet weak var userRoleStudentBtn:UIButton!
     var userName:String = ""
     var pwd:String = ""
     var firstName:String = ""
     var lastName:String = ""
+    var isTrainer:Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -46,6 +49,21 @@ class RegisterViewController: BaseViewController {
         self.registerBtn.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
         self.registerBtn.layer.shadowOffset = CGSize(width: 2, height: 2)
         self.registerBtn.layer.shadowOpacity = 2
+        
+        self.userRoleTrainerBtn.isSelected = true
+        self.userRoleStudentBtn.isSelected = false
+    }
+    
+    @IBAction func userRoleChanged(sender:UIButton!){
+        if sender == self.userRoleTrainerBtn {
+            self.userRoleTrainerBtn.isSelected = true
+            self.userRoleStudentBtn.isSelected = false
+            self.isTrainer = true
+        }else{
+            self.userRoleTrainerBtn.isSelected = false
+            self.userRoleStudentBtn.isSelected = true
+            self.isTrainer = false
+        }
     }
     
     func hanldeBgCornerAndShadow(bgView:UIImageView){
@@ -77,7 +95,7 @@ class RegisterViewController: BaseViewController {
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-        Backend.shared.signUp(username: self.userName, password: self.pwd, firstName: self.firstName,lastName: self.lastName) {
+        Backend.shared.signUp(username: self.userName, password: self.pwd, firstName: self.firstName,lastName: self.lastName,userRole: self.isTrainer == true ? "trainer" : "student") {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg:"Verification code has been sent to your email, please check！", controller: self)

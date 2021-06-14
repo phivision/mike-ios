@@ -87,9 +87,9 @@ class Backend {
     }
     
     //MARK: - register
-    func signUp(username: String, password: String, firstName: String,lastName: String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
+    func signUp(username: String, password: String, firstName: String,lastName: String,userRole:String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {
         let userAttributes = [
-            AuthUserAttribute(.custom("role"),value: "student"),
+            AuthUserAttribute(.custom("role"),value: userRole),
             AuthUserAttribute(.custom("first_name"), value: firstName),
             AuthUserAttribute(.custom("last_name"), value: lastName),
         ]
