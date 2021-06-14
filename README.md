@@ -157,12 +157,50 @@
 			> trainer detail's base info model
 	+ TrainerDetailViewController
 		> when user click the subscriped trainer's avatar in user profile,then will jump to this controller
+		+ ``` func fetchTrainerList() ```
+			> fetch trainer's uploaded content list and fav content list
+		+ ```func configCollectionView()```
+			> config collection 
+		+ ```func userContentClicked(model: UserCenterContent)```
+			> userContent clicked 
 	+ TrainerProfileViewController
 		> when the login user's userRole is a trainer,show this as a user profile
 	+ ContentUploadViewController
 		> trainer upload content by this step-1:base video info complete
+		+ ```func addBtnClicked()```
+			> add video btn clicked
+		+ ```func inputTextChanged(textValue: String?, indexPath: IndexPath) ```
+			> observer title and desc input
+		+ ```func checkChanged(isChecked: Bool) ```
+			> observer is demo value changed
+		+ ```func reselectBtnClicked()```
+			> reselect video btn clicked
+		+ ```func addCaptureBtnClicked()```
+			> add video capture image
+		+ ``` func reselectCoverBtnClicked()```
+			> reslect video capture image 
+		+ ```func singleBtnClicked() ```
+			> continue jump to next page for segments input
+		+ ```func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])```
+			> video or image select result delegate,then handle them
 	+ ContentUploadSectionConfigViewController
 		> trainer upload content by this step-2:segments complete
+		+ ```func doneBtnClicked(timeValue: String)```
+			> datepicker click done button
+		+ ```func inputTextChanged(textValue: String?, indexPath: IndexPath)```
+			> observer textfield input event
+		+ ```@IBAction func addBtnClicked()```
+			> add new section for segments
+		+ ```func delBtnClicked(sectionIndex: NSInteger)```
+			> del section from exists segments
+		+ ```func singleBtnClicked()```
+			> submit btn clicked
+		+ ```func uploadVideo()```
+			> upload video to s3
+		+ ```func uploadVideoCapture()```
+			> upload video capture to s3
+		+ ```func createUserContent()```
+			> when uploaded video and capture,then you can create new userContent by amplify graphql.
 	+ TrainerContentListViewController
 		> when the login user's userRole is a trainer,show this as home page
 * User
@@ -202,18 +240,63 @@
 			> video segments section title header
 	+ UserProfileViewController
 		> user profile for userRole
+		+ ```@objc func fetchFavList()```
+			> refresh user's fav list
+		+ ```func fetchTrainerList()```
+			> fetch user‘s subscription trainer list
+		+ ```func configUserId()```
+			> make sure which userid is current
+		+ ```func configMetricsList()```
+			> init healthkit to fetch calories and steps
+		+ ```func getHealthInfo()```
+			> fetch calories and steps
 	+ UserProfileSettingViewController
 		> user setting page 
 	+ UserContentDetailViewController
 		> content detail
+		+ ```func configData()```
+			> config segments string to segment list object
+		+ ```func fetchFavRelationIdList()```
+			> fetch fav relationship db list
+		+ ```func fetchIsFav()```
+			> fetch fav status for conent
+		+ ```func handleFavBtnState()```
+		+ ```func fetchTrainerInfo()```
+			> for showing trainer info on the top
 	+ UserProfileEditViewController
 		> eidt user profile by user themself
+		+ ```@IBAction func selectAvatar()```
+			> select image for avatar upload
+		+ ```func refreshUserProfile()```
+			> refresh user profile
 * Root
 	+ HomeTabViewController
 		> root page after sign in
 * Video
 	+ VideoViewController
 		> video player page
+		+ ```@objc func receiverNotification()```
+			> when the iphone rotate,the notification will function
+		+ ```func orientationPortraitConfig()```
+			> handle rotate for portrait
+		+ ```func orientationLandScapeConfig()```
+			> handle rotate for landscape
+		+ ```func configData()```
+			> config segments data
+		+ ```func configVideoView()```
+		+ ```@IBAction func playBtnPressed()```
+			> handle play button by video play state
+		+ ```@IBAction func cameraBtnPressed()```
+			> start up camera
+		+ ```func configCamera()```
+		+ ```func startCapture()```
+			> start camera
+		+ ```func stopCapture()```
+			> stop camera
+		+ ```func resetCaptureOrientation()```
+		+ ```func configCaptureOrientation(captureConnection:AVCaptureConnection?)```
+		+ ```func handlePlayBtn(byState:VideoPlayType)```
+		+ ```func handleSegmentTime(currentTime:TimeInterval)```
 * Home
 	+ Cell
 		+ HomeListCell

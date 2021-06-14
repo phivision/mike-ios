@@ -512,8 +512,6 @@
 			children = (
 				158374CDF72240E79C4D8D6B /* amplifytools.xcconfig */,
 				1E1D87B83BC34BB28DFEDE72 /* schema.graphql */,
-				C1DEDD88263746CB00F66A7C /* awsconfiguration.json */,
-				C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */,
 			);
 			name = AmplifyConfig;
 			path = .;
@@ -1499,7 +1497,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = DD77NQH849;
 				ENABLE_PREVIEWS = YES;
@@ -1528,7 +1526,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = DD77NQH849;
 				ENABLE_PREVIEWS = YES;
