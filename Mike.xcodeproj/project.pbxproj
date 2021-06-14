@@ -155,6 +155,10 @@
 		B6965A3E2664850B00173207 /* TrainerContentListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6965A3C2664850B00173207 /* TrainerContentListCell.xib */; };
 		B6965A412664858800173207 /* TrainerContentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6965A3F2664858800173207 /* TrainerContentListViewController.swift */; };
 		B6965A422664858800173207 /* TrainerContentListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6965A402664858800173207 /* TrainerContentListViewController.xib */; };
+		B6AD0BEF2676F2B7009B0B5D /* SelectCoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AD0BED2676F2B7009B0B5D /* SelectCoverCell.swift */; };
+		B6AD0BF02676F2B7009B0B5D /* SelectCoverCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6AD0BEE2676F2B7009B0B5D /* SelectCoverCell.xib */; };
+		B6AD0BF32676FAA5009B0B5D /* VideoCaptureUploadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AD0BF12676FAA5009B0B5D /* VideoCaptureUploadCell.swift */; };
+		B6AD0BF42676FAA5009B0B5D /* VideoCaptureUploadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6AD0BF22676FAA5009B0B5D /* VideoCaptureUploadCell.xib */; };
 		B6BFDE0C264F411D004FC2F1 /* HeightUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE0B264F411D004FC2F1 /* HeightUtils.swift */; };
 		B6BFDE2126526602004FC2F1 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BFDE1F26526602004FC2F1 /* RegisterViewController.swift */; };
 		B6BFDE2226526602004FC2F1 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */; };
@@ -368,6 +372,10 @@
 		B6965A3C2664850B00173207 /* TrainerContentListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainerContentListCell.xib; sourceTree = "<group>"; };
 		B6965A3F2664858800173207 /* TrainerContentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerContentListViewController.swift; sourceTree = "<group>"; };
 		B6965A402664858800173207 /* TrainerContentListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainerContentListViewController.xib; sourceTree = "<group>"; };
+		B6AD0BED2676F2B7009B0B5D /* SelectCoverCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCoverCell.swift; sourceTree = "<group>"; };
+		B6AD0BEE2676F2B7009B0B5D /* SelectCoverCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectCoverCell.xib; sourceTree = "<group>"; };
+		B6AD0BF12676FAA5009B0B5D /* VideoCaptureUploadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCaptureUploadCell.swift; sourceTree = "<group>"; };
+		B6AD0BF22676FAA5009B0B5D /* VideoCaptureUploadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoCaptureUploadCell.xib; sourceTree = "<group>"; };
 		B6BFDE0B264F411D004FC2F1 /* HeightUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightUtils.swift; sourceTree = "<group>"; };
 		B6BFDE1F26526602004FC2F1 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
@@ -504,8 +512,6 @@
 			children = (
 				158374CDF72240E79C4D8D6B /* amplifytools.xcconfig */,
 				1E1D87B83BC34BB28DFEDE72 /* schema.graphql */,
-				C1DEDD88263746CB00F66A7C /* awsconfiguration.json */,
-				C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */,
 			);
 			name = AmplifyConfig;
 			path = .;
@@ -598,6 +604,10 @@
 				B685E7E0266084B2008246A2 /* SingleBtnCell.xib */,
 				B685E7E32660987D008246A2 /* SelectVideoCell.swift */,
 				B685E7E42660987D008246A2 /* SelectVideoCell.xib */,
+				B6AD0BED2676F2B7009B0B5D /* SelectCoverCell.swift */,
+				B6AD0BEE2676F2B7009B0B5D /* SelectCoverCell.xib */,
+				B6AD0BF12676FAA5009B0B5D /* VideoCaptureUploadCell.swift */,
+				B6AD0BF22676FAA5009B0B5D /* VideoCaptureUploadCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1148,6 +1158,7 @@
 				B682631E26424C6A00A32D5C /* Nunito-BlackItalic.ttf in Resources */,
 				B685E7E62660987D008246A2 /* SelectVideoCell.xib in Resources */,
 				B685E7D6265FD619008246A2 /* VideoUploadCell.xib in Resources */,
+				B6AD0BF42676FAA5009B0B5D /* VideoCaptureUploadCell.xib in Resources */,
 				B682631826424C6A00A32D5C /* Nunito-SemiBold.ttf in Resources */,
 				B682632726426FDB00A32D5C /* HomeListCell.xib in Resources */,
 				B69103DD26381EC0005F2ACD /* LoginViewController.xib in Resources */,
@@ -1195,6 +1206,7 @@
 				B677161E264A18760035A50C /* TrainerDetailViewController.xib in Resources */,
 				C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */,
 				B685E7CE265FCF55008246A2 /* TrainerProfileViewController.xib in Resources */,
+				B6AD0BF02676F2B7009B0B5D /* SelectCoverCell.xib in Resources */,
 				B685E7DA26607E6C008246A2 /* ContentInputCell.xib in Resources */,
 				B682632A2642729200A32D5C /* HomeListViewController.xib in Resources */,
 				175A7B668B9D554B1C40DA97 /* awsconfiguration.json in Resources */,
@@ -1228,6 +1240,7 @@
 				B68262CC263BC7A200A32D5C /* LoginInfoModel.swift in Sources */,
 				B6F365472653FCE300539B5E /* TZPhotoPreviewController.swift in Sources */,
 				B69103D926381EC0005F2ACD /* HomeInfoColCell.swift in Sources */,
+				B6AD0BEF2676F2B7009B0B5D /* SelectCoverCell.swift in Sources */,
 				B685E7D1265FD255008246A2 /* ContentUploadViewController.swift in Sources */,
 				B68262BD2639B16100A32D5C /* UIViewExtension.swift in Sources */,
 				B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */,
@@ -1341,6 +1354,7 @@
 				B63749EE264596EA00502913 /* UserCenterTrainer.swift in Sources */,
 				B6F365402653FCE300539B5E /* TZAssetCell.swift in Sources */,
 				B6E40010264C0C510020F636 /* ZFPlayerControlView.m in Sources */,
+				B6AD0BF32676FAA5009B0B5D /* VideoCaptureUploadCell.swift in Sources */,
 				B6E40009264C0C510020F636 /* ZFUtilities.m in Sources */,
 				B6E4000B264C0C510020F636 /* ZFVolumeBrightnessView.m in Sources */,
 				E580130BA74747999F57955C /* UserSubscriptionTrainer+Schema.swift in Sources */,
