@@ -132,9 +132,9 @@ extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDe
     }
     //MARK: - contentInputCellDelegate
     func inputTextChanged(textValue: String?, indexPath: IndexPath) {
-        if indexPath.row == 1 {
+        if indexPath.row == 2 {
             self.videoTitleValue = textValue ?? ""
-        }else if indexPath.row == 2{
+        }else if indexPath.row == 3{
             self.videoDescValue = textValue ?? ""
         }
     }

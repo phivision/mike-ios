@@ -92,7 +92,7 @@ extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableVi
         if section == self.segmentList.count {
             return 1
         }
-        return 5
+        return 2
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -116,21 +116,6 @@ extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableVi
             let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
 //            cell.delegate = self
             cell.setTitle("TimeStamp", textValue: model.timestamp, indexPath: indexPath, shouldEdit: false)
-            return cell
-        case 2:
-            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
-            cell.delegate = self
-            cell.setTitle("Sets", textValue: model.sets, indexPath: indexPath, shouldEdit: true)
-            return cell
-        case 3:
-            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
-            cell.delegate = self
-            cell.setTitle("Reps", textValue: model.reps, indexPath: indexPath, shouldEdit: true)
-            return cell
-        case 4:
-            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
-            cell.delegate = self
-            cell.setTitle("RPE", textValue: model.rPE, indexPath: indexPath, shouldEdit: true)
             return cell
         default:
             return UITableViewCell()
@@ -164,18 +149,6 @@ extension ContentUploadSectionConfigViewController:ContentInputCellDelegate,Segm
         case 0:
             model.name = textValue
             break
-//        case 1:
-//            model.timestamp = textValue
-//            break
-        case 2:
-            model.sets = textValue
-            break
-        case 3:
-            model.reps = textValue
-            break
-        case 4:
-            model.rPE = textValue
-            break
         default:
             break
         }
@@ -200,21 +173,6 @@ extension ContentUploadSectionConfigViewController:ContentInputCellDelegate,Segm
                 break
             }
             if StringUtils.isBlank(value: segmentModel.timestamp) {
-                canContinue = false
-                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
-                break
-            }
-            if StringUtils.isBlank(value: segmentModel.sets) {
-                canContinue = false
-                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
-                break
-            }
-            if StringUtils.isBlank(value: segmentModel.reps) {
-                canContinue = false
-                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
-                break
-            }
-            if StringUtils.isBlank(value: segmentModel.rPE) {
                 canContinue = false
                 ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
                 break

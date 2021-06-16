@@ -32,6 +32,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         self.window?.overrideUserInterfaceStyle = .light
         self.configKeyBoard()
+        self.configVideoHost()
         return true
     }
     var blockRotation: UIInterfaceOrientationMask = .portrait{
@@ -49,6 +50,33 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func configKeyBoard(){
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+    }
+    func configVideoHost(){
+        let dic:NSDictionary = JsonHelper.convertJsonFileToDic(fileName: "amplifyconfiguration")
+        guard let sdic = dic["storage"] as? NSDictionary else{
+            return
+        }
+        guard let pdic = sdic["plugins"] as? NSDictionary else{
+            return
+        }
+        guard let awss3dic = pdic["awsS3StoragePlugin"] as? NSDictionary else{
+            return
+        }
+        guard let bucket = awss3dic["bucket"] as? String else{
+           return
+        }
+        print("~~~~~~~~~~~~~~~~~~~~~\(bucket)")
+        let hostDic:NSDictionary = JsonHelper.convertJsonFileToDic(fileName: "video_endpoints");
+        print("~~~~~~~~~~~~~~~~~~~~\(hostDic)");
+        var finalVideoHost = "";
+        for key in hostDic.allKeys {
+            if bucket.contains(key as? String ?? "") {
+                finalVideoHost = hostDic[key] as? String ?? ""
+                break
+            }
+        }
+        print("url~~~~~~~~~~~~~~~~~~~~\(finalVideoHost)");
+        LoginTools.sharedTools.videoHost = finalVideoHost;
     }
 }
 extension AppDelegate{
