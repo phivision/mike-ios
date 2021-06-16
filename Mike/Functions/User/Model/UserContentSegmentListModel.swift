@@ -8,9 +8,6 @@ import Foundation
 class UserContentSegmentListModel : NSObject, NSCoding{
 
 	var name : String!
-	var rPE : String!
-	var reps : String!
-	var sets : String!
 	var timestamp : String!
 
 
@@ -19,9 +16,6 @@ class UserContentSegmentListModel : NSObject, NSCoding{
 	 */
 	init(fromDictionary dictionary: [String:Any]){
 		name = dictionary["Name"] as? String ?? ""
-		rPE = dictionary["RPE"] as? String ?? ""
-		reps = dictionary["Reps"] as? String ?? ""
-		sets = dictionary["Sets"] as? String ?? ""
 		timestamp = dictionary["Timestamp"] as? String ?? ""
 	}
 
@@ -33,15 +27,6 @@ class UserContentSegmentListModel : NSObject, NSCoding{
 		var dictionary = [String:Any]()
 		if name != nil{
 			dictionary["Name"] = name
-		}
-		if rPE != nil{
-			dictionary["RPE"] = rPE
-		}
-		if reps != nil{
-			dictionary["Reps"] = reps
-		}
-		if sets != nil{
-			dictionary["Sets"] = sets
 		}
 		if timestamp != nil{
 			dictionary["Timestamp"] = timestamp
@@ -56,9 +41,6 @@ class UserContentSegmentListModel : NSObject, NSCoding{
     @objc required init(coder aDecoder: NSCoder)
 	{
          name = aDecoder.decodeObject(forKey: "Name") as? String ?? ""
-         rPE = aDecoder.decodeObject(forKey: "RPE") as? String ?? ""
-         reps = aDecoder.decodeObject(forKey: "Reps") as? String ?? ""
-         sets = aDecoder.decodeObject(forKey: "Sets") as? String ?? ""
          timestamp = aDecoder.decodeObject(forKey: "Timestamp") as? String ?? ""
 
 	}
@@ -71,15 +53,6 @@ class UserContentSegmentListModel : NSObject, NSCoding{
 	{
 		if name != nil{
 			aCoder.encode(name, forKey: "Name")
-		}
-		if rPE != nil{
-			aCoder.encode(rPE, forKey: "RPE")
-		}
-		if reps != nil{
-			aCoder.encode(reps, forKey: "Reps")
-		}
-		if sets != nil{
-			aCoder.encode(sets, forKey: "Sets")
 		}
 		if timestamp != nil{
 			aCoder.encode(timestamp, forKey: "Timestamp")

@@ -223,12 +223,12 @@ class VideoViewController: UIViewController {
         let strArr:Array<String> = (self.videoModel.contentName ?? "").components(separatedBy: ".")
         if strArr.count > 0 {
             let videoUrl:String = strArr.first ?? ""
-            self.playerManager.assetURL = NSURL(string: String(format: "%@%@.m3u8", kVideoHostUrl,videoUrl))! as URL
+//            self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
+            self.playerManager.assetURL = NSURL(string: String(format: "%@%@.m3u8", LoginTools.sharedTools.videoHost,videoUrl))! as URL
             self.videoState = .play
             self.handlePlayBtn(byState: self.videoState)
             self.playerManager.play()
         }
-//        self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
                 
     }
     @IBAction func backBtnPressed(){
@@ -429,15 +429,20 @@ extension VideoViewController{
     }
     func handleSegmentTime(currentTime:TimeInterval){
         if self.segList.count > 0 {
-            var selectIndex = 0
+            var selectIndex = -1
             for i in 0 ..< self.segTimeList.count {
                 let segTime:Int = self.segTimeList[i]
-                if currentTime > Double(segTime) && i < self.segTimeList.count - 1 {
-                    continue
-                }else{
-                    selectIndex = i
+                if currentTime <= Double(segTime){
+                    if i>0 {
+                        selectIndex = i - 1
+                    }else{
+                        selectIndex = 0
+                    }
                     break
                 }
+            }
+            if selectIndex == -1 {
+                selectIndex = self.segTimeList.count - 1
             }
             let model:UserContentSegmentListModel = self.segList[selectIndex]
             self.segmentTitle.text = "\(model.name ?? "")"

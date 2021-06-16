@@ -22,6 +22,9 @@
 		A690E02738114B2F88B979ED /* UserSubscriptionTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */; };
 		A81360E0B069CA7A224B2004 /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
 		B3D3C547E3337A6C16A0C811 /* UserFavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397087124EE4DEA8E0A9DB8 /* UserFavoriteContent.swift */; };
+		B631AFB526799A0700C907B2 /* get_video_endpoints.sh in Resources */ = {isa = PBXBuildFile; fileRef = B631AFB326799A0700C907B2 /* get_video_endpoints.sh */; };
+		B631AFB626799A0700C907B2 /* video_endpoints.json in Resources */ = {isa = PBXBuildFile; fileRef = B631AFB426799A0700C907B2 /* video_endpoints.json */; };
+		B631AFB826799EC700C907B2 /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B631AFB726799EC700C907B2 /* JsonHelper.swift */; };
 		B637496A264446A800502913 /* UserProfileTrainerListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6374968264446A800502913 /* UserProfileTrainerListCell.swift */; };
 		B637496B264446A800502913 /* UserProfileTrainerListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6374969264446A800502913 /* UserProfileTrainerListCell.xib */; };
 		B637496E264446CE00502913 /* UserProfileSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B637496C264446CE00502913 /* UserProfileSectionTitleView.swift */; };
@@ -246,6 +249,9 @@
 		96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "UserSubscriptionTrainer+Schema.swift"; path = "amplify/generated/models/UserSubscriptionTrainer+Schema.swift"; sourceTree = "<group>"; };
 		9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = UserContent.swift; path = amplify/generated/models/UserContent.swift; sourceTree = "<group>"; };
 		ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "UserContent+Schema.swift"; path = "amplify/generated/models/UserContent+Schema.swift"; sourceTree = "<group>"; };
+		B631AFB326799A0700C907B2 /* get_video_endpoints.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_video_endpoints.sh; sourceTree = "<group>"; };
+		B631AFB426799A0700C907B2 /* video_endpoints.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = video_endpoints.json; sourceTree = "<group>"; };
+		B631AFB726799EC700C907B2 /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonHelper.swift; sourceTree = "<group>"; };
 		B6374968264446A800502913 /* UserProfileTrainerListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTrainerListCell.swift; sourceTree = "<group>"; };
 		B6374969264446A800502913 /* UserProfileTrainerListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileTrainerListCell.xib; sourceTree = "<group>"; };
 		B637496C264446CE00502913 /* UserProfileSectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSectionTitleView.swift; sourceTree = "<group>"; };
@@ -517,6 +523,15 @@
 			path = .;
 			sourceTree = "<group>";
 		};
+		B631AFB2267999F200C907B2 /* EndPoint */ = {
+			isa = PBXGroup;
+			children = (
+				B631AFB326799A0700C907B2 /* get_video_endpoints.sh */,
+				B631AFB426799A0700C907B2 /* video_endpoints.json */,
+			);
+			path = EndPoint;
+			sourceTree = "<group>";
+		};
 		B63749672644467800502913 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -646,6 +661,7 @@
 				B6E4FFB3264AC01B0020F636 /* ImageCacheUtils.swift */,
 				B6BFDE0B264F411D004FC2F1 /* HeightUtils.swift */,
 				B6BFDE4B2653CE18004FC2F1 /* NotificationConstMacro.swift */,
+				B631AFB726799EC700C907B2 /* JsonHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1021,6 +1037,7 @@
 		C1DEDD752637460700F66A7C /* Mike */ = {
 			isa = PBXGroup;
 			children = (
+				B631AFB2267999F200C907B2 /* EndPoint */,
 				B641F8062646AD0F00FE8C56 /* Mike.entitlements */,
 				B682630226424C5B00A32D5C /* Fonts */,
 				B68262E3263C05BD00A32D5C /* Base */,
@@ -1195,8 +1212,10 @@
 				B68EAA3D2664C14500BAF259 /* DatePickerViewController.xib in Resources */,
 				B6965A422664858800173207 /* TrainerContentListViewController.xib in Resources */,
 				B682631B26424C6A00A32D5C /* Nunito-Black.ttf in Resources */,
+				B631AFB626799A0700C907B2 /* video_endpoints.json in Resources */,
 				B682631426424C6A00A32D5C /* Nunito-ExtraBold.ttf in Resources */,
 				B637497B26444D9F00502913 /* UserProfileTopCell.xib in Resources */,
+				B631AFB526799A0700C907B2 /* get_video_endpoints.sh in Resources */,
 				B69103D426381EC0005F2ACD /* HomeSeeAllCoursesView.xib in Resources */,
 				B682631626424C6A00A32D5C /* Nunito-Light.ttf in Resources */,
 				B63C3F1526611BEA00A3D08C /* SegmentSectionHeaderView.xib in Resources */,
@@ -1346,6 +1365,7 @@
 				B67716152647F8110035A50C /* UserContentSectionTitleView.swift in Sources */,
 				C7AE4A5E865D4D0A92465D35 /* UserFavoriteContent+Schema.swift in Sources */,
 				B68262E7263C088900A32D5C /* ToastHUD.swift in Sources */,
+				B631AFB826799EC700C907B2 /* JsonHelper.swift in Sources */,
 				B6965A3D2664850B00173207 /* TrainerContentListCell.swift in Sources */,
 				B6E4FFB2264ABB960020F636 /* UserContentSegmentListModel.swift in Sources */,
 				B6E40014264C0C510020F636 /* ZFPortraitControlView.m in Sources */,

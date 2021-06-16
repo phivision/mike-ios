@@ -10,6 +10,7 @@ import UIKit
 
 class LoginTools: NSObject {
     static let sharedTools = LoginTools()
+    var videoHost = ""
     private override init() {
         super.init()
     }
