@@ -6,14 +6,32 @@
 //
 
 import UIKit
+import AWSAppSync
 
 class HomeTabViewController:UITabBarController{
-
+    var appSyncClient: AWSAppSyncClient?
+    var subscriptionWatcher: Cancellable?
     override func viewDidLoad() {
         addChildControllers()
         super.viewDidLoad()
         commitInitView()
         // Do any additional setup after loading the view.
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        appSyncClient = appDelegate.appSyncClient
+//        //In your app code
+//        do {
+//          subscriptionWatcher = try appSyncClient?.subscribe(subscription: .subscriptionMsg(byUserId: "1222c9f6-a14d-456a-8798-24c06ec9d80a"), resultHandler: { (result, transaction, error) in
+//            if let result = result {
+//              print(result.data!.onCreateTodo!.name + " " + result.data!.onCreateTodo!.description!)
+//            } else if let error = error {
+//              print(error.localizedDescription)
+//            }
+//          })
+//        } catch {
+//          print("Error starting subscription.")
+//        }
+//        Backend.shared.createContentCreateSubscription(creatorId: "2c486065-5e75-44c0-a189-3a88be7056ab")
+//        Backend.shared.createContentUpdateSubscription(creatorId: "9badcade-6771-441d-b8e6-b1f2b6e14d52")
     }
     
     func addChildControllers() {
@@ -25,6 +43,7 @@ class HomeTabViewController:UITabBarController{
         }else{
             self.viewControllers = [
                 addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
+                addChildVC(childVC: MessageTrainerListViewController(), title: "", imageNormal: UIImage(named: "icon_chat_N"), imageSelect: UIImage(named: "icon_chat_H"),showNavBar: false),
                 addChildVC(childVC: UserProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];
         }

@@ -8,9 +8,11 @@
 import UIKit
 import Amplify
 import IQKeyboardManagerSwift
+import AWSAppSync
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
     var window: UIWindow?
+    var appSyncClient: AWSAppSyncClient?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // initialize Amplify
         let _ = Backend.initialize()
@@ -33,6 +35,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         self.window?.overrideUserInterfaceStyle = .light
         self.configKeyBoard()
         self.configVideoHost()
+//        self.configAWSAppSync()
         return true
     }
     var blockRotation: UIInterfaceOrientationMask = .portrait{
@@ -77,6 +80,19 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         print("url~~~~~~~~~~~~~~~~~~~~\(finalVideoHost)");
         LoginTools.sharedTools.videoHost = finalVideoHost;
+    }
+    func configAWSAppSync(){
+        do {
+            // You can choose your database location if you wish, or use the default
+            let cacheConfiguration = try AWSAppSyncCacheConfiguration()
+
+            // AppSync configuration & client initialization
+            let appSyncConfig = try AWSAppSyncClientConfiguration(appSyncServiceConfig: AWSAppSyncServiceConfig(), cacheConfiguration: cacheConfiguration)
+            appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
+        } catch {
+            print("Error initializing appsync client. \(error)")
+        }
+        //
     }
 }
 extension AppDelegate{

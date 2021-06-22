@@ -23,20 +23,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4DA5003B-8A9A-4C0D-8276-A64A469842DF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Mike/Backend/Backend.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "745"
-            endingLineNumber = "745">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "BA7682E7-18F6-47C8-BAC4-5DA6E179162B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -44,8 +30,8 @@
             filePath = "Mike/Backend/Backend.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "518"
-            endingLineNumber = "518"
+            startingLineNumber = "560"
+            endingLineNumber = "560"
             landmarkName = "fetchContentIsFav(contentId:suc:fail:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -60,25 +46,9 @@
             filePath = "Mike/Backend/Backend.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "522"
-            endingLineNumber = "522"
+            startingLineNumber = "564"
+            endingLineNumber = "564"
             landmarkName = "fetchContentIsFav(contentId:suc:fail:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "98EC7599-6187-4058-97BE-33F2214B52BD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Mike/Backend/Backend.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "543"
-            endingLineNumber = "543"
-            landmarkName = "addContentToFav(contentId:suc:fail:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
