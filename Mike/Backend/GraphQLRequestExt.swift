@@ -189,6 +189,42 @@ extension GraphQLRequest{
                                     variables: ["id": id],
                                     responseType: JSONValue.self)
     }
+    static func fetchSubscriptionTrainerList() -> GraphQLRequest<JSONValue>{
+        let document = """
+        query getUserProfile($id:ID!) {
+          getUserProfile(id:$id) {
+              Subscriptions {
+                  items {
+                    Trainer {
+                      BgImage
+                      BgTitle
+                      Biography
+                      Birthday
+                      Description
+                      Email
+                      FirstName
+                      Gender
+                      Height
+                      LastName
+                      RegDate
+                      StripeID
+                      UserImage
+                      UserRole
+                      Weight
+                      createdAt
+                      id
+                      owner
+                      updatedAt
+                    }
+                  }
+              }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": LoginTools.sharedTools.userId()],
+                                        responseType: JSONValue.self)
+    }
     static func fetchSimpleTrainerModel(byId id: String) -> GraphQLRequest<JSONValue> {
         let document = """
         query getUserProfile($id:ID!) {
@@ -393,6 +429,63 @@ extension GraphQLRequest{
         """
         return GraphQLRequest<JSONValue>(document: document,
                                          variables: ["CreatorID": LoginTools.sharedTools.userId(),"ContentName":contentName,"Description":desc,"IsDemo":isDemo,"Segments":segments,"Thumbnail":thumbnail,"Title":title],
+                                    responseType: JSONValue.self)
+    }
+    static func subscriptionMsg(byUserId userId: String) -> GraphQLRequest<JSONValue> {
+            let document = """
+            subscription MySubscription($id:ID!) {
+              onMessagesByToUserID(ToUserID:$id) {
+                id
+                PostMessages
+                ToUserID
+                FromUserID
+                Status
+                Type
+                createdAt
+                ToUser {
+                    FirstName
+                    LastName
+                    UserImage
+                }
+                FromUser {
+                    LastName
+                    FirstName
+                    UserImage
+                }
+              }
+            }
+            """
+            return GraphQLRequest<JSONValue>(document: document,
+                                        variables: ["id": userId],
+                                        responseType: JSONValue.self)
+        }
+    static func createMsgToUser(byToUserId toUserId:String,_ msgContent:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+        mutation MyMutation($FromUserID:ID!,$PostMessages:String!,$ToUserID:ID!) {
+          createMessage(input: {FromUserID: $FromUserID, PostMessages: $PostMessages, Status: UNREAD, ToUserID: $ToUserID, Type: TEXT}) {
+            id
+            PostMessages
+            ToUserID
+            FromUserID
+            Status
+            Type
+            createdAt
+            ToUser {
+              FirstName
+              LastName
+              UserImage
+            }
+            FromUser {
+              LastName
+              FirstName
+              UserImage
+            }
+          }
+        }
+        """
+        print("\(LoginTools.sharedTools.userId())~~~~~~~~~~~~\(toUserId)~~~~~~~~~~~~~~~~~\(msgContent)")
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["FromUserID": LoginTools.sharedTools.userId(),"ToUserID":toUserId,"PostMessages":msgContent],
                                     responseType: JSONValue.self)
     }
 }

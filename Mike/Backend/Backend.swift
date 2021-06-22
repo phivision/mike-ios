@@ -375,6 +375,48 @@ class Backend {
             }
         }
     }
+    // MARK: - fetch Trainer for message system
+    func fetchSubscriptionTrainerList(suc:@escaping (_ trainerList:Array<UserCenterTrainer>)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchSubscriptionTrainerList()){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        return
+                    }
+                    guard let favDic = subDic["Subscriptions"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = favDic["items"] as? NSArray else {
+                        return
+                    }
+                    print("~~~~~~~~~~~~\(itemList)")
+                    var trainerList = Array<UserCenterTrainer>()
+                    for item in itemList {
+                        if let itemDic = item as? NSDictionary {
+                            trainerList.append(UserCenterTrainer(fromDictionary: itemDic["Trainer"] as! [String : Any]))
+                        }
+                    }
+                    suc(trainerList)
+                case .failure(let error):
+                    print("Got failed result with \(error)")
+                    fail("\(error)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
     //fetch UserProfile For Trainer Simple Info
     func fetchTrainerSimpleInfo(userId:String?,suc:@escaping (_ userCenterModel:UserCenterModel)->Void,fail:@escaping (_ msg:String)->Void){
         Amplify.API.query(request: .fetchSimpleTrainerModel(byId: userId ?? "")){
@@ -730,6 +772,74 @@ class Backend {
                         suc(true)
                     }else {
                         fail("Failed")
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    func createSubscription(userId:String!,recieveMsg:@escaping (_ messageModel:MessageListModel)->Void) {
+        _ = Amplify.API.subscribe(request: .subscriptionMsg(byUserId: userId), valueListener: { (subscriptionEvent) in
+            switch subscriptionEvent {
+            case .connection(let subscriptionConnectionState):
+                print("Subscription connect state is \(subscriptionConnectionState)")
+            case .data(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["onMessagesByToUserID"] as? NSDictionary {
+                        print("\(subDic)")
+                        let model = MessageListModel(fromDictionary: subDic as! [String : Any])
+                        recieveMsg(model)
+                    }else {
+                        
+                    }
+                    
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                }
+            }
+        }) { result in
+            switch result {
+            case .success:
+                print("Subscription has been closed successfully")
+            case .failure(let apiError):
+                print("Subscription has terminated with \(apiError)")
+            }
+        }
+    }
+    //createMsg
+    func sendMsgToUser(toUserId:String!,msgContent:String!,suc:@escaping (_ messageModel:MessageListModel)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.mutate(request: .createMsgToUser(byToUserId: toUserId, msgContent)){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["createMessage"] as? NSDictionary {
+                        print("\(subDic)")
+                        let model = MessageListModel(fromDictionary: subDic as! [String : Any])
+                        suc(model)
+                    }else {
+                        fail("Send Message Failed!")
                     }
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
