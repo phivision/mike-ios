@@ -5,8 +5,8 @@
 import Foundation
 
 
-class UserCenterTrainer : NSObject, NSCoding{
-
+class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
+    static var supportsSecureCoding: Bool { return true }
 	var userImage : String!
 	var id : String!
     var firstName : String!

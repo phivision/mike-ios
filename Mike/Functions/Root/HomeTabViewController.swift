@@ -38,6 +38,7 @@ class HomeTabViewController:UITabBarController{
         if LoginTools.sharedTools.userInfo().userRole == "trainer" {
             self.viewControllers = [
                 addChildVC(childVC: TrainerContentListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
+                addChildVC(childVC: MessageStudentViewController(), title: "", imageNormal: UIImage(named: "icon_chat_N"), imageSelect: UIImage(named: "icon_chat_H"),showNavBar: false),
                 addChildVC(childVC: TrainerProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];
         }else{
@@ -82,7 +83,7 @@ extension HomeTabViewController{
         tabBar.shadowImage = UIImage()
         tabBar.backgroundImage = initWithImage(color: HexRGBAlpha(0xf8f8f8,1))
         
-        let bg = UIImageView(frame: CGRect.init(x: 0, y: 0, width: kScreenWidth, height: tabBar.height+34))
+        let bg = UIImageView(frame: CGRect.init(x: 0, y: 0, width: kScreenWidth, height: tabBar.height+bottomSafeAreaHeight))
         bg.layer.cornerRadius = 20
         bg.backgroundColor = UIColor.white
         bg.clipsToBounds = false
@@ -101,5 +102,5 @@ extension HomeTabViewController{
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return image!
-        }
+    }
 }

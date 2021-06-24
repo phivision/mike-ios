@@ -462,7 +462,7 @@ extension GraphQLRequest{
     static func createMsgToUser(byToUserId toUserId:String,_ msgContent:String) -> GraphQLRequest<JSONValue>{
         let document = """
         mutation MyMutation($FromUserID:ID!,$PostMessages:String!,$ToUserID:ID!) {
-          createMessage(input: {FromUserID: $FromUserID, PostMessages: $PostMessages, Status: UNREAD, ToUserID: $ToUserID, Type: TEXT}) {
+          createMessage(input: {FromUserID: $FromUserID, PostMessages: $PostMessages, Status: UNRESPONDED, ToUserID: $ToUserID, Type: TEXT}) {
             id
             PostMessages
             ToUserID
@@ -488,4 +488,98 @@ extension GraphQLRequest{
                                          variables: ["FromUserID": LoginTools.sharedTools.userId(),"ToUserID":toUserId,"PostMessages":msgContent],
                                     responseType: JSONValue.self)
     }
+    static func fetchMessageByUser(fromUserId:String,toUserId:String,status:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+        query MyQuery($toUserId: ID!, $fromUserId: ID!,$status:MessageStatus! ) {
+          messageByFromUserID(filter: {ToUserID: {eq: $toUserId}, Status: {eq: $status}}, FromUserID: $fromUserId) {
+            items {
+                    id
+                    PostMessages
+                    ToUserID
+                    FromUserID
+                    Status
+                    Type
+                    createdAt
+                    ToUser {
+                      FirstName
+                      LastName
+                      UserImage
+                    }
+                    FromUser {
+                      LastName
+                      FirstName
+                      UserImage
+                    }
+            }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["toUserId": toUserId,"fromUserId":fromUserId,"status":status],
+                                    responseType: JSONValue.self)
+    }
+    static func fetchMessageByToUserId(toUserId:String,status:String) -> GraphQLRequest<JSONValue>{
+        print("\(toUserId)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(status)")
+        let document = """
+        query MyQuery2($ToUserID: ID = "", $eq: MessageStatus = UNRESPONDED) {
+          messageByToUserID(ToUserID: $ToUserID, filter: {Status: {eq: $eq}}) {
+            items {
+                    id
+                    PostMessages
+                    ToUserID
+                    FromUserID
+                    Status
+                    Type
+                    createdAt
+                    ToUser {
+                      FirstName
+                      LastName
+                      UserImage
+                    }
+                    FromUser {
+                      LastName
+                      FirstName
+                      UserImage
+                    }
+            }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["ToUserID": toUserId,"eq":status],
+                                    responseType: JSONValue.self)
+    }
+    static func updateMessageStatus(byToMessageModel msgModel:MessageListModel,messageStatus status:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+        mutation MyMutation3($id: ID = "",$status:MessageStatus) {
+                  updateMessage(input: {id: $id, Status: $status}) {
+                            id
+                            PostMessages
+                            ToUserID
+                            FromUserID
+                            Status
+                            Type
+                            createdAt
+                            ToUser {
+                              FirstName
+                              LastName
+                              UserImage
+                            }
+                            FromUser {
+                              LastName
+                              FirstName
+                              UserImage
+                            }
+                  }
+                }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": msgModel.id ?? "","status":"RESPONDED"],
+                                    responseType: JSONValue.self)
+    }
+}
+enum MessageStatus{
+    case UNREAD
+    case UNRESPONDED
+    case RESPONDED
 }

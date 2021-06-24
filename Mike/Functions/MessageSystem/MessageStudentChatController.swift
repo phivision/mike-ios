@@ -1,20 +1,24 @@
 //
-//  MessageSystemViewController.swift
+//  MessageStudentChatController.swift
 //  Mike
 //
-//  Created by 殷聃 on 2021/6/22.
+//  Created by 殷聃 on 2021/6/24.
 //
 
 import UIKit
 import IQKeyboardManagerSwift
 
-class MessageSystemViewController: BaseViewController {
+class MessageStudentChatController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     var toUserId:String?
     var toUserName:String?
     lazy var msgList:Array<MessageListModel> = {
         var msgList:Array<MessageListModel> = Array<MessageListModel>()
         return msgList
+    }()
+    lazy var unResponeMsgList:Array<MessageListModel> = {
+        var unResponeMsgList:Array<MessageListModel> = Array<MessageListModel>()
+        return unResponeMsgList
     }()
     //MARK: - comment relation
     @IBOutlet weak var inputAreaBottomMargin:NSLayoutConstraint!
@@ -23,12 +27,21 @@ class MessageSystemViewController: BaseViewController {
     @IBOutlet weak var sendBtn:UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setNavLeftBtn(imageName: "back_nearBlack")
         self.title = toUserName ?? ""
         self.configTableView()
-        self.configSubscription()
+        Backend.shared.createInnerSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a inner subscription")
+            DispatchQueue.main.async {
+                self.msgList.append(msgModel)
+                self.mainTableView.reloadData()
+                self.saveMsgListToLocale()
+                self.saveLastMsg(msg: msgModel.postMessages)
+                self.scrollTableViewToBottom()
+            }
+        }
         self.configMsgList()
         self.configTextView()
+        self.setNavLeftBtn(imageName: "back_nearBlack")
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -49,18 +62,7 @@ class MessageSystemViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardWillHideNotification,object: nil)
         SubscriptionTools.sharedTools.innderSubscription?.cancel()
     }
-    func configSubscription(){
-        Backend.shared.createInnerSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a inner subscription")
-            DispatchQueue.main.async {
-                self.msgList.append(msgModel)
-                self.mainTableView.reloadData()
-                self.handleMsgList()
-                self.saveLastMsg(msg: msgModel.postMessages)
-                self.scrollTableViewToBottom()
-            }
-        }
-    }
+    //MARK: - config tableview
     func configTableView(){
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
@@ -80,9 +82,9 @@ class MessageSystemViewController: BaseViewController {
         self.sendBtn.layer.cornerRadius = 6;
         self.sendBtn.clipsToBounds = true;
     }
-    //MARK: - msg config
+    //MARK: - init msglist from unarchive
     func configMsgList(){
-        let dataFrom = UserDefaults.standard.data(forKey: "\(msgListForStudent)\(self.toUserId ?? "")")
+        let dataFrom = UserDefaults.standard.data(forKey: "\(msgListForTrainer)\(self.toUserId ?? "")")
         if dataFrom != nil {
             do {
                 let savedList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataFrom!) as? Array<MessageListModel>
@@ -93,52 +95,62 @@ class MessageSystemViewController: BaseViewController {
             }
         }
     }
-    //save
-    func handleMsgList(){
+    //MARK: - msg archive to local
+    func saveMsgListToLocale(){
         do {
             let data = try NSKeyedArchiver.archivedData(withRootObject: self.msgList, requiringSecureCoding: true)
-            UserDefaults.standard.set(data, forKey: "\(msgListForStudent)\(self.toUserId ?? "")")
+            UserDefaults.standard.set(data, forKey: "\(msgListForTrainer)\(self.toUserId ?? "")")
             UserDefaults.standard.synchronize()
         } catch let error {
             print("\(error)")
         }
     }
+    //MARK: - save last msg for chat user
     func saveLastMsg(msg:String){
-        UserDefaults.standard.setValue(msg, forKey: "\(lastMsgForStudent)\(self.toUserId ?? "")")
+        UserDefaults.standard.setValue(msg, forKey: "\(lastMsgForTrainer)\(self.toUserId ?? "")")
     }
     //MARK: - unresponed message handle
     func fetchUnResponedStatusMessageList(){
         Backend.shared.fetchMessageListByStatus(toUserId: LoginTools.sharedTools.userId(), fromUserId: self.toUserId, status: "UNRESPONDED") { msgList in
-            for msgModel in msgList{
-                self.updateStatusToResponed(messageModel: msgModel)
-            }
+            self.unResponeMsgList.removeAll()
+            self.unResponeMsgList.append(contentsOf: msgList)
+            self.addUnResponeMsgToCurList()
         } fail: { error in
             
         }
     }
+    func addUnResponeMsgToCurList(){
+        for unResponeMsgModel in self.unResponeMsgList {
+            var isContainIn = false
+            for msgModel in self.msgList {
+                if msgModel.id == unResponeMsgModel.id {
+                    isContainIn = true
+                    break
+                }
+            }
+            if isContainIn == false {
+                self.msgList.append(unResponeMsgModel)
+            }
+        }
+        self.saveMsgListToLocale()
+        DispatchQueue.main.async {
+            self.mainTableView.reloadData()
+            self.scrollTableViewToBottom()
+        }
+    }
+    func changeAllUnResponeMsgStatus(){
+        for msgModel in self.unResponeMsgList{
+            self.updateStatusToResponed(messageModel: msgModel)
+        }
+    }
     func updateStatusToResponed(messageModel:MessageListModel){
-        var isContainIn = false
-        for msgModel in self.msgList {
-            if msgModel.id == messageModel.id {
-                isContainIn = true
-                break
-            }
-        }
-        if isContainIn == false {
-            self.msgList.append(messageModel)
-            self.handleMsgList()
-            DispatchQueue.main.async {
-                self.mainTableView.reloadData()
-                self.scrollTableViewToBottom()
-            }
-        }
         Backend.shared.updateMessageStatus(messageModel:messageModel, status: "RESPONDED") {
             
         } fail: {
             
         }
     }
-    //MARK: - keyboard
+    //MARK: - keyboardObserver
     @objc func keyboardAction(sender:Notification){
         let useInfo = sender.userInfo as? Dictionary<String,Any>
         let value:NSValue = useInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
@@ -151,7 +163,7 @@ class MessageSystemViewController: BaseViewController {
     @objc func keyboardDidShow(){
         self.scrollTableViewToBottom()
     }
-    // MARK: - scroll to bottom offset
+    //MARK: - tableView scroll to bottom
     func scrollTableViewToBottom(){
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300), execute: {
            // code to execute
@@ -160,17 +172,18 @@ class MessageSystemViewController: BaseViewController {
             }
         })
     }
-    // MARK: - send msg to trainer
+    //MARK: - send msg to other
     @IBAction func sendMsgBtnPressed(){
         if StringUtils.isBlank(value: self.commentText.text) {
             ToastHUD.showMsg(msg: "Please Input Message!", controller: self)
             return
         }
         Backend.shared.sendMsgToUser(toUserId: self.toUserId ?? "", msgContent: self.commentText.text) { msgModel in
+            self.changeAllUnResponeMsgStatus()
             DispatchQueue.main.async {
                 self.msgList.append(msgModel)
                 self.mainTableView.reloadData()
-                self.handleMsgList()
+                self.saveMsgListToLocale()
                 self.saveLastMsg(msg: msgModel.postMessages)
                 self.commentText.text = ""
                 self.commentTextHeight.constant = 40
@@ -181,7 +194,9 @@ class MessageSystemViewController: BaseViewController {
                 ToastHUD.showMsg(msg: errorMsg, controller: self)
             }
         }
+
     }
+    
 
     /*
     // MARK: - Navigation
@@ -194,7 +209,7 @@ class MessageSystemViewController: BaseViewController {
     */
 
 }
-extension MessageSystemViewController:UITableViewDelegate,UITableViewDataSource{
+extension MessageStudentChatController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -222,7 +237,7 @@ extension MessageSystemViewController:UITableViewDelegate,UITableViewDataSource{
        
     }
 }
-extension MessageSystemViewController:UITextViewDelegate{
+extension MessageStudentChatController:UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
         let width = textView.width
         let newSize = textView.sizeThatFits(CGSize(width: width, height: CGFloat(MAXFLOAT)))
@@ -231,3 +246,4 @@ extension MessageSystemViewController:UITextViewDelegate{
         self.commentTextHeight.constant = newFrame.size.height
     }
 }
+

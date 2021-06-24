@@ -25,3 +25,5 @@ public let HexRGBAlpha:((Int,Float) -> UIColor) = { (rgbValue : Int, alpha : Flo
 }
 
 let kAppdelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+
+let bottomSafeAreaHeight = keyWindow?.safeAreaInsets.bottom ?? 0.0
