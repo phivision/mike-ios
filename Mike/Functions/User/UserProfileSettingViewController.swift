@@ -31,6 +31,9 @@ class UserProfileSettingViewController: BaseViewController {
     @IBAction func signOut(){
         Backend.shared.signOut {
             LoginTools.sharedTools.removeUserInfo()
+            for subscription in SubscriptionTools.sharedTools.subscriptionList{
+                subscription.cancel()
+            }
             DispatchQueue.main.async {
                 let loginVC:LoginViewController = LoginViewController()
                 let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)

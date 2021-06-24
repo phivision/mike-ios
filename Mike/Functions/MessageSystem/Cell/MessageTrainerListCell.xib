@@ -46,10 +46,20 @@
                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Enc-NE-hpl">
+                        <rect key="frame" x="37" y="74" width="10" height="10"/>
+                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="Jeu-XK-hk5"/>
+                            <constraint firstAttribute="width" constant="10" id="Ksp-7f-dJi"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Vdk-X7-g8X" secondAttribute="trailing" constant="20" id="1Av-F4-d8P"/>
                     <constraint firstItem="ZOC-Yx-C9A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="8te-9q-GYK"/>
+                    <constraint firstItem="Enc-NE-hpl" firstAttribute="top" secondItem="ZOC-Yx-C9A" secondAttribute="bottom" constant="10" id="IY9-y3-x9T"/>
+                    <constraint firstItem="Enc-NE-hpl" firstAttribute="centerX" secondItem="ZOC-Yx-C9A" secondAttribute="centerX" id="JVL-ak-Drb"/>
                     <constraint firstItem="YNH-uj-DUV" firstAttribute="leading" secondItem="Vdk-X7-g8X" secondAttribute="leading" id="VIB-yT-fEg"/>
                     <constraint firstItem="YNH-uj-DUV" firstAttribute="trailing" secondItem="Vdk-X7-g8X" secondAttribute="trailing" id="XFS-qI-P14"/>
                     <constraint firstItem="YNH-uj-DUV" firstAttribute="top" secondItem="Vdk-X7-g8X" secondAttribute="bottom" constant="10" id="Yrl-Ss-7TH"/>
@@ -62,6 +72,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="avatarImg" destination="ZOC-Yx-C9A" id="bkV-2M-1s6"/>
+                <outlet property="dotImg" destination="Enc-NE-hpl" id="LLd-ts-Jtc"/>
                 <outlet property="lastMsgContentLab" destination="YNH-uj-DUV" id="Phj-TP-q2r"/>
                 <outlet property="nameLab" destination="Vdk-X7-g8X" id="h79-TW-lQa"/>
             </connections>

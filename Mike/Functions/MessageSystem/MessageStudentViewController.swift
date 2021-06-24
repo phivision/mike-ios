@@ -1,14 +1,14 @@
 //
-//  MessageTrainerListViewController.swift
+//  MessageStudentViewController.swift
 //  Mike
 //
-//  Created by 殷聃 on 2021/6/22.
+//  Created by 殷聃 on 2021/6/24.
 //
 
 import UIKit
 import PullToRefreshKit
 
-class MessageTrainerListViewController: BaseViewController {
+class MessageStudentViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     lazy var refreshControl:UIRefreshControl = {
         var refreshControl:UIRefreshControl = UIRefreshControl()
@@ -16,9 +16,9 @@ class MessageTrainerListViewController: BaseViewController {
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return refreshControl
     }()
-    lazy var trainerList:Array<UserCenterTrainer> = {
-        var trainerList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
-        return trainerList
+    lazy var studentList:Array<UserCenterTrainer> = {
+        var studentList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
+        return studentList
     }()
     var isRequest:Bool = false
     var curFromUserId:String = ""
@@ -32,11 +32,12 @@ class MessageTrainerListViewController: BaseViewController {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
         self.curFromUserId = ""
+        self.configStudentListFromLocal()
         if self.isRequest == false {
-//            fetchSpeakerList()
             self.mainTableView.switchRefreshHeader(to: .refreshing)
+            self.isRequest = true
         }else{
-            self.fetchMessageList()
+            self.refreshData()
         }
     }
     
@@ -51,63 +52,94 @@ class MessageTrainerListViewController: BaseViewController {
         self.mainTableView.tableFooterView = UIView()
         let header = ElasticRefreshHeader()
         self.mainTableView.configRefreshHeader(with: header,container:self){ [weak self] in
-            self?.fetchTrainerList()
+            self?.fetchMessageList()
         }
     }
     
     @objc func refreshData(){
-        self.trainerList.removeAll()
-        self.fetchTrainerList()
+        self.fetchMessageList()
     }
     
-    func fetchTrainerList(){
-        Backend.shared.fetchSubscriptionTrainerList { trainerList in
-            self.trainerList.removeAll()
-            self.trainerList.append(contentsOf: trainerList)
-            DispatchQueue.main.async {
-                self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
-                self.mainTableView.reloadData()
-                self.isRequest = true
-                self.fetchMessageList()
-            }
+    func fetchMessageList(){
+        Backend.shared.fetchMessageListByToUserId(toUserId: LoginTools.sharedTools.userId(), status:"UNRESPONDED") { msgList in
+            self.handleStudents(msgList: msgList)
         } fail: { error in
             
         }
     }
-    func fetchMessageList(){
-        Backend.shared.fetchMessageListByToUserId(toUserId: LoginTools.sharedTools.userId(), status:"UNRESPONDED") { msgList in
-            if msgList.count == 0{
-                for trainer in self.trainerList {
-                    UserDefaults.standard.setValue(false, forKey: "\(msgForStudentUnRead)\(trainer.id ?? "")")
+    func handleStudents(msgList:Array<MessageListModel>){
+        if msgList.count == 0{
+            for trainer in self.studentList {
+                UserDefaults.standard.setValue(false, forKey: "\(msgForTrainerUnRead)\(trainer.id ?? "")")
+                UserDefaults.standard.synchronize()
+            }
+        }else{
+            for msgModel in msgList{
+                let result = UserDefaults.standard.bool(forKey: "\(msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                if result == false {
+                    UserDefaults.standard.setValue(true, forKey: "\(msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
                     UserDefaults.standard.synchronize()
                 }
-            }else{
-                for msgModel in msgList{
-                    let result = UserDefaults.standard.bool(forKey: "\(msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
-                    if result == false {
-                        UserDefaults.standard.setValue(true, forKey: "\(msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
-                        UserDefaults.standard.synchronize()
-                    }
+            }
+        }
+        for msgModel in msgList {
+            var canAdd:Bool = true
+            for student in self.studentList {
+                if msgModel.fromUserID == student.id{
+                    canAdd = false
+                    break
                 }
             }
-            DispatchQueue.main.async {
-                self.mainTableView.reloadData()
+            if canAdd == true {
+                let studentModel = UserCenterTrainer(fromDictionary: [:])
+                studentModel.id = msgModel.fromUserID
+                studentModel.firstName = msgModel.fromUser.firstName
+                studentModel.lastName = msgModel.fromUser.lastName
+                self.studentList.append(studentModel)
             }
-        } fail: { error in
-            
+        }
+        self.saveStudentList()
+        DispatchQueue.main.async {
+            self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
+            self.mainTableView.reloadData()
         }
     }
     func handleSubscription(){
         Backend.shared.createSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
+            self.fetchMessageList()
             if msgModel.fromUserID != self.curFromUserId{
-                UserDefaults.standard.setValue(true, forKey: "\(msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
-                UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(lastMsgForStudent)\(msgModel.fromUserID ?? "")")
+                UserDefaults.standard.setValue(true, forKey: "\(msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
                 UserDefaults.standard.synchronize()
                 DispatchQueue.main.async {
                     self.mainTableView.reloadData()
                 }
             }
+        }
+    }
+    func configStudentListFromLocal(){
+        let dataFrom = UserDefaults.standard.data(forKey: "\(studentListForTrainer)\(LoginTools.sharedTools.userId())")
+        if dataFrom != nil {
+            do {
+                let savedList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataFrom!) as? Array<UserCenterTrainer>
+                self.studentList.removeAll()
+                self.studentList.append(contentsOf: savedList ?? [])
+                DispatchQueue.main.async {
+                    self.mainTableView.reloadData()
+                }
+            } catch let error {
+                print("\(error)")
+            }
+        }
+    }
+    func saveStudentList(){
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: self.studentList, requiringSecureCoding: true)
+            UserDefaults.standard.set(data, forKey: "\(studentListForTrainer)\(LoginTools.sharedTools.userId())")
+            UserDefaults.standard.synchronize()
+        } catch let error {
+            print("\(error)")
         }
     }
     /*
@@ -121,36 +153,36 @@ class MessageTrainerListViewController: BaseViewController {
     */
 
 }
-extension MessageTrainerListViewController:UITableViewDelegate,UITableViewDataSource{
+extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.trainerList.count == 0 {
+        if self.studentList.count == 0 {
             return 1
         }
-        return self.trainerList.count
+        return self.studentList.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if self.trainerList.count == 0 {
+        if self.studentList.count == 0 {
             let cell:MessageEmptyCell = tableView.dequeueReusableCell(withIdentifier: "MessageEmptyCell",for: indexPath) as! MessageEmptyCell
             return cell
         }
         let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
-        cell.setTrainerModel(model: self.trainerList[indexPath.row])
+        cell.setStudentModel(model: self.studentList[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.trainerList.count == 0 {
+        if self.studentList.count == 0 {
             return
         }
-        let model = self.trainerList[indexPath.row]
+        let model = self.studentList[indexPath.row]
         self.curFromUserId = model.id
-        let vc:MessageSystemViewController = MessageSystemViewController()
+        let vc:MessageStudentChatController = MessageStudentChatController()
         vc.toUserId = model.id
         vc.toUserName =  "\(model.firstName ?? "") \(model.lastName ?? "")"
         vc.hidesBottomBarWhenPushed = true

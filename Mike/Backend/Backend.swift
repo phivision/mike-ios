@@ -783,8 +783,9 @@ class Backend {
             }
         }
     }
-    func createSubscription(userId:String!,recieveMsg:@escaping (_ messageModel:MessageListModel)->Void) {
-        _ = Amplify.API.subscribe(request: .subscriptionMsg(byUserId: userId), valueListener: { (subscriptionEvent) in
+    //MARK: - createSubscription
+    func createInnerSubscription(userId:String!,recieveMsg:@escaping (_ messageModel:MessageListModel)->Void) {
+        let subscription: GraphQLSubscriptionOperation<JSONValue> = Amplify.API.subscribe(request: .subscriptionMsg(byUserId: userId), valueListener: { (subscriptionEvent) in
             switch subscriptionEvent {
             case .connection(let subscriptionConnectionState):
                 print("Subscription connect state is \(subscriptionConnectionState)")
@@ -805,7 +806,6 @@ class Backend {
                     }else {
                         
                     }
-                    
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
                 }
@@ -818,6 +818,43 @@ class Backend {
                 print("Subscription has terminated with \(apiError)")
             }
         }
+        SubscriptionTools.sharedTools.innderSubscription = subscription
+    }
+    func createSubscription(userId:String!,recieveMsg:@escaping (_ messageModel:MessageListModel)->Void) {
+        let subscription: GraphQLSubscriptionOperation<JSONValue> = Amplify.API.subscribe(request: .subscriptionMsg(byUserId: userId), valueListener: { (subscriptionEvent) in
+            switch subscriptionEvent {
+            case .connection(let subscriptionConnectionState):
+                print("Subscription connect state is \(subscriptionConnectionState)")
+            case .data(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["onMessagesByToUserID"] as? NSDictionary {
+                        print("\(subDic)")
+                        let model = MessageListModel(fromDictionary: subDic as! [String : Any])
+                        recieveMsg(model)
+                    }else {
+                        
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                }
+            }
+        }) { result in
+            switch result {
+            case .success:
+                print("Subscription has been closed successfully")
+            case .failure(let apiError):
+                print("Subscription has terminated with \(apiError)")
+            }
+        }
+        SubscriptionTools.sharedTools.subscriptionList.append(subscription)
     }
     //createMsg
     func sendMsgToUser(toUserId:String!,msgContent:String!,suc:@escaping (_ messageModel:MessageListModel)->Void,fail:@escaping (_ msg:String)->Void){
@@ -848,6 +885,116 @@ class Backend {
             case .failure(let error):
                 print("Got failed event with error \(error)")
                 fail("\(error)")
+            }
+        }
+    }
+    //fetch lastMsgList by fromUserId status
+    func fetchMessageListByStatus(toUserId:String?,fromUserId:String?,status:String?,suc:@escaping (_ list:Array<MessageListModel>)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchMessageByUser(fromUserId: fromUserId ?? "", toUserId: toUserId ?? "", status: status ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["messageByFromUserID"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = subDic["items"] as? NSArray else {
+                        return
+                    }
+                    print("~~~~~~~~~~~~\(itemList)")
+                    var contentList = Array<MessageListModel>()
+                    for item in itemList {
+                        if let itemDic = item as? NSDictionary {
+                            contentList.append(MessageListModel(fromDictionary: itemDic as! [String : Any]))
+                        }
+                    }
+                    suc(contentList)
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    //fetch lastMsgList by toUserId status
+    func fetchMessageListByToUserId(toUserId:String?,status:String?,suc:@escaping (_ list:Array<MessageListModel>)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchMessageByToUserId(toUserId: toUserId ?? "", status: status ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["messageByToUserID"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = subDic["items"] as? NSArray else {
+                        return
+                    }
+                    print("~~~~~~~~~~~~\(itemList)")
+                    var contentList = Array<MessageListModel>()
+                    for item in itemList {
+                        if let itemDic = item as? NSDictionary {
+                            contentList.append(MessageListModel(fromDictionary: itemDic as! [String : Any]))
+                        }
+                    }
+                    suc(contentList)
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    //updateMessage status
+    func updateMessageStatus(messageModel:MessageListModel,status:String,suc:@escaping ()->Void,fail:@escaping ()->Void) {
+        Amplify.API.mutate(request: .updateMessageStatus(byToMessageModel: messageModel, messageStatus: status)){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["createMessage"] as? NSDictionary {
+                        print("\(subDic)")
+                        let model = MessageListModel(fromDictionary: subDic as! [String : Any])
+                        suc()
+                    }else {
+                        fail()
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail()
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail()
             }
         }
     }
