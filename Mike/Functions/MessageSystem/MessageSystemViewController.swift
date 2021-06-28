@@ -21,6 +21,8 @@ class MessageSystemViewController: BaseViewController {
     @IBOutlet weak var commentTextHeight:NSLayoutConstraint!
     @IBOutlet weak var commentText:UITextView!
     @IBOutlet weak var sendBtn:UIButton!
+    //MARK: - token balance
+    var tokenBalance:Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setNavLeftBtn(imageName: "back_nearBlack")
@@ -45,6 +47,7 @@ class MessageSystemViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         self.fetchUnResponedStatusMessageList()
+        self.fetchTokenBalance()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
@@ -91,6 +94,14 @@ class MessageSystemViewController: BaseViewController {
         self.commentText.placeholder = "Input";
         self.sendBtn.layer.cornerRadius = 6;
         self.sendBtn.clipsToBounds = true;
+    }
+    //MARK: - token balance
+    func fetchTokenBalance(){
+        Backend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
+            self.tokenBalance = tokenBalance
+        } fail: { error in
+            
+        }
     }
     //MARK: - msg config
     func configMsgList(){
@@ -175,6 +186,10 @@ class MessageSystemViewController: BaseViewController {
     }
     // MARK: - send msg to trainer
     @IBAction func sendMsgBtnPressed(){
+        if self.tokenBalance == 0 {
+            ToastHUD.showMsg(msg: "There is not enough tokenBalance. Please recharge it first!", controller: self)
+            return
+        }
         if StringUtils.isBlank(value: self.commentText.text) {
             ToastHUD.showMsg(msg: "Please Input Message!", controller: self)
             return
@@ -187,6 +202,7 @@ class MessageSystemViewController: BaseViewController {
                 self.saveLastMsg(msg: msgModel.postMessages)
                 self.commentText.text = ""
                 self.commentTextHeight.constant = 40
+                self.tokenBalance = self.tokenBalance - 1
                 self.scrollTableViewToBottom(animated: true)
             }
         } fail: { errorMsg in

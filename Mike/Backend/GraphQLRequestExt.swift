@@ -609,9 +609,16 @@ extension GraphQLRequest{
                                          variables: ["id": msgModel.id ?? "","status":"RESPONDED"],
                                     responseType: JSONValue.self)
     }
-}
-enum MessageStatus{
-    case UNREAD
-    case UNRESPONDED
-    case RESPONDED
+    static func fetchUserTokenBalance(byUserId userId:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+            query MyQuery($id: ID!) {
+              getUserProfile(id: $id) {
+                TokenBalance
+              }
+            }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": userId],
+                                    responseType: JSONValue.self)
+    }
 }
