@@ -13,5 +13,6 @@ let msgListForStudent:String = "msgList_forStudent_"
 let msgListForTrainer:String = "msgList_forTrainer_"
 let msgForStudentUnRead:String = "unread_forStudent"
 let msgForTrainerUnRead:String = "unread_forTrainer"
+let lastMsgSendTimeStampForOutter:String = "lastMsgSendTimeStampForOutter"
 
 

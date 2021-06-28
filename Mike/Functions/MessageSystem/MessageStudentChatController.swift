@@ -29,25 +29,22 @@ class MessageStudentChatController: BaseViewController {
         super.viewDidLoad()
         self.title = toUserName ?? ""
         self.configTableView()
-        Backend.shared.createInnerSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a inner subscription")
-            DispatchQueue.main.async {
-                self.msgList.append(msgModel)
-                self.mainTableView.reloadData()
-                self.saveMsgListToLocale()
-                self.saveLastMsg(msg: msgModel.postMessages)
-                self.scrollTableViewToBottom()
-            }
-        }
+        self.configSubscription()
         self.configMsgList()
         self.configTextView()
         self.setNavLeftBtn(imageName: "back_nearBlack")
         // Do any additional setup after loading the view.
     }
+    override func leftButtonPressed() {
+        self.navigationController?.popViewController(animated: true)
+        SubscriptionTools.sharedTools.innderSubscription?.cancel()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = false
         IQKeyboardManager.shared.enable = false
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelSub), name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(restartSub), name: NSNotification.Name(rawValue:restartSubscription), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
@@ -57,10 +54,11 @@ class MessageStudentChatController: BaseViewController {
         super.viewWillDisappear(true)
         self.navigationController?.isNavigationBarHidden = true
         IQKeyboardManager.shared.enable = true
+        NotificationCenter.default.removeObserver(self,name: NSNotification.Name(rawValue:cancelSubscription),object: nil)
+        NotificationCenter.default.removeObserver(self,name: NSNotification.Name(rawValue:restartSubscription),object: nil)
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardWillShowNotification,object: nil)
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardDidShowNotification,object: nil)
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardWillHideNotification,object: nil)
-        SubscriptionTools.sharedTools.innderSubscription?.cancel()
     }
     //MARK: - config tableview
     func configTableView(){
@@ -135,7 +133,7 @@ class MessageStudentChatController: BaseViewController {
         self.saveMsgListToLocale()
         DispatchQueue.main.async {
             self.mainTableView.reloadData()
-            self.scrollTableViewToBottom()
+            self.scrollTableViewToBottom(animated: true,duration: 0.5)
         }
     }
     func changeAllUnResponeMsgStatus(){
@@ -157,20 +155,40 @@ class MessageStudentChatController: BaseViewController {
         if sender.name == UIResponder.keyboardWillShowNotification {
             self.inputAreaBottomMargin.constant = -value.cgRectValue.size.height+bottomSafeAreaHeight;
         }else{
-            self.inputAreaBottomMargin.constant = self.commentTextHeight.constant-bottomSafeAreaHeight;
+            self.inputAreaBottomMargin.constant = 0;
         }
     }
     @objc func keyboardDidShow(){
-        self.scrollTableViewToBottom()
+        self.scrollTableViewToBottom(animated: true,duration: 0.3)
     }
     //MARK: - tableView scroll to bottom
-    func scrollTableViewToBottom(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300), execute: {
+    func scrollTableViewToBottom(animated:Bool,duration:Double){
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(duration)*1000), execute: {
            // code to execute
             if self.mainTableView.contentSize.height >= self.mainTableView.height{
-                self.mainTableView.setContentOffset(CGPoint(x: 0, y: self.mainTableView.contentSize.height - self.mainTableView.height), animated: true)
+                self.mainTableView.scrollToRow(at: IndexPath(row: self.msgList.count-1, section: 0), at: .bottom, animated: true)
+//                self.mainTableView.setContentOffset(CGPoint(x: 0, y: self.mainTableView.contentSize.height - self.mainTableView.height), animated: animated)
             }
         })
+    }
+    //MARK: - createSubscription
+    func configSubscription(){
+        Backend.shared.createInnerSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a inner subscription")
+            DispatchQueue.main.async {
+                self.msgList.append(msgModel)
+                self.mainTableView.reloadData()
+                self.saveMsgListToLocale()
+                self.saveLastMsg(msg: msgModel.postMessages)
+                self.scrollTableViewToBottom(animated: true,duration: 0.3)
+            }
+        }
+    }
+    @objc func cancelSub(){
+        SubscriptionTools.sharedTools.innderSubscription?.cancel()
+    }
+    @objc func restartSub(){
+        self.configSubscription()
     }
     //MARK: - send msg to other
     @IBAction func sendMsgBtnPressed(){
@@ -187,7 +205,7 @@ class MessageStudentChatController: BaseViewController {
                 self.saveLastMsg(msg: msgModel.postMessages)
                 self.commentText.text = ""
                 self.commentTextHeight.constant = 40
-                self.scrollTableViewToBottom()
+                self.scrollTableViewToBottom(animated: true,duration: 0.3)
             }
         } fail: { errorMsg in
             DispatchQueue.main.async {

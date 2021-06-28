@@ -32,8 +32,16 @@ class RegisterViewController: BaseViewController {
     }
     
     func configView(){
-        self.pwdText.textContentType = .newPassword;
-        self.pwdText.passwordRules =  UITextInputPasswordRules(descriptor: "required: lower; required: upper; allowe: digit; required: [-]; minlength: 5;")//[UITextInputPasswordRules passwordRulesWithDescriptor:@""];
+        if #available(iOS 12.0, *) {
+            self.pwdText.textContentType = .newPassword
+        } else {
+            // Fallback on earlier versions
+        };
+        if #available(iOS 12.0, *) {
+            self.pwdText.passwordRules =  UITextInputPasswordRules(descriptor: "required: lower; required: upper; allowe: digit; required: [-]; minlength: 5;")
+        } else {
+            // Fallback on earlier versions
+        }//[UITextInputPasswordRules passwordRulesWithDescriptor:@""];
         
         self.userNameText.delegate = self
         self.pwdText.delegate = self

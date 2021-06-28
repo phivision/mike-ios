@@ -25,11 +25,17 @@ class MessageSystemViewController: BaseViewController {
         super.viewDidLoad()
         self.setNavLeftBtn(imageName: "back_nearBlack")
         self.title = toUserName ?? ""
-        self.configTableView()
         self.configSubscription()
+        self.configTableView()
         self.configMsgList()
         self.configTextView()
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelSub), name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(restartSub), name: NSNotification.Name(rawValue:restartSubscription), object: nil)
         // Do any additional setup after loading the view.
+    }
+    override func leftButtonPressed() {
+        self.navigationController?.popViewController(animated: true)
+        SubscriptionTools.sharedTools.innderSubscription?.cancel()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -47,7 +53,7 @@ class MessageSystemViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardWillShowNotification,object: nil)
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardDidShowNotification,object: nil)
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardWillHideNotification,object: nil)
-        SubscriptionTools.sharedTools.innderSubscription?.cancel()
+//        SubscriptionTools.sharedTools.innderSubscription?.cancel()
     }
     func configSubscription(){
         Backend.shared.createInnerSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
@@ -57,9 +63,15 @@ class MessageSystemViewController: BaseViewController {
                 self.mainTableView.reloadData()
                 self.handleMsgList()
                 self.saveLastMsg(msg: msgModel.postMessages)
-                self.scrollTableViewToBottom()
+                self.scrollTableViewToBottom(animated: true)
             }
         }
+    }
+    @objc func cancelSub(){
+        SubscriptionTools.sharedTools.innderSubscription?.cancel()
+    }
+    @objc func restartSub(){
+        self.configSubscription()
     }
     func configTableView(){
         self.mainTableView.delegate = self
@@ -112,6 +124,11 @@ class MessageSystemViewController: BaseViewController {
             for msgModel in msgList{
                 self.updateStatusToResponed(messageModel: msgModel)
             }
+            self.handleMsgList()
+            DispatchQueue.main.async {
+                self.mainTableView.reloadData()
+                self.scrollTableViewToBottom(animated: false)
+            }
         } fail: { error in
             
         }
@@ -126,11 +143,6 @@ class MessageSystemViewController: BaseViewController {
         }
         if isContainIn == false {
             self.msgList.append(messageModel)
-            self.handleMsgList()
-            DispatchQueue.main.async {
-                self.mainTableView.reloadData()
-                self.scrollTableViewToBottom()
-            }
         }
         Backend.shared.updateMessageStatus(messageModel:messageModel, status: "RESPONDED") {
             
@@ -149,14 +161,15 @@ class MessageSystemViewController: BaseViewController {
         }
     }
     @objc func keyboardDidShow(){
-        self.scrollTableViewToBottom()
+        self.scrollTableViewToBottom(animated: true)
     }
     // MARK: - scroll to bottom offset
-    func scrollTableViewToBottom(){
+    func scrollTableViewToBottom(animated:Bool){
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300), execute: {
            // code to execute
             if self.mainTableView.contentSize.height >= self.mainTableView.height{
-                self.mainTableView.setContentOffset(CGPoint(x: 0, y: self.mainTableView.contentSize.height - self.mainTableView.height), animated: true)
+                self.mainTableView.scrollToRow(at: IndexPath(row: self.msgList.count-1, section: 0), at: .bottom, animated: animated)
+//                self.mainTableView.setContentOffset(CGPoint(x: 0, y: self.mainTableView.contentSize.height - self.mainTableView.height), animated: animated)
             }
         })
     }
@@ -174,7 +187,7 @@ class MessageSystemViewController: BaseViewController {
                 self.saveLastMsg(msg: msgModel.postMessages)
                 self.commentText.text = ""
                 self.commentTextHeight.constant = 40
-                self.scrollTableViewToBottom()
+                self.scrollTableViewToBottom(animated: true)
             }
         } fail: { errorMsg in
             DispatchQueue.main.async {

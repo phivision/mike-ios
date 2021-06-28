@@ -26,12 +26,16 @@ class MsgLeftListCell: UITableViewCell {
 
     func setMsgModel(model:MessageListModel){
         self.msgContentLab.text = "\(model.postMessages ?? "")"
-        ImageCacheUtils.sharedTools.imageUrl(key: model.fromUser.userImage) { imgUrl, cannotLoadUrl in
-            if cannotLoadUrl == true{
-                self.userImage.image = UIImage(named: "logo")
-            }else{
-                self.userImage.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+        if model.fromUser != nil {
+            ImageCacheUtils.sharedTools.imageUrl(key: model.fromUser.userImage) { imgUrl, cannotLoadUrl in
+                if cannotLoadUrl == true{
+                    self.userImage.image = UIImage(named: "logo")
+                }else{
+                    self.userImage.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                }
             }
+        }else{
+            self.userImage.image = UIImage(named: "logo")
         }
     }
 
