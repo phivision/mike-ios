@@ -26,6 +26,8 @@ class MessageTrainerListViewController: BaseViewController {
         super.viewDidLoad()
         self.configTableView()
         self.handleSubscription()
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelSub), name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(restartSub), name: NSNotification.Name(rawValue:restartSubscription), object: nil)
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +39,21 @@ class MessageTrainerListViewController: BaseViewController {
             self.mainTableView.switchRefreshHeader(to: .refreshing)
         }else{
             self.fetchMessageList()
+            self.fetchTimeStampValue()
+        }
+    }
+    @objc func cancelSub(){
+        SubscriptionTools.sharedTools.outterSubscription?.cancel()
+    }
+    @objc func restartSub(){
+        self.handleSubscription()
+    }
+    func fetchTimeStampValue(){
+        let olderTime = UserDefaults.standard.double(forKey: lastMsgSendTimeStampForOutter)
+        if olderTime != 0{
+            let curTime = Date().timeIntervalSince1970
+            let value = curTime - olderTime
+            print("~~~~~~~~~~~~~~~~~~~~~~\(value)")
         }
     }
     
@@ -98,15 +115,16 @@ class MessageTrainerListViewController: BaseViewController {
         }
     }
     func handleSubscription(){
+        UserDefaults.standard.setValue(Date().timeIntervalSince1970, forKey: lastMsgSendTimeStampForOutter)
+        UserDefaults.standard.synchronize()
         Backend.shared.createSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
-            if msgModel.fromUserID != self.curFromUserId{
-                UserDefaults.standard.setValue(true, forKey: "\(msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
-                UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(lastMsgForStudent)\(msgModel.fromUserID ?? "")")
-                UserDefaults.standard.synchronize()
-                DispatchQueue.main.async {
-                    self.mainTableView.reloadData()
-                }
+            UserDefaults.standard.setValue(true, forKey: "\(msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
+            UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(lastMsgForStudent)\(msgModel.fromUserID ?? "")")
+            UserDefaults.standard.setValue(Date().timeIntervalSince1970, forKey: lastMsgSendTimeStampForOutter)
+            UserDefaults.standard.synchronize()
+            DispatchQueue.main.async {
+                self.mainTableView.reloadData()
             }
         }
     }

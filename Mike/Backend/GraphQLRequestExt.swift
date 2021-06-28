@@ -489,34 +489,66 @@ extension GraphQLRequest{
                                     responseType: JSONValue.self)
     }
     static func fetchMessageByUser(fromUserId:String,toUserId:String,status:String) -> GraphQLRequest<JSONValue>{
-        let document = """
-        query MyQuery($toUserId: ID!, $fromUserId: ID!,$status:MessageStatus! ) {
-          messageByFromUserID(filter: {ToUserID: {eq: $toUserId}, Status: {eq: $status}}, FromUserID: $fromUserId) {
-            items {
-                    id
-                    PostMessages
-                    ToUserID
-                    FromUserID
-                    Status
-                    Type
-                    createdAt
-                    ToUser {
-                      FirstName
-                      LastName
-                      UserImage
-                    }
-                    FromUser {
-                      LastName
-                      FirstName
-                      UserImage
-                    }
+        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+            let document = """
+            query MyQuery($status: MessageStatus!, $fromUserId: ID!, $toUserId: ID!) {
+              messageByToUserID(ToUserID: $toUserId, filter: {FromUserID: {eq: $fromUserId}, Status: {eq: $status}}) {
+                items {
+                        id
+                        PostMessages
+                        ToUserID
+                        FromUserID
+                        Status
+                        Type
+                        createdAt
+                        ToUser {
+                          FirstName
+                          LastName
+                          UserImage
+                        }
+                        FromUser {
+                          LastName
+                          FirstName
+                          UserImage
+                        }
+                }
+              }
             }
-          }
+            """
+            return GraphQLRequest<JSONValue>(document: document,
+                                             variables: ["toUserId": toUserId,"fromUserId":fromUserId,"status":status],
+                                        responseType: JSONValue.self)
+        }else{
+            let document = """
+            query MyQuery($toUserId: ID!, $fromUserId: ID!,$status:MessageStatus! ) {
+              messageByFromUserID(filter: {ToUserID: {eq: $toUserId}, Status: {eq: $status}}, FromUserID: $fromUserId) {
+                items {
+                        id
+                        PostMessages
+                        ToUserID
+                        FromUserID
+                        Status
+                        Type
+                        createdAt
+                        ToUser {
+                          FirstName
+                          LastName
+                          UserImage
+                        }
+                        FromUser {
+                          LastName
+                          FirstName
+                          UserImage
+                        }
+                }
+              }
+            }
+            """
+            
+            return GraphQLRequest<JSONValue>(document: document,
+                                             variables: ["toUserId": toUserId,"fromUserId":fromUserId,"status":status],
+                                        responseType: JSONValue.self)
         }
-        """
-        return GraphQLRequest<JSONValue>(document: document,
-                                         variables: ["toUserId": toUserId,"fromUserId":fromUserId,"status":status],
-                                    responseType: JSONValue.self)
     }
     static func fetchMessageByToUserId(toUserId:String,status:String) -> GraphQLRequest<JSONValue>{
         print("\(toUserId)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(status)")

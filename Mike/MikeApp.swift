@@ -32,11 +32,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self.window?.backgroundColor = .white
             self.window?.makeKeyAndVisible()
         }
-        self.window?.overrideUserInterfaceStyle = .light
+        if #available(iOS 13.0, *) {
+            self.window?.overrideUserInterfaceStyle = .light
+        } else {
+            // Fallback on earlier versions
+        }
         self.configKeyBoard()
         self.configVideoHost()
 //        self.configAWSAppSync()
         return true
+    }
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue:restartSubscription), object: nil)
+    }
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
     }
     var blockRotation: UIInterfaceOrientationMask = .portrait{
             didSet{

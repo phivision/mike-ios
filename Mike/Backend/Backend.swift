@@ -789,6 +789,9 @@ class Backend {
             switch subscriptionEvent {
             case .connection(let subscriptionConnectionState):
                 print("Subscription connect state is \(subscriptionConnectionState)")
+                if subscriptionConnectionState == .disconnected {
+                    SubscriptionTools.sharedTools.innderSubscription?.start()
+                }
             case .data(let result):
                 switch result {
                 case .success(let data):
@@ -825,6 +828,9 @@ class Backend {
             switch subscriptionEvent {
             case .connection(let subscriptionConnectionState):
                 print("Subscription connect state is \(subscriptionConnectionState)")
+                if subscriptionConnectionState == .disconnected {
+                    SubscriptionTools.sharedTools.outterSubscription?.start()
+                }
             case .data(let result):
                 switch result {
                 case .success(let data):
@@ -854,7 +860,7 @@ class Backend {
                 print("Subscription has terminated with \(apiError)")
             }
         }
-        SubscriptionTools.sharedTools.subscriptionList.append(subscription)
+        SubscriptionTools.sharedTools.outterSubscription = subscription
     }
     //createMsg
     func sendMsgToUser(toUserId:String!,msgContent:String!,suc:@escaping (_ messageModel:MessageListModel)->Void,fail:@escaping (_ msg:String)->Void){
@@ -903,7 +909,8 @@ class Backend {
                         return
                     }
                     let dic = d as! NSDictionary
-                    guard let subDic = dic["messageByFromUserID"] as? NSDictionary else {
+                    let key:String = LoginTools.sharedTools.userInfo().userRole == "student" ? "messageByFromUserID" : "messageByToUserID"
+                    guard let subDic = dic[key] as? NSDictionary else {
                         return
                     }
                     guard let itemList = subDic["items"] as? NSArray else {

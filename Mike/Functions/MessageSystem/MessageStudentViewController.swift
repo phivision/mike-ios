@@ -26,8 +26,11 @@ class MessageStudentViewController: BaseViewController {
         super.viewDidLoad()
         self.configTableView()
         self.handleSubscription()
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelSub), name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(restartSub), name: NSNotification.Name(rawValue:restartSubscription), object: nil)
         // Do any additional setup after loading the view.
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
@@ -39,6 +42,13 @@ class MessageStudentViewController: BaseViewController {
         }else{
             self.refreshData()
         }
+    }
+    
+    @objc func cancelSub(){
+        SubscriptionTools.sharedTools.outterSubscription?.cancel()
+    }
+    @objc func restartSub(){
+        self.handleSubscription()
     }
     
     func configTableView(){

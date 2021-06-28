@@ -10,8 +10,9 @@ import Amplify
 
 class SubscriptionTools: NSObject {
     static let sharedTools = SubscriptionTools()
-    var subscriptionList:Array<GraphQLSubscriptionOperation<JSONValue>> = []
+//    var subscriptionList:Array<GraphQLSubscriptionOperation<JSONValue>> = []
     var innderSubscription:GraphQLSubscriptionOperation<JSONValue>?
+    var outterSubscription:GraphQLSubscriptionOperation<JSONValue>?
     private override init() {
         super.init()
     }

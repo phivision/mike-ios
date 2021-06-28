@@ -9,4 +9,6 @@ import Foundation
 
 let refreshFavList:String = "refreshFavList"
 let refreshProfile:String = "refreshUserProfile"
+let cancelSubscription:String = "cancelSubscription"
+let restartSubscription:String = "restartSubscription"
 
