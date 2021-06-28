@@ -147,6 +147,9 @@
 		B63C3F1626611BEA00A3D08C /* SegmentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */; };
 		B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B641F8072646AD1000FE8C56 /* HealthKit.framework */; };
 		B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */; };
+		B64C03422689B13E00833354 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B64C03412689B13E00833354 /* SnapKit */; };
+		B64C03472689B21400833354 /* SplitVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64C03452689B21400833354 /* SplitVideoViewController.swift */; };
+		B64C03482689B21400833354 /* SplitVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B64C03462689B21400833354 /* SplitVideoViewController.xib */; };
 		B66377D526555A93001AB98B /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = B66377D326555A93001AB98B /* UITextView+Placeholder.m */; };
 		B67716072647DE3C0035A50C /* UserMatricsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716062647DE3C0035A50C /* UserMatricsListModel.swift */; };
 		B677160A2647EFF90035A50C /* UserContentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716082647EFF90035A50C /* UserContentDetailViewController.swift */; };
@@ -431,6 +434,8 @@
 		B641F8062646AD0F00FE8C56 /* Mike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mike.entitlements; sourceTree = "<group>"; };
 		B641F8072646AD1000FE8C56 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTools.swift; sourceTree = "<group>"; };
+		B64C03452689B21400833354 /* SplitVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVideoViewController.swift; sourceTree = "<group>"; };
+		B64C03462689B21400833354 /* SplitVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplitVideoViewController.xib; sourceTree = "<group>"; };
 		B66377D326555A93001AB98B /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		B66377D426555A93001AB98B /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		B67716062647DE3C0035A50C /* UserMatricsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMatricsListModel.swift; sourceTree = "<group>"; };
@@ -669,6 +674,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6A2851B2683449D00E40B3B /* AWSAPIPlugin in Frameworks */,
+				B64C03422689B13E00833354 /* SnapKit in Frameworks */,
 				B6A2850F2683449D00E40B3B /* Amplify in Frameworks */,
 				B6A285112683449D00E40B3B /* AWSCognitoAuthPlugin in Frameworks */,
 				B6F3655526553DBF00539B5E /* PullToRefreshKit in Frameworks */,
@@ -809,6 +815,8 @@
 				B68262B42639B04900A32D5C /* Cell */,
 				B68262B02639AB7200A32D5C /* VideoViewController.swift */,
 				B68262B12639AB7200A32D5C /* VideoViewController.xib */,
+				B64C03452689B21400833354 /* SplitVideoViewController.swift */,
+				B64C03462689B21400833354 /* SplitVideoViewController.xib */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -1331,6 +1339,7 @@
 				B6A285162683449D00E40B3B /* AWSPinpointAnalyticsPlugin */,
 				B6A285182683449D00E40B3B /* AWSDataStorePlugin */,
 				B6A2851A2683449D00E40B3B /* AWSAPIPlugin */,
+				B64C03412689B13E00833354 /* SnapKit */,
 			);
 			productName = Mike;
 			productReference = C1DEDD732637460700F66A7C /* Mike.app */;
@@ -1370,6 +1379,7 @@
 				B6F3655326553DBF00539B5E /* XCRemoteSwiftPackageReference "PullToRefreshKit" */,
 				B6A284DC267C558600E40B3B /* XCRemoteSwiftPackageReference "aws-mobile-appsync-sdk-ios" */,
 				B6A2850D2683449D00E40B3B /* XCRemoteSwiftPackageReference "amplify-ios" */,
+				B64C03402689B13E00833354 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = C1DEDD742637460700F66A7C /* Products */;
 			projectDirPath = "";
@@ -1462,6 +1472,7 @@
 				4B81BE0C130150A7F26AA89B /* amplifyconfiguration.json in Resources */,
 				BB11AECB7E8AF84730F8836D /* awsconfiguration.json in Resources */,
 				BD39257517AC41A8E2156561 /* amplifyconfiguration.json in Resources */,
+				B64C03482689B21400833354 /* SplitVideoViewController.xib in Resources */,
 				B6A2850A2681D12800E40B3B /* MessageTrainerListCell.xib in Resources */,
 				7B488202890DAD84CA2766FE /* awsconfiguration.json in Resources */,
 				53E97D95EA3653A2B29A193A /* amplifyconfiguration.json in Resources */,
@@ -1540,6 +1551,7 @@
 				B6A284F12681927F00E40B3B /* MessageListFromUser.swift in Sources */,
 				B68262B62639B05600A32D5C /* ZZPlayerView.swift in Sources */,
 				B6F3653A2653FCE300539B5E /* TZExtension.swift in Sources */,
+				B64C03472689B21400833354 /* SplitVideoViewController.swift in Sources */,
 				B6E40013264C0C510020F636 /* ZFSpeedLoadingView.m in Sources */,
 				B6E4FFFC264C0C510020F636 /* ZFPlayerLogManager.m in Sources */,
 				B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */,
@@ -2016,6 +2028,14 @@
 				minimumVersion = 5.11.0;
 			};
 		};
+		B64C03402689B13E00833354 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitee.com/idol-group/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 		B6A284DC267C558600E40B3B /* XCRemoteSwiftPackageReference "aws-mobile-appsync-sdk-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://gitee.com/mirrors_awslabs/aws-mobile-appsync-sdk-ios.git";
@@ -2070,6 +2090,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B63749AA2644FA2D00502913 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
+		};
+		B64C03412689B13E00833354 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B64C03402689B13E00833354 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 		B6A284DD267C558600E40B3B /* AWSAppSync */ = {
 			isa = XCSwiftPackageProductDependency;
