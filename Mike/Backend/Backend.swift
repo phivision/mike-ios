@@ -45,7 +45,7 @@ class Backend {
             case HubPayload.EventName.Auth.sessionExpired:
                 print("==HUB== Session expired, show sign in UI")
                 self.updateUserData(withSignInStatus: false)
-
+                self.signOut()
             default:
                 self.updateUserData(withSignInStatus: false)
 //                print("==HUB== \(payload)")
@@ -55,6 +55,25 @@ class Backend {
       } catch {
         print("Could not initialize Amplify: \(error)")
       }
+    }
+    
+    func signOut(){
+        Backend.shared.signOut {
+            LoginTools.sharedTools.removeUserInfo()
+            SubscriptionTools.sharedTools.outterSubscription?.cancel()
+            DispatchQueue.main.async {
+                let loginVC:LoginViewController = LoginViewController()
+                let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
+                navVC.isNavigationBarHidden = true
+                let transtition = CATransition()
+                transtition.duration = 0.5
+                transtition.timingFunction = CAMediaTimingFunction(name: .easeOut)
+                keyWindow?.layer.add(transtition, forKey: "animation")
+                keyWindow?.rootViewController = navVC;
+            }
+        } fail: {
+            
+        }
     }
     
     // MARK: - User Authentication

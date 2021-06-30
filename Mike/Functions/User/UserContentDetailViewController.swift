@@ -234,14 +234,14 @@ extension UserContentDetailViewController:UITableViewDelegate,UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             DispatchQueue.main.async {
-//                let vc:VideoViewController = VideoViewController()
-//                vc.videoModel = self.userContentModel
-//                vc.modalPresentationStyle = .fullScreen
-//                self.present(vc, animated: true, completion: nil)
-                let vc:SplitVideoViewController = SplitVideoViewController()
+                let vc:VideoViewController = VideoViewController()
                 vc.videoModel = self.userContentModel
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true, completion: nil)
+//                let vc:SplitVideoViewController = SplitVideoViewController()
+//                vc.videoModel = self.userContentModel
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true, completion: nil)
             }
         }
     }

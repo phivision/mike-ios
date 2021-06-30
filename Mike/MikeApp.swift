@@ -11,6 +11,7 @@ import IQKeyboardManagerSwift
 import AWSAppSync
 import UserNotifications
 import AWSPinpoint
+import SwiftUI
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
     var window: UIWindow?
@@ -35,6 +36,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self.window?.backgroundColor = .white
             self.window?.makeKeyAndVisible()
         }
+        
+//        let loginUIView = UIHostingController(rootView: LoginUIView())
+////        let navVC:UINavigationController  = UINavigationController(rootViewController: loginUIView)
+////        navVC.isNavigationBarHidden = true
+//        self.window?.rootViewController = loginUIView
+//        self.window?.backgroundColor = .white
+//        self.window?.makeKeyAndVisible()
+        
         if #available(iOS 13.0, *) {
             self.window?.overrideUserInterfaceStyle = .light
         } else {

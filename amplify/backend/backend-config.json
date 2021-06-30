@@ -154,5 +154,13 @@
         }
       ]
     }
+  },
+  "notifications": {
+    "mikereact9GStr": {
+      "service": "Pinpoint",
+      "channels": [
+        "APNS"
+      ]
+    }
   }
 }
