@@ -621,4 +621,16 @@ extension GraphQLRequest{
                                          variables: ["id": userId],
                                     responseType: JSONValue.self)
     }
+    static func fetchUserTokenPrice(byTrainerId trainerId:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+            query MyQuery($id: ID!) {
+              getUserProfile(id: $id) {
+                TokenPrice
+              }
+            }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": trainerId],
+                                    responseType: JSONValue.self)
+    }
 }

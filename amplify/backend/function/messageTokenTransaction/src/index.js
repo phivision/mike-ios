@@ -57,6 +57,7 @@ const queryTokenBalanceById = gql`
     getUserProfile(id: $id) {
       id
       TokenBalance
+      TokenPrice
       UserRole
     }
   }
@@ -148,11 +149,15 @@ const queryAndAddTrainerTokenBalance = async (trainerId) => {
           variables: { id: trainerId },
         })
         .then((d) => {
+          var tokenPrice = d.data.getUserProfile.TokenPrice;
           var tokenBalance = d.data.getUserProfile.TokenBalance;
+          if (tokenPrice == null){
+            tokenPrice = 1;
+          }
           if (tokenBalance == null) {
-            tokenBalance = 1;
+            tokenBalance = tokenPrice;
           } else {
-            tokenBalance = tokenBalance + 1;
+            tokenBalance = tokenBalance + tokenPrice;
           }
           return appsyncClient
             .hydrated()
