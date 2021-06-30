@@ -23,6 +23,8 @@ class MessageSystemViewController: BaseViewController {
     @IBOutlet weak var sendBtn:UIButton!
     //MARK: - token balance
     var tokenBalance:Int = 0
+    //MARK: - token price
+    var trainerTokenPrice:Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setNavLeftBtn(imageName: "back_nearBlack")
@@ -47,6 +49,7 @@ class MessageSystemViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         self.fetchUnResponedStatusMessageList()
+        self.fetchTokenPrice()
         self.fetchTokenBalance()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -99,6 +102,14 @@ class MessageSystemViewController: BaseViewController {
     func fetchTokenBalance(){
         Backend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
             self.tokenBalance = tokenBalance
+        } fail: { error in
+            
+        }
+    }
+    //MARK: - token price
+    func fetchTokenPrice(){
+        Backend.shared.fetchTokenPrice(trainerId: self.toUserId) { tokenPrice in
+            self.trainerTokenPrice = tokenPrice
         } fail: { error in
             
         }
@@ -186,7 +197,11 @@ class MessageSystemViewController: BaseViewController {
     }
     // MARK: - send msg to trainer
     @IBAction func sendMsgBtnPressed(){
-        if self.tokenBalance == 0 {
+        if self.trainerTokenPrice == 0 {
+            ToastHUD.showMsg(msg: "The trainer haven't set the price!", controller: self)
+            return
+        }
+        if self.tokenBalance < self.trainerTokenPrice {
             ToastHUD.showMsg(msg: "There is not enough tokenBalance. Please recharge it first!", controller: self)
             return
         }
@@ -202,7 +217,7 @@ class MessageSystemViewController: BaseViewController {
                 self.saveLastMsg(msg: msgModel.postMessages)
                 self.commentText.text = ""
                 self.commentTextHeight.constant = 40
-                self.tokenBalance = self.tokenBalance - 1
+                self.tokenBalance = self.tokenBalance - self.trainerTokenPrice
                 self.scrollTableViewToBottom(animated: true)
             }
         } fail: { errorMsg in

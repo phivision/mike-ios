@@ -1061,4 +1061,41 @@ class Backend {
             }
         }
     }
+    //token price
+    func fetchTokenPrice(trainerId:String?,suc:@escaping (_ tokenPrice:Int)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchUserTokenPrice(byTrainerId: trainerId ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        suc(0)
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        suc(0)
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        suc(0)
+                        return
+                    }
+                    guard let tokenPrice = subDic["TokenPrice"] as? Int else {
+                        suc(0)
+                        return
+                    }
+                    print("~~~~~~~~~~~~\(tokenPrice)")
+                    suc(tokenPrice)
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
 }
