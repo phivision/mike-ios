@@ -770,8 +770,8 @@ class Backend {
         )
     }
     //createUserContent
-    func createUserContent(title:String!,desc:String!,isDemo:Bool!,contentName:String!,thumbnail:String!,segments:String!,suc:@escaping (_ isSuc:Bool)->Void,fail:@escaping (_ msg:String)->Void){
-        Amplify.API.mutate(request: .createUserContent(byTitle: title, description: desc, IsDemo: isDemo, ContentName: contentName, Thumbnail: thumbnail, Segments: segments)){
+    func createUserContent(title:String!,desc:String!,contentName:String!,thumbnail:String!,segments:String!,suc:@escaping (_ isSuc:Bool)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.mutate(request: .createUserContent(byTitle: title, description: desc, ContentName: contentName, Thumbnail: thumbnail, Segments: segments)){
             event in
             switch event {
             case .success(let result):

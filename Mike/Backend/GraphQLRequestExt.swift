@@ -419,16 +419,17 @@ extension GraphQLRequest{
         
     }
     //create user content
-    static func createUserContent(byTitle title:String,description desc:String,IsDemo isDemo:Bool,ContentName contentName:String,Thumbnail thumbnail:String,Segments segments:String) -> GraphQLRequest<JSONValue>{
+    static func createUserContent(byTitle title:String,description desc:String,ContentName contentName:String,Thumbnail thumbnail:String,Segments segments:String) -> GraphQLRequest<JSONValue>{
         let document = """
-                mutation MyMutation($ContentName:String!,$CreatorID:ID!,$Description:String,$IsDemo:Boolean,$Segments:AWSJSON,$Thumbnail:String,$Title:String) {
-                    createUserContent(input: {ContentName:$ContentName, CreatorID:$CreatorID, Description:$Description, IsDemo:$IsDemo, Segments:$Segments, Thumbnail:$Thumbnail, Title:$Title}) {
-                        id
-                      }
+                mutation MyMutation($ContentName: String!, $CreatorID: ID!, $Description: String, $Segments: AWSJSON, $Thumbnail: String, $Title: String, $TranscodeReady: Boolean = false) {
+                  createUserContent(input: {ContentName: $ContentName, CreatorID: $CreatorID, Description: $Description, Segments: $Segments, Thumbnail: $Thumbnail, Title: $Title, TranscodeReady: $TranscodeReady}) {
+                    CreatorID
+                    id
+                  }
                 }
         """
         return GraphQLRequest<JSONValue>(document: document,
-                                         variables: ["CreatorID": LoginTools.sharedTools.userId(),"ContentName":contentName,"Description":desc,"IsDemo":isDemo,"Segments":segments,"Thumbnail":thumbnail,"Title":title],
+                                         variables: ["CreatorID": LoginTools.sharedTools.userId(),"ContentName":contentName,"Description":desc,"Segments":segments,"Thumbnail":thumbnail,"Title":title],
                                     responseType: JSONValue.self)
     }
     static func subscriptionMsg(byUserId userId: String) -> GraphQLRequest<JSONValue> {

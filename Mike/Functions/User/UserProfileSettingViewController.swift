@@ -9,7 +9,6 @@ import UIKit
 
 class UserProfileSettingViewController: BaseViewController {
     @IBOutlet weak var signOutBtn:UIButton!
-    @IBOutlet weak var uploadBtn:UIButton!
     @IBOutlet weak var editBtn:UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,11 +18,6 @@ class UserProfileSettingViewController: BaseViewController {
     func configView(){
         self.signOutBtn.layer.cornerRadius = 20
         self.signOutBtn.clipsToBounds = true
-        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
-            self.uploadBtn.isHidden = false
-        }else{
-            self.uploadBtn.isHidden = true
-        }
     }
     @IBAction func dismissVC(){
         self.dismiss(animated: true, completion: nil)

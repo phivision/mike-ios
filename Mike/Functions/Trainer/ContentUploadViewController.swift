@@ -20,7 +20,7 @@ class ContentUploadViewController: BaseViewController {
     //video capture
     var videoCapture:UIImage?
     //video demo bool
-    var isDemoVideo:Bool = false
+//    var isDemoVideo:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ class ContentUploadViewController: BaseViewController {
         self.mainTableView.register(UINib(nibName: "VideoUploadCell", bundle: nil), forCellReuseIdentifier: "VideoUploadCell")
         self.mainTableView.register(UINib(nibName: "SelectVideoCell", bundle: nil), forCellReuseIdentifier: "SelectVideoCell")
         self.mainTableView.register(UINib(nibName: "ContentInputCell", bundle: nil), forCellReuseIdentifier: "ContentInputCell")
-        self.mainTableView.register(UINib(nibName: "CheckBoxCell", bundle: nil), forCellReuseIdentifier: "CheckBoxCell")
+//        self.mainTableView.register(UINib(nibName: "CheckBoxCell", bundle: nil), forCellReuseIdentifier: "CheckBoxCell")
         self.mainTableView.register(UINib(nibName: "SingleBtnCell", bundle: nil), forCellReuseIdentifier: "SingleBtnCell")
         self.mainTableView.register(UINib(nibName: "SelectCoverCell", bundle: nil), forCellReuseIdentifier: "SelectCoverCell")
         self.mainTableView.register(UINib(nibName: "VideoCaptureUploadCell", bundle: nil), forCellReuseIdentifier: "VideoCaptureUploadCell")
@@ -67,7 +67,7 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -100,19 +100,19 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
         case 2:
             let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
             cell.delegate = self
-            cell.setTitle("videoTitle", textValue: self.videoTitleValue, indexPath: indexPath)
+            cell.setTitle("Title", textValue: self.videoTitleValue, indexPath: indexPath)
             return cell
         case 3:
             let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
             cell.delegate = self
-            cell.setTitle("videoDescription", textValue: self.videoDescValue, indexPath: indexPath)
+            cell.setTitle("Description", textValue: self.videoDescValue, indexPath: indexPath)
             return cell
+//        case 4:
+//            let cell:CheckBoxCell = tableView.dequeueReusableCell(withIdentifier: "CheckBoxCell", for: indexPath) as! CheckBoxCell
+//            cell.delegate = self
+//            cell.setCheckStatus(isCheck: self.isDemoVideo)
+//            return cell
         case 4:
-            let cell:CheckBoxCell = tableView.dequeueReusableCell(withIdentifier: "CheckBoxCell", for: indexPath) as! CheckBoxCell
-            cell.delegate = self
-            cell.setCheckStatus(isCheck: self.isDemoVideo)
-            return cell
-        case 5:
             let cell:SingleBtnCell = tableView.dequeueReusableCell(withIdentifier: "SingleBtnCell", for: indexPath) as! SingleBtnCell
             cell.delegate = self
             cell.setBtnTitle(title: "Continue")
@@ -138,10 +138,10 @@ extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDe
             self.videoDescValue = textValue ?? ""
         }
     }
-    //MARK: - checkBoxCellDelegate
-    func checkChanged(isChecked: Bool) {
-        self.isDemoVideo = isChecked
-    }
+//    //MARK: - checkBoxCellDelegate
+//    func checkChanged(isChecked: Bool) {
+//        self.isDemoVideo = isChecked
+//    }
     //MARK: - reselectVideo
     func reselectBtnClicked() {
         self.selectVideo()
@@ -172,7 +172,7 @@ extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDe
         vc.videoURL = self.videoURL
         vc.videoTitleValue = self.videoTitleValue
         vc.videoDescValue = self.videoDescValue
-        vc.isDemoVideo = self.isDemoVideo
+//        vc.isDemoVideo = self.isDemoVideo
         if self.videoCapture == nil {
             vc.videoImage = self.videoImage
         }else{

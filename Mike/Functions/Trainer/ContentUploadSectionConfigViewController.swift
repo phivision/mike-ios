@@ -16,7 +16,7 @@ class ContentUploadSectionConfigViewController: BaseViewController {
     var videoImage:UIImage!
     var videoURL:URL!
     //video demo bool
-    var isDemoVideo:Bool!
+//    var isDemoVideo:Bool!
     //
     var contentName:String = ""
     var thumbnail:String = ""
@@ -24,6 +24,7 @@ class ContentUploadSectionConfigViewController: BaseViewController {
     var pickerSelectIndex:NSInteger = -1
     
     @IBOutlet weak var mainTableView:UITableView!
+    @IBOutlet weak var submitBtn:UIButton!
     lazy var segmentList:Array<UserContentSegmentListModel> = {
         var segmentList:Array<UserContentSegmentListModel> = Array<UserContentSegmentListModel>()
         return segmentList
@@ -35,14 +36,15 @@ class ContentUploadSectionConfigViewController: BaseViewController {
     }
 
     func configTableView(){
+        self.submitBtn.layer.cornerRadius = 20
+        self.submitBtn.clipsToBounds = true
+        
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
         self.mainTableView.register(UINib(nibName: "ContentInputCell", bundle: nil), forCellReuseIdentifier: "ContentInputCell")
-        self.mainTableView.register(UINib(nibName: "SingleBtnCell", bundle: nil), forCellReuseIdentifier: "SingleBtnCell")
-        self.mainTableView.register(UINib(nibName: "SingleBtnCell", bundle: nil), forHeaderFooterViewReuseIdentifier: "SingleBtnCell")
         self.mainTableView.register(UINib(nibName: "SegmentSectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "SegmentSectionHeaderView")
     }
     
@@ -71,9 +73,6 @@ extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableVi
         return headerView
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == self.segmentList.count {
-           return 1
-        }
         return 44
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -86,12 +85,9 @@ extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableVi
         if self.segmentList.count == 0 {
             return 0
         }
-        return self.segmentList.count + 1
+        return self.segmentList.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == self.segmentList.count {
-            return 1
-        }
         return 2
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -99,12 +95,6 @@ extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == self.segmentList.count {
-            let cell:SingleBtnCell = tableView.dequeueReusableCell(withIdentifier: "SingleBtnCell", for: indexPath) as! SingleBtnCell
-            cell.delegate = self
-            cell.setBtnTitle(title: "Submit")
-            return cell
-        }
         let model = self.segmentList[indexPath.section]
         switch indexPath.row {
         case 0:
@@ -164,7 +154,7 @@ extension ContentUploadSectionConfigViewController:ContentInputCellDelegate,Segm
         self.segmentList.remove(at: sectionIndex)
         self.mainTableView.reloadData()
     }
-    func singleBtnClicked() {
+    @IBAction func singleBtnClicked() {
         var canContinue = true
         for segmentModel:UserContentSegmentListModel in self.segmentList {
             if StringUtils.isBlank(value: segmentModel.name) {
@@ -234,11 +224,20 @@ extension ContentUploadSectionConfigViewController{
         let jsonData = try! JSONSerialization.data(withJSONObject: arrayDic, options: .prettyPrinted)
         let str = String(data: jsonData, encoding: .utf8) ?? ""
         
-        Backend.shared.createUserContent(title: self.videoTitleValue, desc: self.videoDescValue, isDemo: self.isDemoVideo, contentName: self.contentName, thumbnail: self.thumbnail, segments: str) { isSuc in
+        Backend.shared.createUserContent(title: self.videoTitleValue, desc: self.videoDescValue,contentName: self.contentName, thumbnail: self.thumbnail, segments: str) { isSuc in
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg: "Upload Success!", controller: self)
-                self.dismiss(animated: true, completion: nil)
+//                ToastHUD.showMsg(msg: "Upload Success!", controller: self)
+                let alertController = UIAlertController(title: "", message: "Upload Success!,Waiting for transcoding",
+                                                        preferredStyle: .alert)
+                let sureAction = UIAlertAction(title:  "Ok", style: .default) { (alertAction) in
+                    self.dismiss(animated: true, completion: nil)
+                }
+                alertController.addAction(sureAction)
+                DispatchQueue.main.async {
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
             }
         } fail: { error in
             DispatchQueue.main.async {

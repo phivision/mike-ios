@@ -8,13 +8,15 @@
 import UIKit
 import AWSAppSync
 
-class HomeTabViewController:UITabBarController{
+class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
     var appSyncClient: AWSAppSyncClient?
     var subscriptionWatcher: Cancellable?
+    var tabSelectIndex:Int = 0
     override func viewDidLoad() {
         addChildControllers()
         super.viewDidLoad()
         commitInitView()
+        self.delegate = self
         // Do any additional setup after loading the view.
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        appSyncClient = appDelegate.appSyncClient
@@ -39,6 +41,7 @@ class HomeTabViewController:UITabBarController{
             self.viewControllers = [
                 addChildVC(childVC: TrainerContentListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
                 addChildVC(childVC: MessageStudentViewController(), title: "", imageNormal: UIImage(named: "icon_chat_N"), imageSelect: UIImage(named: "icon_chat_H"),showNavBar: false),
+                addChildVC(childVC: BaseViewController(), title: "", imageNormal: UIImage(named: "icon_add_N"), imageSelect: UIImage(named: "icon_add_H"),showNavBar: false),
                 addChildVC(childVC: TrainerProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];
         }else{
@@ -61,6 +64,22 @@ class HomeTabViewController:UITabBarController{
         //设置tabBarItem的title的字体颜色和字大小及字体样式
         navVC.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10,weight: .medium), NSAttributedString.Key.foregroundColor : customGrayColor], for: .selected)
         return navVC
+    }
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+            if tabBarController.selectedIndex == 2 {
+                tabBarController.selectedIndex = self.tabSelectIndex
+                let vc:ContentUploadViewController = ContentUploadViewController()
+                let nav:UINavigationController = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                nav.isNavigationBarHidden = true
+                DispatchQueue.main.async {
+                    self.present(nav, animated: true, completion: nil)
+                }
+            }else{
+                self.tabSelectIndex = tabBarController.selectedIndex
+            }
+        }
     }
     /*
     // MARK: - Navigation
