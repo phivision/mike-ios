@@ -28,6 +28,7 @@ class TrainerContentListViewController: BaseViewController {
         self.configTableView()
         self.configTopView()
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)

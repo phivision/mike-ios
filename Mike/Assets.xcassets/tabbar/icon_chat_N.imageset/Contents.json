@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon_chat_N.png",
+      "filename" : "pinglun-2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon_chat_N@2x.png",
+      "filename" : "pinglun-2@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon_chat_N@3x.png",
+      "filename" : "pinglun-2@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

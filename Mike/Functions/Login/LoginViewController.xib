@@ -14,9 +14,6 @@
         <array key="Nunito-Regular.ttf">
             <string>Nunito-Regular</string>
         </array>
-        <array key="Nunito-SemiBold.ttf">
-            <string>Nunito-SemiBold</string>
-        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Mike" customModuleProvider="target">
@@ -31,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5f-Pw-0Sa">
-                    <rect key="frame" x="68" y="630" width="278" height="60"/>
+                    <rect key="frame" x="68" y="405" width="278" height="60"/>
                     <color key="backgroundColor" red="0.44705882349999998" green="0.39607843139999999" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="GAv-kq-NC7"/>
@@ -42,85 +39,53 @@
                     </connections>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="sTe-bH-yul">
-                    <rect key="frame" x="173" y="63" width="68" height="68"/>
+                    <rect key="frame" x="167" y="144" width="80" height="80"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="68" id="eYD-bw-n1k"/>
-                        <constraint firstAttribute="height" constant="68" id="vR1-0W-ihQ"/>
+                        <constraint firstAttribute="width" constant="80" id="eYD-bw-n1k"/>
+                        <constraint firstAttribute="height" constant="80" id="vR1-0W-ihQ"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5u-eQ-8uh">
-                    <rect key="frame" x="68" y="167" width="278" height="38.5"/>
+                    <rect key="frame" x="68" y="260" width="278" height="38.5"/>
                     <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="28"/>
                     <color key="textColor" red="0.1764705882352941" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mike" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-wu-bsf">
-                    <rect key="frame" x="68" y="205.5" width="278" height="38.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Motion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-wu-bsf">
+                    <rect key="frame" x="68" y="298.5" width="278" height="38.5"/>
                     <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="28"/>
                     <color key="textColor" red="0.44705882352941173" green="0.396078431372549" blue="0.8901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Begin your fitness journey today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUN-UW-JWZ">
-                    <rect key="frame" x="68" y="260" width="278" height="22"/>
+                    <rect key="frame" x="68" y="353" width="278" height="22"/>
                     <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="16"/>
                     <color key="textColor" red="0.29803921568627451" green="0.34901960784313724" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txj-UV-sQP">
-                    <rect key="frame" x="68" y="724" width="278" height="22"/>
-                    <fontDescription key="fontDescription" name="Nunito-SemiBold" family="Nunito" pointSize="16"/>
-                    <color key="textColor" red="0.29803921570000003" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginCenterImg" translatesAutoresizingMaskIntoConstraints="NO" id="XtR-Nw-zKR">
-                    <rect key="frame" x="0.0" y="298" width="414" height="292"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="XtR-Nw-zKR" secondAttribute="height" multiplier="421:297" id="gJd-My-Ymf"/>
-                    </constraints>
-                </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJL-lb-PcK">
-                    <rect key="frame" x="68" y="746" width="278" height="37"/>
-                    <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="18"/>
-                    <state key="normal" title="Sign up online">
-                        <color key="titleColor" red="0.21176470589999999" green="0.1960784314" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="registerBtnPressed" destination="-1" eventType="touchUpInside" id="Ppn-zm-Qbe"/>
-                    </connections>
-                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="XtR-Nw-zKR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="71Q-vI-DCk"/>
-                <constraint firstItem="HJL-lb-PcK" firstAttribute="top" secondItem="txj-UV-sQP" secondAttribute="bottom" id="ANG-NP-DBt"/>
+                <constraint firstItem="M5f-Pw-0Sa" firstAttribute="top" secondItem="wUN-UW-JWZ" secondAttribute="bottom" constant="30" id="0S8-a6-Fcp"/>
                 <constraint firstItem="M5f-Pw-0Sa" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-68" id="DBt-Xi-HEX"/>
                 <constraint firstItem="wUN-UW-JWZ" firstAttribute="trailing" secondItem="fq0-wu-bsf" secondAttribute="trailing" id="Et1-pb-gQx"/>
                 <constraint firstItem="E5u-eQ-8uh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="68" id="I6d-ID-2i9"/>
                 <constraint firstItem="E5u-eQ-8uh" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-68" id="I9m-A9-jaK"/>
                 <constraint firstItem="wUN-UW-JWZ" firstAttribute="top" secondItem="fq0-wu-bsf" secondAttribute="bottom" constant="16" id="Q5r-0c-y0e"/>
                 <constraint firstItem="E5u-eQ-8uh" firstAttribute="top" secondItem="sTe-bH-yul" secondAttribute="bottom" constant="36" id="R6T-PE-D0P"/>
-                <constraint firstItem="txj-UV-sQP" firstAttribute="top" secondItem="M5f-Pw-0Sa" secondAttribute="bottom" constant="34" id="Sh0-Nf-rcY"/>
-                <constraint firstItem="HJL-lb-PcK" firstAttribute="trailing" secondItem="txj-UV-sQP" secondAttribute="trailing" id="Wpg-sQ-tTh"/>
                 <constraint firstItem="fq0-wu-bsf" firstAttribute="top" secondItem="E5u-eQ-8uh" secondAttribute="bottom" id="YLH-Zf-JRi"/>
-                <constraint firstItem="M5f-Pw-0Sa" firstAttribute="top" secondItem="XtR-Nw-zKR" secondAttribute="bottom" constant="40" id="Yvo-kt-rXc"/>
-                <constraint firstItem="M5f-Pw-0Sa" firstAttribute="leading" secondItem="txj-UV-sQP" secondAttribute="leading" id="a9T-Ul-hTN"/>
                 <constraint firstItem="fq0-wu-bsf" firstAttribute="leading" secondItem="E5u-eQ-8uh" secondAttribute="leading" id="aIU-sH-8Hs"/>
                 <constraint firstItem="wUN-UW-JWZ" firstAttribute="leading" secondItem="fq0-wu-bsf" secondAttribute="leading" id="d2F-Gk-FNN"/>
-                <constraint firstItem="sTe-bH-yul" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="19" id="fcQ-dh-MjN"/>
-                <constraint firstItem="XtR-Nw-zKR" firstAttribute="top" secondItem="wUN-UW-JWZ" secondAttribute="bottom" constant="16" id="h1c-M0-4K3"/>
-                <constraint firstItem="XtR-Nw-zKR" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="hbe-Xh-4aN"/>
+                <constraint firstItem="sTe-bH-yul" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="fcQ-dh-MjN"/>
                 <constraint firstItem="fq0-wu-bsf" firstAttribute="trailing" secondItem="E5u-eQ-8uh" secondAttribute="trailing" id="igC-vs-xbe"/>
                 <constraint firstItem="sTe-bH-yul" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="lkf-vQ-rim"/>
                 <constraint firstItem="M5f-Pw-0Sa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="68" id="maf-X0-q1d"/>
-                <constraint firstItem="M5f-Pw-0Sa" firstAttribute="trailing" secondItem="txj-UV-sQP" secondAttribute="trailing" id="nb3-PR-KWM"/>
-                <constraint firstItem="HJL-lb-PcK" firstAttribute="leading" secondItem="txj-UV-sQP" secondAttribute="leading" id="tZr-bj-HOy"/>
             </constraints>
             <point key="canvasLocation" x="-20" y="109"/>
         </view>
     </objects>
     <resources>
-        <image name="loginCenterImg" width="421" height="296.5"/>
         <image name="logo" width="68" height="68"/>
     </resources>
 </document>

@@ -19,11 +19,6 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginBtnPressed(){
-        Backend.shared.signOut {
-
-        } fail: {
-
-        }
         let secondVC = LoginSecondViewController()
         self.navigationController?.pushViewController(secondVC, animated: true)
     }
