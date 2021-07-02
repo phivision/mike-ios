@@ -228,7 +228,7 @@ extension ContentUploadSectionConfigViewController{
             DispatchQueue.main.async {
                 hud.hide(animated: true)
 //                ToastHUD.showMsg(msg: "Upload Success!", controller: self)
-                let alertController = UIAlertController(title: "", message: "Upload Success!,Waiting for transcoding",
+                let alertController = UIAlertController(title: "", message: "Upload Success,Waiting for transcoding!",
                                                         preferredStyle: .alert)
                 let sureAction = UIAlertAction(title:  "Ok", style: .default) { (alertAction) in
                     self.dismiss(animated: true, completion: nil)

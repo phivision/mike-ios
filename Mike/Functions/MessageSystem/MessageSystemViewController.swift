@@ -197,10 +197,6 @@ class MessageSystemViewController: BaseViewController {
     }
     // MARK: - send msg to trainer
     @IBAction func sendMsgBtnPressed(){
-        if self.trainerTokenPrice == 0 {
-            ToastHUD.showMsg(msg: "The trainer haven't set the price!", controller: self)
-            return
-        }
         if self.tokenBalance < self.trainerTokenPrice {
             ToastHUD.showMsg(msg: "There is not enough tokenBalance. Please recharge it first!", controller: self)
             return

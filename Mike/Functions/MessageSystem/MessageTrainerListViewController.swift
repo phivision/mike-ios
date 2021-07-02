@@ -39,7 +39,6 @@ class MessageTrainerListViewController: BaseViewController {
             self.mainTableView.switchRefreshHeader(to: .refreshing)
         }else{
             self.fetchMessageList()
-            self.fetchTimeStampValue()
         }
     }
     @objc func cancelSub(){
@@ -47,14 +46,6 @@ class MessageTrainerListViewController: BaseViewController {
     }
     @objc func restartSub(){
         self.handleSubscription()
-    }
-    func fetchTimeStampValue(){
-        let olderTime = UserDefaults.standard.double(forKey: lastMsgSendTimeStampForOutter)
-        if olderTime != 0{
-            let curTime = Date().timeIntervalSince1970
-            let value = curTime - olderTime
-            print("~~~~~~~~~~~~~~~~~~~~~~\(value)")
-        }
     }
     
     func configTableView(){

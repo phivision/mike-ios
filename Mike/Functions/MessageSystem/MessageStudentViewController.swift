@@ -35,12 +35,11 @@ class MessageStudentViewController: BaseViewController {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
         self.curFromUserId = ""
-        self.configStudentListFromLocal()
         if self.isRequest == false {
+//            fetchSpeakerList()
             self.mainTableView.switchRefreshHeader(to: .refreshing)
-            self.isRequest = true
         }else{
-            self.refreshData()
+            self.fetchMessageList()
         }
     }
     
@@ -62,12 +61,27 @@ class MessageStudentViewController: BaseViewController {
         self.mainTableView.tableFooterView = UIView()
         let header = ElasticRefreshHeader()
         self.mainTableView.configRefreshHeader(with: header,container:self){ [weak self] in
-            self?.fetchMessageList()
+            self?.fetchUserList()
         }
     }
     
     @objc func refreshData(){
-        self.fetchMessageList()
+        self.studentList.removeAll()
+        self.fetchUserList()
+    }
+    func fetchUserList(){
+        Backend.shared.fetchSubscriptionUserList { userList in
+            self.studentList.removeAll()
+            self.studentList.append(contentsOf: userList)
+            DispatchQueue.main.async {
+                self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
+                self.mainTableView.reloadData()
+                self.isRequest = true
+                self.fetchMessageList()
+            }
+        } fail: { error in
+            
+        }
     }
     
     func fetchMessageList(){
@@ -92,23 +106,29 @@ class MessageStudentViewController: BaseViewController {
                 }
             }
         }
-        for msgModel in msgList {
-            var canAdd:Bool = true
-            for student in self.studentList {
-                if msgModel.fromUserID == student.id{
-                    canAdd = false
-                    break
-                }
-            }
-            if canAdd == true {
-                let studentModel = UserCenterTrainer(fromDictionary: [:])
-                studentModel.id = msgModel.fromUserID
-                studentModel.firstName = msgModel.fromUser.firstName
-                studentModel.lastName = msgModel.fromUser.lastName
-                self.studentList.append(studentModel)
-            }
+//        for msgModel in msgList {
+//            var canAdd:Bool = true
+//            for student in self.studentList {
+//                if msgModel.fromUserID == student.id{
+//                    canAdd = false
+//                    break
+//                }
+//            }
+//            if canAdd == true {
+//                let studentModel = UserCenterTrainer(fromDictionary: [:])
+//                studentModel.id = msgModel.fromUserID
+//                studentModel.firstName = msgModel.fromUser.firstName
+//                studentModel.lastName = msgModel.fromUser.lastName
+//                self.studentList.append(studentModel)
+//            }
+//        }
+//        self.saveStudentList()
+        if msgList.count != 0 {
+            let lastMsg = msgList.last
+            UserDefaults.standard.setValue(true, forKey: "\(msgForTrainerUnRead)\(lastMsg?.fromUserID ?? "")")
+            UserDefaults.standard.setValue(lastMsg?.postMessages, forKey: "\(lastMsgForTrainer)\(lastMsg?.fromUserID ?? "")")
+            UserDefaults.standard.synchronize()
         }
-        self.saveStudentList()
         DispatchQueue.main.async {
             self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
             self.mainTableView.reloadData()
@@ -128,30 +148,30 @@ class MessageStudentViewController: BaseViewController {
             }
         }
     }
-    func configStudentListFromLocal(){
-        let dataFrom = UserDefaults.standard.data(forKey: "\(studentListForTrainer)\(LoginTools.sharedTools.userId())")
-        if dataFrom != nil {
-            do {
-                let savedList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataFrom!) as? Array<UserCenterTrainer>
-                self.studentList.removeAll()
-                self.studentList.append(contentsOf: savedList ?? [])
-                DispatchQueue.main.async {
-                    self.mainTableView.reloadData()
-                }
-            } catch let error {
-                print("\(error)")
-            }
-        }
-    }
-    func saveStudentList(){
-        do {
-            let data = try NSKeyedArchiver.archivedData(withRootObject: self.studentList, requiringSecureCoding: true)
-            UserDefaults.standard.set(data, forKey: "\(studentListForTrainer)\(LoginTools.sharedTools.userId())")
-            UserDefaults.standard.synchronize()
-        } catch let error {
-            print("\(error)")
-        }
-    }
+//    func configStudentListFromLocal(){
+//        let dataFrom = UserDefaults.standard.data(forKey: "\(studentListForTrainer)\(LoginTools.sharedTools.userId())")
+//        if dataFrom != nil {
+//            do {
+//                let savedList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataFrom!) as? Array<UserCenterTrainer>
+//                self.studentList.removeAll()
+//                self.studentList.append(contentsOf: savedList ?? [])
+//                DispatchQueue.main.async {
+//                    self.mainTableView.reloadData()
+//                }
+//            } catch let error {
+//                print("\(error)")
+//            }
+//        }
+//    }
+//    func saveStudentList(){
+//        do {
+//            let data = try NSKeyedArchiver.archivedData(withRootObject: self.studentList, requiringSecureCoding: true)
+//            UserDefaults.standard.set(data, forKey: "\(studentListForTrainer)\(LoginTools.sharedTools.userId())")
+//            UserDefaults.standard.synchronize()
+//        } catch let error {
+//            print("\(error)")
+//        }
+//    }
     /*
     // MARK: - Navigation
 

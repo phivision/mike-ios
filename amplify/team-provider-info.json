@@ -50,13 +50,6 @@
           "bucketName": "mike-vod-dev",
           "region": "us-east-1"
         }
-      },
-      "notifications": {
-        "Pinpoint": {
-          "Name": "mikereact9GStr-dev",
-          "Id": "382fb57c3e6943e4ba62b3caa0aa5f2b",
-          "Region": "us-east-1"
-        }
       }
     }
   },
@@ -143,19 +136,19 @@
       "function": {
         "stripeAPI": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/stripeAPI-317a302f4f7962424957-build.zip"
+          "s3Key": "amplify-builds/stripeAPI-474a6b346c51556c7878-build.zip"
         },
         "stripeWebhook": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/stripeWebhook-68744767375557696f64-build.zip"
+          "s3Key": "amplify-builds/stripeWebhook-67652b4c335848586f79-build.zip"
         },
         "cognitoPostConfirm": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/cognitoPostConfirm-5a2b77384c45372b7435-build.zip"
+          "s3Key": "amplify-builds/cognitoPostConfirm-4130695a6c696a45662b-build.zip"
         },
         "videoConvertComplete": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/videoConvertComplete-39316244773246665439-build.zip"
+          "s3Key": "amplify-builds/videoConvertComplete-3334434b6f7233394158-build.zip"
         },
         "marketing": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
@@ -167,7 +160,7 @@
         },
         "messageTokenTransaction": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/messageTokenTransaction-52452f514451334c6659-build.zip"
+          "s3Key": "amplify-builds/messageTokenTransaction-35656f6a74774b546c56-build.zip"
         }
       },
       "storage": {
@@ -178,8 +171,8 @@
       },
       "notifications": {
         "Pinpoint": {
-          "Name": "mikereact9GStr-feature",
-          "Id": "70a1043439724889908ec90e27f888ab",
+          "Name": "iosMessagePush-feature",
+          "Id": "37d7798ba9c3470ab88013ce41fe5714",
           "Region": "us-east-1"
         }
       }

@@ -30,8 +30,8 @@
             filePath = "Mike/Backend/Backend.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "579"
-            endingLineNumber = "579"
+            startingLineNumber = "620"
+            endingLineNumber = "620"
             landmarkName = "fetchContentIsFav(contentId:suc:fail:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "Mike/Backend/Backend.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "583"
-            endingLineNumber = "583"
+            startingLineNumber = "624"
+            endingLineNumber = "624"
             landmarkName = "fetchContentIsFav(contentId:suc:fail:)"
             landmarkType = "7">
          </BreakpointContent>

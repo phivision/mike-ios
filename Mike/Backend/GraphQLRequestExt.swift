@@ -225,6 +225,42 @@ extension GraphQLRequest{
                                          variables: ["id": LoginTools.sharedTools.userId()],
                                         responseType: JSONValue.self)
     }
+    static func fetchSubscriptionUserList() -> GraphQLRequest<JSONValue>{
+        let document = """
+        query getUserProfile($id:ID!) {
+          getUserProfile(id:$id) {
+              Users {
+                  items {
+                    User {
+                      BgImage
+                      BgTitle
+                      Biography
+                      Birthday
+                      Description
+                      Email
+                      FirstName
+                      Gender
+                      Height
+                      LastName
+                      RegDate
+                      StripeID
+                      UserImage
+                      UserRole
+                      Weight
+                      createdAt
+                      id
+                      owner
+                      updatedAt
+                    }
+                  }
+              }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": LoginTools.sharedTools.userId()],
+                                        responseType: JSONValue.self)
+    }
     static func fetchSimpleTrainerModel(byId id: String) -> GraphQLRequest<JSONValue> {
         let document = """
         query getUserProfile($id:ID!) {
@@ -634,4 +670,17 @@ extension GraphQLRequest{
                                          variables: ["id": trainerId],
                                     responseType: JSONValue.self)
     }
+    static func uploadUserDeviceToken(byUserId userId:String,deviceToken:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+                mutation MyMutation($id: ID!, $DeviceToken: String) {
+                  updateUserProfile(input: {id: $id, DeviceToken: $DeviceToken}) {
+                    DeviceToken
+                  }
+                }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": userId,"DeviceToken":deviceToken],
+                                    responseType: JSONValue.self)
+    }
+    
 }
