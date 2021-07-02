@@ -156,11 +156,12 @@
     }
   },
   "notifications": {
-    "mikereact9GStr": {
+    "iosMessagePush": {
       "service": "Pinpoint",
       "channels": [
         "APNS"
       ]
     }
-  }
+  },
+  "analytics": {}
 }

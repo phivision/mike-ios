@@ -74,6 +74,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
         print("Device Token: \(token)")
+        
+        if !StringUtils.isBlank(value: LoginTools.sharedTools.userId()) {
+            Backend.shared.updateUserDeviceToken(deviceToken: token) {
+                
+            } fail: {
+                
+            }
+        }else{
+            LoginTools.sharedTools.deviceToken = token
+        }
 
         // Register the device token with Pinpoint as the endpoint for this user
         pinpoint?.notificationManager

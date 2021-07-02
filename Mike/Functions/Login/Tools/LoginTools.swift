@@ -11,6 +11,7 @@ import UIKit
 class LoginTools: NSObject {
     static let sharedTools = LoginTools()
     var videoHost = ""
+    var deviceToken = ""
     private override init() {
         super.init()
     }

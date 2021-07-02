@@ -436,6 +436,47 @@ class Backend {
             }
         }
     }
+    func fetchSubscriptionUserList(suc:@escaping (_ userList:Array<UserCenterTrainer>)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchSubscriptionUserList()){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        return
+                    }
+                    guard let favDic = subDic["Users"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = favDic["items"] as? NSArray else {
+                        return
+                    }
+                    print("~~~~~~~~~~~~\(itemList)")
+                    var trainerList = Array<UserCenterTrainer>()
+                    for item in itemList {
+                        if let itemDic = item as? NSDictionary {
+                            trainerList.append(UserCenterTrainer(fromDictionary: itemDic["User"] as! [String : Any]))
+                        }
+                    }
+                    suc(trainerList)
+                case .failure(let error):
+                    print("Got failed result with \(error)")
+                    fail("\(error)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
     //fetch UserProfile For Trainer Simple Info
     func fetchTrainerSimpleInfo(userId:String?,suc:@escaping (_ userCenterModel:UserCenterModel)->Void,fail:@escaping (_ msg:String)->Void){
         Amplify.API.query(request: .fetchSimpleTrainerModel(byId: userId ?? "")){
@@ -1095,6 +1136,37 @@ class Backend {
             case .failure(let error):
                 print("Got failed event with error \(error)")
                 fail("\(error)")
+            }
+        }
+    }
+    //update user's deviceToken
+    func updateUserDeviceToken(deviceToken:String,suc:@escaping ()->Void,fail:@escaping ()->Void) {
+        Amplify.API.mutate(request: .uploadUserDeviceToken(byUserId: LoginTools.sharedTools.userId(), deviceToken: deviceToken)){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["updateUserProfile"] as? NSDictionary {
+                        print("\(subDic)")
+                        suc()
+                    }else {
+                        fail()
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail()
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail()
             }
         }
     }
