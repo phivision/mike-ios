@@ -6,8 +6,8 @@
         "repositoryURL": "https://gitee.com/mirrors_aws-amplify/amplify-ios.git",
         "state": {
           "branch": null,
-          "revision": "b448658c46e11e35e972d4de354e5a86d0d02afa",
-          "version": "1.10.0"
+          "revision": "b7b7b9af00db40cc99bfcbde4147253512f3fb92",
+          "version": "1.12.0"
         }
       },
       {
@@ -20,21 +20,12 @@
         }
       },
       {
-        "package": "AWSAppSync",
-        "repositoryURL": "https://gitee.com/mirrors_awslabs/aws-mobile-appsync-sdk-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "84d060696d6e95ff483f88b3b1a1c1201b814fe3",
-          "version": "3.2.1"
-        }
-      },
-      {
         "package": "AWSiOSSDKV2",
-        "repositoryURL": "https://gitee.com/mirrors_aws-amplify/aws-sdk-ios-spm.git",
+        "repositoryURL": "https://github.com/aws-amplify/aws-sdk-ios-spm.git",
         "state": {
           "branch": null,
-          "revision": "7be6c13ea6fdcfdf54d50c08a10928e2e0bc3fb0",
-          "version": "2.24.0"
+          "revision": "621dfbc1a53dc873d0aa8f7b9aa48c966d88d035",
+          "version": "2.24.2"
         }
       },
       {
@@ -53,15 +44,6 @@
           "branch": null,
           "revision": "95ca6672c84e681f5d2fa0f723d2381d0e68fe5e",
           "version": "0.8.9"
-        }
-      },
-      {
-        "package": "Reachability",
-        "repositoryURL": "https://github.com/ashleymills/Reachability.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "c01bbdf2d633cf049ae1ed1a68a2020a8bda32e2",
-          "version": "5.1.0"
         }
       },
       {

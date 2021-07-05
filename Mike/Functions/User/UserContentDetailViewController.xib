@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -49,8 +50,8 @@
                         <constraint firstAttribute="width" constant="45" id="WYJ-Ph-gzS"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ab1-bq-HUU">
-                    <rect key="frame" x="95" y="111" width="294" height="25"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ab1-bq-HUU">
+                    <rect key="frame" x="95" y="111" width="243" height="25"/>
                     <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="18"/>
                     <color key="textColor" red="0.1764705882352941" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -78,7 +79,7 @@
                         <constraint firstAttribute="trailing" secondItem="714-5o-yNw" secondAttribute="trailing" constant="10" id="qaB-9l-rvm"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g0n-7I-Yrj">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g0n-7I-Yrj" userLabel="likebtn">
                     <rect key="frame" x="343" y="104" width="46" height="46"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="46" id="4Bh-2E-RLQ"/>
@@ -108,7 +109,7 @@
                 <constraint firstItem="qrQ-ib-EOc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="49" id="cn8-pC-F0N"/>
                 <constraint firstItem="Ab1-bq-HUU" firstAttribute="top" secondItem="LrR-gY-gjY" secondAttribute="top" constant="7" id="rqf-jF-4Ns"/>
                 <constraint firstItem="qrQ-ib-EOc" firstAttribute="top" secondItem="LrR-gY-gjY" secondAttribute="bottom" constant="24" id="tOc-YY-Bek"/>
-                <constraint firstItem="Ab1-bq-HUU" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-25" id="vjI-1S-PKc"/>
+                <constraint firstItem="Ab1-bq-HUU" firstAttribute="trailing" secondItem="g0n-7I-Yrj" secondAttribute="leading" constant="-5" id="vjI-1S-PKc"/>
                 <constraint firstItem="MH0-fm-H0c" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-25" id="zWj-1Q-v6a"/>
             </constraints>
             <point key="canvasLocation" x="73.913043478260875" y="96.428571428571431"/>

@@ -41,6 +41,46 @@ class SplitVideoViewController: BaseViewController {
         backBtn.addTarget(self, action: #selector(backBtnPressed), for: .touchUpInside)
         return backBtn
     }()
+    //controlbar
+    lazy var controlBar:UIView = {
+       var controlBar:UIView = UIView()
+        controlBar.backgroundColor = UIColor.white
+        controlBar.layer.cornerRadius = 20
+        controlBar.clipsToBounds = true
+        return controlBar
+    }()
+    lazy var playBtn:UIButton = {
+        var playBtn:UIButton = UIButton()
+        playBtn.backgroundColor = pupleBgColor
+        playBtn.setImage(UIImage(named: "icon-play"), for: .normal)
+        playBtn.layer.cornerRadius = 10
+        playBtn.clipsToBounds = true
+        playBtn.addTarget(self, action: #selector(playBtnPressed), for: .touchUpInside)
+        return playBtn
+    }()
+    lazy var segTitle:UILabel = {
+        var segTitle:UILabel = UILabel()
+        segTitle.font = UIFont.init(name: nSemiBold, size: 16)
+        segTitle.textColor = defaultTitleColor
+        return segTitle
+    }()
+    lazy var curTime:UILabel = {
+        var curTime:UILabel = UILabel()
+        curTime.font = UIFont.init(name: nSemiBold, size: 15)
+        curTime.textColor = customGrayColor
+        curTime.text = "00:00"
+        return curTime
+    }()
+    lazy var segTime:UILabel = {
+        var segTime:UILabel = UILabel()
+        segTime.font = UIFont.init(name: nSemiBold, size: 15)
+        segTime.textColor = customGrayColor
+        segTime.text = " / 00:00"
+        return segTime
+    }()
+    //total time
+    var totalVideoTime:TimeInterval = 0
+    var videoState:VideoPlayType = .stop
     //cameraLayer relation property
     private let captureSession = AVCaptureSession()
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer! = nil
@@ -105,7 +145,6 @@ class SplitVideoViewController: BaseViewController {
             self.configVideoView()
             self.isLoaded = true
         }
-        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
@@ -119,17 +158,54 @@ class SplitVideoViewController: BaseViewController {
         self.playerView.snp.makeConstraints { make in
             make.top.left.right.bottom.equalTo(self.view)
         }
+        
         self.view.addSubview(self.cameraView)
         self.cameraView.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(self.view)
             make.height.equalTo(0)
         }
-        self.view.addSubview(self.cameraBtn)
-        self.cameraBtn.snp.makeConstraints { make in
-            make.bottom.equalTo(self.playerView).offset(-10)
-            make.right.equalTo(self.playerView).offset(-10)
+        
+//        self.view.addSubview(self.cameraBtn)
+//        self.cameraBtn.snp.makeConstraints { make in
+//            make.bottom.equalTo(self.playerView).offset(-10)
+//            make.right.equalTo(self.playerView).offset(-10)
+//            make.height.width.equalTo(48)
+//        }
+        
+        self.view.addSubview(self.controlBar)
+        self.controlBar.snp.makeConstraints { make in
+            make.centerX.equalTo(self.view)
+            make.bottom.equalTo(self.view.snp.bottom).offset(-34)
+            make.height.equalTo(90)
+            make.width.equalTo(kScreenWidth-56)
+        }
+        
+        self.controlBar.addSubview(self.playBtn)
+        self.playBtn.snp.makeConstraints { make in
+            make.left.equalTo(self.controlBar).offset(10)
+            make.centerY.equalTo(self.controlBar)
             make.height.width.equalTo(48)
         }
+        
+        self.controlBar.addSubview(self.segTitle)
+        self.segTitle.snp.makeConstraints { make in
+            make.left.equalTo(self.playBtn.snp.right).offset(20)
+            make.top.equalTo(self.playBtn)
+            make.right.equalTo(self.controlBar.snp.right).offset(-20)
+        }
+        
+        self.controlBar.addSubview(self.curTime)
+        self.curTime.snp.makeConstraints { make in
+            make.left.equalTo(self.playBtn.snp.right).offset(20)
+            make.bottom.equalTo(self.playBtn)
+        }
+        
+        self.controlBar.addSubview(self.segTime)
+        self.segTime.snp.makeConstraints { make in
+            make.left.equalTo(self.curTime.snp.right)
+            make.bottom.equalTo(self.playBtn)
+        }
+        
         self.view.addSubview(self.backBtn)
         self.backBtn.snp.makeConstraints { make in
             make.top.equalTo(self.playerView).offset(44)
@@ -137,52 +213,58 @@ class SplitVideoViewController: BaseViewController {
             make.width.equalTo(44)
             make.height.equalTo(44)
         }
+        
+        self.playBtn.layer.cornerRadius = 10
         self.player.playerDidToEnd = { asset in
             self.playerManager.pause()
-//            self.playBtn.isSelected = false
-//            self.videoState = .end
-//            self.handlePlayBtn(byState: self.videoState)
+            self.playBtn.isSelected = false
+            self.videoState = .end
+            self.handlePlayBtn(byState: self.videoState)
         }
         self.player.playerPlayTimeChanged = { asset,curTime,duration in
-//            self.handleSegmentTime(currentTime: curTime)
+            self.totalVideoTime = duration
+            DispatchQueue.main.async {
+                self.curTime.text = self.translateTimestampToFormat(currentTime: curTime)
+            }
+            self.handleSegmentTime(currentTime: curTime)
         }
         let strArr:Array<String> = (self.videoModel.contentName ?? "").components(separatedBy: ".")
         if strArr.count > 0 {
-            let videoUrl:String = strArr.first ?? ""
-//            self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
-            self.playerManager.assetURL = NSURL(string: String(format: "%@%@.m3u8", LoginTools.sharedTools.videoHost,videoUrl))! as URL
-//            self.videoState = .play
-//            self.handlePlayBtn(byState: self.videoState)
+//            let videoUrl:String = strArr.first ?? ""
+            self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
+//            self.playerManager.assetURL = NSURL(string: String(format: "%@%@.m3u8", LoginTools.sharedTools.videoHost,videoUrl))! as URL
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
             self.playerManager.play()
         }
           
     }
     func configData(){
-//        self.segmentTitle.text = ""
+        self.segTitle.text = ""
 //        self.segmentTime.text = ""
-//        let segList:NSArray = JSONUtils.getArrayFromJSONString(jsonString: self.videoModel.segments ?? "")
-//        print("\(segList)");
-//        for segItem in segList {
-//            if let segDic = segItem as? NSDictionary {
-//                let model = UserContentSegmentListModel(fromDictionary: segDic as? [String : Any] ?? [:])
-//                self.segList.append(model)
-//                var finalTime:Int = 0
-//                let timeArr = model.timestamp.components(separatedBy: ":")
-//                if timeArr.count > 2 {
-//                    finalTime += (Int(timeArr[0]) ?? 0)*3600
-//                    finalTime += (Int(timeArr[1]) ?? 0)*60
-//                    finalTime += Int(timeArr[2]) ?? 0
-//                }else if timeArr.count > 1 {
-//                    finalTime += (Int(timeArr[0]) ?? 0)*60
-//                    finalTime += Int(timeArr[1]) ?? 0
-//                }else{
-//                    finalTime += Int(timeArr[0]) ?? 0
-//                }
-//                self.segTimeList.append(finalTime)
-//            }
-//        }
-//        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(self.segTimeList)");
-//        self.handleSegmentTime(currentTime: 0)
+        let segList:NSArray = JSONUtils.getArrayFromJSONString(jsonString: self.videoModel.segments ?? "")
+        print("\(segList)");
+        for segItem in segList {
+            if let segDic = segItem as? NSDictionary {
+                let model = UserContentSegmentListModel(fromDictionary: segDic as? [String : Any] ?? [:])
+                self.segList.append(model)
+                var finalTime:Int = 0
+                let timeArr = model.timestamp.components(separatedBy: ":")
+                if timeArr.count > 2 {
+                    finalTime += (Int(timeArr[0]) ?? 0)*3600
+                    finalTime += (Int(timeArr[1]) ?? 0)*60
+                    finalTime += Int(timeArr[2]) ?? 0
+                }else if timeArr.count > 1 {
+                    finalTime += (Int(timeArr[0]) ?? 0)*60
+                    finalTime += Int(timeArr[1]) ?? 0
+                }else{
+                    finalTime += Int(timeArr[0]) ?? 0
+                }
+                self.segTimeList.append(finalTime)
+            }
+        }
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(self.segTimeList)");
+        self.handleSegmentTime(currentTime: 0)
     }
     @objc func backBtnPressed(){
         self.dismiss(animated: true, completion: nil)
@@ -432,6 +514,85 @@ extension SplitVideoViewController{
                     make.width.equalTo(kScreenHeight/2)
                 }
             }
+        }
+    }
+}
+extension SplitVideoViewController{
+    @objc func playBtnPressed(){
+        switch self.videoState {
+        case .stop:
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.play()
+            break
+        case .pause:
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.play()
+            break
+        case .end:
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.replay()
+            break
+        case .play:
+            self.videoState = .pause
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.pause()
+            break
+        }
+    }
+}
+extension SplitVideoViewController{
+   func handlePlayBtn(byState:VideoPlayType){
+        switch byState {
+        case .stop:
+            self.playBtn.setImage(UIImage(named: "icon-play"), for: .normal)
+            break
+        case .pause:
+            self.playBtn.setImage(UIImage(named: "icon-play"), for: .normal)
+            break
+        case .end:
+            self.playBtn.setImage(UIImage(named: "icon-replay"), for: .normal)
+            break
+        case .play:
+            self.playBtn.setImage(UIImage(named: "icon-pause"), for: .normal)
+            break
+        }
+    }
+    func translateTimestampToFormat(currentTime:TimeInterval) -> String {
+        let hour:Int = Int(currentTime/3600)
+        let mins:Int = Int(currentTime)/60 - hour*60
+        let second = Int(currentTime) - hour*3600 - mins*60
+        return String(format: "%02d:%02d:%02d", hour,mins,second)
+    }
+    func handleSegmentTime(currentTime:TimeInterval){
+        if self.segList.count > 0 {
+            var selectIndex = -1
+            for i in 0 ..< self.segTimeList.count {
+                let segTime:Int = self.segTimeList[i]
+                if currentTime <= Double(segTime){
+                    if i>0 {
+                        selectIndex = i - 1
+                    }else{
+                        selectIndex = 0
+                    }
+                    break
+                }
+            }
+            if selectIndex == -1 {
+                selectIndex = self.segTimeList.count - 1
+            }
+            let model:UserContentSegmentListModel = self.segList[selectIndex]
+            self.segTitle.text = "\(model.name ?? "")"
+            if Int(currentTime) > (self.segTimeList.last ?? 0) {
+                self.segTime.text = " / " + self.translateTimestampToFormat(currentTime: self.totalVideoTime)
+            }else{
+                self.segTime.text = " / \(model.timestamp ?? "")"
+            }
+        }else{
+            self.segTitle.text = self.videoModel.title ?? ""
+            self.segTime.text = " / " + self.translateTimestampToFormat(currentTime: self.totalVideoTime)
         }
     }
 }

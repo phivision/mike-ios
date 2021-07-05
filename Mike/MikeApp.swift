@@ -8,7 +8,6 @@
 import UIKit
 import Amplify
 import IQKeyboardManagerSwift
-import AWSAppSync
 import UserNotifications
 import AWSPinpoint
 import SwiftUI

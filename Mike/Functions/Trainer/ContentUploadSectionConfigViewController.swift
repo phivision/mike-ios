@@ -176,6 +176,7 @@ extension ContentUploadSectionConfigViewController:ContentInputCellDelegate,Segm
 extension ContentUploadSectionConfigViewController{
     func uploadVideo(){
         guard let videoUrl = self.videoURL else{
+            self.uploadVideoCapture()
             return
         }
         let fileData = try! Data(contentsOf: URL(fileURLWithPath: videoUrl.relativePath))
@@ -235,8 +236,10 @@ extension ContentUploadSectionConfigViewController{
                 }
                 alertController.addAction(sureAction)
                 DispatchQueue.main.async {
-                    self.present(alertController, animated: true, completion: nil)
+                    self.navigationController?.popViewController(animated: true)
+//                    self.present(alertController, animated: true, completion: nil)
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: clearUploadPage), object: nil)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
             }
         } fail: { error in

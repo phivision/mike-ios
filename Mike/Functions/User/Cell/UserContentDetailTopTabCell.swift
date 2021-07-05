@@ -13,6 +13,7 @@ class UserContentDetailTopTabCell: UITableViewCell {
     @IBOutlet weak var bigImg:UIImageView!
     @IBOutlet weak var titleLab:UILabel!
     @IBOutlet weak var timeLab:UILabel!
+    @IBOutlet weak var playIcon:UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -34,6 +35,11 @@ class UserContentDetailTopTabCell: UITableViewCell {
             }else{
                 self.bigImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
+        }
+        if StringUtils.isBlank(value:favModel.contentName) {
+            self.playIcon.isHidden = true
+        }else{
+            self.playIcon.isHidden = false
         }
         if segListCount == 0{
             self.backImg.clipsToBounds = false

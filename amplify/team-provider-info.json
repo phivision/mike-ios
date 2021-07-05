@@ -136,11 +136,11 @@
       "function": {
         "stripeAPI": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/stripeAPI-474a6b346c51556c7878-build.zip"
+          "s3Key": "amplify-builds/stripeAPI-444a4d7a647275696e62-build.zip"
         },
         "stripeWebhook": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/stripeWebhook-67652b4c335848586f79-build.zip"
+          "s3Key": "amplify-builds/stripeWebhook-662b33456853485a5433-build.zip"
         },
         "cognitoPostConfirm": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
@@ -160,7 +160,11 @@
         },
         "messageTokenTransaction": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/messageTokenTransaction-35656f6a74774b546c56-build.zip"
+          "s3Key": "amplify-builds/messageTokenTransaction-444a366d773672514f65-build.zip"
+        },
+        "mikereactstripe": {
+          "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
+          "s3Key": "amplify-builds/mikereactstripe-LambdaLayerVersion8af667ca-build.zip"
         }
       },
       "storage": {

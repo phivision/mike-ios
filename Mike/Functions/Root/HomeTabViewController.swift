@@ -6,11 +6,10 @@
 //
 
 import UIKit
-import AWSAppSync
 
 class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
-    var appSyncClient: AWSAppSyncClient?
-    var subscriptionWatcher: Cancellable?
+//    var appSyncClient: AWSAppSyncClient?
+//    var subscriptionWatcher: Cancellable?
     var tabSelectIndex:Int = 0
     override func viewDidLoad() {
         addChildControllers()
@@ -41,7 +40,7 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
             self.viewControllers = [
                 addChildVC(childVC: TrainerContentListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
                 addChildVC(childVC: MessageStudentViewController(), title: "", imageNormal: UIImage(named: "icon_chat_N"), imageSelect: UIImage(named: "icon_chat_H"),showNavBar: false),
-                addChildVC(childVC: BaseViewController(), title: "", imageNormal: UIImage(named: "icon_add_N"), imageSelect: UIImage(named: "icon_add_H"),showNavBar: false),
+                addChildVC(childVC: ContentUploadViewController(), title: "", imageNormal: UIImage(named: "icon_add_N"), imageSelect: UIImage(named: "icon_add_H"),showNavBar: false),
                 addChildVC(childVC: TrainerProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];
         }else{
@@ -66,20 +65,20 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
         return navVC
     }
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
-            if tabBarController.selectedIndex == 2 {
-                tabBarController.selectedIndex = self.tabSelectIndex
-                let vc:ContentUploadViewController = ContentUploadViewController()
-                let nav:UINavigationController = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .fullScreen
-                nav.isNavigationBarHidden = true
-                DispatchQueue.main.async {
-                    self.present(nav, animated: true, completion: nil)
-                }
-            }else{
-                self.tabSelectIndex = tabBarController.selectedIndex
-            }
-        }
+//        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+//            if tabBarController.selectedIndex == 2 {
+//                tabBarController.selectedIndex = self.tabSelectIndex
+//                let vc:ContentUploadViewController = ContentUploadViewController()
+//                let nav:UINavigationController = UINavigationController(rootViewController: vc)
+//                nav.modalPresentationStyle = .fullScreen
+//                nav.isNavigationBarHidden = true
+//                DispatchQueue.main.async {
+//                    self.present(nav, animated: true, completion: nil)
+//                }
+//            }else{
+//                self.tabSelectIndex = tabBarController.selectedIndex
+//            }
+//        }
     }
     /*
     // MARK: - Navigation
