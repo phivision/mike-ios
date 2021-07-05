@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,6 +35,7 @@
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nis-bm-DVM">
                         <rect key="frame" x="28" y="127" width="130" height="130"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="130" id="43a-H6-7gZ"/>
                             <constraint firstAttribute="width" constant="130" id="mMU-k4-k80"/>
@@ -50,8 +52,8 @@
                             <action selector="settingBtnPressed" destination="gTV-IL-0wX" eventType="touchUpInside" id="lXr-oW-kNb"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6f-g6-N2K">
-                        <rect key="frame" x="28" y="269" width="76" height="38.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6f-g6-N2K">
+                        <rect key="frame" x="28" y="269" width="359" height="38.5"/>
                         <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="28"/>
                         <color key="textColor" red="0.1764705882" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -99,6 +101,7 @@
                 <constraint firstItem="lxf-fL-YYc" firstAttribute="top" secondItem="N6f-g6-N2K" secondAttribute="bottom" constant="19" id="LhV-RM-xVn"/>
                 <constraint firstItem="kvd-fg-b5b" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="169" id="Num-0X-toN"/>
                 <constraint firstItem="lxf-fL-YYc" firstAttribute="leading" secondItem="N6f-g6-N2K" secondAttribute="leading" id="Ulk-bj-6uH"/>
+                <constraint firstItem="lxf-fL-YYc" firstAttribute="trailing" secondItem="N6f-g6-N2K" secondAttribute="trailing" id="VI2-mH-OFe"/>
                 <constraint firstItem="27K-4j-g79" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Yb3-mj-RGe"/>
                 <constraint firstItem="nis-bm-DVM" firstAttribute="leading" secondItem="kvd-fg-b5b" secondAttribute="leading" constant="28" id="ZcO-se-uiK"/>
                 <constraint firstItem="N6f-g6-N2K" firstAttribute="leading" secondItem="nis-bm-DVM" secondAttribute="leading" id="bNI-Sj-JPq"/>

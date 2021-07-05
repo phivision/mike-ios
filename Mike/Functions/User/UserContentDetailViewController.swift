@@ -233,16 +233,19 @@ extension UserContentDetailViewController:UITableViewDelegate,UITableViewDataSou
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
+            if StringUtils.isBlank(value: self.userContentModel.contentName) {
+                return
+            }
             if self.userContentModel.transcodeReady == true || self.userContentModel.transcodeReady == nil{
                 DispatchQueue.main.async {
-                    let vc:VideoViewController = VideoViewController()
+//                    let vc:VideoViewController = VideoViewController()
+//                    vc.videoModel = self.userContentModel
+//                    vc.modalPresentationStyle = .fullScreen
+//                    self.present(vc, animated: true, completion: nil)
+                    let vc:SplitVideoViewController = SplitVideoViewController()
                     vc.videoModel = self.userContentModel
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
-    //                let vc:SplitVideoViewController = SplitVideoViewController()
-    //                vc.videoModel = self.userContentModel
-    //                vc.modalPresentationStyle = .fullScreen
-    //                self.present(vc, animated: true, completion: nil)
                 }
             }else{
                 let alertController = UIAlertController(title: "", message: "Waiting for transcoding",

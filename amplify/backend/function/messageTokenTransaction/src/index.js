@@ -4,6 +4,7 @@ const awsServerlessExpressMiddleware = require("aws-serverless-express/middlewar
 const AWS = require("aws-sdk");
 const gql = require("graphql-tag");
 const AWSAppSyncClient = require("aws-appsync").default;
+const { from } = require("apollo-link");
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 
@@ -73,6 +74,15 @@ const queryTokenBalanceById = gql`
   }
 `;
 
+const queryNameById = gql`
+  query MyQuery($id: ID!) {
+    getUserProfile(id: $id) {
+      FirstName
+      LastName
+    }
+  }
+`;
+
 const updateTokenBalance = gql`
   mutation MyMutation($id: ID!, $TokenBalance: Int) {
     updateUserProfile(input: { id: $id, TokenBalance: $TokenBalance }) {
@@ -93,55 +103,59 @@ const updateUserTokenBalance = async (msgModel) => {
   const tokenBalance = d.data.getUserProfile.TokenBalance;
   if (userRole === "student") {
     if (tokenBalance > 0) {
-      queryAndAddTrainerTokenBalance(fromUserId,toUserId,tokenBalance); 
-    } 
+      queryAndAddTrainerTokenBalance(fromUserId,toUserId,tokenBalance);
+    }
   } else {
     console.log("Don't need to mutate!");
   }
 };
 const queryAndAddTrainerTokenBalance = async (fromUserId,trainerId,userTokenBalance) => {
-  const client = await appsyncClient.hydrated(); 
+  const client = await appsyncClient.hydrated();
   const dicForTokenBalance = await client.query({
         query: queryTokenBalanceById,
         variables: { id: trainerId },
   });
       //fetch tokenBalance and tokenPrice for trainer
   var tokenPrice = dicForTokenBalance.data.getUserProfile.TokenPrice;
-  var tokenBalance = dicForTokenBalance.data.getUserProfile.TokenBalance;
   if (tokenPrice == null){
     tokenPrice = 0;
   }
-  if (tokenBalance == null) {
-    tokenBalance = tokenPrice;
-  } else {
-    tokenBalance = tokenBalance + tokenPrice;
+  if(tokenPrice != 0){
+    var tokenBalance = dicForTokenBalance.data.getUserProfile.TokenBalance;
+    if (tokenBalance == null) {
+      tokenBalance = tokenPrice;
+    } else {
+      tokenBalance = tokenBalance + tokenPrice;
+    }
+    await client.mutate({
+      mutation: updateTokenBalance,
+      variables: { id: trainerId, TokenBalance: tokenBalance },
+    });
+    console.log("add trainer token balance suc!");
+    await client.mutate({
+      mutation: updateTokenBalance,
+      variables: { id: fromUserId, TokenBalance: userTokenBalance - tokenPrice },
+    });
+    console.log("reduce token balance from student!");
   }
-  await client.mutate({
-    mutation: updateTokenBalance,
-    variables: { id: trainerId, TokenBalance: tokenBalance },
-  });
-  console.log("add trainer token balance suc!");
-  await client.mutate({
-    mutation: updateTokenBalance,
-    variables: { id: fromUserId, TokenBalance: userTokenBalance - tokenPrice },
-  });
-  console.log("reduce token balance from student!");
 };
 
-function CreateMessageRequest(token) {
+function CreateMessageRequest(token,msgModel,fromUserName) {
+  console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~",msgModel.PostMessages.S);
   var messageRequest = {
     'Addresses': {
       [token]: {
-        'ChannelType' : 'APNS'
+        'ChannelType' : 'APNS_SANDBOX'
       }
     },
     'MessageConfiguration': {
       'APNSMessage': {
         'Action': "OPEN_APP",
-        'Body': "You have a new message",
+        'Body': msgModel.PostMessages.S,
         'SilentPush': false,
-        'Title': "Message received",
+        'Title': fromUserName,
         'TimeToLive': 30,
+        'Priority': "high",
       }
     }
   };
@@ -149,69 +163,87 @@ function CreateMessageRequest(token) {
   return messageRequest
 }
 //send message to userId
-function sendMessage(msgModel){
+const sendMessage = async (msgModel) =>{
+  const fromUserId = msgModel.FromUserID.S;
   const toUserId = msgModel.ToUserID.S;
-  appsyncClient
-    .hydrated()
-    .then((client) => {
-      client
-        .query({
-          query: queryDeviceTokenById,
-          variables: { id: toUserId },
-        })
-        .then((d) => {
-          const deviceToken = d.data.getUserProfile.DeviceToken;
-          console.log("device token is :",deviceToken);
-          var messageRequest = CreateMessageRequest(deviceToken);
-          var pinpoint = new AWS.Pinpoint(
-            {
-              url,
-              region,
-              auth: {
-                type: "AWS_IAM",
-                credentials,
-              },
-              disableOffline: true,
-            },
-            {
-              defaultOptions: {
-                query: {
-                  fetchPolicy: "network-only",
-                  errorPolicy: "all",
-                },
-              },
-            }
-          );
-          console.log("pinpoint app id is :",process.env.projectId);
-          const sendMessagesParams = {
-            "ApplicationId": "37d7798ba9c3470ab88013ce41fe5714", // Find it in Pinpoint->All projects
-            "MessageRequest": messageRequest
-          };
-          // Try to send the message.
-          pinpoint.sendMessages(sendMessagesParams, function(err, data) {
-            if (err) console.log(err);
-            else  ShowOutput(data);
-          });
-        })
-        .catch((e) => {
-          console.log(e);
-          return e.message;
-        });
-    })
-    .catch((e) => {
-      console.log(e);
-      return e.message;
-    });
-}
-function ShowOutput(data){
-  if (data["MessageResponse"]["Result"][recipient["token"]]["DeliveryStatus"]
-      == "SUCCESSFUL") {
-    var status = "Message sent! Response information: ";
-  } else {
-    var status = "The message wasn't sent. Response information: ";
-  }
-  console.log(status);
-  console.dir(data, { depth: null });
+  const client = await appsyncClient.hydrated();
+  const dicForSendUser = await client.query({
+        query: queryNameById,
+        variables: { id: fromUserId },
+  });
+  const fromUserName = dicForSendUser.data.getUserProfile.FirstName + " " + dicForSendUser.data.getUserProfile.LastName;
+  console.log("from username is :",fromUserName); 
+  const dicForDeviceToken = await client.query({
+      query: queryDeviceTokenById,
+      variables: { id: toUserId },
+  })
+  const deviceToken = dicForDeviceToken.data.getUserProfile.DeviceToken;
+  console.log("device token is :",deviceToken);
+  var messageRequest = CreateMessageRequest(deviceToken,msgModel,fromUserName);
+  console.log("pinpoint app id is :",process.env.projectId);
+  const sendMessagesParams = {
+    "ApplicationId": "37d7798ba9c3470ab88013ce41fe5714", // Find it in Pinpoint->All projects
+    "MessageRequest": messageRequest
+  };
+  //Create a new Pinpoint object.
+  var pinpoint = new AWS.Pinpoint();
+  // Try to send the message.
+  pinpoint.sendMessages(sendMessagesParams, function(err, data) {
+    if (err){
+      console.log(err);
+    }else{
+      if (data["MessageResponse"]["Result"][deviceToken]["DeliveryStatus"] == "SUCCESSFUL") {
+          var status = "Message sent! Response information: ";
+      } else {
+          var status = "The message wasn't sent. Response information: ";
+      }
+      console.log(status);
+      console.dir(data, { depth: null });
+    }
+  }); 
+  // appsyncClient
+  //   .hydrated()
+  //   .then((client) => {
+  //     client
+  //       .query({
+  //         query: queryDeviceTokenById,
+  //         variables: { id: toUserId },
+  //       })
+  //       .then((d) => {
+  //         const deviceToken = d.data.getUserProfile.DeviceToken;
+  //         console.log("device token is :",deviceToken);
+  //         var messageRequest = CreateMessageRequest(deviceToken,msgModel);
+  //         console.log("pinpoint app id is :",process.env.projectId);
+  //         const sendMessagesParams = {
+  //           "ApplicationId": "37d7798ba9c3470ab88013ce41fe5714", // Find it in Pinpoint->All projects
+  //           "MessageRequest": messageRequest
+  //         };
+  //         //Create a new Pinpoint object.
+  //         var pinpoint = new AWS.Pinpoint();
+  //         // Try to send the message.
+  //         pinpoint.sendMessages(sendMessagesParams, function(err, data) {
+  //           if (err){
+  //             console.log(err);
+  //           }else{
+  //             if (data["MessageResponse"]["Result"][deviceToken]["DeliveryStatus"] == "SUCCESSFUL") {
+  //                 var status = "Message sent! Response information: ";
+  //             } else {
+  //                 var status = "The message wasn't sent. Response information: ";
+  //             }
+  //             console.log(status);
+  //             console.dir(data, { depth: null });
+  //           }
+  //         });
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return e.message;
+  //       });
+  //   })
+  //   .catch((e) => {
+  //     console.log(e);
+  //     return e.message;
+  //   });
 }
 
 exports.handler = (event) => {
@@ -219,6 +251,7 @@ exports.handler = (event) => {
   for (var i = 0; i < event.Records.length; i++) {
     const record = event.Records[i];
     if (record.eventName === "INSERT") {
+      console.log(record);
       message = record.dynamodb.NewImage;
     }
   }

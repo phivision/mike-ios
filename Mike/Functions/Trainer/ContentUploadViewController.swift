@@ -9,7 +9,7 @@ import UIKit
 import AssetsLibrary
 class ContentUploadViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
-    
+    @IBOutlet weak var continueBtn:UIButton!
     //video title
     var videoTitleValue:String?
     //video description
@@ -26,6 +26,7 @@ class ContentUploadViewController: BaseViewController {
         super.viewDidLoad()
         self.configTableView()
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(clearData), name: NSNotification.Name(rawValue: clearUploadPage), object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +38,20 @@ class ContentUploadViewController: BaseViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc func clearData(){
+        self.videoTitleValue = ""
+        self.videoDescValue = ""
+        self.videoImage = nil
+        self.videoURL = nil
+        self.videoCapture = nil
+        DispatchQueue.main.async {
+            self.mainTableView.reloadData()
+        }
+    }
+    
     func configTableView(){
+        self.continueBtn.layer.cornerRadius = 10
+        
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
@@ -76,6 +90,16 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
+            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
+            cell.delegate = self
+            cell.setTitle("Title", textValue: self.videoTitleValue, indexPath: indexPath)
+            return cell
+        case 1:
+            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
+            cell.delegate = self
+            cell.setTitle("Description", textValue: self.videoDescValue, indexPath: indexPath)
+            return cell
+        case 2:
             if StringUtils.isBlank(value: self.videoURL?.absoluteString) {
                 let cell:VideoUploadCell = tableView.dequeueReusableCell(withIdentifier: "VideoUploadCell", for: indexPath) as! VideoUploadCell
                 cell.delegate = self
@@ -86,7 +110,7 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
                 cell.delegate = self
                 return cell
             }
-        case 1:
+        case 3:
             if self.videoCapture == nil {
                 let cell:VideoCaptureUploadCell = tableView.dequeueReusableCell(withIdentifier: "VideoCaptureUploadCell", for: indexPath) as! VideoCaptureUploadCell
                 cell.delegate = self
@@ -97,26 +121,16 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
                 cell.delegate = self
                 return cell
             }
-        case 2:
-            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
-            cell.delegate = self
-            cell.setTitle("Title", textValue: self.videoTitleValue, indexPath: indexPath)
-            return cell
-        case 3:
-            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
-            cell.delegate = self
-            cell.setTitle("Description", textValue: self.videoDescValue, indexPath: indexPath)
-            return cell
 //        case 4:
 //            let cell:CheckBoxCell = tableView.dequeueReusableCell(withIdentifier: "CheckBoxCell", for: indexPath) as! CheckBoxCell
 //            cell.delegate = self
 //            cell.setCheckStatus(isCheck: self.isDemoVideo)
 //            return cell
-        case 4:
-            let cell:SingleBtnCell = tableView.dequeueReusableCell(withIdentifier: "SingleBtnCell", for: indexPath) as! SingleBtnCell
-            cell.delegate = self
-            cell.setBtnTitle(title: "Continue")
-            return cell
+//        case 4:
+//            let cell:SingleBtnCell = tableView.dequeueReusableCell(withIdentifier: "SingleBtnCell", for: indexPath) as! SingleBtnCell
+//            cell.delegate = self
+//            cell.setBtnTitle(title: "Continue")
+//            return cell
         default:
             return UITableViewCell()
         }
@@ -132,9 +146,9 @@ extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDe
     }
     //MARK: - contentInputCellDelegate
     func inputTextChanged(textValue: String?, indexPath: IndexPath) {
-        if indexPath.row == 2 {
+        if indexPath.row == 0 {
             self.videoTitleValue = textValue ?? ""
-        }else if indexPath.row == 3{
+        }else if indexPath.row == 1{
             self.videoDescValue = textValue ?? ""
         }
     }
@@ -155,11 +169,7 @@ extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDe
         self.selectVideoCapture()
     }
     //MARK: - singleBtnDelegate
-    func singleBtnClicked() {
-        if self.videoURL == nil {
-            ToastHUD.showMsg(msg: "Please Select Video File!", controller: self)
-            return
-        }
+    @IBAction func continueBtnClicked() {
         if StringUtils.isBlank(value: self.videoTitleValue) {
             ToastHUD.showMsg(msg: "Please Input Title!", controller: self)
             return
@@ -168,16 +178,22 @@ extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDe
             ToastHUD.showMsg(msg: "Please Input Description!", controller: self)
             return
         }
+        if self.videoCapture == nil {
+            ToastHUD.showMsg(msg: "Please Select Video Capture!", controller: self)
+            return
+        }
         let vc:ContentUploadSectionConfigViewController = ContentUploadSectionConfigViewController()
         vc.videoURL = self.videoURL
         vc.videoTitleValue = self.videoTitleValue
         vc.videoDescValue = self.videoDescValue
+        vc.videoImage = self.videoCapture
 //        vc.isDemoVideo = self.isDemoVideo
-        if self.videoCapture == nil {
-            vc.videoImage = self.videoImage
-        }else{
-            vc.videoImage = self.videoCapture
-        }
+//        if self.videoCapture == nil {
+//            vc.videoImage = self.videoImage
+//        }else{
+//            vc.videoImage = self.videoCapture
+//        }
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

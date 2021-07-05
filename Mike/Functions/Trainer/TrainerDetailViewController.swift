@@ -173,8 +173,9 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
         switch indexPath.section {
         case 0:
             if let model = self.trainerModel {
+                let titleHeight = heightForView(text: (model.firstName ?? "") + " " + (model.lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
                 let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40)
+                return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40 + titleHeight - 38.5)
             }else{
                 return CGSize.init(width: kScreenWidth, height: 309)
             }
