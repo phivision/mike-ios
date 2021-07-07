@@ -1,11 +1,11 @@
 {
-  "lambdaLayers": [
-    {
-      "type": "ProjectLayer",
-      "resourceName": "mikereactstripe",
-      "env": "feature",
-      "version": "Always choose latest version",
-      "isLatestVersionSelected": true
+  "permissions": {
+    "api": {
+      "mikeAmplify": [
+        "Query",
+        "Mutation"
+      ]
     }
-  ]
+  },
+  "lambdaLayers": []
 }

@@ -1,15 +1,17 @@
 /* Amplify Params - DO NOT EDIT
+	API_MIKEAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
+	API_MIKEAMPLIFY_GRAPHQLAPIIDOUTPUT
 	ENV
 	REGION
-	STORAGE_MIKE_REACT9AA15861_BUCKETNAME
 Amplify Params - DO NOT EDIT */
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
 const AWS = require("aws-sdk");
 const docClient = new AWS.DynamoDB.DocumentClient();
 const v5 = require("uuid/v5");
-const { prices } = require("/opt/nodejs/prices");
+const prices = require("./prices").prices;
 const asyncHandler = require("express-async-handler");
 
 // declare a new express app

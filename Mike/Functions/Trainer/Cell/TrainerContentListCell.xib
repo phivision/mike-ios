@@ -76,8 +76,8 @@
                             <barButtonItem title="Item" id="Cum-iG-L8A"/>
                         </items>
                     </toolbar>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for transcoding" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLJ-8B-jta">
-                        <rect key="frame" x="92" y="114" width="176.5" height="22"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video processing..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLJ-8B-jta">
+                        <rect key="frame" x="110" y="114" width="140" height="22"/>
                         <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="16"/>
                         <color key="textColor" red="0.29803921570000003" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
