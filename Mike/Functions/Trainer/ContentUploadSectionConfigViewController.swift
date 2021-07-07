@@ -22,6 +22,9 @@ class ContentUploadSectionConfigViewController: BaseViewController {
     var thumbnail:String = ""
     //picker index
     var pickerSelectIndex:NSInteger = -1
+    var firstIndex:NSInteger = 0
+    var secondIndex:NSInteger = 0
+    var thirdIndex:NSInteger = 0
     
     @IBOutlet weak var mainTableView:UITableView!
     @IBOutlet weak var submitBtn:UIButton!
@@ -116,6 +119,9 @@ extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableVi
             self.pickerSelectIndex = indexPath.section
             let vc:DatePickerViewController = DatePickerViewController()
             vc.delegate = self
+            vc.firstIndex = self.firstIndex
+            vc.secondIndex = self.secondIndex
+            vc.thirdIndex = self.thirdIndex
             vc.modalPresentationStyle = .overCurrentContext
             DispatchQueue.main.async {
                 self.present(vc, animated: true, completion: nil)
@@ -127,6 +133,10 @@ extension ContentUploadSectionConfigViewController:DatePickerViewControllerDeleg
     func doneBtnClicked(timeValue: String) {
         let model = self.segmentList[self.pickerSelectIndex]
         model.timestamp = timeValue
+        let segList:Array<Substring> = timeValue.split(separator: ":")
+        self.firstIndex = Int(String(segList.first ?? "")) ?? 0
+        self.secondIndex = Int(String(segList[1] )) ?? 0
+        self.thirdIndex = Int(String(segList.last ?? "")) ?? 0
         DispatchQueue.main.async {
             self.mainTableView.reloadData()
         }
@@ -229,7 +239,7 @@ extension ContentUploadSectionConfigViewController{
             DispatchQueue.main.async {
                 hud.hide(animated: true)
 //                ToastHUD.showMsg(msg: "Upload Success!", controller: self)
-                let alertController = UIAlertController(title: "", message: "Upload Success,Waiting for transcoding!",
+                let alertController = UIAlertController(title: "", message: "Upload Success,Waiting for processing...",
                                                         preferredStyle: .alert)
                 let sureAction = UIAlertAction(title:  "Ok", style: .default) { (alertAction) in
                     self.dismiss(animated: true, completion: nil)

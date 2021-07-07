@@ -25,6 +25,9 @@ class DatePickerViewController: BaseViewController {
     func configDatePicker(){
         self.datePicker.delegate = self
         self.datePicker.dataSource = self
+        self.datePicker.selectRow(self.firstIndex, inComponent: 0, animated: false)
+        self.datePicker.selectRow(self.secondIndex, inComponent: 1, animated: false)
+        self.datePicker.selectRow(self.thirdIndex, inComponent: 2, animated: false)
     }
     @IBAction func dismiss(){
         self.dismiss(animated: true, completion: nil)

@@ -248,7 +248,7 @@ extension UserContentDetailViewController:UITableViewDelegate,UITableViewDataSou
                     self.present(vc, animated: true, completion: nil)
                 }
             }else{
-                let alertController = UIAlertController(title: "", message: "Waiting for transcoding",
+                let alertController = UIAlertController(title: "", message: "Waiting for processing",
                                                         preferredStyle: .alert)
                 let sureAction = UIAlertAction(title:  "Ok", style: .default) { (alertAction) in
                 

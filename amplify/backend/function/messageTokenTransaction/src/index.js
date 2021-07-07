@@ -172,7 +172,7 @@ const sendMessage = async (msgModel) =>{
         variables: { id: fromUserId },
   });
   const fromUserName = dicForSendUser.data.getUserProfile.FirstName + " " + dicForSendUser.data.getUserProfile.LastName;
-  console.log("from username is :",fromUserName); 
+  console.log("from username is :",fromUserName);
   const dicForDeviceToken = await client.query({
       query: queryDeviceTokenById,
       variables: { id: toUserId },
@@ -200,50 +200,7 @@ const sendMessage = async (msgModel) =>{
       console.log(status);
       console.dir(data, { depth: null });
     }
-  }); 
-  // appsyncClient
-  //   .hydrated()
-  //   .then((client) => {
-  //     client
-  //       .query({
-  //         query: queryDeviceTokenById,
-  //         variables: { id: toUserId },
-  //       })
-  //       .then((d) => {
-  //         const deviceToken = d.data.getUserProfile.DeviceToken;
-  //         console.log("device token is :",deviceToken);
-  //         var messageRequest = CreateMessageRequest(deviceToken,msgModel);
-  //         console.log("pinpoint app id is :",process.env.projectId);
-  //         const sendMessagesParams = {
-  //           "ApplicationId": "37d7798ba9c3470ab88013ce41fe5714", // Find it in Pinpoint->All projects
-  //           "MessageRequest": messageRequest
-  //         };
-  //         //Create a new Pinpoint object.
-  //         var pinpoint = new AWS.Pinpoint();
-  //         // Try to send the message.
-  //         pinpoint.sendMessages(sendMessagesParams, function(err, data) {
-  //           if (err){
-  //             console.log(err);
-  //           }else{
-  //             if (data["MessageResponse"]["Result"][deviceToken]["DeliveryStatus"] == "SUCCESSFUL") {
-  //                 var status = "Message sent! Response information: ";
-  //             } else {
-  //                 var status = "The message wasn't sent. Response information: ";
-  //             }
-  //             console.log(status);
-  //             console.dir(data, { depth: null });
-  //           }
-  //         });
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return e.message;
-  //       });
-  //   })
-  //   .catch((e) => {
-  //     console.log(e);
-  //     return e.message;
-  //   });
+  });
 }
 
 exports.handler = (event) => {

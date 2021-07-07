@@ -58,6 +58,26 @@ class SplitVideoViewController: BaseViewController {
         playBtn.addTarget(self, action: #selector(playBtnPressed), for: .touchUpInside)
         return playBtn
     }()
+    lazy var nextBtn:UIButton = {
+        var nextBtn:UIButton = UIButton()
+        nextBtn.backgroundColor = pupleBgColor
+        nextBtn.setImage(UIImage(named: "next"), for: .normal)
+        nextBtn.layer.cornerRadius = 10
+        nextBtn.clipsToBounds = true
+        nextBtn.addTarget(self, action: #selector(nextBtnPressed), for: .touchUpInside)
+        nextBtn.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
+        return nextBtn
+    }()
+    lazy var preBtn:UIButton = {
+        var preBtn:UIButton = UIButton()
+        preBtn.backgroundColor = pupleBgColor
+        preBtn.setImage(UIImage(named: "previous"), for: .normal)
+        preBtn.layer.cornerRadius = 10
+        preBtn.clipsToBounds = true
+        preBtn.addTarget(self, action: #selector(preBtnPressed), for: .touchUpInside)
+        preBtn.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
+        return preBtn
+    }()
     lazy var segTitle:UILabel = {
         var segTitle:UILabel = UILabel()
         segTitle.font = UIFont.init(name: nSemiBold, size: 16)
@@ -78,6 +98,7 @@ class SplitVideoViewController: BaseViewController {
         segTime.text = " / 00:00"
         return segTime
     }()
+    var curSegIndex = -1
     //total time
     var totalVideoTime:TimeInterval = 0
     var videoState:VideoPlayType = .stop
@@ -132,7 +153,6 @@ class SplitVideoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configVideoView()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
         // Do any additional setup after loading the view.
     }
@@ -177,7 +197,7 @@ class SplitVideoViewController: BaseViewController {
             make.centerX.equalTo(self.view)
             make.bottom.equalTo(self.view.snp.bottom).offset(-34)
             make.height.equalTo(90)
-            make.width.equalTo(kScreenWidth-56)
+            make.width.equalTo(kScreenWidth-20)
         }
         
         self.controlBar.addSubview(self.playBtn)
@@ -187,11 +207,25 @@ class SplitVideoViewController: BaseViewController {
             make.height.width.equalTo(48)
         }
         
+        self.controlBar.addSubview(self.nextBtn)
+        self.nextBtn.snp.makeConstraints { make in
+            make.right.equalTo(self.controlBar).offset(-10)
+            make.centerY.equalTo(self.controlBar)
+            make.height.width.equalTo(44)
+        }
+        
+        self.controlBar.addSubview(self.preBtn)
+        self.preBtn.snp.makeConstraints { make in
+            make.right.equalTo(self.nextBtn.snp.left).offset(-10)
+            make.centerY.equalTo(self.controlBar)
+            make.height.width.equalTo(44)
+        }
+        
         self.controlBar.addSubview(self.segTitle)
         self.segTitle.snp.makeConstraints { make in
             make.left.equalTo(self.playBtn.snp.right).offset(20)
             make.top.equalTo(self.playBtn)
-            make.right.equalTo(self.controlBar.snp.right).offset(-20)
+            make.right.equalTo(self.preBtn.snp.left).offset(-20)
         }
         
         self.controlBar.addSubview(self.curTime)
@@ -214,13 +248,14 @@ class SplitVideoViewController: BaseViewController {
             make.height.equalTo(44)
         }
         
-        self.playBtn.layer.cornerRadius = 10
         self.player.playerDidToEnd = { asset in
             self.playerManager.pause()
             self.playBtn.isSelected = false
             self.videoState = .end
             self.handlePlayBtn(byState: self.videoState)
         }
+        
+        
         self.player.playerPlayTimeChanged = { asset,curTime,duration in
             self.totalVideoTime = duration
             DispatchQueue.main.async {
@@ -542,6 +577,28 @@ extension SplitVideoViewController{
             break
         }
     }
+    @objc func nextBtnPressed(){
+        if self.curSegIndex == self.segTimeList.count - 1 {
+            self.videoState = .pause
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.seek(toTime: self.totalVideoTime, completionHandler: nil)
+        }else{
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.seek(toTime: TimeInterval(self.segTimeList[self.curSegIndex+1]), completionHandler: nil)
+        }
+    }
+    @objc func preBtnPressed(){
+        if self.curSegIndex <= 0 {
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.seek(toTime: 0, completionHandler: nil)
+        }else{
+            self.videoState = .play
+            self.handlePlayBtn(byState: self.videoState)
+            self.playerManager.seek(toTime: TimeInterval(self.segTimeList[self.curSegIndex-1]), completionHandler: nil)
+        }
+    }
 }
 extension SplitVideoViewController{
    func handlePlayBtn(byState:VideoPlayType){
@@ -568,27 +625,35 @@ extension SplitVideoViewController{
     }
     func handleSegmentTime(currentTime:TimeInterval){
         if self.segList.count > 0 {
-            var selectIndex = -1
-            for i in 0 ..< self.segTimeList.count {
-                let segTime:Int = self.segTimeList[i]
-                if currentTime <= Double(segTime){
-                    if i>0 {
-                        selectIndex = i - 1
-                    }else{
-                        selectIndex = 0
-                    }
-                    break
-                }
-            }
-            if selectIndex == -1 {
-                selectIndex = self.segTimeList.count - 1
-            }
-            let model:UserContentSegmentListModel = self.segList[selectIndex]
-            self.segTitle.text = "\(model.name ?? "")"
-            if Int(currentTime) > (self.segTimeList.last ?? 0) {
-                self.segTime.text = " / " + self.translateTimestampToFormat(currentTime: self.totalVideoTime)
+            let firstSeg = self.segTimeList.first
+            if firstSeg != 0 && Int(currentTime) <= (firstSeg ?? 0) {
+                self.segTitle.text = self.videoModel.title ?? ""
+                self.segTime.text = " / " + (self.segList.first?.timestamp ?? "")
             }else{
-                self.segTime.text = " / \(model.timestamp ?? "")"
+                var selectIndex = -1
+                for i in 0 ..< self.segTimeList.count {
+                    let segTime:Int = self.segTimeList[i]
+                    if currentTime <= Double(segTime){
+                        if i>0 {
+                            selectIndex = i - 1
+                        }else{
+                            selectIndex = 0
+                        }
+                        break
+                    }
+                }
+                if selectIndex == -1 {
+                    selectIndex = self.segTimeList.count - 1
+                }
+                //record curSegIndex for change Seg
+                self.curSegIndex = selectIndex
+                let model:UserContentSegmentListModel = self.segList[selectIndex]
+                self.segTitle.text = "\(model.name ?? "")"
+                if Int(currentTime) > (self.segTimeList.last ?? 0) {
+                    self.segTime.text = " / " + self.translateTimestampToFormat(currentTime: self.totalVideoTime)
+                }else{
+                    self.segTime.text = " / \(model.timestamp ?? "")"
+                }
             }
         }else{
             self.segTitle.text = self.videoModel.title ?? ""
