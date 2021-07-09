@@ -8,6 +8,7 @@
 
 import UIKit
 import PullToRefreshKit
+import Amplify
 class HomeListViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     lazy var refreshControl:UIRefreshControl = {
@@ -121,14 +122,21 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let queryParameters = ["userIds":"testId1,testId2,testId3","message":"group message","fromUserId":"myUserId"]
+//        let request = RESTRequest(apiName: "messageGroupSend" ,path: "/sendUsers", queryParameters: queryParameters)
+//        Amplify.API.post(request: request){ result in
+//            switch result {
+//            case .success(let data):
+//                let str = String(decoding: data, as: UTF8.self)
+//                print("Success \(str)")
+//            case .failure(let apiError):
+//                print("Failed", apiError)
+//            }
+//        }
         let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section]
         let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
-//        if contentModel.TranscodeReady == false {
-//           return
-//        }
         let vc:UserContentDetailViewController = UserContentDetailViewController()
         vc.userContentModel = UserCenterContent(fromDictionary: contentModel.toDictionary())
-//        nav.modalPresentationStyle = .fullScreen
         vc.trainerId = trainerModel.trainer.id
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)

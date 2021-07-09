@@ -57,6 +57,7 @@ class LoginSecondViewController: BaseViewController {
 //        Backend.shared.resultProfile(userName: self.userNameText.text)
 
         Backend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
+            self.updateDeviceToken()
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 let homeVC:HomeTabViewController = HomeTabViewController()
@@ -70,6 +71,15 @@ class LoginSecondViewController: BaseViewController {
             }
         }
 
+    }
+    func updateDeviceToken(){
+        if StringUtils.isBlank(value: LoginTools.sharedTools.deviceToken) == false {
+            Backend.shared.updateUserDeviceToken(deviceToken: LoginTools.sharedTools.deviceToken) {
+                
+            } fail: {
+                
+            }
+        }
     }
     @IBAction func fogotPwdBtnPressed(){
         let vc = FogotPwdViewController()

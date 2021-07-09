@@ -1,3 +1,17 @@
+/*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["STRIPE_SECRET_KEY","STRIPE_ENDPOINT_SECRET","STRIPE_CONNECT_ENDPOINT_SECRET","SEED_UUID"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
 /* Amplify Params - DO NOT EDIT
 	API_MIKEAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
 	API_MIKEAMPLIFY_GRAPHQLAPIIDOUTPUT
@@ -8,11 +22,16 @@ Amplify Params - DO NOT EDIT */
 const express = require("express");
 const bodyParser = require("body-parser");
 const awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
-const AWS = require("aws-sdk");
-const docClient = new AWS.DynamoDB.DocumentClient();
-const v5 = require("uuid/v5");
 const prices = require("./prices").prices;
+const AWS = require("aws-sdk");
 const asyncHandler = require("express-async-handler");
+const {
+  queryByStripeID,
+  setVerified,
+  addTokens,
+  createSubscription,
+  deleteSubscription,
+} = require("./requests");
 
 // declare a new express app
 const app = express();
@@ -27,121 +46,38 @@ app.use(function (req, res, next) {
   next();
 });
 
-let stripe;
-let ENDPOINT_SECRET;
-let CONNECT_SECRET;
-let UUID = "d2b157d4-5a66-49ca-b868-c83008f1e126";
+let stripe, ENDPOINT_SECRET, CONNECT_SECRET;
 
-if (process.env.ENV === "prod") {
-  stripe = require("stripe")(
-    "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"
-  );
-  ENDPOINT_SECRET = "whsec_QlApDvB6XPkqQEZv40xzjrLBUMu7mENM";
-  CONNECT_SECRET = "whsec_1UVRXpjEK7waebehSsr0ujUXWDRWNup7";
-} else {
-  if (process.env.ENV === "dev") {
-    ENDPOINT_SECRET = "whsec_DjCSZgxymENwj2yF0iAyIUKsJ1da0kIO";
-    CONNECT_SECRET = "whsec_cmRg2kJ0dxuJZPDfaJgivyf7mf7bZZJl";
-  } else {
-    ENDPOINT_SECRET = "whsec_XMAGthm9Glxu8vSlrdYNDHMZ36LSmOvu";
-    CONNECT_SECRET = "whsec_fRhIhpQ2H22msNN5HXWVwX3jjp5LmBnk";
-  }
-  stripe = require("stripe")(
-    "sk_test_51IWoNlAXegvVyt5s8RgdmlA7kMtgxRkk5ckcNHQYVjgTyMCxKHDlgJm810tTm3KIVXe34FvDSlnsqzigH25AwsLU00nIkry9yo"
-  );
-}
+app.use(
+  asyncHandler(async (req, res, next) => {
+    const { Parameters } = await new AWS.SSM()
+      .getParameters({
+        Names: [
+          "STRIPE_SECRET_KEY",
+          "STRIPE_ENDPOINT_SECRET",
+          "STRIPE_CONNECT_ENDPOINT_SECRET",
+        ].map((secretName) => process.env[secretName]),
+        WithDecryption: true,
+      })
+      .promise();
 
-const queryByStripeID = async (stripeID) => {
-  const params = {
-    TableName: process.env.TABLE_NAME,
-    IndexName: "profilesByStripeID",
-    KeyConditionExpression: "StripeID = :s",
-    ExpressionAttributeValues: {
-      ":s": stripeID,
-    },
-  };
+    const secretKey = Parameters.find(
+      (e) => e.Name === process.env.STRIPE_SECRET_KEY
+    );
 
-  return await docClient.query(params).promise();
-};
+    stripe = require("stripe")(secretKey.Value);
 
-const setVerified = async (id) => {
-  const params = {
-    TableName: process.env.TABLE_NAME,
-    Key: {
-      id: id,
-    },
-    UpdateExpression: "set #s = :d",
-    ExpressionAttributeNames: {
-      "#s": "IsVerified",
-    },
-    ExpressionAttributeValues: {
-      ":d": true,
-    },
-    ReturnValues: "ALL_NEW",
-  };
+    ENDPOINT_SECRET = Parameters.find(
+      (e) => e.Name === process.env.STRIPE_ENDPOINT_SECRET
+    ).Value;
 
-  return await docClient.update(params).promise();
-};
+    CONNECT_SECRET = Parameters.find(
+      (e) => e.Name === process.env.STRIPE_CONNECT_ENDPOINT_SECRET
+    ).Value;
 
-const addTokens = async (userID, currentTokenCount, amount) => {
-  let curr = currentTokenCount ? currentTokenCount : 0;
-
-  const params = {
-    TableName: process.env.TABLE_NAME,
-    Key: {
-      id: userID,
-    },
-    UpdateExpression: "set #s = :d",
-    ExpressionAttributeNames: {
-      "#s": "TokenBalance",
-    },
-    ExpressionAttributeValues: {
-      ":d": curr + amount,
-    },
-    ReturnValues: "ALL_NEW",
-  };
-
-  return await docClient.update(params).promise();
-};
-
-const createSubscription = async (
-  trainerID,
-  userID,
-  subscriptionID,
-  expireDate
-) => {
-  const i = v5(trainerID + userID, UUID);
-  const time = new Date();
-  const expire = new Date(expireDate * 1000).toISOString();
-  const exp = expire.slice(0, 10);
-  const params = {
-    TableName: process.env.SUB_TABLE_NAME,
-    Item: {
-      id: i,
-      __typename: "UserSubscriptionTrainer",
-      createdAt: time.toISOString(),
-      CancelAtPeriodEnd: false,
-      userSubscriptionTrainerTrainerId: trainerID,
-      userSubscriptionTrainerUserId: userID,
-      StripeID: subscriptionID,
-      ExpireDate: exp,
-      updatedAt: time.toISOString(),
-    },
-  };
-
-  return await docClient.put(params).promise();
-};
-
-const deleteSubscription = async (trainerID, userID) => {
-  const i = v5(trainerID + userID, UUID);
-  console.log(i);
-  const params = {
-    TableName: process.env.SUB_TABLE_NAME,
-    Key: { id: i },
-  };
-
-  return await docClient.delete(params).promise();
-};
+    next();
+  })
+);
 
 app.post(
   "/stripe/webhook/connect",
@@ -167,7 +103,7 @@ app.post(
           account.requirements.pending_verification.length === 0
         ) {
           const user = await queryByStripeID(account.id);
-          await setVerified(user.Items[0].id);
+          await setVerified(user.items[0].id);
           res.json({ received: true });
         } else {
           res.json({ received: true });
@@ -200,6 +136,7 @@ app.post(
     switch (event.type) {
       case "invoice.paid":
         const invoice = event.data.object;
+
         const [customer, trainer, sub] = await Promise.all([
           queryByStripeID(invoice.customer),
           queryByStripeID(invoice.transfer_data.destination),
@@ -208,12 +145,12 @@ app.post(
 
         await Promise.all([
           createSubscription(
-            trainer.Items[0].id,
-            customer.Items[0].id,
+            trainer.items[0].id,
+            customer.items[0].id,
             sub.id,
             sub.current_period_end
           ),
-          addTokens(customer.Items[0].id, customer.Items[0].TokenBalance, 10),
+          addTokens(customer.items[0].id, customer.items[0].TokenBalance, 10),
         ]);
 
         res.json({ received: true });
@@ -227,7 +164,7 @@ app.post(
         ]);
 
         const train = await queryByStripeID(price.lookup_key);
-        await deleteSubscription(train.Items[0].id, cus.Items[0].id);
+        await deleteSubscription(train.items[0].id, cus.items[0].id);
 
         res.json({ received: true });
         break;
@@ -236,9 +173,13 @@ app.post(
         const paymentIntent = event.data.object;
         const c = await queryByStripeID(paymentIntent.customer);
 
+        if (paymentIntent.transfer_data) {
+          res.json({ received: true });
+          break;
+        }
         await addTokens(
-          c.Items[0].id,
-          c.Items[0].TokenBalance,
+          c.items[0].id,
+          c.items[0].TokenBalance,
           parseInt(
             Object.keys(prices).find(
               (key) => prices[key] === paymentIntent.amount

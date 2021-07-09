@@ -31,7 +31,7 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
 		contentName = dictionary["ContentName"] as? String
 		descriptionField = dictionary["Description"] as? String
 		isDemo = dictionary["IsDemo"] as? Bool
-        TranscodeReady = dictionary["TranscodeReady"] as? Bool ?? false
+        TranscodeReady = dictionary["TranscodeReady"] as? Bool
 		length = dictionary["Length"] as? Int
 		level = dictionary["Level"] as? Int
 		preview = dictionary["Preview"] as? String
@@ -108,7 +108,7 @@ class UserSubscriptionTrainerListItem : NSObject, NSCoding{
          contentName = aDecoder.decodeObject(forKey: "ContentName") as? String
          descriptionField = aDecoder.decodeObject(forKey: "Description") as? String
          isDemo = aDecoder.decodeObject(forKey: "IsDemo") as? Bool
-        TranscodeReady = aDecoder.decodeObject(forKey: "TranscodeReady") as? Bool ?? false
+        TranscodeReady = aDecoder.decodeObject(forKey: "TranscodeReady") as? Bool
          length = aDecoder.decodeObject(forKey: "Length") as? Int
          level = aDecoder.decodeObject(forKey: "Level") as? Int
          preview = aDecoder.decodeObject(forKey: "Preview") as? String

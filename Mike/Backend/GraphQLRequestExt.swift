@@ -529,7 +529,7 @@ extension GraphQLRequest{
         if LoginTools.sharedTools.userInfo().userRole == "trainer" {
             let document = """
             query MyQuery($status: MessageStatus!, $fromUserId: ID!, $toUserId: ID!) {
-              messageByToUserID(ToUserID: $toUserId, filter: {FromUserID: {eq: $fromUserId}, Status: {eq: $status}}) {
+              messageByToUserID(ToUserID: $toUserId, filter: {FromUserID: {eq: $fromUserId}, Status: {eq: $status}}, limit: 10000) {
                 items {
                         id
                         PostMessages
@@ -558,7 +558,7 @@ extension GraphQLRequest{
         }else{
             let document = """
             query MyQuery($toUserId: ID!, $fromUserId: ID!,$status:MessageStatus! ) {
-              messageByFromUserID(filter: {ToUserID: {eq: $toUserId}, Status: {eq: $status}}, FromUserID: $fromUserId) {
+              messageByFromUserID(filter: {ToUserID: {eq: $toUserId}, Status: {eq: $status}}, FromUserID: $fromUserId, limit: 10000) {
                 items {
                         id
                         PostMessages
@@ -591,7 +591,7 @@ extension GraphQLRequest{
         print("\(toUserId)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(status)")
         let document = """
         query MyQuery2($ToUserID: ID = "", $eq: MessageStatus = UNRESPONDED) {
-          messageByToUserID(ToUserID: $ToUserID, filter: {Status: {eq: $eq}}) {
+          messageByToUserID(ToUserID: $ToUserID, filter: {Status: {eq: $eq}}, limit: 10000) {
             items {
                     id
                     PostMessages

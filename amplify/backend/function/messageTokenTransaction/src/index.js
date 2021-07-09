@@ -1,10 +1,16 @@
-const express = require("express");
+/* Amplify Params - DO NOT EDIT
+	ANALYTICS_IOSMESSAGEPUSH_ID
+	ANALYTICS_IOSMESSAGEPUSH_REGION
+	API_MIKEAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
+	API_MIKEAMPLIFY_GRAPHQLAPIIDOUTPUT
+	ENV
+	REGION
+Amplify Params - DO NOT EDIT */ const express = require("express");
 const bodyParser = require("body-parser");
 const awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
 const AWS = require("aws-sdk");
 const gql = require("graphql-tag");
 const AWSAppSyncClient = require("aws-appsync").default;
-const { from } = require("apollo-link");
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 
@@ -23,6 +29,7 @@ app.use(function (req, res, next) {
 
 const url = process.env.API_MIKEAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT;
 const region = process.env.REGION;
+const notification_app_id = process.env.ANALYTICS_IOSMESSAGEPUSH_ID;
 
 AWS.config.update({
   region,
@@ -103,25 +110,29 @@ const updateUserTokenBalance = async (msgModel) => {
   const tokenBalance = d.data.getUserProfile.TokenBalance;
   if (userRole === "student") {
     if (tokenBalance > 0) {
-      queryAndAddTrainerTokenBalance(fromUserId,toUserId,tokenBalance);
+      await queryAndAddTrainerTokenBalance(fromUserId, toUserId, tokenBalance);
     }
   } else {
     console.log("Don't need to mutate!");
   }
 };
-const queryAndAddTrainerTokenBalance = async (fromUserId,trainerId,userTokenBalance) => {
+const queryAndAddTrainerTokenBalance = async (
+  fromUserId,
+  trainerId,
+  userTokenBalance
+) => {
   const client = await appsyncClient.hydrated();
   const dicForTokenBalance = await client.query({
-        query: queryTokenBalanceById,
-        variables: { id: trainerId },
+    query: queryTokenBalanceById,
+    variables: { id: trainerId },
   });
-      //fetch tokenBalance and tokenPrice for trainer
-  var tokenPrice = dicForTokenBalance.data.getUserProfile.TokenPrice;
-  if (tokenPrice == null){
+  //fetch tokenBalance and tokenPrice for trainer
+  let tokenPrice = dicForTokenBalance.data.getUserProfile.TokenPrice;
+  if (tokenPrice == null) {
     tokenPrice = 0;
   }
-  if(tokenPrice != 0){
-    var tokenBalance = dicForTokenBalance.data.getUserProfile.TokenBalance;
+  if (tokenPrice !== 0) {
+    let tokenBalance = dicForTokenBalance.data.getUserProfile.TokenBalance;
     if (tokenBalance == null) {
       tokenBalance = tokenPrice;
     } else {
@@ -134,74 +145,86 @@ const queryAndAddTrainerTokenBalance = async (fromUserId,trainerId,userTokenBala
     console.log("add trainer token balance suc!");
     await client.mutate({
       mutation: updateTokenBalance,
-      variables: { id: fromUserId, TokenBalance: userTokenBalance - tokenPrice },
+      variables: {
+        id: fromUserId,
+        TokenBalance: userTokenBalance - tokenPrice,
+      },
     });
     console.log("reduce token balance from student!");
   }
 };
 
-function CreateMessageRequest(token,msgModel,fromUserName) {
-  console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~",msgModel.PostMessages.S);
-  var messageRequest = {
-    'Addresses': {
+function CreateMessageRequest(token, msgModel, fromUserName) {
+  console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~", msgModel.PostMessages.S);
+  return {
+    Addresses: {
       [token]: {
-        'ChannelType' : 'APNS_SANDBOX'
-      }
+        ChannelType: "APNS_SANDBOX",
+      },
     },
-    'MessageConfiguration': {
-      'APNSMessage': {
-        'Action': "OPEN_APP",
-        'Body': msgModel.PostMessages.S,
-        'SilentPush': false,
-        'Title': fromUserName,
-        'TimeToLive': 30,
-        'Priority': "high",
-      }
-    }
+    MessageConfiguration: {
+      APNSMessage: {
+        Action: "OPEN_APP",
+        Body: msgModel.PostMessages.S,
+        SilentPush: false,
+        Title: fromUserName,
+        TimeToLive: 30,
+        Priority: "high",
+      },
+    },
   };
-
-  return messageRequest
 }
 //send message to userId
-const sendMessage = async (msgModel) =>{
+const sendMessage = async (msgModel) => {
   const fromUserId = msgModel.FromUserID.S;
   const toUserId = msgModel.ToUserID.S;
   const client = await appsyncClient.hydrated();
   const dicForSendUser = await client.query({
-        query: queryNameById,
-        variables: { id: fromUserId },
+    query: queryNameById,
+    variables: { id: fromUserId },
   });
-  const fromUserName = dicForSendUser.data.getUserProfile.FirstName + " " + dicForSendUser.data.getUserProfile.LastName;
-  console.log("from username is :",fromUserName);
+  const fromUserName =
+    dicForSendUser.data.getUserProfile.FirstName +
+    " " +
+    dicForSendUser.data.getUserProfile.LastName;
+  console.log("from username is :", fromUserName);
   const dicForDeviceToken = await client.query({
-      query: queryDeviceTokenById,
-      variables: { id: toUserId },
-  })
+    query: queryDeviceTokenById,
+    variables: { id: toUserId },
+  });
   const deviceToken = dicForDeviceToken.data.getUserProfile.DeviceToken;
-  console.log("device token is :",deviceToken);
-  var messageRequest = CreateMessageRequest(deviceToken,msgModel,fromUserName);
-  console.log("pinpoint app id is :",process.env.projectId);
+  console.log("device token is :", deviceToken);
+  var messageRequest = CreateMessageRequest(
+    deviceToken,
+    msgModel,
+    fromUserName
+  );
+  console.log("pinpoint app id is :", notification_app_id);
   const sendMessagesParams = {
-    "ApplicationId": "37d7798ba9c3470ab88013ce41fe5714", // Find it in Pinpoint->All projects
-    "MessageRequest": messageRequest
+    ApplicationId: notification_app_id, // Find it in Pinpoint->All projects
+    MessageRequest: messageRequest,
   };
   //Create a new Pinpoint object.
   var pinpoint = new AWS.Pinpoint();
   // Try to send the message.
-  pinpoint.sendMessages(sendMessagesParams, function(err, data) {
-    if (err){
+  pinpoint.sendMessages(sendMessagesParams, function (err, data) {
+    if (err) {
       console.log(err);
-    }else{
-      if (data["MessageResponse"]["Result"][deviceToken]["DeliveryStatus"] == "SUCCESSFUL") {
-          var status = "Message sent! Response information: ";
+    } else {
+      let status;
+      if (
+        data["MessageResponse"]["Result"][deviceToken]["DeliveryStatus"] ===
+        "SUCCESSFUL"
+      ) {
+        status = "Message sent! Response information: ";
       } else {
-          var status = "The message wasn't sent. Response information: ";
+        status = "The message wasn't sent. Response information: ";
       }
       console.log(status);
       console.dir(data, { depth: null });
     }
   });
-}
+};
 
 exports.handler = (event) => {
   var message;

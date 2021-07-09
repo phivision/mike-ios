@@ -7,6 +7,7 @@
 
 import UIKit
 import PullToRefreshKit
+import Amplify
 
 class TrainerContentListViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!

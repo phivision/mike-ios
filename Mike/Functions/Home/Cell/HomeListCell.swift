@@ -17,6 +17,8 @@ class HomeListCell: UITableViewCell {
     @IBOutlet weak var descText:UILabel!
     @IBOutlet weak var userName:UILabel!
     @IBOutlet weak var timeLab:UILabel!
+    @IBOutlet weak var transcodeBlurView:UIToolbar!
+    @IBOutlet weak var transcodeStatus:UILabel!
     weak var delegate:HomeListCellDelegate?
     var curModel:UserSubscriptionTrainerListTrainer!
     override func awakeFromNib() {
@@ -34,6 +36,10 @@ class HomeListCell: UITableViewCell {
         
         self.avatar.layer.cornerRadius = 15
         self.avatar.clipsToBounds = true
+        
+        self.transcodeBlurView.layer.cornerRadius = 15
+        self.transcodeBlurView.clipsToBounds = true
+        self.transcodeBlurView.items = []
     }
     
     func setItemModel(model:UserSubscriptionTrainerListItem,sectionModel:UserSubscriptionTrainerListTrainer){
@@ -55,6 +61,13 @@ class HomeListCell: UITableViewCell {
             }
         }
         self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: model.createdAt))"
+        if model.TranscodeReady == true || model.TranscodeReady == nil{
+            self.transcodeBlurView.isHidden = true
+            self.transcodeStatus.isHidden = true
+        }else{
+            self.transcodeBlurView.isHidden = false
+            self.transcodeStatus.isHidden = false
+        }
     }
     
     @IBAction func avatarClicked(){

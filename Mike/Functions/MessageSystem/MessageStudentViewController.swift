@@ -54,6 +54,7 @@ class MessageStudentViewController: BaseViewController {
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
+        self.mainTableView.register(UINib(nibName: "MsgGroupSendCell", bundle: nil), forCellReuseIdentifier: "MsgGroupSendCell")
         self.mainTableView.register(UINib(nibName: "MessageTrainerListCell", bundle: nil), forCellReuseIdentifier: "MessageTrainerListCell")
         self.mainTableView.register(UINib(nibName: "MessageEmptyCell", bundle: nil), forCellReuseIdentifier: "MessageEmptyCell")
         self.mainTableView.estimatedRowHeight = 88;
@@ -106,27 +107,9 @@ class MessageStudentViewController: BaseViewController {
                 }
             }
         }
-//        for msgModel in msgList {
-//            var canAdd:Bool = true
-//            for student in self.studentList {
-//                if msgModel.fromUserID == student.id{
-//                    canAdd = false
-//                    break
-//                }
-//            }
-//            if canAdd == true {
-//                let studentModel = UserCenterTrainer(fromDictionary: [:])
-//                studentModel.id = msgModel.fromUserID
-//                studentModel.firstName = msgModel.fromUser.firstName
-//                studentModel.lastName = msgModel.fromUser.lastName
-//                self.studentList.append(studentModel)
-//            }
-//        }
-//        self.saveStudentList()
-        if msgList.count != 0 {
-            let lastMsg = msgList.last
-            UserDefaults.standard.setValue(true, forKey: "\(msgForTrainerUnRead)\(lastMsg?.fromUserID ?? "")")
-            UserDefaults.standard.setValue(lastMsg?.postMessages, forKey: "\(lastMsgForTrainer)\(lastMsg?.fromUserID ?? "")")
+        for msgModel in msgList {
+            UserDefaults.standard.setValue(true, forKey: "\(msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+            UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
             UserDefaults.standard.synchronize()
         }
         DispatchQueue.main.async {
@@ -185,37 +168,70 @@ class MessageStudentViewController: BaseViewController {
 }
 extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.studentList.count == 0 {
+        switch section {
+        case 0:
+            if self.studentList.count == 0 {
+                return 0
+            }
             return 1
+        case 1:
+            if self.studentList.count == 0 {
+                return 1
+            }
+            return self.studentList.count
+        default:
+             return 0
         }
-        return self.studentList.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if self.studentList.count == 0 {
-            let cell:MessageEmptyCell = tableView.dequeueReusableCell(withIdentifier: "MessageEmptyCell",for: indexPath) as! MessageEmptyCell
+        switch indexPath.section {
+        case 0:
+            let cell:MsgGroupSendCell = tableView.dequeueReusableCell(withIdentifier: "MsgGroupSendCell", for: indexPath) as! MsgGroupSendCell
             return cell
+        case 1:
+            if self.studentList.count == 0 {
+                let cell:MessageEmptyCell = tableView.dequeueReusableCell(withIdentifier: "MessageEmptyCell",for: indexPath) as! MessageEmptyCell
+                return cell
+            }
+            let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
+            cell.setStudentModel(model: self.studentList[indexPath.row])
+            return cell
+        default:
+             return UITableViewCell()
         }
-        let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
-        cell.setStudentModel(model: self.studentList[indexPath.row])
-        return cell
+        
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.studentList.count == 0 {
-            return
+        switch indexPath.section {
+        case 0:
+            if self.studentList.count == 0 {
+                return
+            }
+            let vc:MessageGroupSendViewController = MessageGroupSendViewController()
+            vc.toUserList = self.studentList
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case 1:
+            if self.studentList.count == 0 {
+                return
+            }
+            let model = self.studentList[indexPath.row]
+            self.curFromUserId = model.id
+            let vc:MessageStudentChatController = MessageStudentChatController()
+            vc.toUserId = model.id
+            vc.toUserName =  "\(model.firstName ?? "") \(model.lastName ?? "")"
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        default:
+            print("default")
         }
-        let model = self.studentList[indexPath.row]
-        self.curFromUserId = model.id
-        let vc:MessageStudentChatController = MessageStudentChatController()
-        vc.toUserId = model.id
-        vc.toUserName =  "\(model.firstName ?? "") \(model.lastName ?? "")"
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
 }

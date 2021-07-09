@@ -22,6 +22,12 @@ class TimeFormatUtils: NSObject {
         let outStr = outFormatter.string(from: date ?? Date())
         return outStr
    }
+    static func curTimeStrWithDateFormat() -> String{
+        let inFormatter = DateFormatter()
+        inFormatter.locale = Locale(identifier: "en_US_POSIX")
+        inFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        return inFormatter.string(from:Date())
+    }
    static func curTimeStr(format:String) -> String{
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")

@@ -1,3 +1,17 @@
+/*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["STRIPE_SECRET_KEY"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
 /* Amplify Params - DO NOT EDIT
 	API_MIKEAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
 	API_MIKEAMPLIFY_GRAPHQLAPIIDOUTPUT
@@ -10,7 +24,7 @@ const awsServerlessExpressMiddleware = require("aws-serverless-express/middlewar
 const AWS = require("aws-sdk");
 const asyncHandler = require("express-async-handler");
 const { prices, conversionRate } = require("./prices");
-const { getProfileByID } = require("./requests.js");
+const { getProfileByID, setStripeID } = require("./requests.js");
 
 // declare a new express app
 var app = express();
@@ -28,53 +42,26 @@ app.use(function (req, res, next) {
 
 let stripe;
 
-if (process.env.ENV === "prod") {
-  stripe = require("stripe")(
-    "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"
-  );
-} else {
-  stripe = require("stripe")(
-    "sk_test_51IWoNlAXegvVyt5s8RgdmlA7kMtgxRkk5ckcNHQYVjgTyMCxKHDlgJm810tTm3KIVXe34FvDSlnsqzigH25AwsLU00nIkry9yo"
-  );
-}
+app.use(
+  asyncHandler(async (req, res, next) => {
+    const { Parameters } = await new AWS.SSM()
+      .getParameters({
+        Names: ["STRIPE_SECRET_KEY"].map(
+          (secretName) => process.env[secretName]
+        ),
+        WithDecryption: true,
+      })
+      .promise();
 
-const resetTokens = async (userID) => {
-  const params = {
-    TableName: process.env.TABLE_NAME,
-    Key: {
-      id: userID,
-    },
-    UpdateExpression: "set #s = :d",
-    ExpressionAttributeNames: {
-      "#s": "TokenBalance",
-    },
-    ExpressionAttributeValues: {
-      ":d": 0,
-    },
-    ReturnValues: "ALL_NEW",
-  };
+    const secretKey = Parameters.find(
+      (e) => e.Name === process.env.STRIPE_SECRET_KEY
+    );
 
-  return await docClient.update(params).promise();
-};
+    stripe = require("stripe")(secretKey.Value);
 
-const updatePeriodEnd = async (id) => {
-  const params = {
-    TableName: process.env.SUB_TABLE_NAME,
-    Key: {
-      id: id,
-    },
-    UpdateExpression: "set #s = :d",
-    ExpressionAttributeNames: {
-      "#s": "CancelAtPeriodEnd",
-    },
-    ExpressionAttributeValues: {
-      ":d": true,
-    },
-    ReturnValues: "ALL_NEW",
-  };
-
-  return await docClient.update(params).promise();
-};
+    next();
+  })
+);
 
 app.post(
   "/stripe/api/trainer/create",

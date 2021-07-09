@@ -3,57 +3,30 @@ const AWS = require("aws-sdk");
 const urlParse = require("url").URL;
 const appsyncUrl = process.env.API_MIKEAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT;
 const region = process.env.REGION;
-const endpoint = new urlParse(appsyncUrl).hostname.toString();
 
 const graphql = require("graphql");
 const gql = require("graphql-tag");
 const { print } = graphql;
 
-const getUserProfile = gql`
-  query getUserProfile($id: ID!) {
-    getUserProfile(id: $id) {
-      Email
-      FirstName
-      IsVerified
-      LandingURL
-      LastName
-      StripeID
-      TokenBalance
-      TokenPrice
-      UserRole
-    }
-  }
-`;
-
-const getProfileByID = async (id) => {
+const request = (queryDetails, variables) => {
   const req = new AWS.HttpRequest(appsyncUrl, region);
-
-  const item = {
-    id: id,
-  };
+  const endpoint = new urlParse(appsyncUrl).hostname.toString();
 
   req.method = "POST";
   req.path = "/graphql";
   req.headers.host = endpoint;
   req.headers["Content-Type"] = "application/json";
   req.body = JSON.stringify({
-    query: print(getUserProfile),
-    operationName: "getUserProfile",
-    variables: item,
+    query: print(queryDetails),
+    variables: variables,
   });
 
   const signer = new AWS.Signers.V4(req, "appsync", true);
   signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate());
 
-  const data = await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const httpRequest = https.request({ ...req, host: endpoint }, (result) => {
-      let data = "";
-
-      result.on("data", (chunk) => {
-        data += chunk;
-      });
-
-      result.on("end", () => {
+      result.on("data", (data) => {
         resolve(JSON.parse(data.toString()));
       });
     });
@@ -61,8 +34,28 @@ const getProfileByID = async (id) => {
     httpRequest.write(req.body);
     httpRequest.end();
   });
+};
 
-  return data.data.getUserProfile;
+const getProfileByID = async (id) => {
+  const getUserProfile = gql`
+    query getUserProfile($id: ID!) {
+      getUserProfile(id: $id) {
+        Email
+        FirstName
+        IsVerified
+        LandingURL
+        LastName
+        StripeID
+        TokenBalance
+        TokenPrice
+        UserRole
+      }
+    }
+  `;
+  const variables = { id: id };
+  const res = await request(getUserProfile, variables);
+
+  return res.data.getUserProfile;
 };
 
 const updateUserProfile = gql`
@@ -70,48 +63,44 @@ const updateUserProfile = gql`
     updateUserProfile(input: $input) {
       id
       StripeID
+      TokenBalance
     }
   }
 `;
 
 const setStripeID = async (id, stripeID) => {
-  const req = new AWS.HttpRequest(appsyncUrl, region);
+  const variables = { input: { id: id, StripeID: stripeID } };
 
-  const input = { id: id, StripeID: stripeID };
+  const res = await request(updateUserProfile, variables);
 
-  req.method = "POST";
-  req.path = "/graphql";
-  req.headers.host = endpoint;
-  req.headers["Content-Type"] = "application/json";
-  req.body = JSON.stringify({
-    query: print(updateUserProfile),
-    operationName: "updateUserProfile",
-    variables: { input: input },
-  });
-
-  const signer = new AWS.Signers.V4(req, "appsync", true);
-  signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate());
-
-  const data = await new Promise((resolve, reject) => {
-    const httpRequest = https.request({ ...req, host: endpoint }, (result) => {
-      let data = "";
-
-      result.on("data", (chunk) => {
-        data += chunk;
-      });
-
-      result.on("end", () => {
-        resolve(JSON.parse(data.toString()));
-      });
-    });
-
-    httpRequest.write(req.body);
-    httpRequest.end();
-  });
-
-  console.log(data);
-
-  return data;
+  return res.data.updateUserProfile;
 };
 
-module.exports = { getProfileByID, setStripeID };
+const resetTokens = async (id) => {
+  const variables = { input: { id: id, TokenBalance: 0 } };
+
+  const res = await request(updateUserProfile, variables);
+
+  return res.data.updateUserProfile;
+};
+
+const updateUserSubscriptionTrainer = gql`
+  mutation UpdateUserSubscriptionTrainer(
+    $input: UpdateUserSubscriptionTrainerInput!
+  ) {
+    UpdateUserSubscriptionTrainer(input: $input) {
+      id
+      CancelAtPeriodEnd
+    }
+  }
+`;
+
+const updatePeriodEnd = async (id) => {
+  const variables = { input: { id: id, CancelAtPeriodEnd: true } };
+
+  const res = await request(updateUserSubscriptionTrainer, variables);
+
+  return res.data.UpdateUserSubscriptionTrainer;
+};
+
+module.exports = { getProfileByID, setStripeID, resetTokens, updatePeriodEnd };

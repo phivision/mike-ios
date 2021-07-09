@@ -35,7 +35,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self.window?.backgroundColor = .white
             self.window?.makeKeyAndVisible()
         }
-        
 //        let loginUIView = UIHostingController(rootView: LoginUIView())
 ////        let navVC:UINavigationController  = UINavigationController(rootViewController: loginUIView)
 ////        navVC.isNavigationBarHidden = true
@@ -50,6 +49,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         self.configKeyBoard()
         self.configVideoHost()
+        // reset icon badege is 0
+        UIApplication.shared.applicationIconBadgeNumber = 0
         // Instantiate Pinpoint
         let pinpointConfiguration = AWSPinpointConfiguration.defaultPinpointConfiguration(launchOptions: launchOptions)
         // Set debug mode to use APNS sandbox, make sure to toggle for your production app
@@ -62,6 +63,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
     func applicationWillEnterForeground(_ application: UIApplication) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
         NotificationCenter.default.post(name: NSNotification.Name(rawValue:restartSubscription), object: nil)
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -98,15 +100,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult)
                         -> Void) {
         // if the app is in the foreground, create an alert modal with the contents
-        if application.applicationState == .active {
-            let alert = UIAlertController(title: "Notification Received",
-                                          message: userInfo.description,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-
-            UIApplication.shared.keyWindow?.rootViewController?.present(
-                alert, animated: true, completion: nil
-            )
+//        if application.applicationState == .active {
+//            let alert = UIAlertController(title: "Notification Received",
+//                                          message: userInfo.description,
+//                                          preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+//
+//            UIApplication.shared.keyWindow?.rootViewController?.present(
+//                alert, animated: true, completion: nil
+//            )
+//        }
+        if application.applicationState != .active {
+            UIApplication.shared.applicationIconBadgeNumber = 1
         }
 
         // Pass this remote notification event to pinpoint SDK to keep track of notifications produced by AWS Pinpoint campaigns.

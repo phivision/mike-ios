@@ -8,6 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Nunito-Bold.ttf">
+            <string>Nunito-Bold</string>
+        </array>
         <array key="Nunito-Regular.ttf">
             <string>Nunito-Regular</string>
         </array>
@@ -73,15 +76,31 @@
                             <action selector="avatarClicked" destination="KGk-i7-Jjw" eventType="touchUpInside" id="laC-UH-MhO"/>
                         </connections>
                     </button>
+                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Sh-Sm-dzn">
+                        <rect key="frame" x="70" y="64" width="220" height="122"/>
+                        <items>
+                            <barButtonItem title="Item" id="Yv3-IE-JaS"/>
+                        </items>
+                    </toolbar>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video processing..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dB5-an-Hzg">
+                        <rect key="frame" x="110" y="114" width="140" height="22"/>
+                        <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="16"/>
+                        <color key="textColor" red="0.29803921570000003" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="626-ql-thl" firstAttribute="trailing" secondItem="Ybp-rW-8fA" secondAttribute="trailing" id="1Ie-bk-hQB"/>
+                    <constraint firstItem="6Sh-Sm-dzn" firstAttribute="leading" secondItem="X7k-zS-Z8X" secondAttribute="leading" id="5IX-1O-wpm"/>
                     <constraint firstItem="626-ql-thl" firstAttribute="leading" secondItem="Ybp-rW-8fA" secondAttribute="leading" id="6Sf-U2-zwE"/>
                     <constraint firstItem="Yta-3a-5ZU" firstAttribute="leading" secondItem="CXc-FS-SXy" secondAttribute="leading" constant="10" id="8Kp-tj-zRs"/>
+                    <constraint firstItem="dB5-an-Hzg" firstAttribute="centerX" secondItem="6Sh-Sm-dzn" secondAttribute="centerX" id="8dP-fb-xUR"/>
                     <constraint firstItem="Yta-3a-5ZU" firstAttribute="top" secondItem="CXc-FS-SXy" secondAttribute="top" constant="10" id="8tT-CW-AmC"/>
                     <constraint firstItem="CXc-FS-SXy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="9fE-5e-yj1"/>
                     <constraint firstItem="X7k-zS-Z8X" firstAttribute="leading" secondItem="Yta-3a-5ZU" secondAttribute="leading" id="HZc-VT-I4n"/>
+                    <constraint firstItem="dB5-an-Hzg" firstAttribute="centerY" secondItem="6Sh-Sm-dzn" secondAttribute="centerY" id="IN2-Tx-Ft4"/>
+                    <constraint firstItem="6Sh-Sm-dzn" firstAttribute="bottom" secondItem="X7k-zS-Z8X" secondAttribute="bottom" id="IPg-MU-s1s"/>
                     <constraint firstItem="X7k-zS-Z8X" firstAttribute="top" secondItem="Yta-3a-5ZU" secondAttribute="bottom" constant="10" id="IhR-AJ-PKq"/>
                     <constraint firstItem="626-ql-thl" firstAttribute="top" secondItem="Ybp-rW-8fA" secondAttribute="top" id="K9w-Rv-rbZ"/>
                     <constraint firstItem="5dS-PU-Xco" firstAttribute="trailing" secondItem="CXc-FS-SXy" secondAttribute="trailing" constant="-10" id="LyK-1f-vl8"/>
@@ -96,7 +115,9 @@
                     <constraint firstAttribute="bottom" secondItem="CXc-FS-SXy" secondAttribute="bottom" constant="35" id="dwT-JT-7Fr"/>
                     <constraint firstItem="Ybp-rW-8fA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="geb-b7-WlO"/>
                     <constraint firstItem="CXc-FS-SXy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ifU-ud-WlU"/>
+                    <constraint firstItem="6Sh-Sm-dzn" firstAttribute="top" secondItem="X7k-zS-Z8X" secondAttribute="top" id="kSa-3e-KRU"/>
                     <constraint firstItem="TfW-NP-W8n" firstAttribute="leading" secondItem="Ybp-rW-8fA" secondAttribute="trailing" constant="10" id="qU0-8k-WTt"/>
+                    <constraint firstItem="6Sh-Sm-dzn" firstAttribute="trailing" secondItem="X7k-zS-Z8X" secondAttribute="trailing" id="qsU-Ih-kKG"/>
                     <constraint firstItem="X7k-zS-Z8X" firstAttribute="bottom" secondItem="Ybp-rW-8fA" secondAttribute="top" id="zGy-lI-IpO"/>
                 </constraints>
             </tableViewCellContentView>
@@ -107,6 +128,8 @@
                 <outlet property="contentImg" destination="X7k-zS-Z8X" id="4gM-a7-bAN"/>
                 <outlet property="descText" destination="Yta-3a-5ZU" id="FN3-n4-rwX"/>
                 <outlet property="timeLab" destination="5dS-PU-Xco" id="1RY-tU-8AF"/>
+                <outlet property="transcodeBlurView" destination="6Sh-Sm-dzn" id="HXe-Z3-tVp"/>
+                <outlet property="transcodeStatus" destination="dB5-an-Hzg" id="UHV-OJ-MVz"/>
                 <outlet property="userName" destination="TfW-NP-W8n" id="lMy-6A-OD5"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="190.84821428571428"/>
