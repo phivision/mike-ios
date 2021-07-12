@@ -7,11 +7,12 @@
 
 import UIKit
 @objc protocol ContentInputCellDelegate {
-    @objc optional func inputTextChanged(textValue:String?,indexPath:IndexPath)
+    @objc optional func inputTextChanged(textValue:String?)
 }
 class ContentInputCell: UITableViewCell {
     @IBOutlet weak var InputBg:UIImageView!
     @IBOutlet weak var InputText:UITextField!
+    @IBOutlet weak var titleLab:UILabel!
     var index:IndexPath?
     weak var delegate:ContentInputCellDelegate?
     override func awakeFromNib() {
@@ -25,20 +26,24 @@ class ContentInputCell: UITableViewCell {
         self.index = indexPath
     }
     func setTitle(_ title:String?,textValue:String?,indexPath:IndexPath,shouldEdit:Bool){
+        self.titleLab.text = title ?? ""
         self.InputText.placeholder = title ?? ""
         self.InputText.text = textValue
         self.index = indexPath
         self.InputText.isEnabled = shouldEdit
     }
     func hanldeBgCornerAndShadow(bgView:UIImageView){
-        bgView.clipsToBounds = false
-        bgView.layer.cornerRadius = 20
-        bgView.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        bgView.layer.shadowOffset = CGSize(width: 2, height: 2)
-        bgView.layer.shadowOpacity = 2
+        bgView.clipsToBounds = true
+        bgView.layer.cornerRadius = 5
+        bgView.layer.borderColor = lightGreyColor.cgColor
+        bgView.layer.borderWidth = 1
+//        bgView.layer.cornerRadius = 20
+//        bgView.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
+//        bgView.layer.shadowOffset = CGSize(width: 2, height: 2)
+//        bgView.layer.shadowOpacity = 2
     }
     @IBAction func inputTextChanged(textfield:UITextField){
-        self.delegate?.inputTextChanged?(textValue: textfield.text, indexPath: self.index!)
+        self.delegate?.inputTextChanged?(textValue: textfield.text)
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

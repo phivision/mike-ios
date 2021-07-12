@@ -13,6 +13,7 @@ class LoginSecondViewController: BaseViewController {
     @IBOutlet weak var pwdBg:UIImageView!
     @IBOutlet weak var userNameText:UITextField!
     @IBOutlet weak var pwdText:UITextField!
+    @IBOutlet weak var inputBg:UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -20,25 +21,14 @@ class LoginSecondViewController: BaseViewController {
     }
     
     func configView(){
+        self.inputBg.layer.borderWidth = 1
+        self.inputBg.layer.borderColor = HexRGBAlpha(0xF4F4F4,1).cgColor
+        self.inputBg.layer.cornerRadius = 5
+        
         self.userNameText.delegate = self
         self.pwdText.delegate = self
         
-        self.userNameBg.clipsToBounds = false
-        self.userNameBg.layer.cornerRadius = 20
-        self.userNameBg.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        self.userNameBg.layer.shadowOffset = CGSize(width: 2, height: 2)
-        self.userNameBg.layer.shadowOpacity = 2
-        
-        self.pwdBg.clipsToBounds = false
-        self.pwdBg.layer.cornerRadius = 20
-        self.pwdBg.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        self.pwdBg.layer.shadowOffset = CGSize(width: 2, height: 2)
-        self.pwdBg.layer.shadowOpacity = 2
-        
-        self.loginBtn.layer.cornerRadius = 20
-        self.loginBtn.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        self.loginBtn.layer.shadowOffset = CGSize(width: 2, height: 2)
-        self.loginBtn.layer.shadowOpacity = 2
+        self.loginBtn.layer.cornerRadius = 18.5
     }
     
     @IBAction func backBtnPressed(){
