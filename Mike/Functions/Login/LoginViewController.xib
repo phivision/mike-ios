@@ -7,17 +7,10 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Nunito-Bold.ttf">
-            <string>Nunito-Bold</string>
-        </array>
-        <array key="Nunito-Regular.ttf">
-            <string>Nunito-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Mike" customModuleProvider="target">
             <connections>
+                <outlet property="appleLoginBtn" destination="7gq-La-sdJ" id="O5M-3a-QIY"/>
                 <outlet property="loginBtn" destination="M5f-Pw-0Sa" id="PQq-CU-TBt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,14 +21,30 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5f-Pw-0Sa">
-                    <rect key="frame" x="68" y="405" width="278" height="60"/>
-                    <color key="backgroundColor" red="0.44705882349999998" green="0.39607843139999999" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="68" y="602.5" width="278" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="GAv-kq-NC7"/>
+                        <constraint firstAttribute="height" constant="44" id="GAv-kq-NC7"/>
                     </constraints>
-                    <state key="normal" title="Sign in"/>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
+                    <state key="normal" title="Or sign in with email"/>
                     <connections>
                         <action selector="loginBtnPressed" destination="-1" eventType="touchUpInside" id="dNt-jb-sYR"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gq-La-sdJ">
+                    <rect key="frame" x="57" y="538.5" width="300" height="44"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="gnp-2c-42I"/>
+                        <constraint firstAttribute="width" constant="300" id="uN6-OB-o4n"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
+                    <state key="normal" title=" Sign in with Apple" image="appleIcon">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="appleLoginPressed" destination="-1" eventType="touchUpInside" id="4iH-EN-5hv"/>
                     </connections>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="sTe-bH-yul">
@@ -45,40 +54,35 @@
                         <constraint firstAttribute="height" constant="80" id="vR1-0W-ihQ"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5u-eQ-8uh">
-                    <rect key="frame" x="68" y="260" width="278" height="38.5"/>
-                    <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="28"/>
-                    <color key="textColor" red="0.1764705882352941" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Motion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-wu-bsf">
-                    <rect key="frame" x="68" y="298.5" width="278" height="38.5"/>
-                    <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="28"/>
-                    <color key="textColor" red="0.44705882352941173" green="0.396078431372549" blue="0.8901960784313725" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="57" y="318" width="300" height="44"/>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Begin your fitness journey today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUN-UW-JWZ">
-                    <rect key="frame" x="68" y="353" width="278" height="22"/>
-                    <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="16"/>
-                    <color key="textColor" red="0.29803921568627451" green="0.34901960784313724" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reach your goals with the best of the best." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUN-UW-JWZ">
+                    <rect key="frame" x="57" y="382" width="300" height="49.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="NCB-43-2VI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" red="1" green="0.21568627450980393" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="M5f-Pw-0Sa" firstAttribute="top" secondItem="wUN-UW-JWZ" secondAttribute="bottom" constant="30" id="0S8-a6-Fcp"/>
+                <constraint firstItem="M5f-Pw-0Sa" firstAttribute="top" secondItem="7gq-La-sdJ" secondAttribute="bottom" constant="20" id="0S8-a6-Fcp"/>
+                <constraint firstItem="fq0-wu-bsf" firstAttribute="centerX" secondItem="sTe-bH-yul" secondAttribute="centerX" id="2U4-A9-KIO"/>
+                <constraint firstItem="7gq-La-sdJ" firstAttribute="centerX" secondItem="wUN-UW-JWZ" secondAttribute="centerX" id="9RL-8J-xvc"/>
                 <constraint firstItem="M5f-Pw-0Sa" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-68" id="DBt-Xi-HEX"/>
                 <constraint firstItem="wUN-UW-JWZ" firstAttribute="trailing" secondItem="fq0-wu-bsf" secondAttribute="trailing" id="Et1-pb-gQx"/>
-                <constraint firstItem="E5u-eQ-8uh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="68" id="I6d-ID-2i9"/>
-                <constraint firstItem="E5u-eQ-8uh" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-68" id="I9m-A9-jaK"/>
-                <constraint firstItem="wUN-UW-JWZ" firstAttribute="top" secondItem="fq0-wu-bsf" secondAttribute="bottom" constant="16" id="Q5r-0c-y0e"/>
-                <constraint firstItem="E5u-eQ-8uh" firstAttribute="top" secondItem="sTe-bH-yul" secondAttribute="bottom" constant="36" id="R6T-PE-D0P"/>
-                <constraint firstItem="fq0-wu-bsf" firstAttribute="top" secondItem="E5u-eQ-8uh" secondAttribute="bottom" id="YLH-Zf-JRi"/>
-                <constraint firstItem="fq0-wu-bsf" firstAttribute="leading" secondItem="E5u-eQ-8uh" secondAttribute="leading" id="aIU-sH-8Hs"/>
+                <constraint firstItem="7gq-La-sdJ" firstAttribute="top" secondItem="wUN-UW-JWZ" secondAttribute="bottom" constant="107" id="Jal-11-UzI"/>
+                <constraint firstItem="wUN-UW-JWZ" firstAttribute="top" secondItem="fq0-wu-bsf" secondAttribute="bottom" constant="20" id="Q5r-0c-y0e"/>
+                <constraint firstItem="fq0-wu-bsf" firstAttribute="top" secondItem="sTe-bH-yul" secondAttribute="bottom" constant="94" id="WPC-Xf-thU"/>
                 <constraint firstItem="wUN-UW-JWZ" firstAttribute="leading" secondItem="fq0-wu-bsf" secondAttribute="leading" id="d2F-Gk-FNN"/>
                 <constraint firstItem="sTe-bH-yul" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="fcQ-dh-MjN"/>
-                <constraint firstItem="fq0-wu-bsf" firstAttribute="trailing" secondItem="E5u-eQ-8uh" secondAttribute="trailing" id="igC-vs-xbe"/>
                 <constraint firstItem="sTe-bH-yul" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="lkf-vQ-rim"/>
                 <constraint firstItem="M5f-Pw-0Sa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="68" id="maf-X0-q1d"/>
             </constraints>
@@ -86,6 +90,7 @@
         </view>
     </objects>
     <resources>
+        <image name="appleIcon" width="18" height="18"/>
         <image name="logo" width="68" height="68"/>
     </resources>
 </document>

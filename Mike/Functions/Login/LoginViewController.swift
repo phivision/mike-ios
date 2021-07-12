@@ -9,18 +9,23 @@ import UIKit
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginBtn:UIButton!
+    @IBOutlet weak var appleLoginBtn:UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         configView()
         // Do any additional setup after loading the view.
     }
     func configView(){
-        self.loginBtn.layer.cornerRadius = 20;
+        self.view.backgroundColor = orangeColor
+        self.appleLoginBtn.layer.cornerRadius = 5
     }
 
     @IBAction func loginBtnPressed(){
         let secondVC = LoginSecondViewController()
         self.navigationController?.pushViewController(secondVC, animated: true)
+    }
+    @IBAction func appleLoginPressed(){
+        
     }
     @IBAction func registerBtnPressed(){
         let secondVC = RegisterViewController()

@@ -8,9 +8,11 @@
 import Foundation
 let studentListForTrainer:String = "studentList_forTrainer_"
 let lastMsgForTrainer:String = "lastMsg_forTrainer_"
+let lastGroupMsgForTrainer:String = "lastGroupMsg_forTrainer_"
 let lastMsgForStudent:String = "lastMsg_forStudent_"
 let msgListForStudent:String = "msgList_forStudent_"
 let msgListForTrainer:String = "msgList_forTrainer_"
+let groupMsgListForTrainer:String = "groupMsgList_forTrainer_"
 let msgForStudentUnRead:String = "unread_forStudent"
 let msgForTrainerUnRead:String = "unread_forTrainer"
 let lastMsgSendTimeStampForOutter:String = "lastMsgSendTimeStampForOutter"

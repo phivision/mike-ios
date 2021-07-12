@@ -15,8 +15,8 @@ class ContentUploadViewController: BaseViewController {
     //video description
     var videoDescValue:String?
     //video file
-    var videoImage:UIImage?
-    var videoURL:URL?
+//    var videoImage:UIImage?
+//    var videoURL:URL?
     //video capture
     var videoCapture:UIImage?
     //video demo bool
@@ -41,8 +41,8 @@ class ContentUploadViewController: BaseViewController {
     @objc func clearData(){
         self.videoTitleValue = ""
         self.videoDescValue = ""
-        self.videoImage = nil
-        self.videoURL = nil
+//        self.videoImage = nil
+//        self.videoURL = nil
         self.videoCapture = nil
         DispatchQueue.main.async {
             self.mainTableView.reloadData()
@@ -50,19 +50,18 @@ class ContentUploadViewController: BaseViewController {
     }
     
     func configTableView(){
-        self.continueBtn.layer.cornerRadius = 10
-        
+        self.continueBtn.layer.borderWidth = 1
+        self.continueBtn.layer.borderColor = orangeColor.cgColor
+        self.continueBtn.layer.cornerRadius = 18.5
+
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
-        self.mainTableView.register(UINib(nibName: "VideoUploadCell", bundle: nil), forCellReuseIdentifier: "VideoUploadCell")
         self.mainTableView.register(UINib(nibName: "SelectVideoCell", bundle: nil), forCellReuseIdentifier: "SelectVideoCell")
         self.mainTableView.register(UINib(nibName: "ContentInputCell", bundle: nil), forCellReuseIdentifier: "ContentInputCell")
-//        self.mainTableView.register(UINib(nibName: "CheckBoxCell", bundle: nil), forCellReuseIdentifier: "CheckBoxCell")
-        self.mainTableView.register(UINib(nibName: "SingleBtnCell", bundle: nil), forCellReuseIdentifier: "SingleBtnCell")
-        self.mainTableView.register(UINib(nibName: "SelectCoverCell", bundle: nil), forCellReuseIdentifier: "SelectCoverCell")
+        self.mainTableView.register(UINib(nibName: "DescriptionInputCell", bundle: nil), forCellReuseIdentifier: "DescriptionInputCell")
         self.mainTableView.register(UINib(nibName: "VideoCaptureUploadCell", bundle: nil), forCellReuseIdentifier: "VideoCaptureUploadCell")
     }
     /*
@@ -81,12 +80,12 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 3
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
@@ -95,32 +94,26 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
             cell.setTitle("Title", textValue: self.videoTitleValue, indexPath: indexPath)
             return cell
         case 1:
-            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
+            let cell:DescriptionInputCell = tableView.dequeueReusableCell(withIdentifier: "DescriptionInputCell", for: indexPath) as! DescriptionInputCell
             cell.delegate = self
             cell.setTitle("Description", textValue: self.videoDescValue, indexPath: indexPath)
             return cell
+//        case 2:
+//            if StringUtils.isBlank(value: self.videoURL?.absoluteString) {
+//                let cell:VideoUploadCell = tableView.dequeueReusableCell(withIdentifier: "VideoUploadCell", for: indexPath) as! VideoUploadCell
+//                cell.delegate = self
+//                return cell
+//            }else{
+//                let cell:SelectVideoCell = tableView.dequeueReusableCell(withIdentifier: "SelectVideoCell", for: indexPath) as! SelectVideoCell
+//                cell.setImage(image: self.videoImage)
+//                cell.delegate = self
+//                return cell
+//            }
         case 2:
-            if StringUtils.isBlank(value: self.videoURL?.absoluteString) {
-                let cell:VideoUploadCell = tableView.dequeueReusableCell(withIdentifier: "VideoUploadCell", for: indexPath) as! VideoUploadCell
-                cell.delegate = self
-                return cell
-            }else{
-                let cell:SelectVideoCell = tableView.dequeueReusableCell(withIdentifier: "SelectVideoCell", for: indexPath) as! SelectVideoCell
-                cell.setImage(image: self.videoImage)
-                cell.delegate = self
-                return cell
-            }
-        case 3:
-            if self.videoCapture == nil {
-                let cell:VideoCaptureUploadCell = tableView.dequeueReusableCell(withIdentifier: "VideoCaptureUploadCell", for: indexPath) as! VideoCaptureUploadCell
-                cell.delegate = self
-                return cell
-            }else{
-                let cell:SelectCoverCell = tableView.dequeueReusableCell(withIdentifier: "SelectCoverCell", for: indexPath) as! SelectCoverCell
-                cell.setImage(image: self.videoCapture)
-                cell.delegate = self
-                return cell
-            }
+            let cell:VideoCaptureUploadCell = tableView.dequeueReusableCell(withIdentifier: "VideoCaptureUploadCell", for: indexPath) as! VideoCaptureUploadCell
+            cell.setCaptureImg(image: self.videoCapture)
+            cell.delegate = self
+            return cell
 //        case 4:
 //            let cell:CheckBoxCell = tableView.dequeueReusableCell(withIdentifier: "CheckBoxCell", for: indexPath) as! CheckBoxCell
 //            cell.delegate = self
@@ -136,21 +129,20 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
     }
 }
-extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDelegate,CheckBoxCellDelegate,SelectVideoCellDelegate,SingleBtnCellDelegate,SelectCoverCellDelegate,VideoCaptureUploadCellDelegate{
+extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDelegate,SingleBtnCellDelegate,VideoCaptureUploadCellDelegate,DescriptionInputCellDelegate{
     //MARK: - videouploadCellDelegate
     func addBtnClicked() {
         self.selectVideo()
     }
     //MARK: - contentInputCellDelegate
-    func inputTextChanged(textValue: String?, indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            self.videoTitleValue = textValue ?? ""
-        }else if indexPath.row == 1{
-            self.videoDescValue = textValue ?? ""
-        }
+    func inputTextChanged(textValue: String?) {
+        self.videoTitleValue = textValue ?? ""
+    }
+    func descTextChanged(textValue: String?) {
+        self.videoDescValue = textValue ?? ""
     }
 //    //MARK: - checkBoxCellDelegate
 //    func checkChanged(isChecked: Bool) {
@@ -163,6 +155,12 @@ extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDe
     //MARK: - selectCover
     func addCaptureBtnClicked() {
         self.selectVideoCapture()
+    }
+    func delCaptureBtnClicked() {
+        self.videoCapture = nil
+        DispatchQueue.main.async {
+            self.mainTableView.reloadData()
+        }
     }
     //MARK: - reselectCover
     func reselectCoverBtnClicked() {
@@ -183,7 +181,7 @@ extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDe
             return
         }
         let vc:ContentUploadSectionConfigViewController = ContentUploadSectionConfigViewController()
-        vc.videoURL = self.videoURL
+//        vc.videoURL = self.videoURL
         vc.videoTitleValue = self.videoTitleValue
         vc.videoDescValue = self.videoDescValue
         vc.videoImage = self.videoCapture
@@ -229,20 +227,20 @@ extension ContentUploadViewController:UIImagePickerControllerDelegate,UINavigati
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if picker.mediaTypes == ["public.movie"]{
-            let videoURL = info[.mediaURL] as! URL
-            self.videoURL = videoURL
-            let avAsset = AVAsset(url: videoURL)
-            print("视频地址：\(videoURL.relativePath)")
-            
-            //generate image
-            let generator = AVAssetImageGenerator(asset: avAsset)
-            generator.appliesPreferredTrackTransform = true
-            let time = CMTimeMakeWithSeconds(0.0, preferredTimescale: 600)
-            var actualTime = CMTimeMake(value: 0, timescale: 0)
-            let imageRef:CGImage = try! generator.copyCGImage(at: time, actualTime: &actualTime)
-            let frameImg = UIImage(cgImage: imageRef)
-            self.videoImage = frameImg
-            self.mainTableView.reloadData()
+//            let videoURL = info[.mediaURL] as! URL
+//            self.videoURL = videoURL
+//            let avAsset = AVAsset(url: videoURL)
+//            print("视频地址：\(videoURL.relativePath)")
+//
+//            //generate image
+//            let generator = AVAssetImageGenerator(asset: avAsset)
+//            generator.appliesPreferredTrackTransform = true
+//            let time = CMTimeMakeWithSeconds(0.0, preferredTimescale: 600)
+//            var actualTime = CMTimeMake(value: 0, timescale: 0)
+//            let imageRef:CGImage = try! generator.copyCGImage(at: time, actualTime: &actualTime)
+//            let frameImg = UIImage(cgImage: imageRef)
+//            self.videoImage = frameImg
+//            self.mainTableView.reloadData()
         }else{
             let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
             self.videoCapture = pickedImage

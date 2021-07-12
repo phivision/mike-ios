@@ -8,6 +8,7 @@
 
 import UIKit
 import PullToRefreshKit
+import Amplify
 class HomeListViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     lazy var refreshControl:UIRefreshControl = {
@@ -17,7 +18,7 @@ class HomeListViewController: BaseViewController {
         return refreshControl
     }()
     @IBOutlet weak var userName:UILabel!
-    @IBOutlet weak var timeLab:UILabel!
+//    @IBOutlet weak var timeLab:UILabel!
     lazy var subscriptionList:Array<UserSubscriptionTrainerListModel> = {
         var subscriptionList:Array<UserSubscriptionTrainerListModel> = Array<UserSubscriptionTrainerListModel>()
         return subscriptionList
@@ -43,12 +44,12 @@ class HomeListViewController: BaseViewController {
     
     func configTopView(){
         self.userName.text = "Hi, \(LoginTools.sharedTools.userInfo().firstName ?? "")"
-        let date = Date()
-        let timeFormatter = DateFormatter()
-        //日期显示格式，可按自己需求显示
-        timeFormatter.dateFormat = "EEEE MMM dd"
-        let strNowTime = timeFormatter.string(from: date) as String
-        self.timeLab.text = "\(strNowTime)"
+//        let date = Date()
+//        let timeFormatter = DateFormatter()
+//        //日期显示格式，可按自己需求显示
+//        timeFormatter.dateFormat = "EEEE MMM dd"
+//        let strNowTime = timeFormatter.string(from: date) as String
+//        self.timeLab.text = "\(strNowTime)"
     }
     
     func configTableView(){
@@ -56,6 +57,7 @@ class HomeListViewController: BaseViewController {
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
         self.mainTableView.register(UINib(nibName: "HomeListCell", bundle: nil), forCellReuseIdentifier: "HomeListCell")
+        self.mainTableView.register(UINib(nibName: "TrainerListCell", bundle: nil), forCellReuseIdentifier: "TrainerListCell")
         self.mainTableView.estimatedRowHeight = 88;
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
@@ -94,44 +96,47 @@ class HomeListViewController: BaseViewController {
 }
 extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.subscriptionList.count
+        return 1 + self.subscriptionList.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[section]
-        return trainerModel.trainer.contents.items.count
+        if section == 0 {
+            return self.subscriptionList.count
+        }else{
+            let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[section-1]
+            return trainerModel.trainer.contents.items.count
+        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section]
-//        let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
-//        if contentModel.TranscodeReady == false {
-//            return 0
-//        }
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section]
-        let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
-//        if contentModel.TranscodeReady == false {
-//            return UITableViewCell()
-//        }
-        let cell:HomeListCell = tableView.dequeueReusableCell(withIdentifier: "HomeListCell", for: indexPath) as! HomeListCell
-        cell.setItemModel(model: contentModel,sectionModel: trainerModel.trainer)
-        cell.delegate = self
-        return cell
+        if indexPath.section == 0 {
+            let cell:TrainerListCell = tableView.dequeueReusableCell(withIdentifier: "TrainerListCell", for: indexPath) as! TrainerListCell
+            cell.setTrainerList(trainerList: self.subscriptionList)
+            cell.delegate = self
+            return cell
+        }else{
+            let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section-1]
+            let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
+            let cell:HomeListCell = tableView.dequeueReusableCell(withIdentifier: "HomeListCell", for: indexPath) as! HomeListCell
+            cell.setItemModel(model: contentModel,sectionModel: trainerModel.trainer)
+            cell.delegate = self
+            return cell
+        }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section]
-        let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
-//        if contentModel.TranscodeReady == false {
-//           return
-//        }
-        let vc:UserContentDetailViewController = UserContentDetailViewController()
-        vc.userContentModel = UserCenterContent(fromDictionary: contentModel.toDictionary())
-//        nav.modalPresentationStyle = .fullScreen
-        vc.trainerId = trainerModel.trainer.id
-        DispatchQueue.main.async {
-            self.present(vc, animated: true, completion: nil)
+        if indexPath.section == 0 {
+            
+        }else{
+            let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section-1]
+            let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
+            let vc:UserContentDetailViewController = UserContentDetailViewController()
+            vc.userContentModel = UserCenterContent(fromDictionary: contentModel.toDictionary())
+            vc.trainerId = trainerModel.trainer.id
+            DispatchQueue.main.async {
+                self.present(vc, animated: true, completion: nil)
+            }
         }
     }
 }
@@ -139,6 +144,17 @@ extension HomeListViewController:HomeListCellDelegate{
     func homeListAvatarClicked(model: UserSubscriptionTrainerListTrainer) {
         let vc:TrainerDetailViewController = TrainerDetailViewController()
         vc.trainerId = model.id
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+extension HomeListViewController:TrainerListCellDelegate{
+    func addTraner() {
+        self.tabBarController?.selectedIndex = 1
+    }
+    func clickTrainer(model: UserSubscriptionTrainerListModel) {
+        let vc:TrainerDetailViewController = TrainerDetailViewController()
+        vc.trainerId = model.trainer.id
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }

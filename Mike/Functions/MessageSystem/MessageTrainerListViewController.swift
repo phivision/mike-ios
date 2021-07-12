@@ -98,6 +98,17 @@ class MessageTrainerListViewController: BaseViewController {
                     }
                 }
             }
+            for msgModel in msgList {
+                UserDefaults.standard.setValue(true, forKey: "\(msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
+                UserDefaults.standard.synchronize()
+            }
+//            if msgList.count != 0 {
+//                let lastMsg = msgList.last
+//                UserDefaults.standard.setValue(true, forKey: "\(msgForStudentUnRead)\(lastMsg?.fromUserID ?? "")")
+//                UserDefaults.standard.setValue(lastMsg?.postMessages, forKey: "\(lastMsgForStudent)\(lastMsg?.fromUserID ?? "")")
+//                UserDefaults.standard.synchronize()
+//            }
             DispatchQueue.main.async {
                 self.mainTableView.reloadData()
             }
