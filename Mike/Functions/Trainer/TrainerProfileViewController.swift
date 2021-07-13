@@ -12,15 +12,16 @@ class TrainerProfileViewController: BaseViewController{
     @IBOutlet weak var mainCollection:UICollectionView!
     var curUserId:String?
     var isRequest:Bool = false
-    lazy var subscriptionList:Array<UserCenterTrainer> = {
-        var subscriptionList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
-        return subscriptionList
+    lazy var contentList:Array<UserCenterContent> = {
+        var contentList:Array<UserCenterContent> = Array<UserCenterContent>()
+        return contentList
     }()
     lazy var favList:Array<UserCenterContent> = {
         var favList:Array<UserCenterContent> = Array<UserCenterContent>()
         return favList
     }()
     var userProfileModel:UserCenterModel?
+    var isFeedMode:Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -33,10 +34,8 @@ class TrainerProfileViewController: BaseViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
-        if self.isRequest == false {
-            self.fetchTrainerList()
-            self.isRequest = true
-        }
+        self.fetchUserProfile()
+        self.fetchFeedList()
         self.fetchFavList();
     }
     @objc func refreshUserProfile(){
@@ -53,21 +52,20 @@ class TrainerProfileViewController: BaseViewController{
             
         }
     }
-    func fetchTrainerList(){
+    func fetchFeedList(){
+        Backend.shared.fetchTrainerContentList(trainerId: self.curUserId) { contentList in
+            self.contentList.removeAll()
+            self.contentList.append(contentsOf: contentList)
+            DispatchQueue.main.async {
+                self.mainCollection.reloadData()
+            }
+        } fail: { error in
+            
+        }
+    }
+    func fetchUserProfile(){
         Backend.shared.fetchUserProfileModel(userId: self.curUserId) { model in
             self.userProfileModel = model
-            let list:Array<UserCenterItem> = model.subscriptions.items
-            self.subscriptionList.removeAll()
-            for item:UserCenterItem in list{
-                self.subscriptionList.append(item.trainer)
-            }
-            if let userFavorite = model.favorites{
-                let flist:Array<UserCenterItem> = userFavorite.items
-                self.favList.removeAll()
-                for fitem:UserCenterItem in flist{
-                    self.favList.append(fitem.content)
-                }
-            }
             DispatchQueue.main.async {
                 self.mainCollection.reloadData()
             }
@@ -88,7 +86,8 @@ class TrainerProfileViewController: BaseViewController{
         self.mainCollection.dataSource = self
         self.mainCollection.backgroundColor = UIColor.white
         self.mainCollection.register(UINib(nibName: "UserProfileTopCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTopCell")
-        self.mainCollection.register(UINib(nibName: "UserProfileFavHorizonListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileFavHorizonListCell")
+        self.mainCollection.register(UINib(nibName: "UserProfileModeChangeColCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileModeChangeColCell")
+        self.mainCollection.register(UINib(nibName: "FeedOrFavColListCell", bundle: nil), forCellWithReuseIdentifier: "FeedOrFavColListCell")
         self.mainCollection.register(UINib(nibName: "UserProfileSectionTitleView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView")
     }
 
@@ -109,25 +108,11 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return 1
-        default:
-            return 0
-        }
-    }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader{
-            if indexPath.section != 0 {
+            if indexPath.section == 2 {
                 let header:UserProfileSectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView", for: indexPath) as! UserProfileSectionTitleView
-                if indexPath.section == 1{
-                    header.sectionTitle.text = "Favorite Workouts"
-                }else{
-                    header.sectionTitle.text = ""
-                }
+                header.sectionTitle.text = "Feed"
                 return header;
             }else{
                 return UICollectionReusableView()
@@ -137,13 +122,26 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 {
+        if section == 2 {
+            return CGSize.init(width: kScreenWidth, height: 80)
+        }else{
             return CGSize.init(width: 0, height: 0)
         }
-        return CGSize.init(width: kScreenWidth, height: 80)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize.zero
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 1
+        case 2:
+            return self.isFeedMode ? self.contentList.count : self.favList.count
+        default:
+            return 0
+        }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
@@ -155,10 +153,13 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
             }
             return cell
         case 1:
-            let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
-            cell.contentView.backgroundColor = UIColor.white
-            cell.setFavList(fList: self.favList)
+            let cell:UserProfileModeChangeColCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileModeChangeColCell", for: indexPath) as! UserProfileModeChangeColCell
             cell.delegate = self
+            cell.setModel(isFeedMode: self.isFeedMode)
+            return cell
+        case 2:
+            let cell:FeedOrFavColListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeedOrFavColListCell", for: indexPath) as! FeedOrFavColListCell
+            cell.setModel(model: self.isFeedMode == true ? self.contentList[indexPath.row] : self.favList[indexPath.row])
             return cell
         default:
             return UICollectionViewCell()
@@ -172,17 +173,20 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
                 if let model = self.userProfileModel {
                     let titleHeight = heightForView(text: (model.firstName ?? "") + " " + (model.lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
                     let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                    return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40 + titleHeight - 38.5)
+                    return CGSize.init(width: kScreenWidth, height: 198 + descHeight + titleHeight + 70)
                 }else{
-                    return CGSize.init(width: kScreenWidth, height: 309)
+                    return CGSize.init(width: kScreenWidth, height: 198)
                 }
             }else{
                 let titleHeight = heightForView(text: (LoginTools.sharedTools.userInfo().firstName ?? "") + " " + (LoginTools.sharedTools.userInfo().lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
                 let descHeight = heightForView(text: LoginTools.sharedTools.userInfo().descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40 + titleHeight - 38.5)
+                return CGSize.init(width: kScreenWidth, height: 198 + descHeight + titleHeight + 70)
             }
         case 1:
-            return CGSize.init(width: kScreenWidth, height: self.favList.count == 0 ? 40 : 260)
+            return CGSize.init(width: kScreenWidth, height: 85)
+        case 2:
+            let itemWidth = (kScreenWidth - 4)/3
+            return CGSize.init(width: itemWidth, height: itemWidth)
         default:
             return .zero
         }
@@ -190,7 +194,7 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets{
         switch section {
-        case 1:
+        case 2:
             return .zero
         default:
             return .zero
@@ -198,18 +202,18 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat{
-        return 0
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat{
-        return 0
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
             break;
-        case 1:
+        case 2:
             break;
         default:
             break;
@@ -239,6 +243,13 @@ extension TrainerProfileViewController:UserProfileTopCellDelegate{
             self.present(vc, animated: true, completion: nil)
         }
     }
+    func editBtnPressed() {
+        let vc:UserProfileEditViewController = UserProfileEditViewController()
+        vc.modalPresentationStyle = .fullScreen
+        DispatchQueue.main.async {
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
     func backBtnClicked() {
         DispatchQueue.main.async {
             self.navigationController?.popViewController(animated: true)
@@ -250,6 +261,14 @@ extension TrainerProfileViewController:UserProfileTopCellDelegate{
 //        DispatchQueue.main.async {
 //            self.navigationController?.pushViewController(vc, animated: true)
 //        }
+    }
+}
+extension TrainerProfileViewController:UserProfileModeChangeColCellDelegate{
+    func listModeChanged(isFeedMode: Bool) {
+        self.isFeedMode = isFeedMode
+        DispatchQueue.main.async {
+            self.mainCollection.reloadData()
+        }
     }
 }
 extension TrainerProfileViewController:UserProfileFavHorizonListCellDelegate{

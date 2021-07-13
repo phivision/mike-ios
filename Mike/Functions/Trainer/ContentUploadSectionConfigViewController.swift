@@ -8,13 +8,16 @@
 import UIKit
 
 class ContentUploadSectionConfigViewController: BaseViewController {
+    @IBOutlet weak var postBtn:UIButton!
     //video title
     var videoTitleValue:String!
     //video description
     var videoDescValue:String!
     //video file
-    var videoImage:UIImage!
-    var videoURL:URL!
+    var videoImage:UIImage?
+    var videoURL:URL?
+    //video capture
+    var videoCapture:UIImage!
     //video demo bool
 //    var isDemoVideo:Bool!
     //
@@ -27,7 +30,6 @@ class ContentUploadSectionConfigViewController: BaseViewController {
     var thirdIndex:NSInteger = 0
     
     @IBOutlet weak var mainTableView:UITableView!
-    @IBOutlet weak var submitBtn:UIButton!
     lazy var segmentList:Array<UserContentSegmentListModel> = {
         var segmentList:Array<UserContentSegmentListModel> = Array<UserContentSegmentListModel>()
         return segmentList
@@ -39,15 +41,16 @@ class ContentUploadSectionConfigViewController: BaseViewController {
     }
 
     func configTableView(){
-        self.submitBtn.layer.cornerRadius = 20
-        self.submitBtn.clipsToBounds = true
+        self.postBtn.layer.cornerRadius = 18.5
+        
         
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
-        self.mainTableView.register(UINib(nibName: "ContentInputCell", bundle: nil), forCellReuseIdentifier: "ContentInputCell")
+        self.mainTableView.register(UINib(nibName: "VideoUploadCell", bundle: nil), forCellReuseIdentifier: "VideoUploadCell")
+        self.mainTableView.register(UINib(nibName: "SegmentInputCell", bundle: nil), forCellReuseIdentifier: "SegmentInputCell")
         self.mainTableView.register(UINib(nibName: "SegmentSectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "SegmentSectionHeaderView")
     }
     
@@ -67,16 +70,20 @@ class ContentUploadSectionConfigViewController: BaseViewController {
 }
 extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == self.segmentList.count {
-           return UIView()
+        if section == 1 {
+            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "SegmentSectionHeaderView") as! SegmentSectionHeaderView
+            headerView.delegate = self
+            return headerView
+        }else{
+            return UIView()
         }
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "SegmentSectionHeaderView") as! SegmentSectionHeaderView
-        headerView.setIndex(section: section)
-        headerView.delegate = self
-        return headerView
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
+        if section == 1 {
+            return 79
+        }else{
+            return 0
+        }
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
@@ -85,38 +92,100 @@ extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableVi
         return 1
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        if self.segmentList.count == 0 {
-            return 0
-        }
-        return self.segmentList.count
+        return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if section == 0 {
+            return 1
+        }
+        return self.segmentList.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = self.segmentList[indexPath.section]
-        switch indexPath.row {
-        case 0:
-            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
+        if indexPath.section == 0 {
+            let cell:VideoUploadCell = tableView.dequeueReusableCell(withIdentifier: "VideoUploadCell", for: indexPath) as! VideoUploadCell
             cell.delegate = self
-            cell.setTitle("Name", textValue: model.name, indexPath: indexPath, shouldEdit: true)
+            cell.setVideoImg(image: self.videoImage)
             return cell
-        case 1:
-            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
-//            cell.delegate = self
-            cell.setTitle("TimeStamp", textValue: model.timestamp, indexPath: indexPath, shouldEdit: false)
+        }else{
+            let model = self.segmentList[indexPath.row]
+            let cell:SegmentInputCell = tableView.dequeueReusableCell(withIdentifier: "SegmentInputCell", for: indexPath) as! SegmentInputCell
+            cell.delegate = self
+            cell.setModel(model: model,index: indexPath)
             return cell
-        default:
-            return UITableViewCell()
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1 {
-            self.pickerSelectIndex = indexPath.section
+//        if indexPath.row == 1 {
+//            self.pickerSelectIndex = indexPath.section
+//            let vc:DatePickerViewController = DatePickerViewController()
+//            vc.delegate = self
+//            vc.firstIndex = self.firstIndex
+//            vc.secondIndex = self.secondIndex
+//            vc.thirdIndex = self.thirdIndex
+//            vc.modalPresentationStyle = .overCurrentContext
+//            DispatchQueue.main.async {
+//                self.present(vc, animated: true, completion: nil)
+//            }
+//        }
+    }
+}
+extension ContentUploadSectionConfigViewController:VideoUploadCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+    func addVideoBtnClicked() {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.mediaTypes = ["public.movie"]
+            imagePicker.allowsEditing = false
+            DispatchQueue.main.async {
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }
+        else {
+            print("读取相册错误")
+        }
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if picker.mediaTypes == ["public.movie"]{
+            let videoURL = info[.mediaURL] as! URL
+            self.videoURL = videoURL
+            let avAsset = AVAsset(url: videoURL)
+            print("视频地址：\(videoURL.relativePath)")
+
+            //generate image
+            let generator = AVAssetImageGenerator(asset: avAsset)
+            generator.appliesPreferredTrackTransform = true
+            let time = CMTimeMakeWithSeconds(0.0, preferredTimescale: 600)
+            var actualTime = CMTimeMake(value: 0, timescale: 0)
+            let imageRef:CGImage = try! generator.copyCGImage(at: time, actualTime: &actualTime)
+            let frameImg = UIImage(cgImage: imageRef)
+            self.videoImage = frameImg
+            DispatchQueue.main.async {
+                self.mainTableView.reloadData()
+            }
+        }
+        //picker dismiss
+        self.dismiss(animated: true, completion: {})
+    }
+    func delVideoBtnClicked() {
+        self.videoImage = nil
+        DispatchQueue.main.async {
+            self.mainTableView.reloadData()
+        }
+    }
+}
+extension ContentUploadSectionConfigViewController:SegmentInputCellDelegate{
+    func segmentChanged(textValue: String?, index: IndexPath?) {
+        let model = self.segmentList[index?.row ?? 0]
+        model.name = textValue
+    }
+    func segmentTimeClicked(index: IndexPath?) {
+        if let rowIndex = index?.row {
+            self.pickerSelectIndex = rowIndex
             let vc:DatePickerViewController = DatePickerViewController()
             vc.delegate = self
             vc.firstIndex = self.firstIndex
@@ -126,6 +195,12 @@ extension ContentUploadSectionConfigViewController:UITableViewDelegate,UITableVi
             DispatchQueue.main.async {
                 self.present(vc, animated: true, completion: nil)
             }
+        }
+    }
+    func segmentDelAction(index: IndexPath?) {
+        if let rowIndex = index?.row {
+            self.segmentList.remove(at: rowIndex)
+            self.mainTableView.reloadData()
         }
     }
 }
@@ -142,29 +217,25 @@ extension ContentUploadSectionConfigViewController:DatePickerViewControllerDeleg
         }
     }
 }
-extension ContentUploadSectionConfigViewController:ContentInputCellDelegate,SegmentSectionHeaderViewDelegate,SingleBtnCellDelegate{
-    func inputTextChanged(textValue: String?, indexPath: IndexPath) {
-        let model = self.segmentList[indexPath.section]
-        switch indexPath.row {
-        case 0:
-            model.name = textValue
-            break
-        default:
-            break
-        }
-        let tmpModel = self.segmentList[indexPath.section]
-        print("~~~~~~~~~~~~~~~~~~~\(tmpModel.toDictionary())")
-    }
-    @IBAction func addBtnClicked() {
+extension ContentUploadSectionConfigViewController:SegmentSectionHeaderViewDelegate,SingleBtnCellDelegate{
+//    func inputTextChanged(textValue: String?, indexPath: IndexPath) {
+//        let model = self.segmentList[indexPath.section]
+//        switch indexPath.row {
+//        case 0:
+//            model.name = textValue
+//            break
+//        default:
+//            break
+//        }
+//        let tmpModel = self.segmentList[indexPath.section]
+//        print("~~~~~~~~~~~~~~~~~~~\(tmpModel.toDictionary())")
+//    }
+    func addBtnClicked() {
         let model = UserContentSegmentListModel(fromDictionary: [:])
         self.segmentList.append(model)
         self.mainTableView.reloadData()
     }
-    func delBtnClicked(sectionIndex: NSInteger) {
-        self.segmentList.remove(at: sectionIndex)
-        self.mainTableView.reloadData()
-    }
-    @IBAction func singleBtnClicked() {
+    @IBAction func postBtnClicked() {
         var canContinue = true
         for segmentModel:UserContentSegmentListModel in self.segmentList {
             if StringUtils.isBlank(value: segmentModel.name) {
@@ -209,7 +280,7 @@ extension ContentUploadSectionConfigViewController{
         }
     }
     func uploadVideoCapture(){
-        let data = self.videoImage!.jpegData(compressionQuality: 0.2)!
+        let data = self.videoCapture!.jpegData(compressionQuality: 0.2)!
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         self.thumbnail = StringUtils.thumbnailImgKey()
         Backend.shared.uploadImage(imgData: data, imgName: self.thumbnail) {

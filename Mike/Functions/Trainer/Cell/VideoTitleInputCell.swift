@@ -1,20 +1,20 @@
 //
-//  ContentInputCell.swift
+//  VideoTitleInputCell.swift
 //  Mike
 //
 //  Created by 殷聃 on 2021/5/28.
 //
 
 import UIKit
-@objc protocol ContentInputCellDelegate {
+@objc protocol VideoTitleInputCellDelegate {
     @objc optional func inputTextChanged(textValue:String?)
 }
-class ContentInputCell: UITableViewCell {
+class VideoTitleInputCell: UITableViewCell {
     @IBOutlet weak var InputBg:UIImageView!
     @IBOutlet weak var InputText:UITextField!
     @IBOutlet weak var titleLab:UILabel!
     var index:IndexPath?
-    weak var delegate:ContentInputCellDelegate?
+    weak var delegate:VideoTitleInputCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

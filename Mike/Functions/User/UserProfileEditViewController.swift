@@ -12,7 +12,7 @@ import Amplify
 class UserProfileEditViewController: BaseViewController {
     @IBOutlet weak var saveBtn:UIButton!
     
-    @IBOutlet weak var avatarImg:UIImageView!
+    @IBOutlet weak var avatarImg:UIButton!
     
     @IBOutlet weak var firstNameBg:UIImageView!
     @IBOutlet weak var lastNameBg:UIImageView!
@@ -35,29 +35,25 @@ class UserProfileEditViewController: BaseViewController {
         self.configView()
     }
     func configView(){
-        self.avatarImg.layer.cornerRadius = 20
-        self.avatarImg.clipsToBounds = true
+        self.avatarImg.imageView!.layer.cornerRadius = 36
+        self.avatarImg.imageView!.clipsToBounds = true
         
         self.firstNameText.delegate = self
         self.lastNameText.delegate = self
         self.descText.delegate = self
-        self.descText.placeholder = "Description"
         
         self.hanldeBgCornerAndShadow(bgView: self.firstNameBg)
         self.hanldeBgCornerAndShadow(bgView: self.lastNameBg)
         self.hanldeBgCornerAndShadow(bgView: self.descBg)
         
-        self.saveBtn.layer.cornerRadius = 20
-        self.saveBtn.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        self.saveBtn.layer.shadowOffset = CGSize(width: 2, height: 2)
-        self.saveBtn.layer.shadowOpacity = 2
+        self.saveBtn.layer.cornerRadius = 18.5
         
         let userModel = LoginTools.sharedTools.userInfo()
         ImageCacheUtils.sharedTools.imageUrl(key: userModel.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
-                self.avatarImg.image = UIImage(named: "logo")
+                self.avatarImg.setImage( UIImage(named: "icon_user_default"), for: .normal)
             }else{
-                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .fromCacheOnly, completed: nil)
+                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!,for:.normal, placeholderImage: UIImage(named: "icon_user_default"), options: .fromCacheOnly, completed: nil)
             }
         }
         self.firstNameText.text = "\(userModel.firstName ?? "")"
@@ -70,11 +66,10 @@ class UserProfileEditViewController: BaseViewController {
     }
     
     func hanldeBgCornerAndShadow(bgView:UIImageView){
-        bgView.clipsToBounds = false
-        bgView.layer.cornerRadius = 20
-        bgView.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        bgView.layer.shadowOffset = CGSize(width: 2, height: 2)
-        bgView.layer.shadowOpacity = 2
+        bgView.clipsToBounds = true
+        bgView.layer.cornerRadius = 5
+        bgView.layer.borderWidth = 1
+        bgView.layer.borderColor = lightGreyColor.cgColor
     }
 
     @IBAction func textValueChanged(textfield:UITextField){
@@ -141,7 +136,7 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
             return
         }
         self.curAvatar = photos.first!
-        self.avatarImg.image = self.curAvatar
+        self.avatarImg.setImage(self.curAvatar, for: .normal)
     }
     func uploadAvatar(){
         if let userImageKey = LoginTools.sharedTools.userInfo().userImage {
@@ -222,7 +217,7 @@ extension UserProfileEditViewController:UIImagePickerControllerDelegate,UINaviga
             image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage ?? UIImage()
         }
         self.curAvatar = image
-        self.avatarImg.image = self.curAvatar
+        self.avatarImg.setImage(self.curAvatar, for: .normal)
         picker.dismiss(animated: true, completion: nil)
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

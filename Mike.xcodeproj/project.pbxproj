@@ -59,6 +59,7 @@
 		16C92BDABD8BDCCE915A14AB /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */; };
 		16DB310D35783B8E35B15D0D /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
 		175A7B668B9D554B1C40DA97 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
+		1A2205FAEFC108C16AAEB133 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68B47895EF48EFA9E65034 /* AmplifyModels.swift */; };
 		1AB68D645AB1257CA04B805D /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */; };
 		1B9BC6C412A1197ECD065C84 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
 		1BB27942C98723C8932F2C0F /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
@@ -107,6 +108,7 @@
 		2DC996569ACC3DD2E00842E4 /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
 		2DEA24887C41B649CA701B4F /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
 		2ECE65A79860D236BFD34E04 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68B47895EF48EFA9E65034 /* AmplifyModels.swift */; };
+		2ED118DF4809B8C1F0A5F22E /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
 		2EEC6276F75C419BD2AE5226 /* UserSubscriptionTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */; };
 		2F0A3A6A7B308163CDC3FAC1 /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
 		2F52CC65BEDE582FF5F05725 /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
@@ -231,6 +233,7 @@
 		70552EE909B189BAFF646B3B /* UserFavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397087124EE4DEA8E0A9DB8 /* UserFavoriteContent.swift */; };
 		70682C5249CBE0E3097980B0 /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
 		7189536453DB33D5D31747AF /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
+		726672BCCA052D098E8672A9 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
 		726CB4A2AB1C66130FC5BD34 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68B47895EF48EFA9E65034 /* AmplifyModels.swift */; };
 		73BAE59D20FDD79B51C57475 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */; };
 		740DADC93F1A21156B6266A7 /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
@@ -241,11 +244,13 @@
 		78296C7963CC56D1AB521013 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68B47895EF48EFA9E65034 /* AmplifyModels.swift */; };
 		78629D2A64F6473B74BF22D2 /* UserFavoriteContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C47EA47CB640F9BD028AEE /* UserFavoriteContent+Schema.swift */; };
 		78BE441C66E5D306312A2801 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
+		790724B463BC17A64CFA2EC0 /* UserSubscriptionTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */; };
 		798DB99205A643908E494899 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8F3BF2867A4D8294FB8222 /* UserProfile.swift */; };
 		79B5BDAFDF133AD9755890DB /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
 		79BEFFBE1D76DAE1A225F758 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8F3BF2867A4D8294FB8222 /* UserProfile.swift */; };
 		79F550E917CF1D6BF3471F6B /* UserSubscriptionTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */; };
 		7A1CC415AD038890ED791B12 /* UserSubscriptionTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */; };
+		7A504641C4CFD8B6CDF86660 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8F3BF2867A4D8294FB8222 /* UserProfile.swift */; };
 		7AA09CFF35E5953EBCCDC1BC /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
 		7B488202890DAD84CA2766FE /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
 		7BD66E7B234C36905A8A1C8F /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
@@ -314,6 +319,7 @@
 		958520AD95C212B9CB9407D4 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8F3BF2867A4D8294FB8222 /* UserProfile.swift */; };
 		959C9002C906D086964EF447 /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
 		96DAEF64CF9DDD23B0B9480E /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
+		9718AFE26B2BC248BFB3FA87 /* UserFavoriteContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C47EA47CB640F9BD028AEE /* UserFavoriteContent+Schema.swift */; };
 		97B08BEF9E7626FB351AF642 /* UserFavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397087124EE4DEA8E0A9DB8 /* UserFavoriteContent.swift */; };
 		98621365CD5CDE96B53655AA /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68B47895EF48EFA9E65034 /* AmplifyModels.swift */; };
 		98E1544D9DA33D79F43548D5 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68B47895EF48EFA9E65034 /* AmplifyModels.swift */; };
@@ -362,6 +368,7 @@
 		AB89D1263C61AE9C0EBB44BE /* UserContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */; };
 		ABB56C430CA0CD818AF50772 /* UserFavoriteContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C47EA47CB640F9BD028AEE /* UserFavoriteContent+Schema.swift */; };
 		AC3B432C69473656E32F071D /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
+		AC5ABE64EE2EF559C27EF984 /* UserFavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397087124EE4DEA8E0A9DB8 /* UserFavoriteContent.swift */; };
 		AC5E00B34124AC27F98750D5 /* UserContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */; };
 		ACD53299B6D55FDB49FCC15B /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
 		ACDE3C0BAB8FF8BDC2124DD0 /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
@@ -444,8 +451,6 @@
 		B6771624264A18A30035A50C /* TrainerDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6771620264A18A30035A50C /* TrainerDetailModel.swift */; };
 		B6771625264A18A30035A50C /* TrainerDetailContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6771621264A18A30035A50C /* TrainerDetailContent.swift */; };
 		B6771626264A18A30035A50C /* TrainerDetailFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6771622264A18A30035A50C /* TrainerDetailFavorite.swift */; };
-		B6771629264A1A350035A50C /* TrainerBaseInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6771627264A1A350035A50C /* TrainerBaseInfoCell.swift */; };
-		B677162A264A1A350035A50C /* TrainerBaseInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6771628264A1A350035A50C /* TrainerBaseInfoCell.xib */; };
 		B677162C264A21B20035A50C /* AgeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B677162B264A21B20035A50C /* AgeUtils.swift */; };
 		B67D853A2697E8610097DBF9 /* MessageGroupSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67D85382697E8610097DBF9 /* MessageGroupSendViewController.swift */; };
 		B67D853B2697E8610097DBF9 /* MessageGroupSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67D85392697E8610097DBF9 /* MessageGroupSendViewController.xib */; };
@@ -463,6 +468,12 @@
 		B67D8555269C16610097DBF9 /* SearchResultListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67D8553269C16610097DBF9 /* SearchResultListCell.xib */; };
 		B67D8558269C2A860097DBF9 /* DescriptionInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67D8556269C2A860097DBF9 /* DescriptionInputCell.swift */; };
 		B67D8559269C2A860097DBF9 /* DescriptionInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67D8557269C2A860097DBF9 /* DescriptionInputCell.xib */; };
+		B67D855C269D2D4A0097DBF9 /* SegmentInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67D855A269D2D4A0097DBF9 /* SegmentInputCell.swift */; };
+		B67D855D269D2D4A0097DBF9 /* SegmentInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67D855B269D2D4A0097DBF9 /* SegmentInputCell.xib */; };
+		B67D8564269D6A780097DBF9 /* UserProfileModeChangeColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67D8562269D6A780097DBF9 /* UserProfileModeChangeColCell.swift */; };
+		B67D8565269D6A780097DBF9 /* UserProfileModeChangeColCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67D8563269D6A780097DBF9 /* UserProfileModeChangeColCell.xib */; };
+		B67D8568269D6D460097DBF9 /* FeedOrFavColListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67D8566269D6D460097DBF9 /* FeedOrFavColListCell.swift */; };
+		B67D8569269D6D460097DBF9 /* FeedOrFavColListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67D8567269D6D460097DBF9 /* FeedOrFavColListCell.xib */; };
 		B68262AC2639A3F000A32D5C /* ApiMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262AB2639A3F000A32D5C /* ApiMacro.swift */; };
 		B68262B22639AB7200A32D5C /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68262B02639AB7200A32D5C /* VideoViewController.swift */; };
 		B68262B32639AB7200A32D5C /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B68262B12639AB7200A32D5C /* VideoViewController.xib */; };
@@ -514,10 +525,8 @@
 		B685E7D2265FD255008246A2 /* ContentUploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7D0265FD255008246A2 /* ContentUploadViewController.xib */; };
 		B685E7D5265FD619008246A2 /* VideoUploadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7D3265FD619008246A2 /* VideoUploadCell.swift */; };
 		B685E7D6265FD619008246A2 /* VideoUploadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7D4265FD619008246A2 /* VideoUploadCell.xib */; };
-		B685E7D926607E6C008246A2 /* ContentInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7D726607E6C008246A2 /* ContentInputCell.swift */; };
-		B685E7DA26607E6C008246A2 /* ContentInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7D826607E6C008246A2 /* ContentInputCell.xib */; };
-		B685E7DD2660800F008246A2 /* CheckBoxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7DB2660800F008246A2 /* CheckBoxCell.swift */; };
-		B685E7DE2660800F008246A2 /* CheckBoxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7DC2660800F008246A2 /* CheckBoxCell.xib */; };
+		B685E7D926607E6C008246A2 /* VideoTitleInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7D726607E6C008246A2 /* VideoTitleInputCell.swift */; };
+		B685E7DA26607E6C008246A2 /* VideoTitleInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7D826607E6C008246A2 /* VideoTitleInputCell.xib */; };
 		B685E7E1266084B2008246A2 /* SingleBtnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B685E7DF266084B2008246A2 /* SingleBtnCell.swift */; };
 		B685E7E2266084B2008246A2 /* SingleBtnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B685E7E0266084B2008246A2 /* SingleBtnCell.xib */; };
 		B68EAA3C2664C14500BAF259 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68EAA3A2664C14500BAF259 /* DatePickerViewController.swift */; };
@@ -688,6 +697,7 @@
 		CD8BC972198FAF290887A3D7 /* UserContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */; };
 		CDD529108A30072BEECEA061 /* UserFavoriteContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C47EA47CB640F9BD028AEE /* UserFavoriteContent+Schema.swift */; };
 		CDE4D138A38D31A0F6C3035A /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
+		CE593C0316B6B22D9E0258F2 /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
 		CEBE7515AC81BB86F63C5961 /* UserFavoriteContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C47EA47CB640F9BD028AEE /* UserFavoriteContent+Schema.swift */; };
 		CF07D71ACEB7F736E136E06C /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */; };
 		CF59E4C4A2129E255DF89D8A /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
@@ -705,9 +715,11 @@
 		D58204C48D0B36717D07588B /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8F3BF2867A4D8294FB8222 /* UserProfile.swift */; };
 		D59BCF71EE779B9814945EF0 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8F3BF2867A4D8294FB8222 /* UserProfile.swift */; };
 		D5C76618DE8A77D426BF558D /* UserContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */; };
+		D806421618075375AB0EC0EC /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
 		D9B4DE72437CC696B38CA169 /* UserSubscriptionTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */; };
 		D9F477CAB4FD38C04F1AE6DE /* UserSubscriptionTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */; };
 		DA0DDC727FB47A6AD5572A5F /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
+		DA8CD2E8281A818BE5502007 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */; };
 		DAD10FC648E6AEC4B34760E1 /* UserContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */; };
 		DB62D70B574762A391CE325B /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
 		DB6D8625362276A40896B3AC /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
@@ -779,6 +791,7 @@
 		FC17AE64505FED4572596B12 /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
 		FC1B83AB9AD8DCFCCF8D2A8B /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
 		FCB0A406748B74C50FE47102 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68B47895EF48EFA9E65034 /* AmplifyModels.swift */; };
+		FCF081DA26E6F3732DCA73F7 /* UserContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */; };
 		FD57E4B993935042027C1CC2 /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
 		FD745266344501C5A7F40EF1 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */; };
 		FE1AE460562FA5FB355D6FDC /* UserSubscriptionTrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF5B3BF04D4937BDD322DF /* UserSubscriptionTrainer.swift */; };
@@ -844,8 +857,6 @@
 		B6771620264A18A30035A50C /* TrainerDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainerDetailModel.swift; sourceTree = "<group>"; };
 		B6771621264A18A30035A50C /* TrainerDetailContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainerDetailContent.swift; sourceTree = "<group>"; };
 		B6771622264A18A30035A50C /* TrainerDetailFavorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainerDetailFavorite.swift; sourceTree = "<group>"; };
-		B6771627264A1A350035A50C /* TrainerBaseInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerBaseInfoCell.swift; sourceTree = "<group>"; };
-		B6771628264A1A350035A50C /* TrainerBaseInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainerBaseInfoCell.xib; sourceTree = "<group>"; };
 		B677162B264A21B20035A50C /* AgeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeUtils.swift; sourceTree = "<group>"; };
 		B67D85382697E8610097DBF9 /* MessageGroupSendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageGroupSendViewController.swift; sourceTree = "<group>"; };
 		B67D85392697E8610097DBF9 /* MessageGroupSendViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageGroupSendViewController.xib; sourceTree = "<group>"; };
@@ -863,6 +874,12 @@
 		B67D8553269C16610097DBF9 /* SearchResultListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultListCell.xib; sourceTree = "<group>"; };
 		B67D8556269C2A860097DBF9 /* DescriptionInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionInputCell.swift; sourceTree = "<group>"; };
 		B67D8557269C2A860097DBF9 /* DescriptionInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DescriptionInputCell.xib; sourceTree = "<group>"; };
+		B67D855A269D2D4A0097DBF9 /* SegmentInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentInputCell.swift; sourceTree = "<group>"; };
+		B67D855B269D2D4A0097DBF9 /* SegmentInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SegmentInputCell.xib; sourceTree = "<group>"; };
+		B67D8562269D6A780097DBF9 /* UserProfileModeChangeColCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileModeChangeColCell.swift; sourceTree = "<group>"; };
+		B67D8563269D6A780097DBF9 /* UserProfileModeChangeColCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileModeChangeColCell.xib; sourceTree = "<group>"; };
+		B67D8566269D6D460097DBF9 /* FeedOrFavColListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedOrFavColListCell.swift; sourceTree = "<group>"; };
+		B67D8567269D6D460097DBF9 /* FeedOrFavColListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedOrFavColListCell.xib; sourceTree = "<group>"; };
 		B68262AB2639A3F000A32D5C /* ApiMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiMacro.swift; sourceTree = "<group>"; };
 		B68262B02639AB7200A32D5C /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		B68262B12639AB7200A32D5C /* VideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -916,10 +933,8 @@
 		B685E7D0265FD255008246A2 /* ContentUploadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentUploadViewController.xib; sourceTree = "<group>"; };
 		B685E7D3265FD619008246A2 /* VideoUploadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoUploadCell.swift; sourceTree = "<group>"; };
 		B685E7D4265FD619008246A2 /* VideoUploadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoUploadCell.xib; sourceTree = "<group>"; };
-		B685E7D726607E6C008246A2 /* ContentInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInputCell.swift; sourceTree = "<group>"; };
-		B685E7D826607E6C008246A2 /* ContentInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentInputCell.xib; sourceTree = "<group>"; };
-		B685E7DB2660800F008246A2 /* CheckBoxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxCell.swift; sourceTree = "<group>"; };
-		B685E7DC2660800F008246A2 /* CheckBoxCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckBoxCell.xib; sourceTree = "<group>"; };
+		B685E7D726607E6C008246A2 /* VideoTitleInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTitleInputCell.swift; sourceTree = "<group>"; };
+		B685E7D826607E6C008246A2 /* VideoTitleInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoTitleInputCell.xib; sourceTree = "<group>"; };
 		B685E7DF266084B2008246A2 /* SingleBtnCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBtnCell.swift; sourceTree = "<group>"; };
 		B685E7E0266084B2008246A2 /* SingleBtnCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleBtnCell.xib; sourceTree = "<group>"; };
 		B68EAA3A2664C14500BAF259 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
@@ -1139,6 +1154,10 @@
 				B67716112647F6190035A50C /* UserContentSegmentListCell.xib */,
 				B67716142647F8110035A50C /* UserContentSectionTitleView.swift */,
 				B67716162647F81F0035A50C /* UserContentSectionTitleView.xib */,
+				B67D8562269D6A780097DBF9 /* UserProfileModeChangeColCell.swift */,
+				B67D8563269D6A780097DBF9 /* UserProfileModeChangeColCell.xib */,
+				B67D8566269D6D460097DBF9 /* FeedOrFavColListCell.swift */,
+				B67D8567269D6D460097DBF9 /* FeedOrFavColListCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1219,20 +1238,18 @@
 				B6965A3C2664850B00173207 /* TrainerContentListCell.xib */,
 				B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */,
 				B63C3F1326611BEA00A3D08C /* SegmentSectionHeaderView.xib */,
-				B6771627264A1A350035A50C /* TrainerBaseInfoCell.swift */,
-				B6771628264A1A350035A50C /* TrainerBaseInfoCell.xib */,
 				B685E7D3265FD619008246A2 /* VideoUploadCell.swift */,
 				B685E7D4265FD619008246A2 /* VideoUploadCell.xib */,
-				B685E7D726607E6C008246A2 /* ContentInputCell.swift */,
-				B685E7D826607E6C008246A2 /* ContentInputCell.xib */,
-				B67D8556269C2A860097DBF9 /* DescriptionInputCell.swift */,
-				B67D8557269C2A860097DBF9 /* DescriptionInputCell.xib */,
-				B685E7DB2660800F008246A2 /* CheckBoxCell.swift */,
-				B685E7DC2660800F008246A2 /* CheckBoxCell.xib */,
-				B685E7DF266084B2008246A2 /* SingleBtnCell.swift */,
-				B685E7E0266084B2008246A2 /* SingleBtnCell.xib */,
 				B6AD0BF12676FAA5009B0B5D /* VideoCaptureUploadCell.swift */,
 				B6AD0BF22676FAA5009B0B5D /* VideoCaptureUploadCell.xib */,
+				B685E7D726607E6C008246A2 /* VideoTitleInputCell.swift */,
+				B685E7D826607E6C008246A2 /* VideoTitleInputCell.xib */,
+				B67D8556269C2A860097DBF9 /* DescriptionInputCell.swift */,
+				B67D8557269C2A860097DBF9 /* DescriptionInputCell.xib */,
+				B685E7DF266084B2008246A2 /* SingleBtnCell.swift */,
+				B685E7E0266084B2008246A2 /* SingleBtnCell.xib */,
+				B67D855A269D2D4A0097DBF9 /* SegmentInputCell.swift */,
+				B67D855B269D2D4A0097DBF9 /* SegmentInputCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1852,7 +1869,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B677162A264A1A350035A50C /* TrainerBaseInfoCell.xib in Resources */,
 				B67716132647F6190035A50C /* UserContentSegmentListCell.xib in Resources */,
 				C1DEDD8A263746CB00F66A7C /* awsconfiguration.json in Resources */,
 				C1DEDD7E2637460900F66A7C /* Preview Assets.xcassets in Resources */,
@@ -1895,7 +1911,6 @@
 				B69103D526381EC0005F2ACD /* HomeBannerColListCell.xib in Resources */,
 				B682632126424C6A00A32D5C /* Nunito-LightItalic.ttf in Resources */,
 				B67716172647F81F0035A50C /* UserContentSectionTitleView.xib in Resources */,
-				B685E7DE2660800F008246A2 /* CheckBoxCell.xib in Resources */,
 				B69103D326381EC0005F2ACD /* HomeInfoColCell.xib in Resources */,
 				B682632026424C6A00A32D5C /* Nunito-Italic.ttf in Resources */,
 				B6E4000E264C0C510020F636 /* ZFPlayer.bundle in Resources */,
@@ -1918,6 +1933,7 @@
 				B69103D426381EC0005F2ACD /* HomeSeeAllCoursesView.xib in Resources */,
 				B682631626424C6A00A32D5C /* Nunito-Light.ttf in Resources */,
 				B6A285292684341100E40B3B /* MessageStudentChatController.xib in Resources */,
+				B67D8569269D6D460097DBF9 /* FeedOrFavColListCell.xib in Resources */,
 				B63C3F1526611BEA00A3D08C /* SegmentSectionHeaderView.xib in Resources */,
 				B685E7E2266084B2008246A2 /* SingleBtnCell.xib in Resources */,
 				B6BFDE2226526602004FC2F1 /* RegisterViewController.xib in Resources */,
@@ -1925,7 +1941,7 @@
 				B677161E264A18760035A50C /* TrainerDetailViewController.xib in Resources */,
 				C1DEDD7B2637460900F66A7C /* Assets.xcassets in Resources */,
 				B685E7CE265FCF55008246A2 /* TrainerProfileViewController.xib in Resources */,
-				B685E7DA26607E6C008246A2 /* ContentInputCell.xib in Resources */,
+				B685E7DA26607E6C008246A2 /* VideoTitleInputCell.xib in Resources */,
 				B682632A2642729200A32D5C /* HomeListViewController.xib in Resources */,
 				175A7B668B9D554B1C40DA97 /* awsconfiguration.json in Resources */,
 				4B81BE0C130150A7F26AA89B /* amplifyconfiguration.json in Resources */,
@@ -1940,6 +1956,7 @@
 				458FCE463E858EAAD13D9E4A /* awsconfiguration.json in Resources */,
 				6109E816CCE5FDA3D0A27BB6 /* amplifyconfiguration.json in Resources */,
 				BBE9D3A1487CF6E2F63E1B25 /* awsconfiguration.json in Resources */,
+				B67D855D269D2D4A0097DBF9 /* SegmentInputCell.xib in Resources */,
 				4FCFCB7CFD72BE42D393133D /* amplifyconfiguration.json in Resources */,
 				2613ECEA83D26771AB8AED85 /* awsconfiguration.json in Resources */,
 				838AE9D4AD67C43C78949F41 /* amplifyconfiguration.json in Resources */,
@@ -1979,6 +1996,7 @@
 				ACD53299B6D55FDB49FCC15B /* awsconfiguration.json in Resources */,
 				826B2D543E92AB19BEB8ED32 /* amplifyconfiguration.json in Resources */,
 				B67D853F2697EAFD0097DBF9 /* MsgGroupSendCell.xib in Resources */,
+				B67D8565269D6A780097DBF9 /* UserProfileModeChangeColCell.xib in Resources */,
 				F7F7658E1C87FF2050253FBB /* awsconfiguration.json in Resources */,
 				8FA60262718FC70BCC4F6B72 /* amplifyconfiguration.json in Resources */,
 				9EDC5F6A43D3171F4F4F17A0 /* awsconfiguration.json in Resources */,
@@ -2028,6 +2046,8 @@
 				053EF2A57A417F7E5D452026 /* amplifyconfiguration.json in Resources */,
 				80E4A584A57193EFC0C63211 /* awsconfiguration.json in Resources */,
 				62EE459782F811AA7340C925 /* amplifyconfiguration.json in Resources */,
+				726672BCCA052D098E8672A9 /* awsconfiguration.json in Resources */,
+				DA8CD2E8281A818BE5502007 /* amplifyconfiguration.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2098,7 +2118,6 @@
 				B6F365422653FCE300539B5E /* TZVideoPlayerController.swift in Sources */,
 				B68262BF263A3E2300A32D5C /* GraphQLRequestExt.swift in Sources */,
 				B68262BC2639B16100A32D5C /* StringUtils.swift in Sources */,
-				B6771629264A1A350035A50C /* TrainerBaseInfoCell.swift in Sources */,
 				B69103DB26381EC0005F2ACD /* LoginSecondViewController.swift in Sources */,
 				B6F3653B2653FCE300539B5E /* TZProgressView.swift in Sources */,
 				B685E7CD265FCF55008246A2 /* TrainerProfileViewController.swift in Sources */,
@@ -2128,6 +2147,7 @@
 				B63749F2264694C800502913 /* TimeFormatUtils.swift in Sources */,
 				B68262F2263C4F4000A32D5C /* UserSubscriptionTrainerListContent.swift in Sources */,
 				B63749F0264596EA00502913 /* UserCenterModel.swift in Sources */,
+				B67D8568269D6D460097DBF9 /* FeedOrFavColListCell.swift in Sources */,
 				B677161D264A18760035A50C /* TrainerDetailViewController.swift in Sources */,
 				B6BFDE2826526FCD004FC2F1 /* RegisterConfirmViewController.swift in Sources */,
 				661922BAC3E9493399943D1A /* UserContent.swift in Sources */,
@@ -2143,7 +2163,7 @@
 				B6E40006264C0C510020F636 /* ZFReachabilityManager.m in Sources */,
 				B68262DB263BFFEF00A32D5C /* MBProgressHUD.m in Sources */,
 				B69103DE26381EC0005F2ACD /* LoginViewController.swift in Sources */,
-				B685E7D926607E6C008246A2 /* ContentInputCell.swift in Sources */,
+				B685E7D926607E6C008246A2 /* VideoTitleInputCell.swift in Sources */,
 				B63C3F1626611BEA00A3D08C /* SegmentSectionHeaderView.swift in Sources */,
 				B6E4FFFD264C0C510020F636 /* ZFPersentInteractiveTransition.m in Sources */,
 				B6BFDE2C2652A952004FC2F1 /* FogotPwdViewController.swift in Sources */,
@@ -2163,9 +2183,9 @@
 				B6A285092681D12800E40B3B /* MessageTrainerListCell.swift in Sources */,
 				B6E4FFFE264C0C510020F636 /* UIScrollView+ZFPlayer.m in Sources */,
 				B637497A26444D9F00502913 /* UserProfileTopCell.swift in Sources */,
+				B67D855C269D2D4A0097DBF9 /* SegmentInputCell.swift in Sources */,
 				B6E4FFFF264C0C510020F636 /* ZFPlayerNotification.m in Sources */,
 				B6BFDE492653B22D004FC2F1 /* UserProfileEditViewController.swift in Sources */,
-				B685E7DD2660800F008246A2 /* CheckBoxCell.swift in Sources */,
 				B682632626426FDB00A32D5C /* HomeListCell.swift in Sources */,
 				2D300B2B0DB846128C62C062 /* UserFavoriteContent.swift in Sources */,
 				B67716122647F6190035A50C /* UserContentSegmentListCell.swift in Sources */,
@@ -2618,11 +2638,21 @@
 				B962DE3A17129C42E3B8FE19 /* UserContent+Schema.swift in Sources */,
 				936F2AD0E435B3C98F97936F /* UserContent.swift in Sources */,
 				00E98173FB211C50DA7A8D94 /* UserFavoriteContent+Schema.swift in Sources */,
+				B67D8564269D6A780097DBF9 /* UserProfileModeChangeColCell.swift in Sources */,
 				E2CA95936959EF9CE5965FB8 /* UserFavoriteContent.swift in Sources */,
 				46B6BA60DD9BB099AD78C71C /* UserProfile+Schema.swift in Sources */,
 				BE5E964B8ADAB96B9694E5AA /* UserProfile.swift in Sources */,
 				5466B2EFB870904696D4BE16 /* UserSubscriptionTrainer+Schema.swift in Sources */,
 				D3C3B9D3F7897B8A7C5D913A /* UserSubscriptionTrainer.swift in Sources */,
+				1A2205FAEFC108C16AAEB133 /* AmplifyModels.swift in Sources */,
+				FCF081DA26E6F3732DCA73F7 /* UserContent+Schema.swift in Sources */,
+				CE593C0316B6B22D9E0258F2 /* UserContent.swift in Sources */,
+				9718AFE26B2BC248BFB3FA87 /* UserFavoriteContent+Schema.swift in Sources */,
+				AC5ABE64EE2EF559C27EF984 /* UserFavoriteContent.swift in Sources */,
+				2ED118DF4809B8C1F0A5F22E /* UserProfile+Schema.swift in Sources */,
+				7A504641C4CFD8B6CDF86660 /* UserProfile.swift in Sources */,
+				D806421618075375AB0EC0EC /* UserSubscriptionTrainer+Schema.swift in Sources */,
+				790724B463BC17A64CFA2EC0 /* UserSubscriptionTrainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

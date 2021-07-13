@@ -68,7 +68,7 @@ extension DatePickerViewController:UIPickerViewDelegate,UIPickerViewDataSource{
         let itemWidth:CGFloat = CGFloat(kScreenWidth/3.0)
         let title = UILabel(frame: CGRect(x: itemWidth*CGFloat(component), y: 0, width: itemWidth, height: 50))
         title.textColor = defaultTitleColor
-        title.font = UIFont.systemFont(ofSize: 15)
+        title.font = UIFont.init(name: nRegular, size: 20)
         title.text = "\(row)"
         title.textAlignment = .center
         return title

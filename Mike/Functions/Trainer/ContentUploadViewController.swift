@@ -60,7 +60,7 @@ class ContentUploadViewController: BaseViewController {
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
         self.mainTableView.register(UINib(nibName: "SelectVideoCell", bundle: nil), forCellReuseIdentifier: "SelectVideoCell")
-        self.mainTableView.register(UINib(nibName: "ContentInputCell", bundle: nil), forCellReuseIdentifier: "ContentInputCell")
+        self.mainTableView.register(UINib(nibName: "VideoTitleInputCell", bundle: nil), forCellReuseIdentifier: "VideoTitleInputCell")
         self.mainTableView.register(UINib(nibName: "DescriptionInputCell", bundle: nil), forCellReuseIdentifier: "DescriptionInputCell")
         self.mainTableView.register(UINib(nibName: "VideoCaptureUploadCell", bundle: nil), forCellReuseIdentifier: "VideoCaptureUploadCell")
     }
@@ -89,7 +89,7 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            let cell:ContentInputCell = tableView.dequeueReusableCell(withIdentifier: "ContentInputCell", for: indexPath) as! ContentInputCell
+            let cell:VideoTitleInputCell = tableView.dequeueReusableCell(withIdentifier: "VideoTitleInputCell", for: indexPath) as! VideoTitleInputCell
             cell.delegate = self
             cell.setTitle("Title", textValue: self.videoTitleValue, indexPath: indexPath)
             return cell
@@ -132,7 +132,7 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
 
     }
 }
-extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDelegate,SingleBtnCellDelegate,VideoCaptureUploadCellDelegate,DescriptionInputCellDelegate{
+extension ContentUploadViewController:VideoUploadCellDelegate,VideoTitleInputCellDelegate,SingleBtnCellDelegate,VideoCaptureUploadCellDelegate,DescriptionInputCellDelegate{
     //MARK: - videouploadCellDelegate
     func addBtnClicked() {
         self.selectVideo()
@@ -184,7 +184,7 @@ extension ContentUploadViewController:VideoUploadCellDelegate,ContentInputCellDe
 //        vc.videoURL = self.videoURL
         vc.videoTitleValue = self.videoTitleValue
         vc.videoDescValue = self.videoDescValue
-        vc.videoImage = self.videoCapture
+        vc.videoCapture = self.videoCapture
 //        vc.isDemoVideo = self.isDemoVideo
 //        if self.videoCapture == nil {
 //            vc.videoImage = self.videoImage
