@@ -14,6 +14,7 @@ class VideoCaptureUploadCell: UITableViewCell {
     @IBOutlet weak var addBtn:UIButton!
     @IBOutlet weak var uploadTitle:UILabel!
     @IBOutlet weak var delBtn:UIButton!
+    @IBOutlet weak var rightMargin:NSLayoutConstraint!
     weak var delegate:VideoCaptureUploadCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,9 +24,11 @@ class VideoCaptureUploadCell: UITableViewCell {
         if let img = image {
             self.addBtn.setImage(img, for: .normal)
             self.delBtn.isHidden = false
+            self.rightMargin.constant = -60
         }else{
             self.addBtn.setImage(UIImage(named: "btn_upload"), for: .normal)
             self.delBtn.isHidden = true
+            self.rightMargin.constant = 0
         }
     }
     @IBAction func addBtnPressed(){

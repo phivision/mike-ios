@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -26,7 +27,7 @@
                     </constraints>
                 </imageView>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Q90-pL-ncp">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KlE-G0-2WB">
                         <size key="itemSize" width="128" height="128"/>
@@ -39,9 +40,9 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="Q90-pL-ncp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1HP-yh-Jrz"/>
+                <constraint firstItem="Q90-pL-ncp" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="1HP-yh-Jrz"/>
                 <constraint firstItem="9dL-ik-7rq" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="JXz-x8-5td"/>
-                <constraint firstAttribute="bottom" secondItem="Q90-pL-ncp" secondAttribute="bottom" id="Zlb-Qf-RQy"/>
+                <constraint firstItem="Q90-pL-ncp" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Zlb-Qf-RQy"/>
                 <constraint firstItem="9dL-ik-7rq" firstAttribute="width" secondItem="9dL-ik-7rq" secondAttribute="height" multiplier="23:20" id="d7A-sl-Dep"/>
                 <constraint firstItem="Q90-pL-ncp" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dgL-Vc-Meq"/>
                 <constraint firstItem="Q90-pL-ncp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="dqj-FG-M0I"/>

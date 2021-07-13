@@ -7,12 +7,11 @@
 
 import UIKit
 @objc protocol SegmentSectionHeaderViewDelegate {
-    @objc optional func delBtnClicked(sectionIndex:NSInteger)
+    @objc optional func addBtnClicked()
 }
 class SegmentSectionHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var sectionTitle:UILabel!
     weak var delegate:SegmentSectionHeaderViewDelegate?
-    var sectionIndex:NSInteger = -1
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -20,11 +19,7 @@ class SegmentSectionHeaderView: UITableViewHeaderFooterView {
         // Drawing code
     }
     */
-    func setIndex(section:NSInteger){
-        self.sectionIndex = section
-        self.sectionTitle.text = "Section \(section+1)"
-    }
     @IBAction func delBtnPressed(){
-        self.delegate?.delBtnClicked?(sectionIndex: self.sectionIndex)
+        self.delegate?.addBtnClicked?()
     }
 }

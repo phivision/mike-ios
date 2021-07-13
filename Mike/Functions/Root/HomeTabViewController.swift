@@ -137,7 +137,9 @@ extension HomeTabViewController{
 //        bg.layer.shadowOpacity = 2
 //
 //        tabBar.insertSubview(bg, at: 0)
-        tabBar.addSubview(self.centerBorderImg)
+        if LoginTools.sharedTools.userInfo().userRole != "trainer" {
+            tabBar.addSubview(self.centerBorderImg)
+        }
     }
     @objc func logoBtnPressed(){
         self.tabSelectIndex = 2

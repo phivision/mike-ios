@@ -66,7 +66,6 @@ class TrainerDetailViewController: BaseViewController{
         self.mainCollection.clipsToBounds = false
         self.mainCollection.register(UINib(nibName: "UserProfileTopCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTopCell")
         self.mainCollection.register(UINib(nibName: "UserProfileFavHorizonListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileFavHorizonListCell")
-        self.mainCollection.register(UINib(nibName: "TrainerBaseInfoCell", bundle: nil), forCellWithReuseIdentifier: "TrainerBaseInfoCell")
         self.mainCollection.register(UINib(nibName: "UserProfileSectionTitleView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView")
     }
 
@@ -142,12 +141,6 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
             return cell
         case 1:
             return UICollectionViewCell()
-//            let cell:TrainerBaseInfoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrainerBaseInfoCell", for: indexPath) as! TrainerBaseInfoCell
-//            cell.contentView.backgroundColor = UIColor.white
-//            if let model = self.trainerModel {
-//                cell.setModel(model: model)
-//            }
-//            return cell
         case 2:
             let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
             cell.contentView.backgroundColor = UIColor.white
@@ -160,10 +153,6 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
             cell.setFavList(fList: self.contentList)
             cell.delegate = self
             return cell
-//            let cell:UserProfileHealthKitListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileHealthKitListCell", for: indexPath) as! UserProfileHealthKitListCell
-//            cell.contentView.backgroundColor = UIColor.white
-//            cell.setModel(model: self.metricsList[indexPath.row])
-//            return cell
         default:
             return UICollectionViewCell()
         }

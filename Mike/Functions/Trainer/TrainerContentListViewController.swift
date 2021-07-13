@@ -18,7 +18,6 @@ class TrainerContentListViewController: BaseViewController {
         return refreshControl
     }()
     @IBOutlet weak var userName:UILabel!
-    @IBOutlet weak var timeLab:UILabel!
     lazy var contentList:Array<UserCenterContent> = {
         var contentList:Array<UserCenterContent> = Array<UserCenterContent>()
         return contentList
@@ -43,12 +42,12 @@ class TrainerContentListViewController: BaseViewController {
     
     func configTopView(){
         self.userName.text = "Hi, \(LoginTools.sharedTools.userInfo().firstName ?? "")"
-        let date = Date()
-        let timeFormatter = DateFormatter()
-        //日期显示格式，可按自己需求显示
-        timeFormatter.dateFormat = "EEEE MMM dd"
-        let strNowTime = timeFormatter.string(from: date) as String
-        self.timeLab.text = "\(strNowTime)"
+//        let date = Date()
+//        let timeFormatter = DateFormatter()
+//        //日期显示格式，可按自己需求显示
+//        timeFormatter.dateFormat = "EEEE MMM dd"
+//        let strNowTime = timeFormatter.string(from: date) as String
+//        self.timeLab.text = "\(strNowTime)"
     }
     
     func configTableView(){
