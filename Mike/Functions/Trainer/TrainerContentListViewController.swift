@@ -110,11 +110,13 @@ extension TrainerContentListViewController:UITableViewDelegate,UITableViewDataSo
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc:UserContentDetailViewController = UserContentDetailViewController()
+        let vc:UserContentController = UserContentController()
         vc.userContentModel = self.contentList[indexPath.row]
         vc.trainerId = LoginTools.sharedTools.userId()
+        let nav:UINavigationController = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
-            self.present(vc, animated: true, completion: nil)
+            self.present(nav, animated: true, completion: nil)
         }
     }
 }

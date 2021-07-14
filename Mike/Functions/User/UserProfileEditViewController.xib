@@ -52,7 +52,7 @@
                         <constraint firstAttribute="width" constant="97" id="sVO-6E-4yY"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
-                    <state key="normal" title="Post">
+                    <state key="normal" title="Save">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <connections>
