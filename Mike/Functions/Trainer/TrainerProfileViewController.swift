@@ -237,8 +237,8 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
 }
 extension TrainerProfileViewController:UserProfileTopCellDelegate{
     func settingBtnClicked() {
-        let vc:UserProfileSettingViewController = UserProfileSettingViewController()
-//        nav.modalPresentationStyle = .fullScreen
+        let vc:TrainerSettingViewController = TrainerSettingViewController()
+        vc.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
         }
