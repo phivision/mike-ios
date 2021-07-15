@@ -70,7 +70,7 @@ class TrainerContentListViewController: BaseViewController {
     }
     
     func fetchSpeakerList(){
-        Backend.shared.fetchTrainerContentList(trainerId: LoginTools.sharedTools.userId()) { contentList in
+        TrainerBackend.shared.fetchTrainerContentList(trainerId: LoginTools.sharedTools.userId()) { contentList in
             self.contentList.removeAll()
             self.contentList.append(contentsOf: contentList)
             DispatchQueue.main.async {

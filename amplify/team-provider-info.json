@@ -152,7 +152,7 @@
         },
         "marketing": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/marketing-6845384859787373332f-build.zip"
+          "s3Key": "amplify-builds/marketing-664b70424e514768682b-build.zip"
         },
         "videoFlutterMove": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",

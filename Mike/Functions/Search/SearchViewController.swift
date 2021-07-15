@@ -9,6 +9,7 @@ import UIKit
 
 class SearchViewController: BaseViewController {
     @IBOutlet weak var searchBg:UIImageView!
+    @IBOutlet weak var searchText:UITextField!
     @IBOutlet weak var mainTableView:UITableView!
     lazy var trainerList:Array<UserCenterTrainer> = {
         var trainerList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
@@ -34,7 +35,20 @@ class SearchViewController: BaseViewController {
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
     }
+    @IBAction func searchByKeyword(){
+        self.searchText.resignFirstResponder()
+        SearchBackend.shared.fetchTrainerListWithKeyword(keyword: self.searchText.text ?? "") { trainerList in
+            self.trainerList.removeAll()
+            self.trainerList.append(contentsOf: trainerList)
+            DispatchQueue.main.async {
+                self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
+                self.mainTableView.reloadData()
+            }
+        } fail: { error in
+            
+        }
 
+    }
     /*
     // MARK: - Navigation
 
@@ -48,7 +62,7 @@ class SearchViewController: BaseViewController {
 }
 extension SearchViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return self.trainerList.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -56,6 +70,7 @@ extension SearchViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:SearchResultListCell = tableView.dequeueReusableCell(withIdentifier: "SearchResultListCell", for: indexPath) as! SearchResultListCell
+        cell.setModel(model: self.trainerList[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

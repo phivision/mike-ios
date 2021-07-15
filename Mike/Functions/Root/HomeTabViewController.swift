@@ -67,7 +67,7 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
                 addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
                 addChildVC(childVC: SearchViewController(), title: "", imageNormal: UIImage(named: "icon_search_N"), imageSelect: UIImage(named: "icon_search_H"),showNavBar: false),
                 addChildVC(childVC: ContentUploadViewController(), title: "", imageNormal: UIImage(named: ""), imageSelect: UIImage(named: ""),showNavBar: false),
-                addChildVC(childVC: MessageStudentViewController(), title: "", imageNormal: UIImage(named: "icon_chat_N"), imageSelect: UIImage(named: "icon_chat_H"),showNavBar: false),
+                addChildVC(childVC: MessageTrainerListViewController(), title: "", imageNormal: UIImage(named: "icon_chat_N"), imageSelect: UIImage(named: "icon_chat_H"),showNavBar: false),
                 addChildVC(childVC: UserProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];
         }
@@ -77,12 +77,12 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
         let navVC = UINavigationController(rootViewController: childVC)
         navVC.isNavigationBarHidden = !showNavBar
         navVC.tabBarItem.title = title
-        navVC.tabBarItem.image = imageNormal
+        navVC.tabBarItem.image = imageNormal?.withRenderingMode(.alwaysOriginal)
         navVC.tabBarItem.selectedImage = imageSelect?.withRenderingMode(.alwaysOriginal)
-        navVC.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10,weight: .regular), NSAttributedString.Key.foregroundColor :HexRGBAlpha(0x8E9DAE,1)], for: .normal)
+//        navVC.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10,weight: .regular), NSAttributedString.Key.foregroundColor :HexRGBAlpha(0x8E9DAE,1)], for: .normal)
 
         //设置tabBarItem的title的字体颜色和字大小及字体样式
-        navVC.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10,weight: .medium), NSAttributedString.Key.foregroundColor : customGrayColor], for: .selected)
+//        navVC.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10,weight: .medium), NSAttributedString.Key.foregroundColor : customGrayColor], for: .selected)
         return navVC
     }
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {

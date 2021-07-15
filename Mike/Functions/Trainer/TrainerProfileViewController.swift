@@ -42,7 +42,7 @@ class TrainerProfileViewController: BaseViewController{
         self.mainCollection.reloadData()
     }
     @objc func fetchFavList(){
-        Backend.shared.fetchUserFavList(userId: self.curUserId) { contentList in
+        UserProfileBackend.shared.fetchUserFavList(userId: self.curUserId) { contentList in
             self.favList.removeAll()
             self.favList.append(contentsOf: contentList)
             DispatchQueue.main.async {
@@ -53,7 +53,7 @@ class TrainerProfileViewController: BaseViewController{
         }
     }
     func fetchFeedList(){
-        Backend.shared.fetchTrainerContentList(trainerId: self.curUserId) { contentList in
+        TrainerBackend.shared.fetchTrainerContentList(trainerId: self.curUserId) { contentList in
             self.contentList.removeAll()
             self.contentList.append(contentsOf: contentList)
             DispatchQueue.main.async {
@@ -64,7 +64,7 @@ class TrainerProfileViewController: BaseViewController{
         }
     }
     func fetchUserProfile(){
-        Backend.shared.fetchUserProfileModel(userId: self.curUserId) { model in
+        UserProfileBackend.shared.fetchUserProfileModel(userId: self.curUserId) { model in
             self.userProfileModel = model
             DispatchQueue.main.async {
                 self.mainCollection.reloadData()
@@ -112,7 +112,7 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
         if kind == UICollectionView.elementKindSectionHeader{
             if indexPath.section == 2 {
                 let header:UserProfileSectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView", for: indexPath) as! UserProfileSectionTitleView
-                header.sectionTitle.text = "Feed"
+                header.sectionTitle.text = (self.isFeedMode == true ? "Feed" : "Favorites")
                 return header;
             }else{
                 return UICollectionReusableView()
@@ -214,6 +214,14 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
         case 0:
             break;
         case 2:
+            let vc:UserContentController = UserContentController()
+            vc.userContentModel = (self.isFeedMode ? self.contentList[indexPath.row] : self.favList[indexPath.row])
+            vc.trainerId = LoginTools.sharedTools.userId()
+            let nav:UINavigationController = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self.present(nav, animated: true, completion: nil)
+            }
             break;
         default:
             break;
@@ -238,6 +246,7 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
 extension TrainerProfileViewController:UserProfileTopCellDelegate{
     func settingBtnClicked() {
         let vc:TrainerSettingViewController = TrainerSettingViewController()
+        vc.isTrainer = true
         vc.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
@@ -245,6 +254,7 @@ extension TrainerProfileViewController:UserProfileTopCellDelegate{
     }
     func editBtnPressed() {
         let vc:UserProfileEditViewController = UserProfileEditViewController()
+        vc.isTrainer = true
         vc.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)

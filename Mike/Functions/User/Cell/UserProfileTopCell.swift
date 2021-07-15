@@ -33,25 +33,25 @@ class UserProfileTopCell: UICollectionViewCell {
         if isOtherUser == true {
             ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
                 if cannotLoadUrl == true{
-                    self.avatar.setImage(UIImage(named: "logo"), for: .normal)
+                    self.avatar.setImage(UIImage(named: "icon_user_default"), for: .normal)
                 }else{
-                    self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!,for:.normal, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                    self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!,for:.normal, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
                 }
             }
             self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
-            self.userDesc.text = "\(model.descriptionField ?? "")"
+            self.userDesc.text = "Joined \(model.regDate ?? "")"
             self.isTrainer = false
             self.configBtn(showBack: isOtherUser)
         }else{
             ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.userInfo().userImage) { imgUrl, cannotLoadUrl in
                 if cannotLoadUrl == true{
-                    self.avatar.setImage(UIImage(named: "logo"), for: .normal)
+                    self.avatar.setImage(UIImage(named: "icon_user_default"), for: .normal)
                 }else{
-                    self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!,for:.normal, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                    self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!,for:.normal, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
                 }
             }
             self.userName.text = "\(LoginTools.sharedTools.userInfo().firstName ?? "") \(LoginTools.sharedTools.userInfo().lastName ?? "")"
-            self.userDesc.text = "\(LoginTools.sharedTools.userInfo().descriptionField ?? "")"
+            self.userDesc.text = "Joined \(LoginTools.sharedTools.userInfo().regDate ?? "")"
             self.isTrainer = false
             self.configBtn(showBack: isOtherUser)
         }
@@ -59,9 +59,9 @@ class UserProfileTopCell: UICollectionViewCell {
     func setTrainerModel(model:TrainerDetailModel){
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
-                self.avatar.setImage(UIImage(named: "logo"), for: .normal)
+                self.avatar.setImage(UIImage(named: "icon_user_default"), for: .normal)
             }else{
-                self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!,for:.normal, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!,for:.normal, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
             }
         }
         self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"

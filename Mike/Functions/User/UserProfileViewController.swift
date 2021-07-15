@@ -13,18 +13,9 @@ class UserProfileViewController: BaseViewController {
     @IBOutlet weak var mainCollection:UICollectionView!
     var curUserId:String?
     var isRequest:Bool = false
-    lazy var subscriptionList:Array<UserCenterTrainer> = {
-        var subscriptionList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
-        return subscriptionList
-    }()
     lazy var favList:Array<UserCenterContent> = {
         var favList:Array<UserCenterContent> = Array<UserCenterContent>()
         return favList
-    }()
-    let healthKitStore:HKHealthStore = HKHealthStore()
-    lazy var metricsList:Array<UserMatricsListModel> = {
-        var metricsList:Array<UserMatricsListModel> = Array<UserMatricsListModel>()
-        return metricsList
     }()
     var userProfileModel:UserCenterModel?
     override func viewDidLoad() {
@@ -40,7 +31,7 @@ class UserProfileViewController: BaseViewController {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
         if self.isRequest == false {
-            self.fetchTrainerList()
+            self.fetchUserProfile()
             self.isRequest = true
         }
         self.fetchFavList();
@@ -49,7 +40,7 @@ class UserProfileViewController: BaseViewController {
         self.mainCollection.reloadData()
     }
     @objc func fetchFavList(){
-        Backend.shared.fetchUserFavList(userId: self.curUserId) { contentList in
+        UserProfileBackend.shared.fetchUserFavList(userId: self.curUserId) { contentList in
             self.favList.removeAll()
             self.favList.append(contentsOf: contentList)
             DispatchQueue.main.async {
@@ -59,21 +50,9 @@ class UserProfileViewController: BaseViewController {
             
         }
     }
-    func fetchTrainerList(){
-        Backend.shared.fetchUserProfileModel(userId: self.curUserId) { model in
+    func fetchUserProfile(){
+        UserProfileBackend.shared.fetchUserProfileModel(userId: self.curUserId) { model in
             self.userProfileModel = model
-            let list:Array<UserCenterItem> = model.subscriptions.items
-            self.subscriptionList.removeAll()
-            for item:UserCenterItem in list{
-                self.subscriptionList.append(item.trainer)
-            }
-//            if let userFavorite = model.favorites{
-//                let flist:Array<UserCenterItem> = userFavorite.items
-//                self.favList.removeAll()
-//                for fitem:UserCenterItem in flist{
-//                    self.favList.append(fitem.content)
-//                }
-//            }
             DispatchQueue.main.async {
                 self.mainCollection.reloadData()
             }
@@ -81,42 +60,10 @@ class UserProfileViewController: BaseViewController {
             
         }
     }
+
     func configUserId(){
         if StringUtils.isBlank(value: self.curUserId) {
             self.curUserId = LoginTools.sharedTools.userId()
-            self.configMetricsList()
-        }
-    }
-    func configMetricsList(){
-        for i in 0..<2 {
-            let model:UserMatricsListModel = UserMatricsListModel(fromDictionary: [:])
-            switch i {
-            case 0:
-                model.type = HealthType.calories
-                model.title = "CALORIES"
-                model.unit = "kcal"
-//            case 1:
-//                model.type = HealthType.weight
-//                model.title = "WEIGHT"
-//                model.unit = "lb"
-//            case 2:
-//                model.type = HealthType.water
-//                model.title = "WATER"
-//                model.unit = "ml"
-            case 1:
-                model.type = HealthType.steps
-                model.title = "STEPS"
-            default:
-                model.type = HealthType.calories
-                model.title = "CALORIES"
-                model.unit = "kcal"
-            }
-            self.metricsList.append(model)
-        }
-        HealthKitTools.sharedTools.authorizeHealthKit { success, error in
-            if success == true{
-                self.getHealthInfo()
-            }
         }
     }
     func configCollectionView(){
@@ -126,9 +73,7 @@ class UserProfileViewController: BaseViewController {
         self.mainCollection.dataSource = self
         self.mainCollection.backgroundColor = UIColor.white
         self.mainCollection.register(UINib(nibName: "UserProfileTopCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTopCell")
-        self.mainCollection.register(UINib(nibName: "UserProfileTrainerListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTrainerListCell")
-        self.mainCollection.register(UINib(nibName: "UserProfileFavHorizonListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileFavHorizonListCell")
-        self.mainCollection.register(UINib(nibName: "UserProfileHealthKitListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileHealthKitListCell")
+        self.mainCollection.register(UINib(nibName: "FeedOrFavColListCell", bundle: nil), forCellWithReuseIdentifier: "FeedOrFavColListCell")
         self.mainCollection.register(UINib(nibName: "UserProfileSectionTitleView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView")
     }
 
@@ -146,36 +91,23 @@ class UserProfileViewController: BaseViewController {
 extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     //MARK: - collectionViewDelegate
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return 2
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
         case 1:
-            return self.subscriptionList.count
-        case 2:
-            return 1
-        case 3:
-            return self.metricsList.count
+            return self.favList.count
         default:
             return 0
         }
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader{
-            if indexPath.section != 0 {
+            if indexPath.section == 1 {
                 let header:UserProfileSectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView", for: indexPath) as! UserProfileSectionTitleView
-                switch indexPath.section {
-                case 1:
-                    header.sectionTitle.text = "My Trainers"
-                case 2:
-                    header.sectionTitle.text = "Favorite Workouts"
-                case 3:
-                    header.sectionTitle.text = self.metricsList.count > 0 ? "Metrics" : ""
-                default:
-                    header.sectionTitle.text = ""
-                }
+                header.sectionTitle.text = "My Favorites"
                 return header;
             }else{
                 return UICollectionReusableView()
@@ -185,10 +117,11 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 {
+        if section == 1 {
+            return CGSize.init(width: kScreenWidth, height: 80)
+        }else{
             return CGSize.init(width: 0, height: 0)
         }
-        return CGSize.init(width: kScreenWidth, height: 80)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize.zero
@@ -203,20 +136,8 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
             }
             return cell
         case 1:
-            let cell:UserProfileTrainerListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileTrainerListCell", for: indexPath) as! UserProfileTrainerListCell
-            cell.contentView.backgroundColor = UIColor.white
-            cell.setModel(model: self.subscriptionList[indexPath.row])
-            return cell
-        case 2:
-            let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
-            cell.contentView.backgroundColor = UIColor.white
-            cell.setFavList(fList: self.favList)
-            cell.delegate = self
-            return cell
-        case 3:
-            let cell:UserProfileHealthKitListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileHealthKitListCell", for: indexPath) as! UserProfileHealthKitListCell
-            cell.contentView.backgroundColor = UIColor.white
-            cell.setModel(model: self.metricsList[indexPath.row])
+            let cell:FeedOrFavColListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeedOrFavColListCell", for: indexPath) as! FeedOrFavColListCell
+            cell.setModel(model:self.favList[indexPath.row])
             return cell
         default:
             return UICollectionViewCell()
@@ -230,22 +151,19 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
                 if let model = self.userProfileModel {
                     let titleHeight = heightForView(text: (model.firstName ?? "") + " " + (model.lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
                     let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                    return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40 + titleHeight - 38.5)
+                    return CGSize.init(width: kScreenWidth, height: 198 + descHeight + titleHeight + 30)
                 }else{
-                    return CGSize.init(width: kScreenWidth, height: 309)
+                    return CGSize.init(width: kScreenWidth, height: 198)
                 }
             }else{
                 let titleHeight = heightForView(text: (LoginTools.sharedTools.userInfo().firstName ?? "") + " " + (LoginTools.sharedTools.userInfo().lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
                 let descHeight = heightForView(text: LoginTools.sharedTools.userInfo().descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40 + titleHeight - 38.5)
+                return CGSize.init(width: kScreenWidth, height: 198 + descHeight + titleHeight + 30)
             }
             
         case 1:
-            return CGSize.init(width: 64, height: 64)
-        case 2:
-            return CGSize.init(width: kScreenWidth, height: self.favList.count == 0 ? 40 : 260)
-        case 3:
-            return CGSize.init(width: (kScreenWidth-60)/2, height: ((kScreenWidth-60)/2)*210/152)
+            let itemWidth = (kScreenWidth - 4)/3
+            return CGSize.init(width: itemWidth, height: itemWidth)
         default:
             return .zero
         }
@@ -253,33 +171,19 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets{
         switch section {
-        case 1:
-            return UIEdgeInsets.init(top: 0, left: 25, bottom: 0, right: 25)
         case 2:
             return .zero
-        case 3:
-            return UIEdgeInsets.init(top: 0, left: 25, bottom: 0, right: 25)
         default:
             return .zero
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat{
-        switch section {
-        case 3:
-            return 10
-        default:
-            return 0
-        }
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat{
-        switch section {
-        case 3:
-            return 10
-        default:
-            return 0
-        }
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -287,11 +191,14 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 0:
             break;
         case 1:
-            let model:UserCenterTrainer = self.subscriptionList[indexPath.row];
-            let vc:TrainerDetailViewController = TrainerDetailViewController()
-            vc.trainerId = model.id
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
+            let vc:UserContentController = UserContentController()
+            vc.userContentModel = self.favList[indexPath.row]
+            vc.trainerId = LoginTools.sharedTools.userId()
+            let nav:UINavigationController = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self.present(nav, animated: true, completion: nil)
+            }
             break;
         case 2:
             break;
@@ -319,8 +226,17 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
 }
 extension UserProfileViewController:UserProfileTopCellDelegate{
     func settingBtnClicked() {
-        let vc:UserProfileSettingViewController = UserProfileSettingViewController()
-//        nav.modalPresentationStyle = .fullScreen
+        let vc:TrainerSettingViewController = TrainerSettingViewController()
+        vc.isTrainer = false
+        vc.modalPresentationStyle = .fullScreen
+        DispatchQueue.main.async {
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    func editBtnPressed() {
+        let vc:UserProfileEditViewController = UserProfileEditViewController()
+        vc.isTrainer = false
+        vc.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
         }
@@ -336,81 +252,5 @@ extension UserProfileViewController:UserProfileTopCellDelegate{
 //        DispatchQueue.main.async {
 //            self.navigationController?.pushViewController(vc, animated: true)
 //        }
-    }
-}
-extension UserProfileViewController{
-    func getInfo(){
-            let healthKitStore = HKHealthStore()
-            do {
-                let unwrappedBiologicalSex = try  healthKitStore.biologicalSex()
-                switch unwrappedBiologicalSex.biologicalSex {
-                case .notSet:
-                     print("Gender:Not set")
-                    break
-                case .female:
-                    print("Gender:female")
-                    break
-                case .male:
-                    print("Gender:male")
-                    break
-                default:
-                   print("Gender:other")
-                    break
-                }
-                
-                let birthDate = try  healthKitStore.dateOfBirthComponents()
-                print("birthday：\(birthDate.year!)-\(birthDate.month!)-\(birthDate.day!)")
-            } catch let error {
-                print("No permission to fetch the data\(error)")
-            }
-        }
-        func getHealthInfo(){
-            HealthKitTools.sharedTools.getCalories { (success, energy, error) in
-                print("Here is the energy：\(energy) kcal")
-                let model = self.metricsList[0]
-                model.contentValue = "\(energy)"
-                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
-                DispatchQueue.main.async {
-                    self.mainCollection.reloadData()
-                }
-            }
-//            HealthKitTools.sharedTools.getBodyMass { success, weight, error in
-//                print("Here's the weight：\(weight) lb")
-//                let model = self.metricsList[1]
-//                model.contentValue = String(format: "%.2f", weight)
-//                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
-//                DispatchQueue.main.async {
-//                    self.mainCollection.reloadData()
-//                }
-//            }
-//            HealthKitTools.sharedTools.getWater { success, water, error in
-//                print("Here's the water：\(water) ml")
-//                let model = self.metricsList[2]
-//                model.contentValue = "\(water)"
-//                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
-//                DispatchQueue.main.async {
-//                    self.mainCollection.reloadData()
-//                }
-//            }
-            HealthKitTools.sharedTools.getStepCount { success, stepCount, error in
-                print("Here are the steps for today：\(stepCount) steps")
-                let model = self.metricsList[1]
-                model.contentValue = "\(stepCount)"
-                model.updateTime = TimeFormatUtils.curTimeStr(format: "MM.dd.yy")
-                DispatchQueue.main.async {
-                    self.mainCollection.reloadData()
-                }
-            }
-        }
-}
-extension UserProfileViewController:UserProfileFavHorizonListCellDelegate{
-    func userContentClicked(model: UserCenterContent) {
-        let vc:UserContentDetailViewController = UserContentDetailViewController()
-        vc.userContentModel = model
-        vc.trainerId = model.creatorId
-//        nav.modalPresentationStyle = .fullScreen
-        DispatchQueue.main.async {
-            self.present(vc, animated: true, completion: nil)
-        }
     }
 }

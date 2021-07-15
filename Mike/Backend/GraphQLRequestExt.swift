@@ -22,6 +22,7 @@ extension GraphQLRequest{
                           UserImage
                           LastName
                           FirstName
+                          TokenPrice
                           Contents(limit: 100) {
                             items {
                                 id
@@ -109,6 +110,7 @@ extension GraphQLRequest{
                 Weight
                 Description
                 Biography
+                TokenPrice
               }
             }
             """
@@ -142,11 +144,13 @@ extension GraphQLRequest{
             id
             owner
             updatedAt
+            TokenPrice
             Subscriptions {
               items {
                 Trainer {
                   UserImage
                   id
+                  TokenPrice
                 }
               }
             }
@@ -215,6 +219,7 @@ extension GraphQLRequest{
                       id
                       owner
                       updatedAt
+                      TokenPrice
                     }
                   }
               }
@@ -682,5 +687,24 @@ extension GraphQLRequest{
                                          variables: ["id": userId,"DeviceToken":deviceToken],
                                     responseType: JSONValue.self)
     }
+    static func fetchTrainerList(byKeyword keyword:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+                query MyQuery($keyword: String!) {
+                  trainerSearch(keyword: $keyword) {
+                    items {
+                      LastName
+                      UserRole
+                      id
+                      UserImage
+                      FirstName
+                    }
+                  }
+                }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["keyword": keyword],
+                                    responseType: JSONValue.self)
+    }
+    
     
 }

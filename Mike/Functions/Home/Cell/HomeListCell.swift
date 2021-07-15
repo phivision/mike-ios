@@ -39,9 +39,9 @@ class HomeListCell: UITableViewCell {
         self.descText.text = "\(model.descriptionField ?? "")"
         ImageCacheUtils.sharedTools.imageUrl(key: sectionModel.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
-                self.avatar.setImage(UIImage(named: "logo"), for: .normal)
+                self.avatar.setImage(UIImage(named: "icon_user_default"), for: .normal)
             }else{
-                self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!,for: .normal, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!,for: .normal, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
             }
         }
         ImageCacheUtils.sharedTools.imageUrl(key: model.thumbnail) { imgUrl, cannotLoadUrl in

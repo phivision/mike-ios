@@ -17,6 +17,7 @@ class UserProfileEditViewController: BaseViewController {
     @IBOutlet weak var firstNameBg:UIImageView!
     @IBOutlet weak var lastNameBg:UIImageView!
     @IBOutlet weak var descBg:UIImageView!
+    @IBOutlet weak var descTitle:UILabel!
     
     @IBOutlet weak var firstNameText:UITextField!
     @IBOutlet weak var lastNameText:UITextField!
@@ -28,6 +29,7 @@ class UserProfileEditViewController: BaseViewController {
     var descValue:String?
     var curAvatar:UIImage?
     var userImage:String?
+    var isTrainer:Bool!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,6 +37,16 @@ class UserProfileEditViewController: BaseViewController {
         self.configView()
     }
     func configView(){
+        if self.isTrainer == true {
+            self.descBg.isHidden = false
+            self.descText.isHidden = false
+            self.descTitle.isHidden = false
+        }else{
+            self.descBg.isHidden = true
+            self.descText.isHidden = true
+            self.descTitle.isHidden = true
+        }
+        
         self.avatarImg.imageView!.layer.cornerRadius = 36
         self.avatarImg.imageView!.clipsToBounds = true
         
@@ -183,7 +195,7 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
         }
     }
     func editUserProfile(){
-        Backend.shared.editUserProfile(firstname: self.firstName, lastname: self.lastName, descValue: self.descValue, userImage: self.userImage) { isSuc in
+        UserProfileBackend.shared.editUserProfile(firstname: self.firstName, lastname: self.lastName, descValue: self.descValue, userImage: self.userImage) { isSuc in
             self.refreshUserProfile()
         } fail: { error in
             DispatchQueue.main.async {
@@ -193,7 +205,7 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
         }
     }
     func refreshUserProfile(){
-        Backend.shared.fetchUserProfile(userId: LoginTools.sharedTools.userId()) {
+        LoginBackend.shared.fetchUserProfile(userId: LoginTools.sharedTools.userId()) {
             DispatchQueue.main.async {
                 self.hud?.hide(animated: true)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshUserProfile"), object: nil)

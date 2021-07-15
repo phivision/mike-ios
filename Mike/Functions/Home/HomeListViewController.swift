@@ -73,7 +73,7 @@ class HomeListViewController: BaseViewController {
     }
     
     func fetchSpeakerList(){
-        Backend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+        HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
             self.subscriptionList.removeAll()
             self.subscriptionList.append(contentsOf: subscriptionList)
             DispatchQueue.main.async {
@@ -143,7 +143,7 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
 extension HomeListViewController:HomeListCellDelegate{
     func homeListAvatarClicked(model: UserSubscriptionTrainerListTrainer) {
         let vc:TrainerDetailViewController = TrainerDetailViewController()
-        vc.trainerId = model.id
+        vc.curUserId = model.id
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -154,7 +154,7 @@ extension HomeListViewController:TrainerListCellDelegate{
     }
     func clickTrainer(model: UserSubscriptionTrainerListModel) {
         let vc:TrainerDetailViewController = TrainerDetailViewController()
-        vc.trainerId = model.trainer.id
+        vc.curUserId = model.trainer.id
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }

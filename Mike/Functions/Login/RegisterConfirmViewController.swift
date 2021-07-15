@@ -47,7 +47,7 @@ class RegisterConfirmViewController: BaseViewController {
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-        Backend.shared.confirmSignUp(for: self.userName, with: self.codeValue) {
+        LoginBackend.shared.confirmSignUp(for: self.userName, with: self.codeValue) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg:"Register Success", controller: self)

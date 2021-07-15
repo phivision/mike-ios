@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b09-sB-654">
-                        <rect key="frame" x="15" y="0.0" width="50" height="50"/>
+                        <rect key="frame" x="25" y="0.0" width="50" height="50"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="Rau-OC-Cd8"/>
@@ -31,7 +31,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jz3-XK-aum">
-                        <rect key="frame" x="87" y="0.0" width="50" height="50"/>
+                        <rect key="frame" x="97" y="0.0" width="50" height="50"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="Hzx-Oi-1lA"/>
@@ -44,13 +44,13 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Gk-w2-ebE">
-                        <rect key="frame" x="26.5" y="56" width="27.5" height="17"/>
+                        <rect key="frame" x="36.5" y="56" width="27.5" height="17"/>
                         <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="deD-L0-gQo">
-                        <rect key="frame" x="87.5" y="56" width="49" height="17"/>
+                        <rect key="frame" x="97.5" y="56" width="49" height="17"/>
                         <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -65,7 +65,7 @@
                 <constraint firstItem="jz3-XK-aum" firstAttribute="centerX" secondItem="deD-L0-gQo" secondAttribute="centerX" id="aV6-bl-sIm"/>
                 <constraint firstItem="2Gk-w2-ebE" firstAttribute="centerX" secondItem="b09-sB-654" secondAttribute="centerX" id="cEN-4Y-Iu1"/>
                 <constraint firstItem="2Gk-w2-ebE" firstAttribute="top" secondItem="b09-sB-654" secondAttribute="bottom" constant="6" id="oXZ-P6-OSy"/>
-                <constraint firstItem="b09-sB-654" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="tqw-ca-VAI"/>
+                <constraint firstItem="b09-sB-654" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="25" id="tqw-ca-VAI"/>
                 <constraint firstItem="jz3-XK-aum" firstAttribute="centerY" secondItem="b09-sB-654" secondAttribute="centerY" id="xRw-sF-5do"/>
             </constraints>
             <size key="customSize" width="463" height="115"/>

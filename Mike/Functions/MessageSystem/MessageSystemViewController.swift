@@ -62,7 +62,7 @@ class MessageSystemViewController: BaseViewController {
 //        SubscriptionTools.sharedTools.innderSubscription?.cancel()
     }
     func configSubscription(){
-        Backend.shared.createInnerSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
+        MessageBackend.shared.createInnerSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a inner subscription")
             DispatchQueue.main.async {
                 self.msgList.append(msgModel)
@@ -100,7 +100,7 @@ class MessageSystemViewController: BaseViewController {
     }
     //MARK: - token balance
     func fetchTokenBalance(){
-        Backend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
+        MessageBackend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
             self.tokenBalance = tokenBalance
         } fail: { error in
             
@@ -108,7 +108,7 @@ class MessageSystemViewController: BaseViewController {
     }
     //MARK: - token price
     func fetchTokenPrice(){
-        Backend.shared.fetchTokenPrice(trainerId: self.toUserId) { tokenPrice in
+        MessageBackend.shared.fetchTokenPrice(trainerId: self.toUserId) { tokenPrice in
             self.trainerTokenPrice = tokenPrice
         } fail: { error in
             
@@ -142,7 +142,7 @@ class MessageSystemViewController: BaseViewController {
     }
     //MARK: - unresponed message handle
     func fetchUnResponedStatusMessageList(){
-        Backend.shared.fetchMessageListByStatus(toUserId: LoginTools.sharedTools.userId(), fromUserId: self.toUserId, status: "UNRESPONDED") { msgList in
+        MessageBackend.shared.fetchMessageListByStatus(toUserId: LoginTools.sharedTools.userId(), fromUserId: self.toUserId, status: "UNRESPONDED") { msgList in
             for msgModel in msgList{
                 self.updateStatusToResponed(messageModel: msgModel)
             }
@@ -166,7 +166,7 @@ class MessageSystemViewController: BaseViewController {
         if isContainIn == false {
             self.msgList.append(messageModel)
         }
-        Backend.shared.updateMessageStatus(messageModel:messageModel, status: "RESPONDED") {
+        MessageBackend.shared.updateMessageStatus(messageModel:messageModel, status: "RESPONDED") {
             
         } fail: {
             
@@ -205,7 +205,7 @@ class MessageSystemViewController: BaseViewController {
             ToastHUD.showMsg(msg: "Please Input Message!", controller: self)
             return
         }
-        Backend.shared.sendMsgToUser(toUserId: self.toUserId ?? "", msgContent: self.commentText.text) { msgModel in
+        MessageBackend.shared.sendMsgToUser(toUserId: self.toUserId ?? "", msgContent: self.commentText.text) { msgModel in
             DispatchQueue.main.async {
                 self.msgList.append(msgModel)
                 self.mainTableView.reloadData()

@@ -45,7 +45,7 @@
                         <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yk5-9x-iNC">
-                        <rect key="frame" x="18" y="72" width="162" height="0.0"/>
+                        <rect key="frame" x="18" y="72" width="149" height="0.0"/>
                         <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="31"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -79,7 +79,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZg-3x-8P6">
-                        <rect key="frame" x="190" y="72" width="40" height="44"/>
+                        <rect key="frame" x="177" y="72" width="40" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="DgN-Sa-Flc"/>
                             <constraint firstAttribute="height" constant="44" id="T2Y-0h-Zau"/>
@@ -98,7 +98,7 @@
                     <constraint firstAttribute="trailing" secondItem="ojK-0l-lCA" secondAttribute="trailing" constant="18" id="B2q-zs-5tb"/>
                     <constraint firstItem="4yM-UN-qwP" firstAttribute="trailing" secondItem="DXT-T1-e64" secondAttribute="leading" constant="-10" id="BxU-qO-MXb"/>
                     <constraint firstItem="vqe-cP-5oC" firstAttribute="trailing" secondItem="pPt-qM-GnM" secondAttribute="leading" id="Hvq-Kp-BHN"/>
-                    <constraint firstItem="dZg-3x-8P6" firstAttribute="trailing" secondItem="vqe-cP-5oC" secondAttribute="leading" id="I7O-Cj-u9x"/>
+                    <constraint firstItem="dZg-3x-8P6" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-103" id="I7O-Cj-u9x"/>
                     <constraint firstAttribute="trailing" secondItem="pPt-qM-GnM" secondAttribute="trailing" constant="10" id="J1a-SM-kY8"/>
                     <constraint firstItem="4yM-UN-qwP" firstAttribute="leading" secondItem="Zg1-dO-evP" secondAttribute="trailing" constant="6" id="RuV-q1-Knt"/>
                     <constraint firstAttribute="bottom" secondItem="ojK-0l-lCA" secondAttribute="bottom" constant="20" id="U8s-S8-QET"/>
@@ -120,6 +120,7 @@
                 <outlet property="descText" destination="ojK-0l-lCA" id="Zwp-St-bLO"/>
                 <outlet property="editBtn" destination="vqe-cP-5oC" id="TmO-Dw-XCC"/>
                 <outlet property="favBtn" destination="dZg-3x-8P6" id="4V1-Fm-GUp"/>
+                <outlet property="favBtnRightMargin" destination="I7O-Cj-u9x" id="4nO-vy-Vrn"/>
                 <outlet property="timeLab" destination="DXT-T1-e64" id="ag1-BZ-FMS"/>
                 <outlet property="titleText" destination="yk5-9x-iNC" id="snv-8Z-75V"/>
                 <outlet property="userName" destination="4yM-UN-qwP" id="9UR-gh-Fsa"/>

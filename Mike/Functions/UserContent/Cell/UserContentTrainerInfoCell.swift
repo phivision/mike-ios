@@ -20,6 +20,7 @@ class UserContentTrainerInfoCell: UITableViewCell {
     @IBOutlet weak var favBtn:UIButton!
     @IBOutlet weak var editBtn:UIButton!
     @IBOutlet weak var delBtn:UIButton!
+    @IBOutlet weak var favBtnRightMargin:NSLayoutConstraint!
     weak var delegate:UserContentTrainerInfoCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,6 +42,15 @@ class UserContentTrainerInfoCell: UITableViewCell {
         }
         self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: contentModel.createdAt ?? ""))"
         self.favBtn.isSelected = isFav
+        if LoginTools.sharedTools.userId() == model.id {
+            self.editBtn.isHidden = false
+            self.delBtn.isHidden = false
+            self.favBtnRightMargin.constant = -103
+        }else{
+            self.editBtn.isHidden = true
+            self.delBtn.isHidden = true
+            self.favBtnRightMargin.constant = -15
+        }
     }
     @IBAction func favBtnClicked(){
         self.delegate?.favBtnPressed?()

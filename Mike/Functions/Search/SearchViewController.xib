@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="mainTableView" destination="BZj-F1-Lhe" id="GrQ-TV-j0E"/>
                 <outlet property="searchBg" destination="76S-cB-rVO" id="qIR-JS-FAy"/>
+                <outlet property="searchText" destination="dex-Hf-Y0n" id="PJF-Zp-yqZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,32 +23,35 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9t-Ib-iQi">
-                    <rect key="frame" x="24" y="130" width="132" height="44"/>
+                    <rect key="frame" x="24" y="86" width="132" height="44"/>
                     <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="32"/>
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="76S-cB-rVO">
-                    <rect key="frame" x="24" y="202" width="366" height="36"/>
+                    <rect key="frame" x="24" y="158" width="366" height="36"/>
                     <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="36" id="xgV-Fa-G3u"/>
                     </constraints>
                 </imageView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_search" translatesAutoresizingMaskIntoConstraints="NO" id="FVV-z3-Yrg">
-                    <rect key="frame" x="32" y="210" width="20" height="20"/>
+                    <rect key="frame" x="32" y="166" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="BP1-BS-Klg"/>
                         <constraint firstAttribute="width" constant="20" id="V7n-S4-Qf3"/>
                     </constraints>
                 </imageView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search trainers…" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dex-Hf-Y0n">
-                    <rect key="frame" x="62" y="202" width="328" height="36"/>
+                    <rect key="frame" x="62" y="158" width="328" height="36"/>
                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                    <connections>
+                        <action selector="searchByKeyword" destination="-1" eventType="editingDidEndOnExit" id="OfO-fM-0Gi"/>
+                    </connections>
                 </textField>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BZj-F1-Lhe">
-                    <rect key="frame" x="24" y="268" width="366" height="594"/>
+                    <rect key="frame" x="24" y="224" width="366" height="638"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>
@@ -60,7 +64,7 @@
                 <constraint firstItem="76S-cB-rVO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-24" id="GlD-Pq-Nuf"/>
                 <constraint firstItem="76S-cB-rVO" firstAttribute="top" secondItem="E9t-Ib-iQi" secondAttribute="bottom" constant="28" id="J9U-MT-KTY"/>
                 <constraint firstItem="BZj-F1-Lhe" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="N44-gc-CBw"/>
-                <constraint firstItem="E9t-Ib-iQi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="86" id="O1r-59-eay"/>
+                <constraint firstItem="E9t-Ib-iQi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="86" id="O1r-59-eay"/>
                 <constraint firstItem="dex-Hf-Y0n" firstAttribute="leading" secondItem="FVV-z3-Yrg" secondAttribute="trailing" constant="10" id="OTU-AF-Zg5"/>
                 <constraint firstItem="dex-Hf-Y0n" firstAttribute="bottom" secondItem="76S-cB-rVO" secondAttribute="bottom" id="S7K-nB-QDl"/>
                 <constraint firstItem="FVV-z3-Yrg" firstAttribute="leading" secondItem="76S-cB-rVO" secondAttribute="leading" constant="8" id="Trv-Kb-7Fj"/>

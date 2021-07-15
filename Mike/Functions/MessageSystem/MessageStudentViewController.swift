@@ -71,7 +71,7 @@ class MessageStudentViewController: BaseViewController {
         self.fetchUserList()
     }
     func fetchUserList(){
-        Backend.shared.fetchSubscriptionUserList { userList in
+        UserProfileBackend.shared.fetchSubscriptionUserList { userList in
             self.studentList.removeAll()
             self.studentList.append(contentsOf: userList)
             DispatchQueue.main.async {
@@ -86,7 +86,7 @@ class MessageStudentViewController: BaseViewController {
     }
     
     func fetchMessageList(){
-        Backend.shared.fetchMessageListByToUserId(toUserId: LoginTools.sharedTools.userId(), status:"UNRESPONDED") { msgList in
+        MessageBackend.shared.fetchMessageListByToUserId(toUserId: LoginTools.sharedTools.userId(), status:"UNRESPONDED") { msgList in
             self.handleStudents(msgList: msgList)
         } fail: { error in
             
@@ -118,7 +118,7 @@ class MessageStudentViewController: BaseViewController {
         }
     }
     func handleSubscription(){
-        Backend.shared.createSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
+        MessageBackend.shared.createSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
             self.fetchMessageList()
             if msgModel.fromUserID != self.curFromUserId{
@@ -178,9 +178,6 @@ extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource
             }
             return 1
         case 1:
-            if self.studentList.count == 0 {
-                return 1
-            }
             return self.studentList.count
         default:
              return 0
@@ -196,10 +193,6 @@ extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource
             let cell:MsgGroupSendCell = tableView.dequeueReusableCell(withIdentifier: "MsgGroupSendCell", for: indexPath) as! MsgGroupSendCell
             return cell
         case 1:
-            if self.studentList.count == 0 {
-                let cell:MessageEmptyCell = tableView.dequeueReusableCell(withIdentifier: "MessageEmptyCell",for: indexPath) as! MessageEmptyCell
-                return cell
-            }
             let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
             cell.setStudentModel(model: self.studentList[indexPath.row])
             return cell

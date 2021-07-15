@@ -17,7 +17,7 @@ class MessageTrainerListCell: UITableViewCell {
         // Initialization code
         self.dotImg.layer.cornerRadius = 5
         self.dotImg.clipsToBounds = true
-        self.avatarImg.layer.cornerRadius = 10
+        self.avatarImg.layer.cornerRadius = 25
         self.avatarImg.clipsToBounds = true
     }
     func setTrainerModel(model:UserCenterTrainer){
@@ -29,9 +29,9 @@ class MessageTrainerListCell: UITableViewCell {
         self.nameLab.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
-                self.avatarImg.image = UIImage(named: "logo")
+                self.avatarImg.image = UIImage(named: "icon_user_default")
             }else{
-                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
             }
         }
         let result = UserDefaults.standard.bool(forKey: "\(msgForStudentUnRead)\(model.id ?? "")")
@@ -47,9 +47,9 @@ class MessageTrainerListCell: UITableViewCell {
         self.nameLab.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
-                self.avatarImg.image = UIImage(named: "logo")
+                self.avatarImg.image = UIImage(named: "icon_user_default")
             }else{
-                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
             }
         }
         let result = UserDefaults.standard.bool(forKey: "\(msgForTrainerUnRead)\(model.id ?? "")")

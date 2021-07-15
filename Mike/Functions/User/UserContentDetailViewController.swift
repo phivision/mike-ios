@@ -76,7 +76,7 @@ class UserContentDetailViewController: BaseViewController {
     }
     func fetchFavRelationIdList() {
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        Backend.shared.fetchFavIdList { relationDic in
+        UserContentBackend.shared.fetchFavIdList { relationDic in
             print("\(relationDic)")
             self.favRelationDic = relationDic
             DispatchQueue.main.async {
@@ -95,7 +95,7 @@ class UserContentDetailViewController: BaseViewController {
         }
     }
     func fetchIsFav(){
-        Backend.shared.fetchContentIsFav(contentId: self.userContentModel.id) { suc in
+        UserContentBackend.shared.fetchContentIsFav(contentId: self.userContentModel.id) { suc in
             if(suc == true){
                 self.isFav = true
             }else{
@@ -113,7 +113,7 @@ class UserContentDetailViewController: BaseViewController {
         }
     }
     func fetchTrainerInfo(){
-        Backend.shared.fetchTrainerSimpleInfo(userId: self.trainerId) { trainerModel in
+        TrainerBackend.shared.fetchTrainerSimpleInfo(userId: self.trainerId) { trainerModel in
             self.configTrainerUI(trainerModel: trainerModel)
         } fail: { error in
             
@@ -137,7 +137,7 @@ class UserContentDetailViewController: BaseViewController {
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         if self.isFav == true {
             let favRelationId:String = self.favRelationDic[self.userContentModel.id ?? ""] as? String ?? ""
-            Backend.shared.delContentToFav(favRelationId: favRelationId) { isSuc in
+            UserContentBackend.shared.delContentToFav(favRelationId: favRelationId) { isSuc in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
                 }
@@ -154,7 +154,7 @@ class UserContentDetailViewController: BaseViewController {
                 }
             }
         }else{
-            Backend.shared.addContentToFav(contentId: self.userContentModel.id) { isSuc in
+            UserContentBackend.shared.addContentToFav(contentId: self.userContentModel.id) { isSuc in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
                 }
