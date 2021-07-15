@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TrainerSubscribeActionCell" customModule="Mike" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="440" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="440" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KRL-H0-Ouv">
+                        <rect key="frame" x="20" y="7.5" width="195" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="m9s-Nd-A3J"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
+                        <state key="normal" title="Button">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bR-03-XjO">
+                        <rect key="frame" x="225" y="7.5" width="195" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="UNR-zP-cog"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
+                        <state key="normal" title="Button">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="KRL-H0-Ouv" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="1:2" constant="-25" id="KMw-by-8xx"/>
+                <constraint firstItem="KRL-H0-Ouv" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Mdo-VL-Jsw"/>
+                <constraint firstAttribute="trailing" secondItem="3bR-03-XjO" secondAttribute="trailing" constant="20" id="UAE-ks-YZ1"/>
+                <constraint firstItem="3bR-03-XjO" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="jFR-pK-cCp"/>
+                <constraint firstItem="KRL-H0-Ouv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="tzi-UE-9QK"/>
+                <constraint firstItem="3bR-03-XjO" firstAttribute="width" secondItem="KRL-H0-Ouv" secondAttribute="width" id="y0z-bt-ch1"/>
+            </constraints>
+            <size key="customSize" width="440" height="50"/>
+            <connections>
+                <outlet property="messageBtn" destination="3bR-03-XjO" id="u0P-wY-4B4"/>
+                <outlet property="subscribeBtn" destination="KRL-H0-Ouv" id="BvX-Al-MQO"/>
+            </connections>
+            <point key="canvasLocation" x="356.52173913043481" y="85.714285714285708"/>
+        </collectionViewCell>
+    </objects>
+</document>

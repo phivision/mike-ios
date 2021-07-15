@@ -46,7 +46,7 @@ class LoginSecondViewController: BaseViewController {
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
 //        Backend.shared.resultProfile(userName: self.userNameText.text)
 
-        Backend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
+        LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
             self.updateDeviceToken()
             DispatchQueue.main.async {
                 hud.hide(animated: true)
@@ -64,7 +64,7 @@ class LoginSecondViewController: BaseViewController {
     }
     func updateDeviceToken(){
         if StringUtils.isBlank(value: LoginTools.sharedTools.deviceToken) == false {
-            Backend.shared.updateUserDeviceToken(deviceToken: LoginTools.sharedTools.deviceToken) {
+            MessageBackend.shared.updateUserDeviceToken(deviceToken: LoginTools.sharedTools.deviceToken) {
                 
             } fail: {
                 
@@ -76,7 +76,7 @@ class LoginSecondViewController: BaseViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     func logOut(){
-        Backend.shared.signOut {
+        LoginBackend.shared.signOut {
             
         } fail: {
 

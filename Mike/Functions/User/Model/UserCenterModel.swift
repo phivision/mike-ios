@@ -28,6 +28,7 @@ class UserCenterModel : NSObject, NSCoding{
 	var id : String!
 	var owner : String!
 	var updatedAt : String!
+    var TokenPrice: Int!
 
 
 	/**
@@ -61,6 +62,7 @@ class UserCenterModel : NSObject, NSCoding{
 		id = dictionary["id"] as? String
 		owner = dictionary["owner"] as? String
 		updatedAt = dictionary["updatedAt"] as? String
+        TokenPrice = dictionary["TokenPrice"] as? Int
 	}
 
 	/**
@@ -132,6 +134,9 @@ class UserCenterModel : NSObject, NSCoding{
 		if updatedAt != nil{
 			dictionary["updatedAt"] = updatedAt
 		}
+        if TokenPrice != nil {
+            dictionary["TokenPrice"] = TokenPrice
+        }
 		return dictionary
 	}
 
@@ -162,7 +167,7 @@ class UserCenterModel : NSObject, NSCoding{
          id = aDecoder.decodeObject(forKey: "id") as? String
          owner = aDecoder.decodeObject(forKey: "owner") as? String
          updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
-
+        TokenPrice = aDecoder.decodeObject(forKey: "TokenPrice") as? Int
 	}
 
     /**
@@ -234,7 +239,9 @@ class UserCenterModel : NSObject, NSCoding{
 		if updatedAt != nil{
 			aCoder.encode(updatedAt, forKey: "updatedAt")
 		}
-
+        if TokenPrice != nil {
+            aCoder.encode(TokenPrice,forKey: "TokenPrice")
+        }
 	}
 
 }

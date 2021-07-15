@@ -56,7 +56,7 @@ class FogotConfirmViewController: BaseViewController {
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-        Backend.shared.confirmResetPassword(username: self.userName, newPassword: self.newPwdValue, confirmationCode: self.codeValue) {
+        LoginBackend.shared.confirmResetPassword(username: self.userName, newPassword: self.newPwdValue, confirmationCode: self.codeValue) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg:"Reset Password Success", controller: self)

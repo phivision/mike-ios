@@ -11,6 +11,8 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
 	var id : String!
     var firstName : String!
     var lastName : String!
+    var updatedAt: String!
+    var tokenPrice: Int!
 
 
 	/**
@@ -21,6 +23,8 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
 		id = dictionary["id"] as? String
         firstName = dictionary["FirstName"] as? String
         lastName = dictionary["LastName"] as? String
+        updatedAt = dictionary["updatedAt"] as? String
+        tokenPrice = dictionary["TokenPrice"] as? Int ?? 0
 	}
 
 	/**
@@ -41,6 +45,12 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
         if lastName != nil {
             dictionary["LastName"] = lastName
         }
+        if updatedAt != nil {
+            dictionary["updatedAt"] = updatedAt
+        }
+        if tokenPrice != nil {
+            dictionary["TokenPrice"] = tokenPrice
+        }
 		return dictionary
 	}
 
@@ -54,6 +64,8 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
          id = aDecoder.decodeObject(forKey: "id") as? String
         lastName = aDecoder.decodeObject(forKey: "LastName") as? String
         firstName = aDecoder.decodeObject(forKey: "FirstName") as? String
+        updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
+        tokenPrice = aDecoder.decodeObject(forKey: "TokenPrice") as? Int ?? 0
 	}
 
     /**
@@ -74,7 +86,12 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
         if lastName != nil{
             aCoder.encode(lastName, forKey: "LastName")
         }
-
+        if updatedAt != nil {
+            aCoder.encode(updatedAt, forKey: "updatedAt")
+        }
+        if tokenPrice != nil {
+            aCoder.encode(tokenPrice,forKey: "TokenPrice")
+        }
 	}
 
 }

@@ -46,7 +46,7 @@ class FogotPwdViewController: BaseViewController {
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-        Backend.shared.resetPassword(username: self.userName) {
+        LoginBackend.shared.resetPassword(username: self.userName) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg:"Verification code has been sent to your email, please check！", controller: self)

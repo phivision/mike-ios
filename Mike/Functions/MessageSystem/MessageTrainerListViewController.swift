@@ -10,6 +10,7 @@ import PullToRefreshKit
 
 class MessageTrainerListViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
+    @IBOutlet weak var tokenBalance:UILabel!
     lazy var refreshControl:UIRefreshControl = {
         var refreshControl:UIRefreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to Refresh")
@@ -34,9 +35,9 @@ class MessageTrainerListViewController: BaseViewController {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
         self.curFromUserId = ""
+        self.fetchTokenBalance()
         if self.isRequest == false {
-//            fetchSpeakerList()
-            self.mainTableView.switchRefreshHeader(to: .refreshing)
+            self.fetchTrainerList()
         }else{
             self.fetchMessageList()
         }
@@ -67,9 +68,18 @@ class MessageTrainerListViewController: BaseViewController {
         self.trainerList.removeAll()
         self.fetchTrainerList()
     }
-    
+    func fetchTokenBalance(){
+        MessageBackend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
+            DispatchQueue.main.async {
+                self.tokenBalance.text = "\(tokenBalance)"
+            }
+        } fail: { error in
+            
+        }
+
+    }
     func fetchTrainerList(){
-        Backend.shared.fetchSubscriptionTrainerList { trainerList in
+        UserProfileBackend.shared.fetchSubscriptionTrainerList { trainerList in
             self.trainerList.removeAll()
             self.trainerList.append(contentsOf: trainerList)
             DispatchQueue.main.async {
@@ -83,7 +93,7 @@ class MessageTrainerListViewController: BaseViewController {
         }
     }
     func fetchMessageList(){
-        Backend.shared.fetchMessageListByToUserId(toUserId: LoginTools.sharedTools.userId(), status:"UNRESPONDED") { msgList in
+        MessageBackend.shared.fetchMessageListByToUserId(toUserId: LoginTools.sharedTools.userId(), status:"UNRESPONDED") { msgList in
             if msgList.count == 0{
                 for trainer in self.trainerList {
                     UserDefaults.standard.setValue(false, forKey: "\(msgForStudentUnRead)\(trainer.id ?? "")")
@@ -119,7 +129,7 @@ class MessageTrainerListViewController: BaseViewController {
     func handleSubscription(){
         UserDefaults.standard.setValue(Date().timeIntervalSince1970, forKey: lastMsgSendTimeStampForOutter)
         UserDefaults.standard.synchronize()
-        Backend.shared.createSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
+        MessageBackend.shared.createSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
             UserDefaults.standard.setValue(true, forKey: "\(msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
             UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(lastMsgForStudent)\(msgModel.fromUserID ?? "")")
@@ -146,9 +156,6 @@ extension MessageTrainerListViewController:UITableViewDelegate,UITableViewDataSo
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.trainerList.count == 0 {
-            return 1
-        }
         return self.trainerList.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -156,10 +163,6 @@ extension MessageTrainerListViewController:UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if self.trainerList.count == 0 {
-            let cell:MessageEmptyCell = tableView.dequeueReusableCell(withIdentifier: "MessageEmptyCell",for: indexPath) as! MessageEmptyCell
-            return cell
-        }
         let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
         cell.setTrainerModel(model: self.trainerList[indexPath.row])
         return cell

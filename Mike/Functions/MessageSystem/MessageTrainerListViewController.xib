@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -11,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageTrainerListViewController" customModule="Mike" customModuleProvider="target">
             <connections>
                 <outlet property="mainTableView" destination="4aE-Ug-7bp" id="HAN-GI-EPO"/>
+                <outlet property="tokenBalance" destination="OxR-7c-3QG" id="32K-eB-oZI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,23 +21,49 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fgf-Vz-efP">
+                    <rect key="frame" x="25" y="86" width="149" height="44"/>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="32"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4aE-Ug-7bp">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="158" width="414" height="704"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_coins" translatesAutoresizingMaskIntoConstraints="NO" id="bip-XF-tGJ">
+                    <rect key="frame" x="374" y="93.5" width="25" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="8kc-WL-mgW"/>
+                        <constraint firstAttribute="height" constant="29" id="Wxu-Js-01r"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OxR-7c-3QG">
+                    <rect key="frame" x="358" y="95.5" width="11" height="25"/>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="4aE-Ug-7bp" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="KM8-Ew-SFD"/>
+                <constraint firstItem="OxR-7c-3QG" firstAttribute="trailing" secondItem="bip-XF-tGJ" secondAttribute="leading" constant="-5" id="NLh-eA-W63"/>
                 <constraint firstItem="4aE-Ug-7bp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="QhA-SF-AEB"/>
+                <constraint firstItem="Fgf-Vz-efP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="86" id="R0W-VK-YgP"/>
+                <constraint firstItem="bip-XF-tGJ" firstAttribute="centerY" secondItem="Fgf-Vz-efP" secondAttribute="centerY" id="aTS-be-CVN"/>
+                <constraint firstItem="bip-XF-tGJ" firstAttribute="centerY" secondItem="OxR-7c-3QG" secondAttribute="centerY" id="e7r-2m-tzu"/>
                 <constraint firstItem="4aE-Ug-7bp" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="hi7-DY-uTf"/>
+                <constraint firstItem="4aE-Ug-7bp" firstAttribute="top" secondItem="Fgf-Vz-efP" secondAttribute="bottom" constant="28" id="kyc-eB-gBJ"/>
                 <constraint firstItem="4aE-Ug-7bp" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="nZv-8W-2hR"/>
+                <constraint firstItem="bip-XF-tGJ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-15" id="qRt-BF-XtD"/>
+                <constraint firstItem="Fgf-Vz-efP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="waQ-j0-c9p"/>
             </constraints>
             <point key="canvasLocation" x="139" y="92"/>
         </view>
     </objects>
     <resources>
+        <image name="icon_coins" width="17" height="20"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

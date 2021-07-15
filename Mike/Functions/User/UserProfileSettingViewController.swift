@@ -23,7 +23,7 @@ class UserProfileSettingViewController: BaseViewController {
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func signOut(){
-        Backend.shared.signOut {
+        LoginBackend.shared.signOut {
             LoginTools.sharedTools.removeUserInfo()
             SubscriptionTools.sharedTools.outterSubscription?.cancel()
             DispatchQueue.main.async {

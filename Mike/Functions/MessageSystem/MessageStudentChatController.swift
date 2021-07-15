@@ -109,7 +109,7 @@ class MessageStudentChatController: BaseViewController {
     }
     //MARK: - unresponed message handle
     func fetchUnResponedStatusMessageList(){
-        Backend.shared.fetchMessageListByStatus(toUserId: LoginTools.sharedTools.userId(), fromUserId: self.toUserId, status: "UNRESPONDED") { msgList in
+        MessageBackend.shared.fetchMessageListByStatus(toUserId: LoginTools.sharedTools.userId(), fromUserId: self.toUserId, status: "UNRESPONDED") { msgList in
             self.unResponeMsgList.removeAll()
             self.unResponeMsgList.append(contentsOf: msgList)
             self.addUnResponeMsgToCurList()
@@ -142,7 +142,7 @@ class MessageStudentChatController: BaseViewController {
         }
     }
     func updateStatusToResponed(messageModel:MessageListModel){
-        Backend.shared.updateMessageStatus(messageModel:messageModel, status: "RESPONDED") {
+        MessageBackend.shared.updateMessageStatus(messageModel:messageModel, status: "RESPONDED") {
             
         } fail: {
             
@@ -173,7 +173,7 @@ class MessageStudentChatController: BaseViewController {
     }
     //MARK: - createSubscription
     func configSubscription(){
-        Backend.shared.createInnerSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
+        MessageBackend.shared.createInnerSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a inner subscription")
             DispatchQueue.main.async {
                 self.msgList.append(msgModel)
@@ -196,7 +196,7 @@ class MessageStudentChatController: BaseViewController {
             ToastHUD.showMsg(msg: "Please Input Message!", controller: self)
             return
         }
-        Backend.shared.sendMsgToUser(toUserId: self.toUserId ?? "", msgContent: self.commentText.text) { msgModel in
+        MessageBackend.shared.sendMsgToUser(toUserId: self.toUserId ?? "", msgContent: self.commentText.text) { msgModel in
             self.changeAllUnResponeMsgStatus()
             DispatchQueue.main.async {
                 self.msgList.append(msgModel)

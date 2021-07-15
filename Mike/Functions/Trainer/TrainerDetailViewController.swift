@@ -4,11 +4,12 @@
 //
 //  Created by 殷聃 on 2021/5/11.
 //
-
 import UIKit
+import Amplify
 
 class TrainerDetailViewController: BaseViewController{
     @IBOutlet weak var mainCollection:UICollectionView!
+    var curUserId:String?
     var isRequest:Bool = false
     lazy var contentList:Array<UserCenterContent> = {
         var contentList:Array<UserCenterContent> = Array<UserCenterContent>()
@@ -18,54 +19,76 @@ class TrainerDetailViewController: BaseViewController{
         var favList:Array<UserCenterContent> = Array<UserCenterContent>()
         return favList
     }()
-    var trainerId:String?
-    var trainerModel:TrainerDetailModel?
+    var userProfileModel:UserCenterModel?
+    var isFeedMode:Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
+        self.configUserId()
         self.configCollectionView()
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchFavList), name: NSNotification.Name(rawValue:refreshFavList), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshUserProfile), name: NSNotification.Name(rawValue:refreshProfile), object: nil)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
-        if self.isRequest == false {
-            self.fetchTrainerList()
-            self.isRequest = true
-        }
+        self.fetchUserProfile()
+        self.fetchFeedList()
+        self.fetchFavList();
     }
-    func fetchTrainerList(){
-        Backend.shared.fetchTrainerDetail(trainerId:self.trainerId ?? "") { model in
-            self.trainerModel = model
-            if let contentModel = model.contents{
-                let list:[UserCenterContent] = contentModel.items
-                self.contentList.removeAll()
-                for item:UserCenterContent in list{
-                    self.contentList.append(item)
-                }
-            }
-            if let favModel = model.favorites{
-                let flist:[UserCenterItem] = favModel.items
-                self.favList.removeAll()
-                for fitem:UserCenterItem in flist{
-                    self.favList.append(fitem.content)
-                }
-            }
+    @objc func refreshUserProfile(){
+        self.mainCollection.reloadData()
+    }
+    @objc func fetchFavList(){
+        UserProfileBackend.shared.fetchUserFavList(userId: self.curUserId) { contentList in
+            self.favList.removeAll()
+            self.favList.append(contentsOf: contentList)
             DispatchQueue.main.async {
                 self.mainCollection.reloadData()
             }
-        } fail: { errormsg in
+        } fail: { error in
             
         }
     }
+    func fetchFeedList(){
+        TrainerBackend.shared.fetchTrainerContentList(trainerId: self.curUserId) { contentList in
+            self.contentList.removeAll()
+            self.contentList.append(contentsOf: contentList)
+            DispatchQueue.main.async {
+                self.mainCollection.reloadData()
+            }
+        } fail: { error in
+            
+        }
+    }
+    func fetchUserProfile(){
+        UserProfileBackend.shared.fetchUserProfileModel(userId: self.curUserId) { model in
+            self.userProfileModel = model
+            DispatchQueue.main.async {
+                self.mainCollection.reloadData()
+            }
+        } fail: { errorMsg in
+            
+        }
+    }
+    func configUserId(){
+        if StringUtils.isBlank(value: self.curUserId) {
+            self.curUserId = LoginTools.sharedTools.userId()
+        }
+    }
+
     func configCollectionView(){
         let flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         self.mainCollection.collectionViewLayout = flowLayout
         self.mainCollection.delegate = self
         self.mainCollection.dataSource = self
-        self.mainCollection.backgroundColor = UIColor.clear
-        self.mainCollection.clipsToBounds = false
-        self.mainCollection.register(UINib(nibName: "UserProfileTopCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileTopCell")
-        self.mainCollection.register(UINib(nibName: "UserProfileFavHorizonListCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileFavHorizonListCell")
+        self.mainCollection.backgroundColor = UIColor.white
+        self.mainCollection.register(UINib(nibName: "TrainerDetailTopCell", bundle: nil), forCellWithReuseIdentifier: "TrainerDetailTopCell")
+        self.mainCollection.register(UINib(nibName: "TrainerSubscribeActionCell", bundle: nil), forCellWithReuseIdentifier: "TrainerSubscribeActionCell")
+        self.mainCollection.register(UINib(nibName: "UserProfileModeChangeColCell", bundle: nil), forCellWithReuseIdentifier: "UserProfileModeChangeColCell")
+        self.mainCollection.register(UINib(nibName: "FeedOrFavColListCell", bundle: nil), forCellWithReuseIdentifier: "FeedOrFavColListCell")
         self.mainCollection.register(UINib(nibName: "UserProfileSectionTitleView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView")
     }
 
@@ -81,38 +104,16 @@ class TrainerDetailViewController: BaseViewController{
 
 }
 extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    
     //MARK: - collectionViewDelegate
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 4
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return 0
-        case 2:
-            return 1
-        case 3:
-            return 1
-        default:
-            return 0
-        }
-    }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader{
-            if indexPath.section != 0 && indexPath.section != 1 {
+            if indexPath.section == 3 {
                 let header:UserProfileSectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView", for: indexPath) as! UserProfileSectionTitleView
-                switch indexPath.section {
-                case 1:
-                    header.sectionTitle.text = ""
-                case 2:
-                    header.sectionTitle.text = "Pinned Workouts"
-                case 3:
-                    header.sectionTitle.text = "Feed"
-                default:
-                    header.sectionTitle.text = ""
-                }
+                header.sectionTitle.text = (self.isFeedMode == true ? "Feed" : "Favorites")
                 return header;
             }else{
                 return UICollectionReusableView()
@@ -122,36 +123,52 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 || section == 1{
+        if section == 3 {
+            return CGSize.init(width: kScreenWidth, height: 80)
+        }else{
             return CGSize.init(width: 0, height: 0)
         }
-        return CGSize.init(width: kScreenWidth, height: 80)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize.zero
     }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 1
+        case 2:
+            return 1
+        case 3:
+            return self.isFeedMode ? self.contentList.count : self.favList.count
+        default:
+            return 0
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            let cell:UserProfileTopCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileTopCell", for: indexPath) as! UserProfileTopCell
+            let cell:TrainerDetailTopCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrainerDetailTopCell", for: indexPath) as! TrainerDetailTopCell
             cell.delegate = self
-            if let model = self.trainerModel {
-                cell.setTrainerModel(model: model)
+            if let model = self.userProfileModel {
+                cell.setModel(model: model)
             }
             return cell
         case 1:
-            return UICollectionViewCell()
+            let cell:TrainerSubscribeActionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrainerSubscribeActionCell", for: indexPath) as! TrainerSubscribeActionCell
+            if let model = self.userProfileModel {
+                cell.setModel(model:model, isSubscribed: true)
+            }
+            return cell
         case 2:
-            let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
-            cell.contentView.backgroundColor = UIColor.white
-            cell.setFavList(fList: self.favList)
+            let cell:UserProfileModeChangeColCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileModeChangeColCell", for: indexPath) as! UserProfileModeChangeColCell
             cell.delegate = self
+            cell.setModel(isFeedMode: self.isFeedMode)
             return cell
         case 3:
-            let cell:UserProfileFavHorizonListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileFavHorizonListCell", for: indexPath) as! UserProfileFavHorizonListCell
-            cell.contentView.backgroundColor = UIColor.white
-            cell.setFavList(fList: self.contentList)
-            cell.delegate = self
+            let cell:FeedOrFavColListCell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeedOrFavColListCell", for: indexPath) as! FeedOrFavColListCell
+            cell.setModel(model: self.isFeedMode == true ? self.contentList[indexPath.row] : self.favList[indexPath.row])
             return cell
         default:
             return UICollectionViewCell()
@@ -161,22 +178,16 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         switch indexPath.section {
         case 0:
-            if let model = self.trainerModel {
-                let titleHeight = heightForView(text: (model.firstName ?? "") + " " + (model.lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
-                let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                return CGSize.init(width: kScreenWidth, height: 309 + descHeight + 40 + titleHeight - 38.5)
-            }else{
-                return CGSize.init(width: kScreenWidth, height: 309)
-            }
-            
+            let titleHeight = heightForView(text: (LoginTools.sharedTools.userInfo().firstName ?? "") + " " + (LoginTools.sharedTools.userInfo().lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
+            let descHeight = heightForView(text: LoginTools.sharedTools.userInfo().descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
+            return CGSize.init(width: kScreenWidth, height: 198 + descHeight + titleHeight + 20)
         case 1:
-//            return CGSize.init(width: kScreenWidth, height: 100)
-            return CGSize.zero
+            return CGSize.init(width: kScreenWidth, height: 55)
         case 2:
-            return CGSize.init(width: kScreenWidth, height: 260)
+            return CGSize.init(width: kScreenWidth, height: 85)
         case 3:
-            return CGSize.init(width: kScreenWidth, height: 260)
-//            return CGSize.init(width: (kScreenWidth-60)/2, height: ((kScreenWidth-60)/2)*210/152)
+            let itemWidth = (kScreenWidth - 4)/3
+            return CGSize.init(width: itemWidth, height: itemWidth)
         default:
             return .zero
         }
@@ -184,11 +195,7 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets{
         switch section {
-        case 1:
-            return .zero
         case 2:
-            return .zero
-        case 3:
             return .zero
         default:
             return .zero
@@ -196,21 +203,30 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat{
-        switch section {
-        default:
-            return 0
-        }
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat{
-        switch section {
-        default:
-            return 0
-        }
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        switch indexPath.section {
+        case 0:
+            break;
+        case 3:
+            let vc:UserContentController = UserContentController()
+            vc.userContentModel = (self.isFeedMode ? self.contentList[indexPath.row] : self.favList[indexPath.row])
+            vc.trainerId = LoginTools.sharedTools.userId()
+            let nav:UINavigationController = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self.present(nav, animated: true, completion: nil)
+            }
+            break;
+        default:
+            break;
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -228,10 +244,25 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
         return label.frame.height
     }
 }
-extension TrainerDetailViewController:UserProfileTopCellDelegate{
-    func backBtnClicked() {
+extension TrainerDetailViewController:TrainerDetailTopCellDelegate{
+    func closeBtnPressed() {
         DispatchQueue.main.async {
             self.navigationController?.popViewController(animated: true)
+        }
+    }
+    func avatarBtnClicked() {
+//        let vc:UserProfileEditViewController = UserProfileEditViewController()
+//        vc.hidesBottomBarWhenPushed = true
+//        DispatchQueue.main.async {
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }
+    }
+}
+extension TrainerDetailViewController:UserProfileModeChangeColCellDelegate{
+    func listModeChanged(isFeedMode: Bool) {
+        self.isFeedMode = isFeedMode
+        DispatchQueue.main.async {
+            self.mainCollection.reloadData()
         }
     }
 }
@@ -239,7 +270,7 @@ extension TrainerDetailViewController:UserProfileFavHorizonListCellDelegate{
     func userContentClicked(model: UserCenterContent) {
         let vc:UserContentDetailViewController = UserContentDetailViewController()
         vc.userContentModel = model
-        vc.trainerId = model.owner
+        vc.trainerId = model.creatorId
 //        nav.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)

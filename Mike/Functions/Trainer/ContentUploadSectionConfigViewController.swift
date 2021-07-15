@@ -264,7 +264,7 @@ extension ContentUploadSectionConfigViewController{
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         let videoKey = StringUtils.handleVideoKey(filename: videoUrl.lastPathComponent)
         self.contentName = videoKey
-        Backend.shared.uploadVideo(videoData: fileData, videoKey: videoKey) { progress in
+        TrainerBackend.shared.uploadVideo(videoData: fileData, videoKey: videoKey) { progress in
             print("~~~~~~~~~~~~~~~~~~~~~~\(progress.fractionCompleted)")
         } suc: {
             DispatchQueue.main.async {
@@ -283,7 +283,7 @@ extension ContentUploadSectionConfigViewController{
         let data = self.videoCapture!.jpegData(compressionQuality: 0.2)!
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         self.thumbnail = StringUtils.thumbnailImgKey()
-        Backend.shared.uploadImage(imgData: data, imgName: self.thumbnail) {
+        TrainerBackend.shared.uploadImage(imgData: data, imgName: self.thumbnail) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg: "Upload Success!", controller: self)
@@ -306,7 +306,7 @@ extension ContentUploadSectionConfigViewController{
         let jsonData = try! JSONSerialization.data(withJSONObject: arrayDic, options: .prettyPrinted)
         let str = String(data: jsonData, encoding: .utf8) ?? ""
         
-        Backend.shared.createUserContent(title: self.videoTitleValue, desc: self.videoDescValue,contentName: self.contentName, thumbnail: self.thumbnail, segments: str) { isSuc in
+        TrainerBackend.shared.createUserContent(title: self.videoTitleValue, desc: self.videoDescValue,contentName: self.contentName, thumbnail: self.thumbnail, segments: str) { isSuc in
             DispatchQueue.main.async {
                 hud.hide(animated: true)
 //                ToastHUD.showMsg(msg: "Upload Success!", controller: self)

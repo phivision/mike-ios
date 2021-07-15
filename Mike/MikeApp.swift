@@ -11,6 +11,13 @@ import IQKeyboardManagerSwift
 import UserNotifications
 import AWSPinpoint
 import SwiftUI
+import AWSCognitoAuthPlugin
+import AWSMobileClientXCF
+import AWSAPIPlugin
+import AWSPinpointAnalyticsPlugin
+import AWSPluginsCore
+import AWSS3StoragePlugin
+import AWSS3
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
     var window: UIWindow?
@@ -18,7 +25,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // initialize Amplify
-        let _ = Backend.initialize()
+//        let _ = Backend.initialize()
+        self.configAmplify()
         self.window = UIWindow(frame: UIScreen.main.bounds)
         if StringUtils.isBlank(value: LoginTools.sharedTools.userId()) == false {
             let homeVC:HomeTabViewController = HomeTabViewController()
@@ -77,7 +85,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         print("Device Token: \(token)")
         
         if !StringUtils.isBlank(value: LoginTools.sharedTools.userId()) {
-            Backend.shared.updateUserDeviceToken(deviceToken: token) {
+            MessageBackend.shared.updateUserDeviceToken(deviceToken: token) {
                 
             } fail: {
                 
@@ -129,6 +137,42 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 }
             }
         }
+    func configAmplify(){
+        do {
+          try Amplify.add(plugin: AWSCognitoAuthPlugin())
+          try Amplify.add(plugin: AWSAPIPlugin(modelRegistration: AmplifyModels()))
+          try Amplify.add(plugin: AWSS3StoragePlugin())
+  //        try Amplify.add(plugin: AWSPinpointAnalyticsPlugin())
+          try Amplify.configure()
+          print("Initialized Amplify");
+          // listen to auth events
+          // see https://github.com/aws-amplify/amplify-ios/blob/master/Amplify/Categories/Auth/Models/AuthEventName.swift
+          _ = Amplify.Hub.listen(to: .auth) { (payload) in
+
+              switch payload.eventName {
+
+              case HubPayload.EventName.Auth.signedIn:
+                  print("==HUB== User signed In, update UI")
+                  self.updateUserData(withSignInStatus: true)
+
+              case HubPayload.EventName.Auth.signedOut:
+                  print("==HUB== User signed Out, update UI")
+                  self.updateUserData(withSignInStatus: false)
+
+              case HubPayload.EventName.Auth.sessionExpired:
+                  print("==HUB== Session expired, show sign in UI")
+                  self.updateUserData(withSignInStatus: false)
+                  self.signOut()
+              default:
+                  self.updateUserData(withSignInStatus: false)
+  //                print("==HUB== \(payload)")
+                  break
+              }
+          }
+        } catch {
+          print("Could not initialize Amplify: \(error)")
+        }
+    }
     func configKeyBoard(){
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
@@ -196,9 +240,28 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 extension AppDelegate{
+    func signOut(){
+        LoginBackend.shared.signOut {
+            LoginTools.sharedTools.removeUserInfo()
+            SubscriptionTools.sharedTools.outterSubscription?.cancel()
+            DispatchQueue.main.async {
+                let loginVC:LoginViewController = LoginViewController()
+                let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)
+                navVC.isNavigationBarHidden = true
+                let transtition = CATransition()
+                transtition.duration = 0.5
+                transtition.timingFunction = CAMediaTimingFunction(name: .easeOut)
+                keyWindow?.layer.add(transtition, forKey: "animation")
+                keyWindow?.rootViewController = navVC;
+            }
+        } fail: {
+            
+        }
+    }
+    // MARK: -  change our internal state, this triggers an UI update on the main thread
+    func updateUserData(withSignInStatus status : Bool) {
+        DispatchQueue.main.async() {
 
-//    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-//
-//        return blockRotation
-//    }
+        }
+    }
 }

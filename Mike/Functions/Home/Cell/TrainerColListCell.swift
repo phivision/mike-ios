@@ -20,9 +20,9 @@ class TrainerColListCell: UICollectionViewCell {
         self.trainerName.text = "\(model.trainer.firstName ?? "") \(model.trainer.lastName ?? "")"
         ImageCacheUtils.sharedTools.imageUrl(key: model.trainer.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
-                self.trainerAvatar.image = UIImage(named: "logo")
+                self.trainerAvatar.image = UIImage(named: "icon_user_default")
             }else{
-                self.trainerAvatar.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
+                self.trainerAvatar.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
             }
         }
     }

@@ -103,7 +103,7 @@ class RegisterViewController: BaseViewController {
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-        Backend.shared.signUp(username: self.userName, password: self.pwd, firstName: self.firstName,lastName: self.lastName,userRole: self.isTrainer == true ? "trainer" : "student") {
+        LoginBackend.shared.signUp(username: self.userName, password: self.pwd, firstName: self.firstName,lastName: self.lastName,userRole: self.isTrainer == true ? "trainer" : "student") {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg:"Verification code has been sent to your email, please check！", controller: self)

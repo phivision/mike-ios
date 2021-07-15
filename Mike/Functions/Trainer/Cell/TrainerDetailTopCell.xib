@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TrainerDetailTopCell" customModule="Mike" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="415" height="358"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="415" height="358"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P77-ph-06b">
+                        <rect key="frame" x="0.0" y="0.0" width="415" height="358"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i2y-Ro-0GN">
+                        <rect key="frame" x="351" y="10" width="44" height="64"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="EjH-se-JLF"/>
+                            <constraint firstAttribute="height" constant="64" id="LYe-i4-Xmq"/>
+                        </constraints>
+                        <state key="normal" image="icon-delete"/>
+                        <connections>
+                            <action selector="closeBtnPressed" destination="gTV-IL-0wX" eventType="touchUpInside" id="eZa-Cj-JaL"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6f-g6-N2K">
+                        <rect key="frame" x="20" y="167" width="375" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="RAI-hy-AWM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="32"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxf-fL-YYc">
+                        <rect key="frame" x="20" y="222" width="375" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="ZNY-np-gep"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
+                        <color key="textColor" red="0.51764705882352935" green="0.51764705882352935" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KiD-NS-Xwl">
+                        <rect key="frame" x="14" y="61" width="88" height="88"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="88" id="PKk-7P-UNg"/>
+                            <constraint firstAttribute="width" constant="88" id="qOY-hW-iQa"/>
+                        </constraints>
+                        <connections>
+                            <action selector="avatarBtnPressed" destination="gTV-IL-0wX" eventType="touchUpInside" id="ZVP-Vx-1mP"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="P77-ph-06b" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="4V9-hv-13f"/>
+                <constraint firstAttribute="trailing" secondItem="P77-ph-06b" secondAttribute="trailing" id="7Kc-aU-JVd"/>
+                <constraint firstItem="P77-ph-06b" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7hn-Mc-wzb"/>
+                <constraint firstAttribute="bottom" secondItem="P77-ph-06b" secondAttribute="bottom" id="EAO-ll-C7A"/>
+                <constraint firstItem="N6f-g6-N2K" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="LMC-19-WUv"/>
+                <constraint firstItem="lxf-fL-YYc" firstAttribute="top" secondItem="N6f-g6-N2K" secondAttribute="bottom" constant="11" id="LhV-RM-xVn"/>
+                <constraint firstItem="KiD-NS-Xwl" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="61" id="Qs9-f4-tbc"/>
+                <constraint firstItem="i2y-Ro-0GN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="S0q-Ah-ggV"/>
+                <constraint firstItem="lxf-fL-YYc" firstAttribute="leading" secondItem="N6f-g6-N2K" secondAttribute="leading" id="Ulk-bj-6uH"/>
+                <constraint firstItem="lxf-fL-YYc" firstAttribute="trailing" secondItem="N6f-g6-N2K" secondAttribute="trailing" id="VI2-mH-OFe"/>
+                <constraint firstItem="N6f-g6-N2K" firstAttribute="top" secondItem="KiD-NS-Xwl" secondAttribute="bottom" constant="18" id="mEM-vi-jKg"/>
+                <constraint firstAttribute="trailing" secondItem="i2y-Ro-0GN" secondAttribute="trailing" constant="20" id="swZ-Y5-0yJ"/>
+                <constraint firstAttribute="trailing" secondItem="N6f-g6-N2K" secondAttribute="trailing" constant="20" id="xMM-NA-rNp"/>
+                <constraint firstItem="KiD-NS-Xwl" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="14" id="yoc-6o-9V0"/>
+            </constraints>
+            <size key="customSize" width="415" height="358"/>
+            <connections>
+                <outlet property="avatar" destination="KiD-NS-Xwl" id="IP4-HY-lEq"/>
+                <outlet property="closeBtn" destination="i2y-Ro-0GN" id="27H-GW-O6H"/>
+                <outlet property="topBg" destination="P77-ph-06b" id="aF1-jf-Cob"/>
+                <outlet property="userDesc" destination="lxf-fL-YYc" id="65y-aV-b4O"/>
+                <outlet property="userName" destination="N6f-g6-N2K" id="zuF-QD-PC2"/>
+            </connections>
+            <point key="canvasLocation" x="90.579710144927546" y="40.178571428571423"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="icon-delete" width="18" height="18"/>
+    </resources>
+</document>
