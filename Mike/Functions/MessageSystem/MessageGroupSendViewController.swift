@@ -10,7 +10,9 @@ import Amplify
 
 class MessageGroupSendViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
-    var toUserList:Array<UserCenterTrainer>!
+    var groupId:String!
+    var trainerId:String!
+    var trainerName:String!
     lazy var msgList:Array<MessageListModel> = {
         var msgList:Array<MessageListModel> = Array<MessageListModel>()
         return msgList
@@ -19,12 +21,13 @@ class MessageGroupSendViewController: BaseViewController {
     @IBOutlet weak var inputAreaBottomMargin:NSLayoutConstraint!
     @IBOutlet weak var commentTextHeight:NSLayoutConstraint!
     @IBOutlet weak var commentText:UITextView!
+    @IBOutlet weak var commentBg:UIView!
     @IBOutlet weak var sendBtn:UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Send To All"
+        self.title = "Group: \(self.trainerName ?? "")"
         self.configTableView()
-        self.configMsgList()
+        self.configSubscription()
         self.configTextView()
         self.setNavLeftBtn(imageName: "back_nearBlack")
         // Do any additional setup after loading the view.
@@ -40,6 +43,7 @@ class MessageGroupSendViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+        fetchMessageList()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
@@ -64,6 +68,7 @@ class MessageGroupSendViewController: BaseViewController {
     }
     
     func configTextView(){
+        self.commentBg.layer.cornerRadius = 10
         self.commentText.delegate = self;
         self.commentText.layer.cornerRadius = 10;
         self.commentText.clipsToBounds = true;
@@ -71,32 +76,31 @@ class MessageGroupSendViewController: BaseViewController {
         self.sendBtn.layer.cornerRadius = 6;
         self.sendBtn.clipsToBounds = true;
     }
-    //MARK: - init msglist from unarchive
-    func configMsgList(){
-        let dataFrom = UserDefaults.standard.data(forKey: "\(groupMsgListForTrainer)\(LoginTools.sharedTools.userId())")
-        if dataFrom != nil {
-            do {
-                let savedList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataFrom!) as? Array<MessageListModel>
-                self.msgList.append(contentsOf: savedList ?? [])
-                self.mainTableView.reloadData()
-            } catch let error {
-                print("\(error)")
+    //MARK: - unresponed message handle
+    func fetchMessageList(){
+        MessageBackend.shared.fetchGroupMessageListByTrainerId(trainerId: self.trainerId) { msgList in
+            self.msgList.removeAll()
+            self.msgList.append(contentsOf: msgList)
+            if self.msgList.count > 0{
+                self.saveLastMsg(msg: self.msgList.last?.postMessages ?? "")
             }
+            self.resetMsgStatus()
+            DispatchQueue.main.async {
+                self.mainTableView.reloadData()
+                self.scrollTableViewToBottom(animated: true,duration: 0.3)
+            }
+        } fail: { error in
+            
         }
     }
-    //MARK: - msg archive to local
-    func saveMsgListToLocale(){
-        do {
-            let data = try NSKeyedArchiver.archivedData(withRootObject: self.msgList, requiringSecureCoding: true)
-            UserDefaults.standard.set(data, forKey: "\(groupMsgListForTrainer)\(LoginTools.sharedTools.userId())")
-            UserDefaults.standard.synchronize()
-        } catch let error {
-            print("\(error)")
-        }
+    func resetMsgStatus(){
+        UserDefaults.standard.setValue(false, forKey: "\(message_groupMsg_unread)\(self.trainerId ?? "")")
+        UserDefaults.standard.synchronize()
     }
     //MARK: - save last msg for chat user
     func saveLastMsg(msg:String){
-        UserDefaults.standard.setValue(msg, forKey: "\(lastGroupMsgForTrainer)\(LoginTools.sharedTools.userId())")
+        UserDefaults.standard.setValue(msg, forKey: "\(message_lastGroupMsg)\(self.trainerId ?? "")")
+        UserDefaults.standard.synchronize()
     }
     //MARK: - keyboardObserver
     @objc func keyboardAction(sender:Notification){
@@ -126,105 +130,41 @@ class MessageGroupSendViewController: BaseViewController {
             ToastHUD.showMsg(msg: "Please Input Message!", controller: self)
             return
         }
-        let str:NSMutableString = NSMutableString()
-        for i in 0 ..< self.toUserList.count {
-            let student = self.toUserList[i]
-            str.append(student.id)
-            if i < self.toUserList.count - 1 {
-                str.append(",")
-            }
-        }
-        let queryParameters = ["userIds":String(format: "%@", str),"message":self.commentText.text ?? "","fromUserId":LoginTools.sharedTools.userId()]
-        let request = RESTRequest(apiName: "messageGroupSend" ,path: "/sendUsers", queryParameters: queryParameters)
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        Amplify.API.post(request: request){ result in
-            switch result {
-            case .success(let data):
-                let str = String(decoding: data, as: UTF8.self)
-                print("Success \(str)")
-                DispatchQueue.main.async {
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                    self.handleMsg(postMessage: self.commentText.text ?? "")
-                }
-                
-            case .failure(let apiError):
-                print("Failed", apiError)
-                DispatchQueue.main.async {
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                }
-            }
-        }
-    }
-    func handleMsg(postMessage:String){
-        DispatchQueue.main.async {
-            let curDic:[String : Any] = [
-                "PostMessages":postMessage,
-                "FromUserID":LoginTools.sharedTools.userId(),
-                "Status":"UNRESPONDED",
-                "ToUserID":"",
-                "Type": "TEXT",
-                "createdAt": TimeFormatUtils.curTimeStrWithDateFormat(),
-                "ToUser": [
-                    "LastName":"",
-                    "UserImage":"",
-                    "FirstName":"",
-                ],
-                "FromUser": [
-                    "LastName": LoginTools.sharedTools.userInfo().lastName ?? "",
-                    "UserImage": LoginTools.sharedTools.userInfo().userImage ?? "",
-                    "FirstName": LoginTools.sharedTools.userInfo().firstName ?? "",
-                ],
-            ]
-            let curMsgModel:MessageListModel = MessageListModel(fromDictionary:curDic)
-            self.msgList.append(curMsgModel)
-            self.commentText.text = ""
-            self.commentTextHeight.constant = 40
-            self.scrollTableViewToBottom(animated: true,duration: 0.3)
-            self.mainTableView.reloadData()
-        }
-        
-        for student in self.toUserList {
+        MessageBackend.shared.sendMsgToGroup(groupId: self.groupId, msgContent: self.commentText.text) { msgModel in
             DispatchQueue.main.async {
-                let dic:[String : Any] = [
-                    "PostMessages":postMessage,
-                    "FromUserID":LoginTools.sharedTools.userId(),
-                    "Status":"UNRESPONDED",
-                    "ToUserID":student.id ?? "",
-                    "Type": "TEXT",
-                    "createdAt": TimeFormatUtils.curTimeStrWithDateFormat(),
-                    "ToUser": [
-                        "LastName": student.lastName ?? "",
-                        "UserImage": student.userImage ?? "",
-                        "FirstName": student.firstName ?? "",
-                    ],
-                    "FromUser": [
-                        "LastName": LoginTools.sharedTools.userInfo().lastName ?? "",
-                        "UserImage": LoginTools.sharedTools.userInfo().userImage ?? "",
-                        "FirstName": LoginTools.sharedTools.userInfo().firstName ?? "",
-                    ],
-                ]
-                let msgModel:MessageListModel = MessageListModel(fromDictionary:dic)
-                let dataFrom = UserDefaults.standard.data(forKey: "\(msgListForTrainer)\(student.id ?? "")")
-                if dataFrom != nil {
-                    do {
-                        let savedList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataFrom!) as? Array<MessageListModel>
-                        var msgList:Array<MessageListModel> = Array<MessageListModel>()
-                        msgList.append(contentsOf: savedList ?? [])
-                        msgList.append(msgModel)
-                        let data = try NSKeyedArchiver.archivedData(withRootObject:msgList, requiringSecureCoding: true)
-                        UserDefaults.standard.set(data, forKey: "\(msgListForTrainer)\(student.id ?? "")")
-                        let lastMsg = msgList.last
-                        UserDefaults.standard.setValue(lastMsg?.postMessages, forKey: "\(lastMsgForTrainer)\(lastMsg?.toUserID ?? "")")
-                        UserDefaults.standard.synchronize()
-                    } catch let error {
-                        print("\(error)")
-                    }
+                self.msgList.append(msgModel)
+                self.mainTableView.reloadData()
+                self.saveLastMsg(msg: msgModel.postMessages)
+                self.commentText.text = ""
+                self.commentTextHeight.constant = 40
+                self.scrollTableViewToBottom(animated: true,duration: 0.3)
+            }
+        } fail: { errorMsg in
+            DispatchQueue.main.async {
+                ToastHUD.showMsg(msg: errorMsg, controller: self)
+            }
+        }
+    }
+    @objc func cancelSub(){
+        SubscriptionTools.sharedTools.innderSubscription?.cancel()
+    }
+    @objc func restartSub(){
+        self.configSubscription()
+    }
+    //MARK: - createSubscription
+    func configSubscription(){
+        MessageBackend.shared.createGroupSubscription(groupId: self.groupId) { msgModel in
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a inner subscription")
+            if msgModel.fromUserID != LoginTools.sharedTools.userId() {
+                DispatchQueue.main.async {
+                    self.msgList.append(msgModel)
+                    self.mainTableView.reloadData()
+                    self.saveLastMsg(msg: msgModel.postMessages)
+                    self.scrollTableViewToBottom(animated: true,duration: 0.3)
                 }
             }
         }
     }
-    
-
     /*
     // MARK: - Navigation
 

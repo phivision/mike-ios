@@ -13,6 +13,10 @@ class SubscriptionTools: NSObject {
 //    var subscriptionList:Array<GraphQLSubscriptionOperation<JSONValue>> = []
     var innderSubscription:GraphQLSubscriptionOperation<JSONValue>?
     var outterSubscription:GraphQLSubscriptionOperation<JSONValue>?
+    lazy var groupSubscription:[String:GraphQLSubscriptionOperation<JSONValue>] = {
+        var groupSubscription:[String:GraphQLSubscriptionOperation<JSONValue>] = [:]
+        return groupSubscription
+    }()
     private override init() {
         super.init()
     }
@@ -28,7 +32,6 @@ class SubscriptionTools: NSObject {
                 print("\(error)")
                 return []
             }
-            
         }else{
             return []
         }

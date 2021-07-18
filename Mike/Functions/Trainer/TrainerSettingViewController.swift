@@ -152,6 +152,10 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
         LoginBackend.shared.signOut {
             LoginTools.sharedTools.removeUserInfo()
             SubscriptionTools.sharedTools.outterSubscription?.cancel()
+            for key in SubscriptionTools.sharedTools.groupSubscription {
+                let subscription = SubscriptionTools.sharedTools.groupSubscription["\(key)"]
+                subscription?.cancel()
+            }
             DispatchQueue.main.async {
                 let loginVC:LoginViewController = LoginViewController()
                 let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)

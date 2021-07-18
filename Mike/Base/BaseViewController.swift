@@ -51,6 +51,21 @@ class BaseViewController: UIViewController, UIGestureRecognizerDelegate {
         negativeSpacer.width = 19;
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: button),negativeSpacer]
     }
+    func setNavRightIcon(tokenBalance:Int?){
+        let button:UIButton = UIButton(type: .custom)
+        button.backgroundColor = UIColor.clear
+        button.setImage(UIImage(named: "icon_coins"), for: .normal)
+        button.addTarget(self, action: #selector(rightButtonPressed), for: .touchUpInside)
+        let negativeSpacer:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        negativeSpacer.width = 0;
+        let tokenBtn:UIButton = UIButton(type: .custom)
+        tokenBtn.backgroundColor = UIColor.clear
+        tokenBtn.setTitle("\(tokenBalance ?? 0)", for: .normal)
+        tokenBtn.setTitleColor(UIColor.black, for: .normal)
+        tokenBtn.titleLabel?.font = UIFont.init(name: nAvenirBlack, size: 18)
+        tokenBtn.addTarget(self, action: #selector(rightButtonPressed), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: button),negativeSpacer,UIBarButtonItem(customView: tokenBtn)]
+    }
     
     func changeRootController(controller:UIViewController){
         let transtition = CATransition()

@@ -2,66 +2,49 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Nunito-Regular.ttf">
-            <string>Nunito-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="273" id="KGk-i7-Jjw" customClass="MsgRightCell" customModule="Mike" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="273" id="KGk-i7-Jjw" customClass="MsgRightCell" customModule="Motion" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="273"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="273"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="hQE-Uh-aNY">
-                        <rect key="frame" x="256" y="20" width="44" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="44" id="9ZF-Lp-xwa"/>
-                            <constraint firstAttribute="width" constant="44" id="kGg-JF-vuV"/>
-                        </constraints>
-                    </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N2I-NS-XJT">
-                        <rect key="frame" x="20" y="20" width="216" height="233"/>
-                        <color key="backgroundColor" red="0.1764705882" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <rect key="frame" x="105" y="10" width="205" height="253"/>
+                        <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCY-FA-DuV">
-                        <rect key="frame" x="40" y="40" width="176" height="193"/>
-                        <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="15"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <rect key="frame" x="120" y="25" width="175" height="223"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="pCY-FA-DuV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="40" id="3bL-dv-r9n"/>
-                    <constraint firstItem="N2I-NS-XJT" firstAttribute="leading" secondItem="pCY-FA-DuV" secondAttribute="leading" constant="-20" id="7Lu-3g-X3S"/>
-                    <constraint firstItem="pCY-FA-DuV" firstAttribute="trailing" secondItem="hQE-Uh-aNY" secondAttribute="leading" constant="-40" id="N3t-hL-Pjy"/>
-                    <constraint firstItem="hQE-Uh-aNY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Pob-gj-gfQ"/>
-                    <constraint firstItem="pCY-FA-DuV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="Xu5-Vc-wXf"/>
-                    <constraint firstAttribute="bottom" secondItem="pCY-FA-DuV" secondAttribute="bottom" constant="40" id="ZPl-ZZ-25c"/>
-                    <constraint firstItem="pCY-FA-DuV" firstAttribute="trailing" secondItem="N2I-NS-XJT" secondAttribute="trailing" constant="-20" id="aTi-0G-3rs"/>
-                    <constraint firstItem="N2I-NS-XJT" firstAttribute="bottom" secondItem="pCY-FA-DuV" secondAttribute="bottom" constant="20" id="cxO-Gu-8Kp"/>
-                    <constraint firstAttribute="trailing" secondItem="hQE-Uh-aNY" secondAttribute="trailing" constant="20" id="gHp-z0-bOc"/>
-                    <constraint firstItem="N2I-NS-XJT" firstAttribute="top" secondItem="pCY-FA-DuV" secondAttribute="top" constant="-20" id="kLV-Tv-8jb"/>
+                    <constraint firstItem="pCY-FA-DuV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="3bL-dv-r9n"/>
+                    <constraint firstItem="N2I-NS-XJT" firstAttribute="leading" secondItem="pCY-FA-DuV" secondAttribute="leading" constant="-15" id="7Lu-3g-X3S"/>
+                    <constraint firstItem="pCY-FA-DuV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="120" id="Xu5-Vc-wXf"/>
+                    <constraint firstAttribute="bottom" secondItem="pCY-FA-DuV" secondAttribute="bottom" constant="25" id="ZPl-ZZ-25c"/>
+                    <constraint firstItem="pCY-FA-DuV" firstAttribute="trailing" secondItem="N2I-NS-XJT" secondAttribute="trailing" constant="-15" id="aTi-0G-3rs"/>
+                    <constraint firstItem="N2I-NS-XJT" firstAttribute="bottom" secondItem="pCY-FA-DuV" secondAttribute="bottom" constant="15" id="cxO-Gu-8Kp"/>
+                    <constraint firstItem="N2I-NS-XJT" firstAttribute="top" secondItem="pCY-FA-DuV" secondAttribute="top" constant="-15" id="kLV-Tv-8jb"/>
+                    <constraint firstItem="pCY-FA-DuV" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-25" id="zcU-T6-KnQ"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="msgContentBg" destination="N2I-NS-XJT" id="15B-eu-TUb"/>
                 <outlet property="msgContentLab" destination="pCY-FA-DuV" id="Hdp-U8-BcJ"/>
-                <outlet property="userImage" destination="hQE-Uh-aNY" id="rw4-nX-IAi"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="183.14732142857142"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="logo" width="68" height="68"/>
-    </resources>
 </document>

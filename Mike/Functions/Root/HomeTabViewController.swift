@@ -14,7 +14,7 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
         var button = UIButton(frame: CGRect(x: 5, y:5, width: tabBar.height-20, height: tabBar.height-20))
         button.clipsToBounds = true
         button.contentMode = .scaleAspectFill
-        button.setImage(UIImage(named:"logo"), for: .normal)
+        button.setImage(UIImage(named:"icon_user_default"), for: .normal)
         button.layer.cornerRadius = (tabBar.height-20)/2
         button.isUserInteractionEnabled = false
         return button
@@ -34,23 +34,17 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
         super.viewDidLoad()
         commitInitView()
         self.delegate = self
-        // Do any additional setup after loading the view.
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        appSyncClient = appDelegate.appSyncClient
-//        //In your app code
-//        do {
-//          subscriptionWatcher = try appSyncClient?.subscribe(subscription: .subscriptionMsg(byUserId: "1222c9f6-a14d-456a-8798-24c06ec9d80a"), resultHandler: { (result, transaction, error) in
-//            if let result = result {
-//              print(result.data!.onCreateTodo!.name + " " + result.data!.onCreateTodo!.description!)
-//            } else if let error = error {
-//              print(error.localizedDescription)
-//            }
-//          })
-//        } catch {
-//          print("Error starting subscription.")
-//        }
-//        Backend.shared.createContentCreateSubscription(creatorId: "2c486065-5e75-44c0-a189-3a88be7056ab")
-//        Backend.shared.createContentUpdateSubscription(creatorId: "9badcade-6771-441d-b8e6-b1f2b6e14d52")
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCenterIcon), name: NSNotification.Name(rawValue: changeTabbarCenterIcon), object: nil)
+    }
+    
+    @objc func updateCenterIcon(){
+        ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.trainerModel?.userImage) { imgUrl, cannotLoadUrl in
+            if cannotLoadUrl == true{
+                self.centerBtn.setImage(UIImage(named: "icon_user_default"), for: .normal)
+            }else{
+                self.centerBtn.sd_setImage(with: URL(string: imgUrl  ?? "")!, for:.normal,placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
+            }
+        }
     }
     
     func addChildControllers() {
@@ -66,7 +60,7 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
             self.viewControllers = [
                 addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
                 addChildVC(childVC: SearchViewController(), title: "", imageNormal: UIImage(named: "icon_search_N"), imageSelect: UIImage(named: "icon_search_H"),showNavBar: false),
-                addChildVC(childVC: ContentUploadViewController(), title: "", imageNormal: UIImage(named: ""), imageSelect: UIImage(named: ""),showNavBar: false),
+                addChildVC(childVC: TrainerDetailViewController(), title: "", imageNormal: UIImage(named: ""), imageSelect: UIImage(named: ""),showNavBar: false),
                 addChildVC(childVC: MessageTrainerListViewController(), title: "", imageNormal: UIImage(named: "icon_chat_N"), imageSelect: UIImage(named: "icon_chat_H"),showNavBar: false),
                 addChildVC(childVC: UserProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];
@@ -105,6 +99,14 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
             }else{
                 self.centerBorderImg.layer.borderColor = UIColor.clear.cgColor
             }
+            if tabBarController.selectedIndex == 2 && self.tabSelectIndex == 2 {
+                let vc = ChangeCurTrainerController()
+                vc.delegate = self
+                vc.view.frame = CGRect.init(x: 0, y: 0, width: kScreenWidth, height: 100)
+                vc.modalPresentationStyle = .overFullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+            self.tabSelectIndex = tabBarController.selectedIndex
         }
     }
     /*
@@ -117,6 +119,13 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
     }
     */
 
+}
+extension HomeTabViewController:CurTrainerSelectDelegate{
+    func changeCurTrainer(model: UserCenterTrainer) {
+        LoginTools.sharedTools.trainerModel = model
+        self.updateCenterIcon()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerDetail), object: nil)
+    }
 }
 
 extension HomeTabViewController{

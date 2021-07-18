@@ -41,7 +41,6 @@ class UserProfileTopCell: UICollectionViewCell {
             self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
             self.userDesc.text = "Joined \(model.regDate ?? "")"
             self.isTrainer = false
-            self.configBtn(showBack: isOtherUser)
         }else{
             ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.userInfo().userImage) { imgUrl, cannotLoadUrl in
                 if cannotLoadUrl == true{
@@ -53,10 +52,9 @@ class UserProfileTopCell: UICollectionViewCell {
             self.userName.text = "\(LoginTools.sharedTools.userInfo().firstName ?? "") \(LoginTools.sharedTools.userInfo().lastName ?? "")"
             self.userDesc.text = "Joined \(LoginTools.sharedTools.userInfo().regDate ?? "")"
             self.isTrainer = false
-            self.configBtn(showBack: isOtherUser)
         }
     }
-    func setTrainerModel(model:TrainerDetailModel){
+    func setTrainerModel(model:UserCenterModel){
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
                 self.avatar.setImage(UIImage(named: "icon_user_default"), for: .normal)
@@ -67,14 +65,6 @@ class UserProfileTopCell: UICollectionViewCell {
         self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         self.userDesc.text = "\(model.descriptionField ?? "")"
         self.isTrainer = true
-        self.configBtn(showBack: true)
-    }
-    func configBtn(showBack:Bool){
-        if showBack == true {
-            self.settingBtn.isHidden = true
-        }else{
-            self.settingBtn.isHidden = false
-        }
     }
     @IBAction func settingBtnPressed(){
         self.delegate?.settingBtnClicked?()

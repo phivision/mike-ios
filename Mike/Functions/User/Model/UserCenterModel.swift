@@ -29,6 +29,7 @@ class UserCenterModel : NSObject, NSCoding{
 	var owner : String!
 	var updatedAt : String!
     var TokenPrice: Int!
+    var userMessageGroup : UserCenterUserMessageGroup?
 
 
 	/**
@@ -63,6 +64,9 @@ class UserCenterModel : NSObject, NSCoding{
 		owner = dictionary["owner"] as? String
 		updatedAt = dictionary["updatedAt"] as? String
         TokenPrice = dictionary["TokenPrice"] as? Int
+        if let userMessageGroupData = dictionary["UserMessageGroup"] as? [String:Any]{
+            userMessageGroup = UserCenterUserMessageGroup(fromDictionary: userMessageGroupData)
+        }
 	}
 
 	/**
@@ -137,6 +141,9 @@ class UserCenterModel : NSObject, NSCoding{
         if TokenPrice != nil {
             dictionary["TokenPrice"] = TokenPrice
         }
+        if userMessageGroup != nil{
+            dictionary["UserMessageGroup"] = userMessageGroup?.toDictionary()
+        }
 		return dictionary
 	}
 
@@ -168,6 +175,7 @@ class UserCenterModel : NSObject, NSCoding{
          owner = aDecoder.decodeObject(forKey: "owner") as? String
          updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
         TokenPrice = aDecoder.decodeObject(forKey: "TokenPrice") as? Int
+        userMessageGroup = aDecoder.decodeObject(forKey: "UserMessageGroup") as? UserCenterUserMessageGroup
 	}
 
     /**
@@ -241,6 +249,9 @@ class UserCenterModel : NSObject, NSCoding{
 		}
         if TokenPrice != nil {
             aCoder.encode(TokenPrice,forKey: "TokenPrice")
+        }
+        if userMessageGroup != nil{
+            aCoder.encode(userMessageGroup, forKey: "UserMessageGroup")
         }
 	}
 

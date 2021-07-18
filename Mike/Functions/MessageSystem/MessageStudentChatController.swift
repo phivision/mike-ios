@@ -24,7 +24,10 @@ class MessageStudentChatController: BaseViewController {
     @IBOutlet weak var inputAreaBottomMargin:NSLayoutConstraint!
     @IBOutlet weak var commentTextHeight:NSLayoutConstraint!
     @IBOutlet weak var commentText:UITextView!
+    @IBOutlet weak var commentBg:UIView!
     @IBOutlet weak var sendBtn:UIButton!
+    //MARK: - token balance
+    var tokenBalance:Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = toUserName ?? ""
@@ -34,6 +37,8 @@ class MessageStudentChatController: BaseViewController {
         self.configTextView()
         self.setNavLeftBtn(imageName: "back_nearBlack")
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelSub), name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(restartSub), name: NSNotification.Name(rawValue:restartSubscription), object: nil)
     }
     override func leftButtonPressed() {
         self.navigationController?.popViewController(animated: true)
@@ -43,22 +48,23 @@ class MessageStudentChatController: BaseViewController {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = false
         IQKeyboardManager.shared.enable = false
-        NotificationCenter.default.addObserver(self, selector: #selector(cancelSub), name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(restartSub), name: NSNotification.Name(rawValue:restartSubscription), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         self.fetchUnResponedStatusMessageList()
+        self.fetchTokenBalance()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         self.navigationController?.isNavigationBarHidden = true
         IQKeyboardManager.shared.enable = true
-        NotificationCenter.default.removeObserver(self,name: NSNotification.Name(rawValue:cancelSubscription),object: nil)
-        NotificationCenter.default.removeObserver(self,name: NSNotification.Name(rawValue:restartSubscription),object: nil)
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardWillShowNotification,object: nil)
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardDidShowNotification,object: nil)
         NotificationCenter.default.removeObserver(self,name: UIResponder.keyboardWillHideNotification,object: nil)
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self,name: NSNotification.Name(rawValue:cancelSubscription),object: nil)
+        NotificationCenter.default.removeObserver(self,name: NSNotification.Name(rawValue:restartSubscription),object: nil)
     }
     //MARK: - config tableview
     func configTableView(){
@@ -73,6 +79,8 @@ class MessageStudentChatController: BaseViewController {
     }
     
     func configTextView(){
+        self.commentBg.layer.cornerRadius = 10
+        self.commentBg.clipsToBounds = true
         self.commentText.delegate = self;
         self.commentText.layer.cornerRadius = 10;
         self.commentText.clipsToBounds = true;
@@ -82,7 +90,7 @@ class MessageStudentChatController: BaseViewController {
     }
     //MARK: - init msglist from unarchive
     func configMsgList(){
-        let dataFrom = UserDefaults.standard.data(forKey: "\(msgListForTrainer)\(self.toUserId ?? "")")
+        let dataFrom = UserDefaults.standard.data(forKey: "\(message_msgListForTrainer)\(self.toUserId ?? "")")
         if dataFrom != nil {
             do {
                 let savedList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataFrom!) as? Array<MessageListModel>
@@ -97,7 +105,7 @@ class MessageStudentChatController: BaseViewController {
     func saveMsgListToLocale(){
         do {
             let data = try NSKeyedArchiver.archivedData(withRootObject: self.msgList, requiringSecureCoding: true)
-            UserDefaults.standard.set(data, forKey: "\(msgListForTrainer)\(self.toUserId ?? "")")
+            UserDefaults.standard.set(data, forKey: "\(message_msgListForTrainer)\(self.toUserId ?? "")")
             UserDefaults.standard.synchronize()
         } catch let error {
             print("\(error)")
@@ -105,7 +113,7 @@ class MessageStudentChatController: BaseViewController {
     }
     //MARK: - save last msg for chat user
     func saveLastMsg(msg:String){
-        UserDefaults.standard.setValue(msg, forKey: "\(lastMsgForTrainer)\(self.toUserId ?? "")")
+        UserDefaults.standard.setValue(msg, forKey: "\(message_lastMsgForTrainer)\(self.toUserId ?? "")")
     }
     //MARK: - unresponed message handle
     func fetchUnResponedStatusMessageList(){
@@ -134,6 +142,17 @@ class MessageStudentChatController: BaseViewController {
         DispatchQueue.main.async {
             self.mainTableView.reloadData()
             self.scrollTableViewToBottom(animated: true,duration: 0.5)
+        }
+    }
+    //MARK: - token balance
+    func fetchTokenBalance(){
+        MessageBackend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
+            self.tokenBalance = tokenBalance
+            DispatchQueue.main.async {
+                self.setNavRightIcon(tokenBalance: self.tokenBalance)
+            }
+        } fail: { error in
+            
         }
     }
     func changeAllUnResponeMsgStatus(){
@@ -181,6 +200,7 @@ class MessageStudentChatController: BaseViewController {
                 self.saveMsgListToLocale()
                 self.saveLastMsg(msg: msgModel.postMessages)
                 self.scrollTableViewToBottom(animated: true,duration: 0.3)
+                self.fetchTokenBalance()
             }
         }
     }

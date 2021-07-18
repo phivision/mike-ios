@@ -231,7 +231,7 @@ exports.handler = (event) => {
   for (var i = 0; i < event.Records.length; i++) {
     const record = event.Records[i];
     if (record.eventName === "INSERT") {
-      console.log(record);
+      console.log(JSON.stringify(record));
       message = record.dynamodb.NewImage;
     }
   }

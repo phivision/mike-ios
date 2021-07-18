@@ -17,10 +17,12 @@ class MessageSystemViewController: BaseViewController {
         return msgList
     }()
     //MARK: - comment relation
+    @IBOutlet weak var commentBg:UIView!
     @IBOutlet weak var inputAreaBottomMargin:NSLayoutConstraint!
     @IBOutlet weak var commentTextHeight:NSLayoutConstraint!
     @IBOutlet weak var commentText:UITextView!
     @IBOutlet weak var sendBtn:UIButton!
+    @IBOutlet weak var sendBtnWidth:NSLayoutConstraint!
     //MARK: - token balance
     var tokenBalance:Int = 0
     //MARK: - token price
@@ -41,6 +43,7 @@ class MessageSystemViewController: BaseViewController {
         self.navigationController?.popViewController(animated: true)
         SubscriptionTools.sharedTools.innderSubscription?.cancel()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = false
@@ -91,6 +94,8 @@ class MessageSystemViewController: BaseViewController {
     }
     
     func configTextView(){
+        self.commentBg.layer.cornerRadius = 10
+        self.commentBg.clipsToBounds = true
         self.commentText.delegate = self;
         self.commentText.layer.cornerRadius = 10;
         self.commentText.clipsToBounds = true;
@@ -102,6 +107,9 @@ class MessageSystemViewController: BaseViewController {
     func fetchTokenBalance(){
         MessageBackend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
             self.tokenBalance = tokenBalance
+            DispatchQueue.main.async {
+                self.setNavRightIcon(tokenBalance: self.tokenBalance)
+            }
         } fail: { error in
             
         }
@@ -110,13 +118,17 @@ class MessageSystemViewController: BaseViewController {
     func fetchTokenPrice(){
         MessageBackend.shared.fetchTokenPrice(trainerId: self.toUserId) { tokenPrice in
             self.trainerTokenPrice = tokenPrice
+            DispatchQueue.main.async {
+                self.sendBtn.setTitle("Send for \(self.trainerTokenPrice)", for: .normal)
+                self.sendBtnWidth.constant = CGFloat("Send for \(self.trainerTokenPrice)".count * 9)
+            }
         } fail: { error in
             
         }
     }
     //MARK: - msg config
     func configMsgList(){
-        let dataFrom = UserDefaults.standard.data(forKey: "\(msgListForStudent)\(self.toUserId ?? "")")
+        let dataFrom = UserDefaults.standard.data(forKey: "\(message_msgListForStudent)\(self.toUserId ?? "")")
         if dataFrom != nil {
             do {
                 let savedList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataFrom!) as? Array<MessageListModel>
@@ -131,14 +143,14 @@ class MessageSystemViewController: BaseViewController {
     func handleMsgList(){
         do {
             let data = try NSKeyedArchiver.archivedData(withRootObject: self.msgList, requiringSecureCoding: true)
-            UserDefaults.standard.set(data, forKey: "\(msgListForStudent)\(self.toUserId ?? "")")
+            UserDefaults.standard.set(data, forKey: "\(message_msgListForStudent)\(self.toUserId ?? "")")
             UserDefaults.standard.synchronize()
         } catch let error {
             print("\(error)")
         }
     }
     func saveLastMsg(msg:String){
-        UserDefaults.standard.setValue(msg, forKey: "\(lastMsgForStudent)\(self.toUserId ?? "")")
+        UserDefaults.standard.setValue(msg, forKey: "\(message_lastMsgForStudent)\(self.toUserId ?? "")")
     }
     //MARK: - unresponed message handle
     func fetchUnResponedStatusMessageList(){
@@ -215,6 +227,7 @@ class MessageSystemViewController: BaseViewController {
                 self.commentTextHeight.constant = 40
                 self.tokenBalance = self.tokenBalance - self.trainerTokenPrice
                 self.scrollTableViewToBottom(animated: true)
+                self.fetchTokenBalance()
             }
         } fail: { errorMsg in
             DispatchQueue.main.async {
