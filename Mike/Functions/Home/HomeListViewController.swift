@@ -76,6 +76,11 @@ class HomeListViewController: BaseViewController {
         HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
             self.subscriptionList.removeAll()
             self.subscriptionList.append(contentsOf: subscriptionList)
+            if LoginTools.sharedTools.trainerModel == nil{
+                let trainerModel = self.subscriptionList.first?.trainer
+                LoginTools.sharedTools.trainerModel = UserCenterTrainer(fromDictionary: trainerModel?.toDictionary() ?? [:])
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue:changeTabbarCenterIcon), object: nil)
+            }
             DispatchQueue.main.async {
                 self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
                 self.mainTableView.reloadData()
@@ -100,7 +105,7 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return self.subscriptionList.count
+            return 1
         }else{
             let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[section-1]
             return trainerModel.trainer.contents.items.count
@@ -131,11 +136,13 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
         }else{
             let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section-1]
             let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
-            let vc:UserContentDetailViewController = UserContentDetailViewController()
+            let vc:UserContentController = UserContentController()
             vc.userContentModel = UserCenterContent(fromDictionary: contentModel.toDictionary())
             vc.trainerId = trainerModel.trainer.id
+            let nav:UINavigationController = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
-                self.present(vc, animated: true, completion: nil)
+                self.present(nav, animated: true, completion: nil)
             }
         }
     }

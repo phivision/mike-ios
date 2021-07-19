@@ -74,6 +74,10 @@ extension SearchViewController:UITableViewDelegate,UITableViewDataSource{
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let vc:TrainerDetailViewController = TrainerDetailViewController()
+        let model = self.trainerList[indexPath.row]
+        vc.curUserId = model.id
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

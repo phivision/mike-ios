@@ -145,6 +145,9 @@ extension GraphQLRequest{
             owner
             updatedAt
             TokenPrice
+            UserMessageGroup {
+                id
+            }
             Subscriptions {
               items {
                 Trainer {
@@ -220,6 +223,9 @@ extension GraphQLRequest{
                       owner
                       updatedAt
                       TokenPrice
+                      UserMessageGroup {
+                        id
+                      }
                     }
                   }
               }
@@ -703,6 +709,97 @@ extension GraphQLRequest{
         """
         return GraphQLRequest<JSONValue>(document: document,
                                          variables: ["keyword": keyword],
+                                    responseType: JSONValue.self)
+    }
+    
+    static func subscriptionGroupMsg(byGroupId groupId: String) -> GraphQLRequest<JSONValue> {
+            let document = """
+                subscription MySubscription($GroupID: ID = "") {
+                  onMessageByGroupID(GroupID: $GroupID) {
+                    FromUser {
+                      LastName
+                      FirstName
+                      UserImage
+                    }
+                    PostMessages
+                    GroupID
+                    FromUserID
+                    Status
+                    ToUserID
+                    Type
+                    createdAt
+                    owner
+                    id
+                    
+                  }
+                }
+            """
+            return GraphQLRequest<JSONValue>(document: document,
+                                        variables: ["GroupID": groupId],
+                                        responseType: JSONValue.self)
+        }
+    static func createMsgToGroup(byGroupId groupId:String,_ msgContent:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+        mutation MyMutation3($FromUserID: ID!,$ToUserID: ID!, $GroupID: ID!, $PostMessages: String!) {
+          createMessage(input: {FromUserID: $FromUserID, ToUserID: $ToUserID, PostMessages: $PostMessages, GroupID: $GroupID, Type: TEXT, Status: UNREAD}) {
+            id
+            PostMessages
+            ToUserID
+            FromUserID
+            Status
+            Type
+            createdAt
+            ToUser {
+              FirstName
+              LastName
+              UserImage
+            }
+            FromUser {
+              LastName
+              FirstName
+              UserImage
+            }
+            GroupID
+          }
+        }
+        """
+        print("\(LoginTools.sharedTools.userId())~~~~~~~~~~~~\(groupId)~~~~~~~~~~~~~~~~~\(msgContent)")
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["FromUserID": LoginTools.sharedTools.userId(),"ToUserID":LoginTools.sharedTools.userId(),"PostMessages":msgContent,"GroupID":groupId],
+                                    responseType: JSONValue.self)
+    }
+    static func fetchMessageByTrainerId(trainerId:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+            query MyQuery($id: ID!) {
+              getUserProfile(id: $id) {
+                UserMessageGroup {
+                  Messages(sortDirection: ASC) {
+                    items {
+                      id
+                      PostMessages
+                      ToUserID
+                      FromUserID
+                      Status
+                      Type
+                      createdAt
+                      ToUser {
+                        FirstName
+                        LastName
+                        UserImage
+                      }
+                      FromUser {
+                        LastName
+                        FirstName
+                        UserImage
+                      }
+                    }
+                  }
+                }
+              }
+            }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": trainerId],
                                     responseType: JSONValue.self)
     }
     

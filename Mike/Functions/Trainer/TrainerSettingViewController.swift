@@ -135,6 +135,7 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
             if indexPath.row == 0 {
                 cell.textBtn.setTitle("Change Password", for: .normal)
                 cell.textBtn.setTitleColor(UIColor.black, for: .normal)
+                cell.textBtn.addTarget(self, action: #selector(changePwd), for: .touchUpInside)
             }else{
                 cell.textBtn.setTitle("Log Out", for: .normal)
                 cell.textBtn.setTitleColor(orangeColor, for: .normal)
@@ -148,10 +149,19 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+    @objc func changePwd(){
+        let vc = FogotPwdViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     @objc func signOut(){
         LoginBackend.shared.signOut {
+            Backend.shared.resetDeviceToken()
             LoginTools.sharedTools.removeUserInfo()
             SubscriptionTools.sharedTools.outterSubscription?.cancel()
+            for key in SubscriptionTools.sharedTools.groupSubscription {
+                let subscription = SubscriptionTools.sharedTools.groupSubscription["\(key)"]
+                subscription?.cancel()
+            }
             DispatchQueue.main.async {
                 let loginVC:LoginViewController = LoginViewController()
                 let navVC:UINavigationController  = UINavigationController(rootViewController: loginVC)

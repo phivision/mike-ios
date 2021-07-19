@@ -20,8 +20,8 @@ class MessageTrainerListCell: UITableViewCell {
         self.avatarImg.layer.cornerRadius = 25
         self.avatarImg.clipsToBounds = true
     }
-    func setTrainerModel(model:UserCenterTrainer){
-        if let lastMsg = UserDefaults.standard.object(forKey: "\(lastMsgForStudent)\(model.id ?? "")") {
+    func setModelForStudent(model:UserCenterTrainer){
+        if let lastMsg = UserDefaults.standard.object(forKey: "\(message_lastMsgForStudent)\(model.id ?? "")") {
             self.lastMsgContentLab.text = "\(lastMsg)"
         }else{
             self.lastMsgContentLab.text = "No records!"
@@ -34,12 +34,12 @@ class MessageTrainerListCell: UITableViewCell {
                 self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
             }
         }
-        let result = UserDefaults.standard.bool(forKey: "\(msgForStudentUnRead)\(model.id ?? "")")
+        let result = UserDefaults.standard.bool(forKey: "\(message_msgForStudentUnRead)\(model.id ?? "")")
         print("trainer~~~~~~~~~~~~~~~~~~~~~~~~~\(result)")
         self.dotImg.isHidden = !result
     }
-    func setStudentModel(model:UserCenterTrainer){
-        if let lastMsg = UserDefaults.standard.object(forKey: "\(lastMsgForTrainer)\(model.id ?? "")") {
+    func setModelForTrainer(model:UserCenterTrainer){
+        if let lastMsg = UserDefaults.standard.object(forKey: "\(message_lastMsgForTrainer)\(model.id ?? "")") {
             self.lastMsgContentLab.text = "\(lastMsg)"
         }else{
             self.lastMsgContentLab.text = "No records!"
@@ -49,10 +49,10 @@ class MessageTrainerListCell: UITableViewCell {
             if cannotLoadUrl == true{
                 self.avatarImg.image = UIImage(named: "icon_user_default")
             }else{
-                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
+                self.avatarImg.sd_setImage(with: URL(string: imgUrl  ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
             }
         }
-        let result = UserDefaults.standard.bool(forKey: "\(msgForTrainerUnRead)\(model.id ?? "")")
+        let result = UserDefaults.standard.bool(forKey: "\(message_msgForTrainerUnRead)\(model.id ?? "")")
         print("trainer~~~~~~~~~~~~~~~~~~~~~~~~~\(result)")
         self.dotImg.isHidden = !result
     }

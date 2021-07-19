@@ -16,7 +16,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserProfileSettingViewController" customModule="Mike" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserProfileSettingViewController" customModule="Motion" customModuleProvider="target">
             <connections>
                 <outlet property="editBtn" destination="NqJ-M8-rI1" id="Fsx-u4-PTj"/>
                 <outlet property="signOutBtn" destination="6Wz-cF-2ik" id="XuJ-DD-H5h"/>

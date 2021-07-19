@@ -15,12 +15,12 @@ class MsgLeftListCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         self.msgContentBg.clipsToBounds = false
-        self.msgContentBg.layer.cornerRadius = 15
-        self.msgContentBg.layer.shadowColor = HexRGBAlpha(0xffe2e7f6,1).cgColor
-        self.msgContentBg.layer.shadowOffset = CGSize(width: 10, height: 10)
-        self.msgContentBg.layer.shadowOpacity = 2
-        self.msgContentBg.layer.shadowRadius = 20
-        self.userImage.layer.cornerRadius = 10
+        self.msgContentBg.layer.cornerRadius = 10
+//        self.msgContentBg.layer.shadowColor = HexRGBAlpha(0xffe2e7f6,1).cgColor
+//        self.msgContentBg.layer.shadowOffset = CGSize(width: 10, height: 10)
+//        self.msgContentBg.layer.shadowOpacity = 2
+//        self.msgContentBg.layer.shadowRadius = 20
+        self.userImage.layer.cornerRadius = 15
         self.userImage.clipsToBounds = true
     }
 

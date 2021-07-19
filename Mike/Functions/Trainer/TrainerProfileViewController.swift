@@ -149,7 +149,8 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
             let cell:UserProfileTopCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserProfileTopCell", for: indexPath) as! UserProfileTopCell
             cell.delegate = self
             if let model = self.userProfileModel {
-                cell.setModel(model: model,isOtherUser: self.curUserId != LoginTools.sharedTools.userId())
+                cell.setTrainerModel(model: model)
+//                cell.setModel(model: model,isOtherUser: self.curUserId != LoginTools.sharedTools.userId())
             }
             return cell
         case 1:
@@ -169,18 +170,12 @@ extension TrainerProfileViewController:UICollectionViewDelegate,UICollectionView
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         switch indexPath.section {
         case 0:
-            if self.curUserId != LoginTools.sharedTools.userId() {
-                if let model = self.userProfileModel {
-                    let titleHeight = heightForView(text: (model.firstName ?? "") + " " + (model.lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
-                    let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                    return CGSize.init(width: kScreenWidth, height: 198 + descHeight + titleHeight + 70)
-                }else{
-                    return CGSize.init(width: kScreenWidth, height: 198)
-                }
+            if let model = self.userProfileModel {
+                let titleHeight = heightForView(text: (model.firstName ?? "") + " " + (model.lastName ?? ""), font: UIFont(name: nAvenirBlack, size: 32) ?? UIFont.systemFont(ofSize: 32), width: kScreenWidth-40)
+                let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: nAvenirMedium, size: 16) ?? UIFont.systemFont(ofSize: 16), width: kScreenWidth-40)
+                return CGSize.init(width: kScreenWidth, height: 182 + descHeight + titleHeight + 15)
             }else{
-                let titleHeight = heightForView(text: (LoginTools.sharedTools.userInfo().firstName ?? "") + " " + (LoginTools.sharedTools.userInfo().lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
-                let descHeight = heightForView(text: LoginTools.sharedTools.userInfo().descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-                return CGSize.init(width: kScreenWidth, height: 198 + descHeight + titleHeight + 70)
+                return CGSize.init(width: kScreenWidth, height: 182)
             }
         case 1:
             return CGSize.init(width: kScreenWidth, height: 85)
@@ -247,9 +242,10 @@ extension TrainerProfileViewController:UserProfileTopCellDelegate{
     func settingBtnClicked() {
         let vc:TrainerSettingViewController = TrainerSettingViewController()
         vc.isTrainer = true
-        vc.modalPresentationStyle = .fullScreen
+        let nav:UINavigationController = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
-            self.present(vc, animated: true, completion: nil)
+            self.present(nav, animated: true, completion: nil)
         }
     }
     func editBtnPressed() {

@@ -2,24 +2,22 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Nunito-Bold.ttf">
-            <string>Nunito-Bold</string>
-        </array>
-    </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageSystemViewController" customModule="Mike" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageSystemViewController" customModule="Motion" customModuleProvider="target">
             <connections>
+                <outlet property="commentBg" destination="PU5-iD-PPN" id="T0g-bm-8nH"/>
                 <outlet property="commentText" destination="lcQ-gm-I98" id="JXP-dE-EhU"/>
                 <outlet property="commentTextHeight" destination="cTK-9s-wFO" id="9fZ-A9-YWL"/>
                 <outlet property="inputAreaBottomMargin" destination="R02-J3-Zf5" id="9L8-a4-CEB"/>
                 <outlet property="mainTableView" destination="jYo-Sk-gtV" id="XbW-Lp-Bm7"/>
                 <outlet property="sendBtn" destination="ahU-qp-tl0" id="9E3-mA-1QL"/>
+                <outlet property="sendBtnWidth" destination="km1-Sp-C0h" id="AJP-sw-OYS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -33,11 +31,11 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PU5-iD-PPN">
-                    <rect key="frame" x="0.0" y="802" width="414" height="60"/>
+                    <rect key="frame" x="15" y="802" width="384" height="60"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lcQ-gm-I98">
-                            <rect key="frame" x="10" y="10" width="304" height="40"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <rect key="frame" x="10" y="10" width="229" height="40"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="cTK-9s-wFO"/>
                             </constraints>
@@ -46,27 +44,38 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahU-qp-tl0">
-                            <rect key="frame" x="344" y="15" width="60" height="30"/>
-                            <color key="backgroundColor" red="0.44705882352941173" green="0.396078431372549" blue="0.8901960784313725" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="259" y="15" width="100" height="30"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="cgB-lY-rHt"/>
-                                <constraint firstAttribute="width" constant="60" id="km1-Sp-C0h"/>
+                                <constraint firstAttribute="width" constant="100" id="km1-Sp-C0h"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="15"/>
-                            <state key="normal" title="Send"/>
+                            <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
+                            <state key="normal" title="Send for 0">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <connections>
                                 <action selector="sendMsgBtnPressed" destination="-1" eventType="touchUpInside" id="mxC-Gt-Y1r"/>
                             </connections>
                         </button>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_coins" translatesAutoresizingMaskIntoConstraints="NO" id="F2B-cR-5Uh">
+                            <rect key="frame" x="361" y="21.5" width="15" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="17" id="NXk-e2-9dP"/>
+                                <constraint firstAttribute="width" constant="15" id="a8R-hx-2uf"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
-                    <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="lcQ-gm-I98" firstAttribute="top" secondItem="PU5-iD-PPN" secondAttribute="top" constant="10" id="IPD-uE-9Ok"/>
                         <constraint firstAttribute="bottom" secondItem="lcQ-gm-I98" secondAttribute="bottom" constant="10" id="OFB-S4-uG9"/>
+                        <constraint firstAttribute="trailing" secondItem="F2B-cR-5Uh" secondAttribute="trailing" constant="8" id="PdV-WJ-9Qh"/>
                         <constraint firstItem="ahU-qp-tl0" firstAttribute="centerY" secondItem="lcQ-gm-I98" secondAttribute="centerY" id="bko-0y-IBw"/>
+                        <constraint firstItem="ahU-qp-tl0" firstAttribute="centerY" secondItem="F2B-cR-5Uh" secondAttribute="centerY" id="c8t-cE-RxQ"/>
                         <constraint firstItem="lcQ-gm-I98" firstAttribute="leading" secondItem="PU5-iD-PPN" secondAttribute="leading" constant="10" id="hQE-BC-Wfh"/>
-                        <constraint firstAttribute="trailing" secondItem="lcQ-gm-I98" secondAttribute="trailing" constant="100" id="nA1-VL-Sqo"/>
-                        <constraint firstAttribute="trailing" secondItem="ahU-qp-tl0" secondAttribute="trailing" constant="10" id="vWC-Qe-beK"/>
+                        <constraint firstItem="lcQ-gm-I98" firstAttribute="trailing" secondItem="ahU-qp-tl0" secondAttribute="leading" constant="-20" id="nA1-VL-Sqo"/>
+                        <constraint firstItem="ahU-qp-tl0" firstAttribute="trailing" secondItem="F2B-cR-5Uh" secondAttribute="leading" constant="-2" id="vWC-Qe-beK"/>
                     </constraints>
                 </view>
             </subviews>
@@ -74,17 +83,18 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="jYo-Sk-gtV" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="2ce-Ox-oQQ"/>
-                <constraint firstItem="PU5-iD-PPN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="DFD-lE-wtK"/>
+                <constraint firstItem="PU5-iD-PPN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="DFD-lE-wtK"/>
                 <constraint firstItem="PU5-iD-PPN" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="R02-J3-Zf5"/>
                 <constraint firstItem="jYo-Sk-gtV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="WmD-kd-v7G"/>
                 <constraint firstItem="jYo-Sk-gtV" firstAttribute="bottom" secondItem="PU5-iD-PPN" secondAttribute="top" id="eK4-Eh-zww"/>
-                <constraint firstItem="PU5-iD-PPN" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="t1F-g4-Tq2"/>
+                <constraint firstItem="PU5-iD-PPN" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-15" id="t1F-g4-Tq2"/>
                 <constraint firstItem="jYo-Sk-gtV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ykA-zX-qbn"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="70"/>
+            <point key="canvasLocation" x="137.68115942028987" y="69.642857142857139"/>
         </view>
     </objects>
     <resources>
+        <image name="icon_coins" width="17" height="20"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

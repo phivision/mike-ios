@@ -21,22 +21,43 @@ class TrainerDetailViewController: BaseViewController{
     }()
     var userProfileModel:UserCenterModel?
     var isFeedMode:Bool = true
+    var isSubscribed:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
-        self.configUserId()
         self.configCollectionView()
+        self.configUserId()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(fetchFavList), name: NSNotification.Name(rawValue:refreshFavList), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshUserProfile), name: NSNotification.Name(rawValue:refreshProfile), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshTrainerId), name: NSNotification.Name(rawValue:refreshTrainerDetail), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
+        if !StringUtils.isBlank(value: self.curUserId) {
+            self.fetchUserProfile()
+            self.fetchFeedList()
+            self.fetchFavList()
+            self.configSubscribeStatus()
+        }
+    }
+    @objc func refreshTrainerId(){
+        self.isFeedMode = true
+        self.isSubscribed = false
+        self.contentList.removeAll()
+        self.favList.removeAll()
+        self.userProfileModel = nil
+        DispatchQueue.main.async {
+            self.mainCollection.reloadData()
+        }
+        self.curUserId = LoginTools.sharedTools.trainerModel?.id
         self.fetchUserProfile()
         self.fetchFeedList()
-        self.fetchFavList();
+        self.fetchFavList()
+        self.configSubscribeStatus()
     }
     @objc func refreshUserProfile(){
         self.mainCollection.reloadData()
@@ -75,7 +96,33 @@ class TrainerDetailViewController: BaseViewController{
     }
     func configUserId(){
         if StringUtils.isBlank(value: self.curUserId) {
-            self.curUserId = LoginTools.sharedTools.userId()
+            if LoginTools.sharedTools.trainerModel != nil {
+                self.curUserId = LoginTools.sharedTools.trainerModel?.id
+            }else{
+                self.fetchTrainerList()
+            }
+        }
+    }
+    func configSubscribeStatus(){
+        HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+            for trainer in subscriptionList{
+                if trainer.trainer.id == self.curUserId {
+                    self.isSubscribed = true
+                    DispatchQueue.main.async {
+                        self.mainCollection.reloadData()
+                    }
+                    break
+                }
+            }
+        }
+    }
+    func fetchTrainerList(){
+        HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+            if subscriptionList.count != 0{
+                let trainerModel = subscriptionList.first?.trainer
+                LoginTools.sharedTools.trainerModel = UserCenterTrainer(fromDictionary: trainerModel?.toDictionary() ?? [:])
+                self.refreshTrainerId()
+            }
         }
     }
 
@@ -137,7 +184,11 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
         case 0:
             return 1
         case 1:
-            return 1
+            if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+                return 0
+            }else{
+                return 1
+            }
         case 2:
             return 1
         case 3:
@@ -157,8 +208,9 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
             return cell
         case 1:
             let cell:TrainerSubscribeActionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrainerSubscribeActionCell", for: indexPath) as! TrainerSubscribeActionCell
+            cell.delegate = self
             if let model = self.userProfileModel {
-                cell.setModel(model:model, isSubscribed: true)
+                cell.setModel(model:model, isSubscribed: self.isSubscribed)
             }
             return cell
         case 2:
@@ -178,11 +230,15 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         switch indexPath.section {
         case 0:
-            let titleHeight = heightForView(text: (LoginTools.sharedTools.userInfo().firstName ?? "") + " " + (LoginTools.sharedTools.userInfo().lastName ?? ""), font: UIFont(name: "Nunito-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28), width: kScreenWidth-56)
-            let descHeight = heightForView(text: LoginTools.sharedTools.userInfo().descriptionField ?? "", font: UIFont(name: "Nunito-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14), width: kScreenWidth-56)
-            return CGSize.init(width: kScreenWidth, height: 198 + descHeight + titleHeight + 20)
+            if let model = self.userProfileModel {
+                let titleHeight = heightForView(text: (model.firstName ?? "") + " " + (model.lastName ?? ""), font: UIFont(name: nAvenirBlack, size: 32) ?? UIFont.systemFont(ofSize: 32), width: kScreenWidth-40)
+                let descHeight = heightForView(text: model.descriptionField ?? "", font: UIFont(name: nAvenirMedium, size: 16) ?? UIFont.systemFont(ofSize: 16), width: kScreenWidth-40)
+                return CGSize.init(width: kScreenWidth, height: 182 + descHeight + titleHeight + 15)
+            }else{
+                return CGSize.init(width: kScreenWidth, height: 182)
+            }
         case 1:
-            return CGSize.init(width: kScreenWidth, height: 55)
+            return CGSize.init(width: kScreenWidth, height: 85)
         case 2:
             return CGSize.init(width: kScreenWidth, height: 85)
         case 3:
@@ -275,5 +331,17 @@ extension TrainerDetailViewController:UserProfileFavHorizonListCellDelegate{
         DispatchQueue.main.async {
             self.present(vc, animated: true, completion: nil)
         }
+    }
+}
+extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
+    func messageMeBtnClicked() {
+        let vc:MessageSystemViewController = MessageSystemViewController()
+        vc.toUserId = self.curUserId
+        vc.toUserName =  "\(self.userProfileModel?.firstName ?? "") \(self.userProfileModel?.lastName ?? "")"
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    func subscribeBtnClicked() {
+        
     }
 }

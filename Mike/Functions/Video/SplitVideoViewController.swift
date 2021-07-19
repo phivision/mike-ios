@@ -134,7 +134,7 @@ class SplitVideoViewController: BaseViewController {
     }()
     lazy var player:ZFPlayerController = {
         var player:ZFPlayerController = ZFPlayerController(playerManager: self.playerManager, containerView: self.playerView)
-        player.controlView = controlView
+//        player.controlView = controlView
         player.pauseWhenAppResignActive = true
         player.allowOrentitaionRotation = false
         return player

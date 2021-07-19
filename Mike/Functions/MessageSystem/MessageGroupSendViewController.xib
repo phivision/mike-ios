@@ -8,14 +8,10 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Nunito-Bold.ttf">
-            <string>Nunito-Bold</string>
-        </array>
-    </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageGroupSendViewController" customModule="Mike" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageGroupSendViewController" customModule="Motion" customModuleProvider="target">
             <connections>
+                <outlet property="commentBg" destination="hRF-2E-qqx" id="xIl-KL-o2e"/>
                 <outlet property="commentText" destination="kP2-fm-Jie" id="Xiq-rL-X9k"/>
                 <outlet property="commentTextHeight" destination="ejI-mx-NHJ" id="FqI-L9-LJZ"/>
                 <outlet property="inputAreaBottomMargin" destination="bdF-bZ-Tmf" id="48d-yT-6DS"/>
@@ -34,11 +30,11 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hRF-2E-qqx">
-                    <rect key="frame" x="0.0" y="802" width="414" height="60"/>
+                    <rect key="frame" x="15" y="802" width="384" height="60"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kP2-fm-Jie">
-                            <rect key="frame" x="10" y="10" width="304" height="40"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <rect key="frame" x="10" y="10" width="274" height="40"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="ejI-mx-NHJ"/>
                             </constraints>
@@ -47,20 +43,22 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1w4-4f-w5Y">
-                            <rect key="frame" x="344" y="15" width="60" height="30"/>
-                            <color key="backgroundColor" red="0.44705882349999998" green="0.39607843139999999" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="314" y="15" width="60" height="30"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="KYv-mJ-Jme"/>
                                 <constraint firstAttribute="height" constant="30" id="vE5-UK-3OJ"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="15"/>
-                            <state key="normal" title="Send"/>
+                            <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
+                            <state key="normal" title="Send">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <connections>
                                 <action selector="sendMsgBtnPressed" destination="-1" eventType="touchUpInside" id="aYx-zT-ARK"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="kP2-fm-Jie" firstAttribute="leading" secondItem="hRF-2E-qqx" secondAttribute="leading" constant="10" id="Gcd-2x-h9H"/>
                         <constraint firstAttribute="trailing" secondItem="kP2-fm-Jie" secondAttribute="trailing" constant="100" id="Kx1-i6-ytO"/>
@@ -76,8 +74,8 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="EgX-Bg-pxL" secondAttribute="leading" id="A6Y-7M-Y6h"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="EgX-Bg-pxL" secondAttribute="trailing" id="Jhl-6k-TxR"/>
-                <constraint firstItem="hRF-2E-qqx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Mgq-6b-njq"/>
-                <constraint firstItem="hRF-2E-qqx" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Tcu-M6-u5a"/>
+                <constraint firstItem="hRF-2E-qqx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="Mgq-6b-njq"/>
+                <constraint firstItem="hRF-2E-qqx" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-15" id="Tcu-M6-u5a"/>
                 <constraint firstItem="EgX-Bg-pxL" firstAttribute="bottom" secondItem="hRF-2E-qqx" secondAttribute="top" id="YEd-DI-4oc"/>
                 <constraint firstItem="hRF-2E-qqx" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="bdF-bZ-Tmf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="EgX-Bg-pxL" secondAttribute="top" id="dGD-vI-KKH"/>

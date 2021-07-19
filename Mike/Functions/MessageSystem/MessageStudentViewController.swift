@@ -10,6 +10,7 @@ import PullToRefreshKit
 
 class MessageStudentViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
+    @IBOutlet weak var tokenBalance:UILabel!
     lazy var refreshControl:UIRefreshControl = {
         var refreshControl:UIRefreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to Refresh")
@@ -22,6 +23,7 @@ class MessageStudentViewController: BaseViewController {
     }()
     var isRequest:Bool = false
     var curFromUserId:String = ""
+    var userProfileModel:UserCenterModel?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configTableView()
@@ -41,20 +43,25 @@ class MessageStudentViewController: BaseViewController {
         }else{
             self.fetchMessageList()
         }
+        self.fetchUserProfile()
+        self.fetchTokenBalance()
     }
     
     @objc func cancelSub(){
         SubscriptionTools.sharedTools.outterSubscription?.cancel()
+        let subscription = SubscriptionTools.sharedTools.groupSubscription["\(LoginTools.sharedTools.userId())"]
+        subscription?.cancel()
     }
     @objc func restartSub(){
         self.handleSubscription()
+        self.handleGroupSubscription()
     }
     
     func configTableView(){
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
-        self.mainTableView.register(UINib(nibName: "MsgGroupSendCell", bundle: nil), forCellReuseIdentifier: "MsgGroupSendCell")
+        self.mainTableView.register(UINib(nibName: "MessageGroupListCell", bundle: nil), forCellReuseIdentifier: "MessageGroupListCell")
         self.mainTableView.register(UINib(nibName: "MessageTrainerListCell", bundle: nil), forCellReuseIdentifier: "MessageTrainerListCell")
         self.mainTableView.register(UINib(nibName: "MessageEmptyCell", bundle: nil), forCellReuseIdentifier: "MessageEmptyCell")
         self.mainTableView.estimatedRowHeight = 88;
@@ -69,6 +76,27 @@ class MessageStudentViewController: BaseViewController {
     @objc func refreshData(){
         self.studentList.removeAll()
         self.fetchUserList()
+    }
+    func fetchUserProfile(){
+        UserProfileBackend.shared.fetchUserProfileModel(userId:LoginTools.sharedTools.userId()) { model in
+            self.userProfileModel = model
+            self.handleGroupSubscription()
+            DispatchQueue.main.async {
+                self.mainTableView.reloadData()
+            }
+        } fail: { errorMsg in
+            
+        }
+    }
+    func fetchTokenBalance(){
+        MessageBackend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
+            DispatchQueue.main.async {
+                self.tokenBalance.text = "\(tokenBalance)"
+            }
+        } fail: { error in
+            
+        }
+
     }
     func fetchUserList(){
         UserProfileBackend.shared.fetchSubscriptionUserList { userList in
@@ -95,21 +123,21 @@ class MessageStudentViewController: BaseViewController {
     func handleStudents(msgList:Array<MessageListModel>){
         if msgList.count == 0{
             for trainer in self.studentList {
-                UserDefaults.standard.setValue(false, forKey: "\(msgForTrainerUnRead)\(trainer.id ?? "")")
+                UserDefaults.standard.setValue(false, forKey: "\(message_msgForTrainerUnRead)\(trainer.id ?? "")")
                 UserDefaults.standard.synchronize()
             }
         }else{
             for msgModel in msgList{
-                let result = UserDefaults.standard.bool(forKey: "\(msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                let result = UserDefaults.standard.bool(forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
                 if result == false {
-                    UserDefaults.standard.setValue(true, forKey: "\(msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                    UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
                     UserDefaults.standard.synchronize()
                 }
             }
         }
         for msgModel in msgList {
-            UserDefaults.standard.setValue(true, forKey: "\(msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
-            UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
+            UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+            UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
             UserDefaults.standard.synchronize()
         }
         DispatchQueue.main.async {
@@ -122,8 +150,8 @@ class MessageStudentViewController: BaseViewController {
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
             self.fetchMessageList()
             if msgModel.fromUserID != self.curFromUserId{
-                UserDefaults.standard.setValue(true, forKey: "\(msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
-                UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
+                UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
                 UserDefaults.standard.synchronize()
                 DispatchQueue.main.async {
                     self.mainTableView.reloadData()
@@ -131,30 +159,18 @@ class MessageStudentViewController: BaseViewController {
             }
         }
     }
-//    func configStudentListFromLocal(){
-//        let dataFrom = UserDefaults.standard.data(forKey: "\(studentListForTrainer)\(LoginTools.sharedTools.userId())")
-//        if dataFrom != nil {
-//            do {
-//                let savedList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataFrom!) as? Array<UserCenterTrainer>
-//                self.studentList.removeAll()
-//                self.studentList.append(contentsOf: savedList ?? [])
-//                DispatchQueue.main.async {
-//                    self.mainTableView.reloadData()
-//                }
-//            } catch let error {
-//                print("\(error)")
-//            }
-//        }
-//    }
-//    func saveStudentList(){
-//        do {
-//            let data = try NSKeyedArchiver.archivedData(withRootObject: self.studentList, requiringSecureCoding: true)
-//            UserDefaults.standard.set(data, forKey: "\(studentListForTrainer)\(LoginTools.sharedTools.userId())")
-//            UserDefaults.standard.synchronize()
-//        } catch let error {
-//            print("\(error)")
-//        }
-//    }
+    func handleGroupSubscription(){
+        MessageBackend.shared.createOutrerGroupSubscription(groupId: self.userProfileModel?.userMessageGroup?.id ?? "", trainerId: self.userProfileModel?.id ?? "") { msgModel in
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
+            UserDefaults.standard.setValue(true, forKey: "\(message_groupMsg_unread)\(self.userProfileModel?.id ?? "")")
+            UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastGroupMsg)\(self.userProfileModel?.id ?? "")")
+            UserDefaults.standard.setValue(Date().timeIntervalSince1970, forKey: message_lastMsgSendTimeStampForOutter)
+            UserDefaults.standard.synchronize()
+            DispatchQueue.main.async {
+                self.mainTableView.reloadData()
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 
@@ -173,10 +189,11 @@ extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            if self.studentList.count == 0 {
+            if !StringUtils.isBlank(value: self.userProfileModel?.userMessageGroup?.id) {
+                return 1
+            }else{
                 return 0
             }
-            return 1
         case 1:
             return self.studentList.count
         default:
@@ -190,11 +207,12 @@ extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell:MsgGroupSendCell = tableView.dequeueReusableCell(withIdentifier: "MsgGroupSendCell", for: indexPath) as! MsgGroupSendCell
+            let cell:MessageGroupListCell = tableView.dequeueReusableCell(withIdentifier: "MessageGroupListCell", for: indexPath) as! MessageGroupListCell
+            cell.setGroupModelforTrainer(model: self.userProfileModel!)
             return cell
         case 1:
             let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
-            cell.setStudentModel(model: self.studentList[indexPath.row])
+            cell.setModelForTrainer(model: self.studentList[indexPath.row])
             return cell
         default:
              return UITableViewCell()
@@ -204,11 +222,10 @@ extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            if self.studentList.count == 0 {
-                return
-            }
             let vc:MessageGroupSendViewController = MessageGroupSendViewController()
-            vc.toUserList = self.studentList
+            vc.groupId = self.userProfileModel?.userMessageGroup?.id ?? ""
+            vc.trainerId = LoginTools.sharedTools.userId()
+            vc.trainerName = LoginTools.sharedTools.userInfo().firstName ?? ""
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         case 1:

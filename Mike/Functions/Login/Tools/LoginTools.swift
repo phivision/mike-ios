@@ -12,6 +12,7 @@ class LoginTools: NSObject {
     static let sharedTools = LoginTools()
     var videoHost = ""
     var deviceToken = ""
+    var trainerModel:UserCenterTrainer?
     private override init() {
         super.init()
     }
