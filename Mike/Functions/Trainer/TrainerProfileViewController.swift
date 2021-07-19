@@ -242,9 +242,10 @@ extension TrainerProfileViewController:UserProfileTopCellDelegate{
     func settingBtnClicked() {
         let vc:TrainerSettingViewController = TrainerSettingViewController()
         vc.isTrainer = true
-        vc.modalPresentationStyle = .fullScreen
+        let nav:UINavigationController = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
         DispatchQueue.main.async {
-            self.present(vc, animated: true, completion: nil)
+            self.present(nav, animated: true, completion: nil)
         }
     }
     func editBtnPressed() {

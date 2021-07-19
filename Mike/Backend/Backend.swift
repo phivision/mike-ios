@@ -59,6 +59,7 @@ class Backend {
     
     func signOut(){
         LoginBackend.shared.signOut {
+            self.resetDeviceToken()
             LoginTools.sharedTools.removeUserInfo()
             SubscriptionTools.sharedTools.outterSubscription?.cancel()
             DispatchQueue.main.async {
@@ -91,6 +92,13 @@ class Backend {
 //        } fail: {
 //
 //        }
+    }
+    func resetDeviceToken(){
+        MessageBackend.shared.updateUserDeviceToken(deviceToken: "") {
+            
+        } fail: {
+            
+        }
     }
     // MARK: -  change our internal state, this triggers an UI update on the main thread
     func updateUserData(withSignInStatus status : Bool) {

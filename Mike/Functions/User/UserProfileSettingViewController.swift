@@ -24,6 +24,7 @@ class UserProfileSettingViewController: BaseViewController {
     }
     @IBAction func signOut(){
         LoginBackend.shared.signOut {
+            Backend.shared.resetDeviceToken()
             LoginTools.sharedTools.removeUserInfo()
             SubscriptionTools.sharedTools.outterSubscription?.cancel()
             for key in SubscriptionTools.sharedTools.groupSubscription {

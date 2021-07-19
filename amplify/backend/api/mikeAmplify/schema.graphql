@@ -66,11 +66,12 @@ type UserSubscriptionTrainer @model(subscriptions: null)
   User: UserProfile! @connection(name: "byUserSubscription")
 }
 
-type UserFavoriteContent @model(queries: null, subscriptions: null)
+type UserFavoriteContent @model(subscriptions: null)
 @auth(rules: [{ allow: owner, operations: [create, delete, update] },
   { allow: private, operations: [read]},
   { allow: public, provider: iam, operations: [read]}]){
   id: ID!
+  userFavoriteContentContentId:ID!
   User: UserProfile! @connection(name: "byFavoriteContent")
   Content: UserContent! @connection(name: "byFavoriteUser")
 }

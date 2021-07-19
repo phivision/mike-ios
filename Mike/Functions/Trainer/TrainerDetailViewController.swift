@@ -45,6 +45,14 @@ class TrainerDetailViewController: BaseViewController{
         }
     }
     @objc func refreshTrainerId(){
+        self.isFeedMode = true
+        self.isSubscribed = false
+        self.contentList.removeAll()
+        self.favList.removeAll()
+        self.userProfileModel = nil
+        DispatchQueue.main.async {
+            self.mainCollection.reloadData()
+        }
         self.curUserId = LoginTools.sharedTools.trainerModel?.id
         self.fetchUserProfile()
         self.fetchFeedList()
