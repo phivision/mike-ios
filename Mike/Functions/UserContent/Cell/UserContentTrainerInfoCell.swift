@@ -42,7 +42,7 @@ class UserContentTrainerInfoCell: UITableViewCell {
         }
         self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: contentModel.createdAt ?? ""))"
         self.favBtn.isSelected = isFav
-        if LoginTools.sharedTools.userId() == model.id {
+        if LoginTools.sharedTools.userId() == model.id{
             self.editBtn.isHidden = false
             self.delBtn.isHidden = false
             self.favBtnRightMargin.constant = -103

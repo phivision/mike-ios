@@ -181,6 +181,10 @@
         "mikereactPostConfirmation": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
           "s3Key": "amplify-builds/mikereactPostConfirmation-364a4431326f51784834-build.zip"
+        },
+        "videoCleanUpFavorite": {
+          "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
+          "s3Key": "amplify-builds/videoCleanUpFavorite-72674e5373636e71704b-build.zip"
         }
       },
       "storage": {
