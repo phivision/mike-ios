@@ -65,6 +65,7 @@ app.use(
       secret: secretKey,
       extended: true,
       excludeOldTransactions: true,
+      environment:['sandbox']
     });
 
     next();
