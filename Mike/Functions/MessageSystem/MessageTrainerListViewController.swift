@@ -172,6 +172,12 @@ class MessageTrainerListViewController: BaseViewController {
         }
         
     }
+    @IBAction func iconBtnClicked(){
+        let vc:ChargeViewController = ChargeViewController()
+        vc.tokenBalance = self.tokenBalance.text ?? ""
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     /*
     // MARK: - Navigation
 
