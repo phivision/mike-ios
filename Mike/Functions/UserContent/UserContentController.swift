@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Amplify
 class UserContentController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     var isFav:Bool = false
@@ -266,7 +266,41 @@ extension UserContentController:UserContentTrainerInfoCellDelegate{
         
     }
     func delBtnPressed() {
-        
+        let alertController = UIAlertController(title: "", message: "Do you want to remove this content?",
+                                                preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title:  "Cancel", style: .cancel) { (alertAction) in
+
+        }
+        let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
+            self.delContent()
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(sureAction)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    func delContent(){
+        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        let request = RESTRequest(apiName: "videoCleanUpFavorite",path: "/videoCleanUpFavorite/delContentAndRelFav",queryParameters: ["contentId":self.userContentModel.id ?? ""])
+        Amplify.API.post(request: request) { result in
+            switch result {
+            case .success(let data):
+                let str = String(decoding: data, as: UTF8.self)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    self.dismiss(animated: true, completion: nil)
+                }
+                print("Success \(str)")
+            case .failure(let apiError):
+                print("Failed", apiError)
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    ToastHUD.showMsg(msg: apiError.localizedDescription, controller: self)
+                }
+            }
+        }
     }
 }
 

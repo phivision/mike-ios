@@ -276,6 +276,7 @@ extension GraphQLRequest{
         let document = """
         query getUserProfile($id:ID!) {
           getUserProfile(id:$id) {
+            id
             LastName
             FirstName
             UserImage
