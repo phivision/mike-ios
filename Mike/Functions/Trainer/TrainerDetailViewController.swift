@@ -342,6 +342,6 @@ extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
         self.navigationController?.pushViewController(vc, animated: true)
     }
     func subscribeBtnClicked() {
-        
+        SubscriptionPaymentTools.shared.payForSubscribe(trainerId: self.curUserId)
     }
 }

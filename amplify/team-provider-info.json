@@ -176,7 +176,7 @@
         },
         "appStore": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/appStore-6e5448725569577a4c38-build.zip"
+          "s3Key": "amplify-builds/appStore-707a594c5743705a702f-build.zip"
         },
         "mikereactPostConfirmation": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
