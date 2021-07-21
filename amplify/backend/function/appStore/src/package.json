@@ -9,6 +9,8 @@
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "express-async-handler": "^1.1.4",
+    "graphql": "^0.13.0",
+    "graphql-tag": "^2.10.1",
     "node-apple-receipt-verify": "^1.10.0"
   },
   "devDependencies": {},

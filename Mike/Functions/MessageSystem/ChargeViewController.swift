@@ -141,12 +141,14 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
             let encodeStr = receiptData?.base64EncodedString(options: NSData.Base64EncodingOptions.endLineWithLineFeed)
 //            print(encodeStr)
             let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-            let request = RESTRequest(apiName: "appStore",path: "/appstore/verify",queryParameters: ["userID":LoginTools.sharedTools.userId(),"receipt":encodeStr ?? ""])
+            let jsonData = try! JSONSerialization.data(withJSONObject: ["userID":LoginTools.sharedTools.userId(),"receipt":encodeStr ?? ""], options: .prettyPrinted)
+            let request = RESTRequest(apiName: "appStore",path: "/appstore/verify",body:jsonData)
             Amplify.API.post(request: request) { result in
                 switch result {
                 case .success(let data):
                     let str = String(decoding: data, as: UTF8.self)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
+                    self.fetchTokenBalance()
                     DispatchQueue.main.async {
                         hud.hide(animated: true)
                         self.dismiss(animated: true, completion: nil)
@@ -160,20 +162,19 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
                     }
                 }
             }
-//            self.myCenterViewModel.fetchPayResult(receipt: encodeStr ?? "") { (suc) in
-//                if(suc == true){
-//                    self.navigationController?.popViewController(animated: true)
-//                }else{
-//                    let alert:UIAlertController = UIAlertController(title: "支付结果", message: "支付失败", preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
-//                    DispatchQueue.main.async {
-//                        self.present(alert, animated: true, completion: nil)
-//                    }
-//                }
-//            }
         }else{
 //            Toast(self.view, "没有拿到receiptURL");
         }
+    }
+    func fetchTokenBalance(){
+        MessageBackend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
+            DispatchQueue.main.async {
+                self.tokenBalanceLab.text = "\(tokenBalance)"
+            }
+        } fail: { error in
+            
+        }
+
     }
 }
 extension ChargeViewController:UITableViewDelegate,UITableViewDataSource{
