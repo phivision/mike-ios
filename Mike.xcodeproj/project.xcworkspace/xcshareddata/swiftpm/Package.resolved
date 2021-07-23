@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/aws-amplify/aws-sdk-ios-spm.git",
         "state": {
           "branch": null,
-          "revision": "621dfbc1a53dc873d0aa8f7b9aa48c966d88d035",
-          "version": "2.24.2"
+          "revision": "13457a1154b7da58351b793bf34f1a2808c5b597",
+          "version": "2.24.3"
         }
       },
       {
@@ -84,7 +84,7 @@
       },
       {
         "package": "swift-nio-zlib-support",
-        "repositoryURL": "https://gitee.com/Zither_Chen/swift-nio-zlib-support.git",
+        "repositoryURL": "https://github.com/apple/swift-nio-zlib-support.git",
         "state": {
           "branch": null,
           "revision": "37760e9a52030bb9011972c5213c3350fa9d41fd",
