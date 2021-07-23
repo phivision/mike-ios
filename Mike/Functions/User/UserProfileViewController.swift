@@ -186,7 +186,7 @@ extension UserProfileViewController:UICollectionViewDelegate,UICollectionViewDat
         case 1:
             let vc:UserContentController = UserContentController()
             vc.userContentModel = self.favList[indexPath.row]
-            vc.trainerId = LoginTools.sharedTools.userId()
+            vc.trainerId = self.favList[indexPath.row].creatorId
             let nav:UINavigationController = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {

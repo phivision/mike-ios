@@ -273,7 +273,7 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
         case 3:
             let vc:UserContentController = UserContentController()
             vc.userContentModel = (self.isFeedMode ? self.contentList[indexPath.row] : self.favList[indexPath.row])
-            vc.trainerId = LoginTools.sharedTools.userId()
+            vc.trainerId = self.curUserId
             let nav:UINavigationController = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {

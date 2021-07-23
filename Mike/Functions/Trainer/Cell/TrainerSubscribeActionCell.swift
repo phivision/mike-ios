@@ -34,6 +34,7 @@ class TrainerSubscribeActionCell: UICollectionViewCell {
             self.messageBtn.setTitleColor(UIColor.white, for: .normal)
             self.messageBtn.layer.borderWidth = 1
             self.messageBtn.layer.borderColor = orangeColor.cgColor
+            self.messageBtn.isHidden = false
         }else{
             self.subscribeBtn.setTitle("Subscribe for $\(model.TokenPrice ?? 0)", for: .normal)
             self.messageBtn.setTitle("Message Me", for: .normal)
@@ -43,8 +44,9 @@ class TrainerSubscribeActionCell: UICollectionViewCell {
             self.messageBtn.backgroundColor = UIColor.white
             self.subscribeBtn.backgroundColor = orangeColor
             self.subscribeBtn.setTitleColor(UIColor.white, for: .normal)
+            self.messageBtn.isHidden = true
         }
-        self.messageBtn.isHidden = false
+//        self.messageBtn.isHidden = false
         self.subscribeBtn.isHidden = false
     }
     @IBAction func messageMe(){

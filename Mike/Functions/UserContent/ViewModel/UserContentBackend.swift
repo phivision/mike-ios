@@ -59,11 +59,11 @@ class UserContentBackend: NSObject {
                 case .failure(let error):
                     print("Got failed result with \(error.errorDescription)")
 //                    fail("\(error.errorDescription)")
-                    suc(false)
+                    fail(error.errorDescription)
                 }
             case .failure(let error):
                 print("Got failed event with error \(error)")
-                suc(false)
+                fail(error.errorDescription)
             }
         }
     }
