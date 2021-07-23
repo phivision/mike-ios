@@ -7,6 +7,7 @@
 
 import UIKit
 import Amplify
+import AWSMobileClientXCF
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginBtn:UIButton!
     @IBOutlet weak var appleLoginBtn:UIButton!
@@ -25,14 +26,18 @@ class LoginViewController: UIViewController {
         self.navigationController?.pushViewController(secondVC, animated: true)
     }
     @IBAction func appleLoginPressed(){
-        Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!) { result in
-                switch result {
-                case .success:
-                    print("Sign in succeeded")
-                case .failure(let error):
-                    print("Sign in failed \(error)")
-                }
-            }
+        let hostedUIOptions = HostedUIOptions(identityProvider: "SignInWithApple")
+        AWSMobileClient.default().showSignIn(presentationAnchor: self.view.window!, hostedUIOptions: hostedUIOptions) { userState, error in
+            
+        }
+//        Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!) { result in
+//                switch result {
+//                case .success:
+//                    print("Sign in succeeded")
+//                case .failure(let error):
+//                    print("Sign in failed \(error)")
+//                }
+//            }
     }
     @IBAction func registerBtnPressed(){
         let secondVC = RegisterViewController()

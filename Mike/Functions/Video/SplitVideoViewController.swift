@@ -297,9 +297,9 @@ class SplitVideoViewController: BaseViewController {
         }
         let strArr:Array<String> = (self.videoModel.contentName ?? "").components(separatedBy: ".")
         if strArr.count > 0 {
-//            let videoUrl:String = strArr.first ?? ""
-            self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
-//            self.playerManager.assetURL = NSURL(string: String(format: "%@%@.m3u8", LoginTools.sharedTools.videoHost,videoUrl))! as URL
+            let videoUrl:String = strArr.first ?? ""
+//            self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
+            self.playerManager.assetURL = NSURL(string: String(format: "%@%@.m3u8", LoginTools.sharedTools.videoHost,videoUrl))! as URL
             self.videoState = .play
             self.handlePlayBtn(byState: self.videoState)
             self.playerManager.play()
@@ -528,7 +528,7 @@ extension SplitVideoViewController{
             }
         }
     func orientationPortraitConfig(){
-        if self.showCamera  != true {
+//        if self.showCamera  != true {
             UIView.animate(withDuration: 0.3) {
                 self.playerView.snp.remakeConstraints { make in
                     make.top.left.right.bottom.equalTo(self.view)
@@ -538,22 +538,22 @@ extension SplitVideoViewController{
                     make.height.equalTo(0)
                 }
             }
-        }else{
-//            self.resetCaptureOrientation()
-            UIView.animate(withDuration: 0.3) {
-                self.playerView.snp.remakeConstraints { make in
-                    make.top.left.right.equalTo(self.view)
-                    make.height.equalTo(kScreenHeight/2)
-                }
-                self.cameraView.snp.remakeConstraints { make in
-                    make.left.right.bottom.equalTo(self.view)
-                    make.height.equalTo(kScreenHeight/2)
-                }
-            }
-        }
+//        }else{
+////            self.resetCaptureOrientation()
+//            UIView.animate(withDuration: 0.3) {
+//                self.playerView.snp.remakeConstraints { make in
+//                    make.top.left.right.equalTo(self.view)
+//                    make.height.equalTo(kScreenHeight/2)
+//                }
+//                self.cameraView.snp.remakeConstraints { make in
+//                    make.left.right.bottom.equalTo(self.view)
+//                    make.height.equalTo(kScreenHeight/2)
+//                }
+//            }
+//        }
     }
     func orientationLandScapeConfig(){
-        if self.showCamera  != true {
+//        if self.showCamera  != true {
             UIView.animate(withDuration: 0.3) {
                 self.playerView.snp.remakeConstraints { make in
                     make.top.left.bottom.right.equalTo(self.view)
@@ -563,19 +563,19 @@ extension SplitVideoViewController{
                     make.height.equalTo(0)
                 }
             }
-        }else{
-//            self.resetCaptureOrientation()
-            UIView.animate(withDuration: 0.3) {
-                self.playerView.snp.remakeConstraints { make in
-                    make.top.left.bottom.equalTo(self.view)
-                    make.width.equalTo(kScreenHeight/2)
-                }
-                self.cameraView.snp.remakeConstraints { make in
-                    make.top.right.bottom.equalTo(self.view)
-                    make.width.equalTo(kScreenHeight/2)
-                }
-            }
-        }
+//        }else{
+////            self.resetCaptureOrientation()
+//            UIView.animate(withDuration: 0.3) {
+//                self.playerView.snp.remakeConstraints { make in
+//                    make.top.left.bottom.equalTo(self.view)
+//                    make.width.equalTo(kScreenHeight/2)
+//                }
+//                self.cameraView.snp.remakeConstraints { make in
+//                    make.top.right.bottom.equalTo(self.view)
+//                    make.width.equalTo(kScreenHeight/2)
+//                }
+//            }
+//        }
     }
 }
 extension SplitVideoViewController{

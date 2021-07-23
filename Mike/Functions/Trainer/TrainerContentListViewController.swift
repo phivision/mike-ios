@@ -27,6 +27,11 @@ class TrainerContentListViewController: BaseViewController {
         super.viewDidLoad()
         self.configTableView()
         self.configTopView()
+        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+            self.handleSubscription()
+            NotificationCenter.default.addObserver(self, selector: #selector(cancelSub), name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(restartSub), name: NSNotification.Name(rawValue:restartSubscription), object: nil)
+        }
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(refreshData), name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
     }
@@ -79,6 +84,20 @@ class TrainerContentListViewController: BaseViewController {
             }
         } fail: { error in
             
+        }
+    }
+    
+    @objc func cancelSub(){
+        SubscriptionTools.sharedTools.createContentSubscription?.cancel()
+    }
+    @objc func restartSub(){
+        self.handleSubscription()
+    }
+    func handleSubscription(){
+        TrainerBackend.shared.createNewContentSubscription {
+            DispatchQueue.main.async {
+                self.fetchSpeakerList()
+            }
         }
     }
 

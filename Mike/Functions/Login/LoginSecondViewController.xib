@@ -17,7 +17,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginSecondViewController" customModule="Mike" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginSecondViewController" customModule="Motion" customModuleProvider="target">
             <connections>
                 <outlet property="inputBg" destination="WLS-bv-0DB" id="dRL-6x-jl6"/>
                 <outlet property="loginBtn" destination="Jyc-xM-9Rp" id="Wzt-8W-e3l"/>

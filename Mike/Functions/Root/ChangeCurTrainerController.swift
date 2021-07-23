@@ -38,7 +38,7 @@ class ChangeCurTrainerController: BaseViewController {
         self.mainTableView.tableFooterView = UIView()
     }
     func fetchTrainerList(){
-        UserProfileBackend.shared.fetchSubscriptionTrainerList{ subscriptionList in
+        UserProfileBackend.shared.fetchSubscriptionTrainerList{ subscriptionList,subIdList in
             self.subscriptionList.removeAll()
             self.subscriptionList.append(contentsOf: subscriptionList)
             DispatchQueue.main.async {

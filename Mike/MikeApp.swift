@@ -66,7 +66,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         pinpoint = AWSPinpoint(configuration: pinpointConfiguration)
         // Present the user with a request to authorize push notifications
         registerForPushNotifications()
-        AWSDDLog.sharedInstance.logLevel = .verbose
+        AWSDDLog.sharedInstance.logLevel = .error
         AWSDDLog.add(AWSDDTTYLogger.sharedInstance)
         return true
     }
@@ -76,6 +76,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
+    }
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        AWSMobileClient.default().handleAuthResponse(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        return true
     }
     // MARK: Remote Notifications Lifecycle
     func application(_: UIApplication,
@@ -112,7 +116,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 //            let alert = UIAlertController(title: "Notification Received",
 //                                          message: userInfo.description,
 //                                          preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 //
 //            UIApplication.shared.keyWindow?.rootViewController?.present(
 //                alert, animated: true, completion: nil

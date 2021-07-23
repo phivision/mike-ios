@@ -28,6 +28,7 @@ class HomeListViewController: BaseViewController {
         super.viewDidLoad()
         self.configTableView()
         self.configTopView()
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchTrainerList), name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +39,7 @@ class HomeListViewController: BaseViewController {
             self.mainTableView.switchRefreshHeader(to: .refreshing)
             self.isRequest = true
         }else{
-            self.fetchSpeakerList()
+            self.fetchTrainerList()
         }
     }
     
@@ -63,16 +64,16 @@ class HomeListViewController: BaseViewController {
         self.mainTableView.tableFooterView = UIView()
         let header = ElasticRefreshHeader()
         self.mainTableView.configRefreshHeader(with: header,container:self){ [weak self] in
-            self?.fetchSpeakerList()
+            self?.fetchTrainerList()
         }
     }
     
     @objc func refreshData(){
         self.subscriptionList.removeAll()
-        self.fetchSpeakerList()
+        self.fetchTrainerList()
     }
     
-    func fetchSpeakerList(){
+    @objc func fetchTrainerList(){
         HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
             self.subscriptionList.removeAll()
             self.subscriptionList.append(contentsOf: subscriptionList)

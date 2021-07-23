@@ -205,7 +205,9 @@ extension ContentUploadViewController:UIImagePickerControllerDelegate,UINavigati
             imagePicker.sourceType = .photoLibrary
             imagePicker.mediaTypes = ["public.movie"]
             imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(imagePicker, animated: true, completion: nil)
+            }
         }
         else {
             print("读取相册错误")
@@ -219,7 +221,9 @@ extension ContentUploadViewController:UIImagePickerControllerDelegate,UINavigati
             imagePicker.sourceType = .photoLibrary
             imagePicker.mediaTypes = ["public.image"]
             imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(imagePicker, animated: true, completion: nil)
+            }
         }
         else {
             print("读取相册错误")

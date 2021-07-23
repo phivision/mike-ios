@@ -23,18 +23,14 @@ class FogotPwdViewController: BaseViewController {
         
         self.hanldeBgCornerAndShadow(bgView: self.userNameBg)
         
-        self.continueBtn.layer.cornerRadius = 20
-        self.continueBtn.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        self.continueBtn.layer.shadowOffset = CGSize(width: 2, height: 2)
-        self.continueBtn.layer.shadowOpacity = 2
+        self.continueBtn.layer.cornerRadius = 18.5
     }
     
     func hanldeBgCornerAndShadow(bgView:UIImageView){
-        bgView.clipsToBounds = false
-        bgView.layer.cornerRadius = 20
-        bgView.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        bgView.layer.shadowOffset = CGSize(width: 2, height: 2)
-        bgView.layer.shadowOpacity = 2
+        bgView.clipsToBounds = true
+        bgView.layer.cornerRadius = 5
+        bgView.layer.borderWidth = 1
+        bgView.layer.borderColor = lightGreyColor.cgColor
     }
     
     @IBAction func backBtnPressed(){

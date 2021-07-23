@@ -1,5 +1,5 @@
 //
-//  MessageTrainerListViewController.swift
+//  MessageListForStudentRoleViewController.swift
 //  Mike
 //
 //  Created by 殷聃 on 2021/6/22.
@@ -8,7 +8,7 @@
 import UIKit
 import PullToRefreshKit
 
-class MessageTrainerListViewController: BaseViewController {
+class MessageListForStudentRoleViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     @IBOutlet weak var tokenBalance:UILabel!
     lazy var refreshControl:UIRefreshControl = {
@@ -89,7 +89,7 @@ class MessageTrainerListViewController: BaseViewController {
 
     }
     func fetchTrainerList(){
-        UserProfileBackend.shared.fetchSubscriptionTrainerList { trainerList in
+        UserProfileBackend.shared.fetchSubscriptionTrainerList { trainerList,subIdList in
             self.trainerList.removeAll()
             self.groupList.removeAll()
             self.trainerList.append(contentsOf: trainerList)
@@ -110,7 +110,7 @@ class MessageTrainerListViewController: BaseViewController {
         }
     }
     func fetchMessageList(){
-        MessageBackend.shared.fetchMessageListByToUserId(toUserId: LoginTools.sharedTools.userId(), status:"UNRESPONDED") { msgList in
+        MessageBackend.shared.fetchMessageListByToUserId(toUserId: LoginTools.sharedTools.userId(), status:"UNREAD") { msgList in
             if msgList.count == 0{
                 for trainer in self.trainerList {
                     UserDefaults.standard.setValue(false, forKey: "\(message_msgForStudentUnRead)\(trainer.id ?? "")")
@@ -130,12 +130,6 @@ class MessageTrainerListViewController: BaseViewController {
                 UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForStudent)\(msgModel.fromUserID ?? "")")
                 UserDefaults.standard.synchronize()
             }
-//            if msgList.count != 0 {
-//                let lastMsg = msgList.last
-//                UserDefaults.standard.setValue(true, forKey: "\(msgForStudentUnRead)\(lastMsg?.fromUserID ?? "")")
-//                UserDefaults.standard.setValue(lastMsg?.postMessages, forKey: "\(lastMsgForStudent)\(lastMsg?.fromUserID ?? "")")
-//                UserDefaults.standard.synchronize()
-//            }
             DispatchQueue.main.async {
                 self.mainTableView.reloadData()
             }
@@ -144,13 +138,10 @@ class MessageTrainerListViewController: BaseViewController {
         }
     }
     func handleSubscription(){
-        UserDefaults.standard.setValue(Date().timeIntervalSince1970, forKey: message_lastMsgSendTimeStampForOutter)
-        UserDefaults.standard.synchronize()
         MessageBackend.shared.createSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
             UserDefaults.standard.setValue(true, forKey: "\(message_msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
             UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForStudent)\(msgModel.fromUserID ?? "")")
-            UserDefaults.standard.setValue(Date().timeIntervalSince1970, forKey: message_lastMsgSendTimeStampForOutter)
             UserDefaults.standard.synchronize()
             DispatchQueue.main.async {
                 self.mainTableView.reloadData()
@@ -161,9 +152,10 @@ class MessageTrainerListViewController: BaseViewController {
         for trainerModel in self.groupList {
             MessageBackend.shared.createOutrerGroupSubscription(groupId: trainerModel.userMessageGroup?.id ?? "", trainerId: trainerModel.id ?? "") { msgModel in
                 print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
-                UserDefaults.standard.setValue(true, forKey: "\(message_groupMsg_unread)\(trainerModel.id ?? "")")
+                if msgModel.fromUserID != LoginTools.sharedTools.userId(){
+                    UserDefaults.standard.setValue(true, forKey: "\(message_groupMsg_unread)\(trainerModel.id ?? "")")
+                }
                 UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastGroupMsg)\(trainerModel.id ?? "")")
-                UserDefaults.standard.setValue(Date().timeIntervalSince1970, forKey: message_lastMsgSendTimeStampForOutter)
                 UserDefaults.standard.synchronize()
                 DispatchQueue.main.async {
                     self.mainTableView.reloadData()
@@ -189,7 +181,7 @@ class MessageTrainerListViewController: BaseViewController {
     */
 
 }
-extension MessageTrainerListViewController:UITableViewDelegate,UITableViewDataSource{
+extension MessageListForStudentRoleViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -220,14 +212,14 @@ extension MessageTrainerListViewController:UITableViewDelegate,UITableViewDataSo
             }
             let model = self.trainerList[indexPath.row]
             self.curFromUserId = model.id
-            let vc:MessageSystemViewController = MessageSystemViewController()
+            let vc:MessageChatForStudentRoleViewController = MessageChatForStudentRoleViewController()
             vc.toUserId = model.id
             vc.toUserName =  "\(model.firstName ?? "") \(model.lastName ?? "")"
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             let model = self.groupList[indexPath.row]
-            let vc:MessageGroupSendViewController = MessageGroupSendViewController()
+            let vc:MessageGroupChatRoomViewController = MessageGroupChatRoomViewController()
             vc.groupId = model.userMessageGroup?.id ?? ""
             vc.trainerId = model.id
             vc.trainerName = model.firstName ?? ""

@@ -59,8 +59,46 @@ class LoginSecondViewController: BaseViewController {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg:error, controller: self)
             }
+        } confirmSignUp: {
+            DispatchQueue.main.async {
+                hud.hide(animated: true)
+                self.resenConfirmCode()
+            }
+            
         }
 
+//        LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
+//            self.updateDeviceToken()
+//            DispatchQueue.main.async {
+//                hud.hide(animated: true)
+//                let homeVC:HomeTabViewController = HomeTabViewController()
+//                self.changeRootController(controller: homeVC)
+//            }
+//        } fail: { error in
+//            self.logOut()
+//            DispatchQueue.main.async {
+//                hud.hide(animated: true)
+//                ToastHUD.showMsg(msg:error, controller: self)
+//            }
+//        }
+
+    }
+    func resenConfirmCode(){
+        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        LoginBackend.shared.resendCodeForSignUp(username: self.userNameText.text ?? "") {
+            DispatchQueue.main.async {
+                hud.hide(animated: true)
+                ToastHUD.showMsg(msg:"Verification code has been sent to your email, please check！", controller: self)
+                let secondVC = RegisterConfirmViewController()
+                secondVC.userName = self.userNameText.text
+                self.navigationController?.pushViewController(secondVC, animated: true)
+            }
+        } fail: { error in
+            DispatchQueue.main.async {
+                hud.hide(animated: true)
+                ToastHUD.showMsg(msg:error, controller: self)
+            }
+        }
     }
     func updateDeviceToken(){
         if StringUtils.isBlank(value: LoginTools.sharedTools.deviceToken) == false {
