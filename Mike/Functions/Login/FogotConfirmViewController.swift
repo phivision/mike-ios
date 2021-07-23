@@ -14,6 +14,7 @@ class FogotConfirmViewController: BaseViewController {
     @IBOutlet weak var codeText:UITextField!
     @IBOutlet weak var newPwdBg:UIImageView!
     @IBOutlet weak var newPwdText:UITextField!
+    @IBOutlet weak var inputBg:UIView!
     var codeValue:String = ""
     var newPwdValue:String = ""
     override func viewDidLoad() {
@@ -26,21 +27,16 @@ class FogotConfirmViewController: BaseViewController {
         self.codeText.delegate = self
         self.newPwdText.delegate = self
         
-        self.hanldeBgCornerAndShadow(bgView: self.codeBg)
-        self.hanldeBgCornerAndShadow(bgView: self.newPwdBg)
+        self.hanldeBgCornerAndShadow(bgView: self.inputBg)
         
-        self.confirmBtn.layer.cornerRadius = 20
-        self.confirmBtn.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        self.confirmBtn.layer.shadowOffset = CGSize(width: 2, height: 2)
-        self.confirmBtn.layer.shadowOpacity = 2
+        self.confirmBtn.layer.cornerRadius = 18.5
     }
     
-    func hanldeBgCornerAndShadow(bgView:UIImageView){
-        bgView.clipsToBounds = false
-        bgView.layer.cornerRadius = 20
-        bgView.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        bgView.layer.shadowOffset = CGSize(width: 2, height: 2)
-        bgView.layer.shadowOpacity = 2
+    func hanldeBgCornerAndShadow(bgView:UIView){
+        bgView.clipsToBounds = true
+        bgView.layer.cornerRadius = 5
+        bgView.layer.borderColor = lightGreyColor.cgColor
+        bgView.layer.borderWidth = 1
     }
     
     @IBAction func backBtnPressed(){

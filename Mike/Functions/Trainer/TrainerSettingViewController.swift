@@ -14,6 +14,10 @@ class TrainerSettingViewController: BaseViewController {
         var subscriptionList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
         return subscriptionList
     }()
+    lazy var subscriptionIdList:Array<String> = {
+        var subscriptionIdList:Array<String> = Array<String>()
+        return subscriptionIdList
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configTableView()
@@ -45,9 +49,11 @@ class TrainerSettingViewController: BaseViewController {
         self.mainTableView.tableFooterView = UIView()
     }
     func fetchTrainerList(){
-        UserProfileBackend.shared.fetchSubscriptionTrainerList{ subscriptionList in
+        UserProfileBackend.shared.fetchSubscriptionTrainerList{ subscriptionList,subIdList in
             self.subscriptionList.removeAll()
+            self.subscriptionIdList.removeAll()
             self.subscriptionList.append(contentsOf: subscriptionList)
+            self.subscriptionIdList.append(contentsOf: subIdList)
             DispatchQueue.main.async {
                 self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
                 self.mainTableView.reloadData()
@@ -147,7 +153,20 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        switch indexPath.section {
+        case 0:
+            break
+        case 2:
+            if indexPath.row == 0 {
+                let vc = FogotPwdViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else{
+                self.signOut()
+            }
+            break
+        default:
+            break
+        }
     }
     @objc func changePwd(){
         let vc = FogotPwdViewController()
@@ -175,6 +194,38 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
 }
 extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{
     func delSubscriptionTrainer(index: IndexPath) {
+        let trainer = self.subscriptionList[index.row];
+        let alertController = UIAlertController(title: "", message: "Are you sure you want to unsubscribe \(trainer.firstName ?? "") \(trainer.lastName ?? "")?",
+                                                preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title:  "CANCEL", style: .cancel) { (alertAction) in
+            
+        }
+        let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
+            self.delSub(index: index.row)
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(sureAction)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
         
     }
+    func delSub(index:NSInteger){
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        let subId = self.subscriptionIdList[index];
+        UserProfileBackend.shared.delSubscriptionTrainer(subscriptionId: subId) { suc in
+            DispatchQueue.main.async {
+                hud.hide(animated: true)
+                ToastHUD.showMsg(msg:"Delete Success!", controller: self)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
+                self.fetchTrainerList()
+            }
+        } fail: { error in
+            DispatchQueue.main.async {
+                hud.hide(animated: true)
+                ToastHUD.showMsg(msg:"\(error)", controller: self)
+            }
+        }
+    }
 }
+

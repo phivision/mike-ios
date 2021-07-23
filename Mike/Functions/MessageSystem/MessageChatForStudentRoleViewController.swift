@@ -1,5 +1,5 @@
 //
-//  MessageSystemViewController.swift
+//  MessageChatForStudentRoleViewController.swift
 //  Mike
 //
 //  Created by 殷聃 on 2021/6/22.
@@ -8,7 +8,7 @@
 import UIKit
 import IQKeyboardManagerSwift
 
-class MessageSystemViewController: BaseViewController {
+class MessageChatForStudentRoleViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     var toUserId:String?
     var toUserName:String?
@@ -51,9 +51,14 @@ class MessageSystemViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAction(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
-        self.fetchUnResponedStatusMessageList()
+        self.resetUnReadStatus()
+        self.fetchUnReadStatusMessageList()
         self.fetchTokenPrice()
         self.fetchTokenBalance()
+    }
+    func resetUnReadStatus(){
+        UserDefaults.standard.setValue(false, forKey: "\(message_msgForStudentUnRead)\(self.toUserId ?? "")")
+        UserDefaults.standard.synchronize()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
@@ -153,8 +158,8 @@ class MessageSystemViewController: BaseViewController {
         UserDefaults.standard.setValue(msg, forKey: "\(message_lastMsgForStudent)\(self.toUserId ?? "")")
     }
     //MARK: - unresponed message handle
-    func fetchUnResponedStatusMessageList(){
-        MessageBackend.shared.fetchMessageListByStatus(toUserId: LoginTools.sharedTools.userId(), fromUserId: self.toUserId, status: "UNRESPONDED") { msgList in
+    func fetchUnReadStatusMessageList(){
+        MessageBackend.shared.fetchMessageListByStatus(toUserId: LoginTools.sharedTools.userId(), fromUserId: self.toUserId, status: "UNREAD") { msgList in
             for msgModel in msgList{
                 self.updateStatusToResponed(messageModel: msgModel)
             }
@@ -217,7 +222,7 @@ class MessageSystemViewController: BaseViewController {
             ToastHUD.showMsg(msg: "Please Input Message!", controller: self)
             return
         }
-        MessageBackend.shared.sendMsgToUser(toUserId: self.toUserId ?? "", msgContent: self.commentText.text) { msgModel in
+        MessageBackend.shared.sendMsgToTrainer(trainerId: self.toUserId ?? "", msgContent: self.commentText.text) { msgModel in
             DispatchQueue.main.async {
                 self.msgList.append(msgModel)
                 self.mainTableView.reloadData()
@@ -247,7 +252,7 @@ class MessageSystemViewController: BaseViewController {
     */
 
 }
-extension MessageSystemViewController:UITableViewDelegate,UITableViewDataSource{
+extension MessageChatForStudentRoleViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -275,7 +280,7 @@ extension MessageSystemViewController:UITableViewDelegate,UITableViewDataSource{
        
     }
 }
-extension MessageSystemViewController:UITextViewDelegate{
+extension MessageChatForStudentRoleViewController:UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
         let width = textView.width
         let newSize = textView.sizeThatFits(CGSize(width: width, height: CGFloat(MAXFLOAT)))

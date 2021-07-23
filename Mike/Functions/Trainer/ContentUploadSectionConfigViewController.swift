@@ -151,25 +151,38 @@ extension ContentUploadSectionConfigViewController:VideoUploadCellDelegate,UIIma
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if picker.mediaTypes == ["public.movie"]{
-            let videoURL = info[.mediaURL] as! URL
-            self.videoURL = videoURL
-            let avAsset = AVAsset(url: videoURL)
-            print("视频地址：\(videoURL.relativePath)")
-
-            //generate image
-            let generator = AVAssetImageGenerator(asset: avAsset)
-            generator.appliesPreferredTrackTransform = true
-            let time = CMTimeMakeWithSeconds(0.0, preferredTimescale: 600)
-            var actualTime = CMTimeMake(value: 0, timescale: 0)
-            let imageRef:CGImage = try! generator.copyCGImage(at: time, actualTime: &actualTime)
-            let frameImg = UIImage(cgImage: imageRef)
-            self.videoImage = frameImg
-            DispatchQueue.main.async {
-                self.mainTableView.reloadData()
+            if let videoURL = info[.mediaURL] as? URL{
+                self.handleVideoUrl(videoURL: videoURL)
+            }else{
+                if let videoURL = info[.referenceURL] as? URL {
+                    self.handleVideoUrl(videoURL: videoURL)
+                }
             }
         }
         //picker dismiss
         self.dismiss(animated: true, completion: {})
+    }
+    func handleVideoUrl(videoURL:URL!){
+        self.videoURL = videoURL
+        let avAsset = AVAsset(url: videoURL)
+        print("视频地址：\(videoURL.relativePath)")
+
+        //generate image
+        let generator = AVAssetImageGenerator(asset: avAsset)
+        generator.appliesPreferredTrackTransform = true
+        let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
+        var actualTime = CMTimeMake(value: 0, timescale: 0)
+        do {
+            if let imageRef = try? generator.copyCGImage(at: time, actualTime: &actualTime) {
+                let frameImg = UIImage(cgImage: imageRef)
+                self.videoImage = frameImg
+                DispatchQueue.main.async {
+                    self.mainTableView.reloadData()
+                }
+            }
+        } catch let error {
+            print("\(error)")
+        }
     }
     func delVideoBtnClicked() {
         self.videoImage = nil
@@ -312,13 +325,12 @@ extension ContentUploadSectionConfigViewController{
 //                ToastHUD.showMsg(msg: "Upload Success!", controller: self)
                 let alertController = UIAlertController(title: "", message: "Upload Success,Waiting for processing...",
                                                         preferredStyle: .alert)
-                let sureAction = UIAlertAction(title:  "Ok", style: .default) { (alertAction) in
-                    self.dismiss(animated: true, completion: nil)
+                let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
+                    self.navigationController?.popViewController(animated: true)
                 }
                 alertController.addAction(sureAction)
                 DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
-//                    self.present(alertController, animated: true, completion: nil)
+                    self.present(alertController, animated: true, completion: nil)
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: clearUploadPage), object: nil)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)

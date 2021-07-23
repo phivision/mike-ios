@@ -209,7 +209,7 @@ extension UserContentController:UITableViewDelegate,UITableViewDataSource{
             }else{
                 let alertController = UIAlertController(title: "", message: "Waiting for processing",
                                                         preferredStyle: .alert)
-                let sureAction = UIAlertAction(title:  "Ok", style: .default) { (alertAction) in
+                let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
                 
                 }
                 alertController.addAction(sureAction)

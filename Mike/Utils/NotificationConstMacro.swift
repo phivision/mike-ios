@@ -7,6 +7,7 @@
 
 import Foundation
 
+let refreshHomeList:String = "refreshHomeList"
 let refreshFavList:String = "refreshFavList"
 let refreshProfile:String = "refreshUserProfile"
 let refreshTrainerDetail:String = "refreshTrainerId"

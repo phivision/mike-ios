@@ -202,6 +202,7 @@ extension GraphQLRequest{
           getUserProfile(id:$id) {
               Subscriptions {
                   items {
+                    id
                     Trainer {
                       BgImage
                       BgTitle
@@ -508,10 +509,38 @@ extension GraphQLRequest{
                                         variables: ["id": userId],
                                         responseType: JSONValue.self)
         }
-    static func createMsgToUser(byToUserId toUserId:String,_ msgContent:String) -> GraphQLRequest<JSONValue>{
+    static func createMsgToTrainer(byToTrainerId trainerId:String,_ msgContent:String) -> GraphQLRequest<JSONValue>{
         let document = """
         mutation MyMutation($FromUserID:ID!,$PostMessages:String!,$ToUserID:ID!) {
           createMessage(input: {FromUserID: $FromUserID, PostMessages: $PostMessages, Status: UNRESPONDED, ToUserID: $ToUserID, Type: TEXT}) {
+            id
+            PostMessages
+            ToUserID
+            FromUserID
+            Status
+            Type
+            createdAt
+            ToUser {
+              FirstName
+              LastName
+              UserImage
+            }
+            FromUser {
+              LastName
+              FirstName
+              UserImage
+            }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["FromUserID": LoginTools.sharedTools.userId(),"ToUserID":trainerId,"PostMessages":msgContent],
+                                    responseType: JSONValue.self)
+    }
+    static func createMsgToUser(byToUserId toUserId:String,_ msgContent:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+        mutation MyMutation($FromUserID:ID!,$PostMessages:String!,$ToUserID:ID!) {
+          createMessage(input: {FromUserID: $FromUserID, PostMessages: $PostMessages, Status: UNREAD, ToUserID: $ToUserID, Type: TEXT}) {
             id
             PostMessages
             ToUserID
@@ -803,6 +832,32 @@ extension GraphQLRequest{
                                          variables: ["id": trainerId],
                                     responseType: JSONValue.self)
     }
+    
+    static func delSubscription(bySubscribeId subscribeId:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+                    mutation MyMutation($id: ID!) {
+                      deleteUserSubscriptionTrainer(input: {id: $id}) {
+                        id
+                      }
+                    }
+        """
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": subscribeId],
+                                    responseType: JSONValue.self)
+    }
+    static func subscriptionNewContent(byCreatorId creatorId: String) -> GraphQLRequest<JSONValue> {
+            let document = """
+                    subscription MySubscription($CreatorID: ID!) {
+                      onUpdateByCreatorID(CreatorID: $CreatorID) {
+                        CreatorID
+                        id
+                      }
+                    }
+            """
+            return GraphQLRequest<JSONValue>(document: document,
+                                        variables: ["CreatorID": creatorId],
+                                        responseType: JSONValue.self)
+        }
     
     
 }

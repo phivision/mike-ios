@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageSystemViewController" customModule="Motion" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageChatForStudentRoleViewController">
             <connections>
                 <outlet property="commentBg" destination="PU5-iD-PPN" id="T0g-bm-8nH"/>
                 <outlet property="commentText" destination="lcQ-gm-I98" id="JXP-dE-EhU"/>

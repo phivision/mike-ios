@@ -189,4 +189,42 @@ class TrainerBackend: NSObject {
             }
         }
     }
+    func createNewContentSubscription(complete:@escaping ()->Void) {
+        let subscription: GraphQLSubscriptionOperation<JSONValue> = Amplify.API.subscribe(request: .subscriptionNewContent(byCreatorId: LoginTools.sharedTools.userId()), valueListener: { (subscriptionEvent) in
+            switch subscriptionEvent {
+            case .connection(let subscriptionConnectionState):
+                print("Subscription connect state is \(subscriptionConnectionState)")
+                if subscriptionConnectionState == .disconnected {
+                    SubscriptionTools.sharedTools.createContentSubscription?.start()
+                }
+            case .data(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["onUpdateByCreatorID"] as? NSDictionary {
+                        print("\(subDic)")
+                        complete()
+                    }else {
+                        
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                }
+            }
+        }) { result in
+            switch result {
+            case .success:
+                print("Subscription has been closed successfully")
+            case .failure(let apiError):
+                print("Subscription has terminated with \(apiError)")
+            }
+        }
+        SubscriptionTools.sharedTools.createContentSubscription = subscription
+    }
 }

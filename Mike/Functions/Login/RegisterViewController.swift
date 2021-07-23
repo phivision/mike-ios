@@ -20,6 +20,7 @@ class RegisterViewController: BaseViewController {
     @IBOutlet weak var lastNameText:UITextField!
     @IBOutlet weak var userRoleTrainerBtn:UIButton!
     @IBOutlet weak var userRoleStudentBtn:UIButton!
+    @IBOutlet weak var inputBg:UIView!
     var userName:String = ""
     var pwd:String = ""
     var firstName:String = ""
@@ -48,15 +49,9 @@ class RegisterViewController: BaseViewController {
         self.firstNameText.delegate = self
         self.lastNameText.delegate = self
         
-        self.hanldeBgCornerAndShadow(bgView: self.userNameBg)
-        self.hanldeBgCornerAndShadow(bgView: self.pwdBg)
-        self.hanldeBgCornerAndShadow(bgView: self.firstNameBg)
-        self.hanldeBgCornerAndShadow(bgView: self.lastNameBg)
+        self.hanldeBgCornerAndShadow(bgView: self.inputBg)
         
-        self.registerBtn.layer.cornerRadius = 20
-        self.registerBtn.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        self.registerBtn.layer.shadowOffset = CGSize(width: 2, height: 2)
-        self.registerBtn.layer.shadowOpacity = 2
+        self.registerBtn.layer.cornerRadius = 18.5
         
         self.userRoleTrainerBtn.isSelected = true
         self.userRoleStudentBtn.isSelected = false
@@ -74,12 +69,11 @@ class RegisterViewController: BaseViewController {
         }
     }
     
-    func hanldeBgCornerAndShadow(bgView:UIImageView){
-        bgView.clipsToBounds = false
-        bgView.layer.cornerRadius = 20
-        bgView.layer.shadowColor = HexRGBAlpha(0xff000000,0.16).cgColor
-        bgView.layer.shadowOffset = CGSize(width: 2, height: 2)
-        bgView.layer.shadowOpacity = 2
+    func hanldeBgCornerAndShadow(bgView:UIView){
+        bgView.clipsToBounds = true
+        bgView.layer.cornerRadius = 5
+        bgView.layer.borderColor = lightGreyColor.cgColor
+        bgView.layer.borderWidth = 1
     }
     
     @IBAction func backBtnPressed(){

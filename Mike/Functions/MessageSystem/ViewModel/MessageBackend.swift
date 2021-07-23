@@ -99,8 +99,41 @@ class MessageBackend: NSObject {
         SubscriptionTools.sharedTools.outterSubscription = subscription
     }
     //createMsg
+    //trainer send msg to user
     func sendMsgToUser(toUserId:String!,msgContent:String!,suc:@escaping (_ messageModel:MessageListModel)->Void,fail:@escaping (_ msg:String)->Void){
         Amplify.API.mutate(request: .createMsgToUser(byToUserId: toUserId, msgContent)){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["createMessage"] as? NSDictionary {
+                        print("\(subDic)")
+                        let model = MessageListModel(fromDictionary: subDic as! [String : Any])
+                        suc(model)
+                    }else {
+                        fail("Send Message Failed!")
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    //user send msg to trainer
+    func sendMsgToTrainer(trainerId:String!,msgContent:String!,suc:@escaping (_ messageModel:MessageListModel)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.mutate(request: .createMsgToTrainer(byToTrainerId: trainerId, msgContent)){
             event in
             switch event {
             case .success(let result):

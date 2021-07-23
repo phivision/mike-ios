@@ -1,5 +1,5 @@
 //
-//  MessageStudentViewController.swift
+//  MessageListForTrainerRoleViewController.swift
 //  Mike
 //
 //  Created by 殷聃 on 2021/6/24.
@@ -8,7 +8,7 @@
 import UIKit
 import PullToRefreshKit
 
-class MessageStudentViewController: BaseViewController {
+class MessageListForTrainerRoleViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     @IBOutlet weak var tokenBalance:UILabel!
     lazy var refreshControl:UIRefreshControl = {
@@ -115,40 +115,36 @@ class MessageStudentViewController: BaseViewController {
     
     func fetchMessageList(){
         MessageBackend.shared.fetchMessageListByToUserId(toUserId: LoginTools.sharedTools.userId(), status:"UNRESPONDED") { msgList in
-            self.handleStudents(msgList: msgList)
-        } fail: { error in
-            
-        }
-    }
-    func handleStudents(msgList:Array<MessageListModel>){
-        if msgList.count == 0{
-            for trainer in self.studentList {
-                UserDefaults.standard.setValue(false, forKey: "\(message_msgForTrainerUnRead)\(trainer.id ?? "")")
-                UserDefaults.standard.synchronize()
-            }
-        }else{
-            for msgModel in msgList{
-                let result = UserDefaults.standard.bool(forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
-                if result == false {
-                    UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
-                    UserDefaults.standard.synchronize()
+            if msgList.count == 0{
+//                for trainer in self.studentList {
+//                    UserDefaults.standard.setValue(false, forKey: "\(message_msgForTrainerUnRead)\(trainer.id ?? "")")
+//                    UserDefaults.standard.synchronize()
+//                }
+            }else{
+                for msgModel in msgList{
+                    let result = UserDefaults.standard.bool(forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                    if result == false {
+                        UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                        UserDefaults.standard.synchronize()
+                    }
                 }
             }
-        }
-        for msgModel in msgList {
-            UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
-            UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
-            UserDefaults.standard.synchronize()
-        }
-        DispatchQueue.main.async {
-            self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
-            self.mainTableView.reloadData()
+            for msgModel in msgList {
+                UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
+                UserDefaults.standard.synchronize()
+            }
+            DispatchQueue.main.async {
+                self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
+                self.mainTableView.reloadData()
+            }
+        } fail: { error in
+            
         }
     }
     func handleSubscription(){
         MessageBackend.shared.createSubscription(userId: LoginTools.sharedTools.userId()) { msgModel in
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
-            self.fetchMessageList()
             if msgModel.fromUserID != self.curFromUserId{
                 UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
                 UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
@@ -164,7 +160,6 @@ class MessageStudentViewController: BaseViewController {
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~im a outer subscription")
             UserDefaults.standard.setValue(true, forKey: "\(message_groupMsg_unread)\(self.userProfileModel?.id ?? "")")
             UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastGroupMsg)\(self.userProfileModel?.id ?? "")")
-            UserDefaults.standard.setValue(Date().timeIntervalSince1970, forKey: message_lastMsgSendTimeStampForOutter)
             UserDefaults.standard.synchronize()
             DispatchQueue.main.async {
                 self.mainTableView.reloadData()
@@ -182,7 +177,7 @@ class MessageStudentViewController: BaseViewController {
     */
 
 }
-extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource{
+extension MessageListForTrainerRoleViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -222,7 +217,7 @@ extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            let vc:MessageGroupSendViewController = MessageGroupSendViewController()
+            let vc:MessageGroupChatRoomViewController = MessageGroupChatRoomViewController()
             vc.groupId = self.userProfileModel?.userMessageGroup?.id ?? ""
             vc.trainerId = LoginTools.sharedTools.userId()
             vc.trainerName = LoginTools.sharedTools.userInfo().firstName ?? ""
@@ -234,7 +229,7 @@ extension MessageStudentViewController:UITableViewDelegate,UITableViewDataSource
             }
             let model = self.studentList[indexPath.row]
             self.curFromUserId = model.id
-            let vc:MessageStudentChatController = MessageStudentChatController()
+            let vc:MessageChatForTrainerRoleViewController = MessageChatForTrainerRoleViewController()
             vc.toUserId = model.id
             vc.toUserName =  "\(model.firstName ?? "") \(model.lastName ?? "")"
             vc.hidesBottomBarWhenPushed = true

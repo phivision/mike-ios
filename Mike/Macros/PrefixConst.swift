@@ -9,7 +9,6 @@ import Foundation
 let message_lastMsgForTrainer:String = "lastMsg_forTrainer_"
 let message_msgListForTrainer:String = "msgList_forTrainer_"
 let message_msgForTrainerUnRead:String = "unread_forTrainer"
-let message_lastMsgSendTimeStampForOutter:String = "lastMsgSendTimeStampForOutter"
 
 let message_lastMsgForStudent:String = "lastMsg_forStudent_"
 let message_msgListForStudent:String = "msgList_forStudent_"
