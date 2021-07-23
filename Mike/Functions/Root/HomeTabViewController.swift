@@ -13,7 +13,7 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
     lazy var centerBtn:UIButton = {
         var button = UIButton(frame: CGRect(x: 5, y:5, width: tabBar.height-20, height: tabBar.height-20))
         button.clipsToBounds = true
-        button.contentMode = .scaleAspectFill
+        button.imageView!.contentMode = .scaleAspectFill
         button.setImage(UIImage(named:"icon_user_default"), for: .normal)
         button.layer.cornerRadius = (tabBar.height-20)/2
         button.isUserInteractionEnabled = false

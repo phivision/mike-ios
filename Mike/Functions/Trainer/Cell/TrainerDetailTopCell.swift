@@ -26,6 +26,7 @@ class TrainerDetailTopCell: UICollectionViewCell {
         self.avatar.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
         self.avatar.imageView!.layer.cornerRadius = 34
         self.avatar.imageView!.clipsToBounds = true
+        self.avatar.imageView!.contentMode = .scaleAspectFill
     }
     func setModel(model:UserCenterModel){
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
