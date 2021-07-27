@@ -66,7 +66,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         pinpoint = AWSPinpoint(configuration: pinpointConfiguration)
         // Present the user with a request to authorize push notifications
         registerForPushNotifications()
-        AWSDDLog.sharedInstance.logLevel = .error
+        AWSDDLog.sharedInstance.logLevel = .all
         AWSDDLog.add(AWSDDTTYLogger.sharedInstance)
         return true
     }
@@ -78,6 +78,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
     }
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        if url.absoluteString.hasPrefix("mike://") {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "dismissSafari"), object: nil)
+        }
         AWSMobileClient.default().handleAuthResponse(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
         return true
     }
