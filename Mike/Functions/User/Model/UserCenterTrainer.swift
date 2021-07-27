@@ -28,6 +28,7 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
 	var id : String!
 	var owner : String!
 	var updatedAt : String!
+    var subscriptionPrice: Int!
 
 
 	/**
@@ -57,6 +58,7 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
 		id = dictionary["id"] as? String
 		owner = dictionary["owner"] as? String
 		updatedAt = dictionary["updatedAt"] as? String
+        subscriptionPrice = dictionary["SubscriptionPrice"] as? Int
 	}
 
 	/**
@@ -128,6 +130,9 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
 		if updatedAt != nil{
 			dictionary["updatedAt"] = updatedAt
 		}
+        if subscriptionPrice != nil {
+            dictionary["SubscriptionPrice"] = subscriptionPrice
+        }
 		return dictionary
 	}
 
@@ -158,7 +163,7 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
          id = aDecoder.decodeObject(forKey: "id") as? String
          owner = aDecoder.decodeObject(forKey: "owner") as? String
          updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
-
+        subscriptionPrice = aDecoder.decodeObject(forKey: "SubscriptionPrice") as? Int
 	}
 
     /**
@@ -230,6 +235,9 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
 		if updatedAt != nil{
 			aCoder.encode(updatedAt, forKey: "updatedAt")
 		}
+        if subscriptionPrice != nil {
+            aCoder.encode(subscriptionPrice,forKey: "SubscriptionPrice")
+        }
 
 	}
 

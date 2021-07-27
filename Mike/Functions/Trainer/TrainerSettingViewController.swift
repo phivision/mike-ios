@@ -18,6 +18,9 @@ class TrainerSettingViewController: BaseViewController {
         var subscriptionIdList:Array<String> = Array<String>()
         return subscriptionIdList
     }()
+    var trainerProfileModel:UserCenterTrainer?
+    var tokenPrice:String = "0"
+    var subPrice:String = "0"
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configTableView()
@@ -27,6 +30,8 @@ class TrainerSettingViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         if self.isTrainer == false {
             self.fetchTrainerList()
+        }else{
+            self.fetchTraienrModel()
         }
     }
     @IBAction func backBtnPressed(){
@@ -60,6 +65,32 @@ class TrainerSettingViewController: BaseViewController {
             }
         } fail: { error in
             
+        }
+    }
+    func fetchTraienrModel(){
+        TrainerBackend.shared.fetchTrainerUserProfile(userId: LoginTools.sharedTools.userId()) { trainerModel in
+            DispatchQueue.main.async {
+                self.trainerProfileModel = trainerModel
+                self.tokenPrice = "\(trainerModel.tokenPrice ?? 0)"
+                self.subPrice = "\(trainerModel.subscriptionPrice ?? 0)"
+                self.mainTableView.reloadData()
+            }
+        } fail: { error in
+            
+        }
+    }
+    @IBAction func saveBtnPressed(){
+        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+            TrainerBackend.shared.updateTokenPriceAndSubPrice(tokenPrice: self.tokenPrice, subPrice: self.subPrice) {
+                DispatchQueue.main.async {
+                    ToastHUD.showMsg(msg: "Save Success!", controller: self)
+                    self.fetchTraienrModel()
+                }
+            } fail: { error in
+                DispatchQueue.main.async {
+                    ToastHUD.showMsg(msg: error, controller: self)
+                }
+            }
         }
     }
     /*
@@ -126,6 +157,10 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
         case 0:
             if self.isTrainer == true {
                 let cell:UserSettingSubscribeCell = tableView.dequeueReusableCell(withIdentifier: "UserSettingSubscribeCell", for: indexPath) as! UserSettingSubscribeCell
+                cell.delegate = self
+                if let model = self.trainerProfileModel {
+                    cell.setModel(trainerModel: model)
+                }
                 return cell
             }else{
                 let cell:UserSettingTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "UserSettingTrainerListCell", for: indexPath) as! UserSettingTrainerListCell
@@ -190,6 +225,14 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
         } fail: {
 
         }
+    }
+}
+extension TrainerSettingViewController:UserSettingSubscribeCellDelegate{
+    func subscriptionPriceChanged(price: String) {
+        self.subPrice = price
+    }
+    func tokenPriceChanged(price: String) {
+        self.tokenPrice = price
     }
 }
 extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{

@@ -30,7 +30,8 @@ class UserCenterModel : NSObject, NSCoding{
 	var updatedAt : String!
     var TokenPrice: Int!
     var userMessageGroup : UserCenterUserMessageGroup?
-
+    var SubscriptionPrice: Int!
+    var TokenBalance:Int!
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
@@ -67,6 +68,8 @@ class UserCenterModel : NSObject, NSCoding{
         if let userMessageGroupData = dictionary["UserMessageGroup"] as? [String:Any]{
             userMessageGroup = UserCenterUserMessageGroup(fromDictionary: userMessageGroupData)
         }
+        SubscriptionPrice = dictionary["SubscriptionPrice"] as? Int
+        TokenBalance = dictionary["TokenBalance"] as? Int
 	}
 
 	/**
@@ -144,6 +147,12 @@ class UserCenterModel : NSObject, NSCoding{
         if userMessageGroup != nil{
             dictionary["UserMessageGroup"] = userMessageGroup?.toDictionary()
         }
+        if SubscriptionPrice != nil {
+            dictionary["SubscriptionPrice"] = SubscriptionPrice
+        }
+        if TokenBalance != nil {
+            dictionary["TokenBalance"] = TokenBalance
+        }
 		return dictionary
 	}
 
@@ -176,6 +185,8 @@ class UserCenterModel : NSObject, NSCoding{
          updatedAt = aDecoder.decodeObject(forKey: "updatedAt") as? String
         TokenPrice = aDecoder.decodeObject(forKey: "TokenPrice") as? Int
         userMessageGroup = aDecoder.decodeObject(forKey: "UserMessageGroup") as? UserCenterUserMessageGroup
+        SubscriptionPrice = aDecoder.decodeObject(forKey: "SubscriptionPrice") as? Int
+        TokenBalance = aDecoder.decodeObject(forKey: "TokenBalance") as? Int
 	}
 
     /**
@@ -250,8 +261,15 @@ class UserCenterModel : NSObject, NSCoding{
         if TokenPrice != nil {
             aCoder.encode(TokenPrice,forKey: "TokenPrice")
         }
+        
         if userMessageGroup != nil{
             aCoder.encode(userMessageGroup, forKey: "UserMessageGroup")
+        }
+        if SubscriptionPrice != nil {
+            aCoder.encode(SubscriptionPrice,forKey: "SubscriptionPrice")
+        }
+        if TokenBalance != nil {
+            aCoder.encode(TokenBalance,forKey: "TokenBalance")
         }
 	}
 

@@ -345,7 +345,29 @@ extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
     }
     func subscribeBtnClicked() {
         if self.isSubscribed == false {
-            SubscriptionPaymentTools.shared.payForSubscribe(trainerId: self.curUserId)
+//            Amplify.API.post(request: <#T##RESTRequest#>)
+//            SubscriptionPaymentTools.shared.payForSubscribe(trainerId: self.curUserId)
+            let hud:MBProgressHUD = MBProgressHUD.showAdded(to: keyWindow?.rootViewController?.view ?? UIView(), animated: true)
+            let jsonData = try! JSONSerialization.data(withJSONObject: ["userID":LoginTools.sharedTools.userId(),"trainerID":self.curUserId ?? ""], options: .prettyPrinted)
+            let request = RESTRequest(apiName: "subscriptions",path: "/sub/",body:jsonData)
+            Amplify.API.post(request: request) { result in
+                switch result {
+                case .success(let data):
+                    let str = String(decoding: data, as: UTF8.self)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
+                    DispatchQueue.main.async {
+                        self.configSubscribeStatus()
+                        hud.hide(animated: true)
+                    }
+                    print("Success \(str)")
+                case .failure(let apiError):
+                    print("Failed", apiError)
+                    DispatchQueue.main.async {
+                        hud.hide(animated: true)
+                        ToastHUD.showMsg(msg: apiError.localizedDescription, controller: keyWindow?.rootViewController ?? UIViewController())
+                    }
+                }
+            }
         }
     }
 }
