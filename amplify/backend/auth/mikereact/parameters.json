@@ -62,6 +62,7 @@
     "userPoolGroups": false,
     "userPoolGroupList": [],
     "adminQueries": false,
+    "userpoolClientGenerateSecret": true,
     "usernameCaseSensitive": false,
     "dependsOn": [
         {

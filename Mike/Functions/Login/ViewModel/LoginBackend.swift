@@ -31,6 +31,59 @@ class LoginBackend: NSObject {
             }
         }
     }
+    // sign in with apple
+    public func signInWithApple(suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void,confirmSignUp:@escaping ()->Void){
+        Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: keyWindow!,options: AuthWebUISignInRequest.Options(scopes: ["email","openid","aws.cognito.signin.user.admin","profile"], signInQueryParameters: ["ResponseType":"Code"])) { result in
+            do {
+                let signinResult = try result.get()
+                switch signinResult.nextStep {
+                case .confirmSignInWithSMSMFACode(let deliveryDetails, let info):
+                    print("SMS code send to \(deliveryDetails.destination)")
+                    print("Additional info \(String(describing: info))")
+
+                    // Prompt the user to enter the SMSMFA code they received
+                    // Then invoke `confirmSignIn` api with the code
+
+                case .confirmSignInWithCustomChallenge(let info):
+                    print("Custom challenge, additional info \(String(describing: info))")
+
+                    // Prompt the user to enter custom challenge answer
+                    // Then invoke `confirmSignIn` api with the answer
+
+                case .confirmSignInWithNewPassword(let info):
+                    print("New password additional info \(String(describing: info))")
+
+                    // Prompt the user to enter a new password
+                    // Then invoke `confirmSignIn` api with new password
+
+                case .resetPassword(let info):
+                    print("Reset password additional info \(String(describing: info))")
+
+                    // User needs to reset their password.
+                    // Invoke `resetPassword` api to start the reset password
+                    // flow, and once reset password flow completes, invoke
+                    // `signIn` api to trigger signin flow again.
+
+                case .confirmSignUp(let info):
+                    print("Confirm signup additional info \(String(describing: info))")
+                    confirmSignUp()
+                    // User was not confirmed during the signup process.
+                    // Invoke `confirmSignUp` api to confirm the user if
+                    // they have the confirmation code. If they do not have the
+                    // confirmation code, invoke `resendSignUpCode` to send the
+                    // code again.
+                    // After the user is confirmed, invoke the `signIn` api again.
+                case .done:
+                    // Use has successfully signed in to the app
+                    print("Sign in succeeded \(result)")
+                    self.fetchSession(suc: suc, fail: fail)
+                }
+            } catch {
+                print ("Sign in failed \(error)")
+                fail("\(error)")
+            }
+        }
+    }
     //  login with userName and password
     public func login(userName:String!,pwd:String!,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void,confirmSignUp:@escaping ()->Void){
 //        signOut()
