@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Amplify
 class TrainerSettingViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     @IBOutlet weak var saveBtn:UIButton!
@@ -256,19 +257,38 @@ extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{
     func delSub(index:NSInteger){
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         let subId = self.subscriptionIdList[index];
-        UserProfileBackend.shared.delSubscriptionTrainer(subscriptionId: subId) { suc in
-            DispatchQueue.main.async {
-                hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Delete Success!", controller: self)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
-                self.fetchTrainerList()
-            }
-        } fail: { error in
-            DispatchQueue.main.async {
-                hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"\(error)", controller: self)
+        let jsonData = try! JSONSerialization.data(withJSONObject: ["id":subId], options: .prettyPrinted)
+        let request = RESTRequest(apiName: "subscriptions",path: "/sub",body:jsonData)
+        Amplify.API.delete(request: request) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    ToastHUD.showMsg(msg:"Delete Success!", controller: self)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
+                    self.fetchTrainerList()
+                }
+            case .failure(let apiError):
+                print("Failed", apiError)
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    ToastHUD.showMsg(msg:"\(apiError)", controller: self)
+                }
             }
         }
+//        UserProfileBackend.shared.delSubscriptionTrainer(subscriptionId: subId) { suc in
+//            DispatchQueue.main.async {
+//                hud.hide(animated: true)
+//                ToastHUD.showMsg(msg:"Delete Success!", controller: self)
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
+//                self.fetchTrainerList()
+//            }
+//        } fail: { error in
+//            DispatchQueue.main.async {
+//                hud.hide(animated: true)
+//                ToastHUD.showMsg(msg:"\(error)", controller: self)
+//            }
+//        }
     }
 }
 

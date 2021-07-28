@@ -40,7 +40,9 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
     @objc func updateCenterIcon(){
         ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.trainerModel?.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
-                self.centerBtn.setImage(UIImage(named: "icon_user_default"), for: .normal)
+                DispatchQueue.main.async {
+                    self.centerBtn.setImage(UIImage(named: "icon_user_default"), for: .normal)
+                }
             }else{
                 self.centerBtn.sd_setImage(with: URL(string: imgUrl  ?? "")!, for:.normal,placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
             }
