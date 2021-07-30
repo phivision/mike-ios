@@ -830,6 +830,8 @@
 		B63C3F1626611BEA00A3D08C /* SegmentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */; };
 		B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B641F8072646AD1000FE8C56 /* HealthKit.framework */; };
 		B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */; };
+		B6421B3E26B3E1F8003F9134 /* CompleteUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6421B3C26B3E1F7003F9134 /* CompleteUserInfoViewController.swift */; };
+		B6421B3F26B3E1F8003F9134 /* CompleteUserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6421B3D26B3E1F7003F9134 /* CompleteUserInfoViewController.xib */; };
 		B64C03472689B21400833354 /* SplitVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64C03452689B21400833354 /* SplitVideoViewController.swift */; };
 		B64C03482689B21400833354 /* SplitVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B64C03462689B21400833354 /* SplitVideoViewController.xib */; };
 		B64C034C268B0E1400833354 /* LoginUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64C034B268B0E1400833354 /* LoginUIView.swift */; };
@@ -1438,6 +1440,8 @@
 		B641F8062646AD0F00FE8C56 /* Mike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mike.entitlements; sourceTree = "<group>"; };
 		B641F8072646AD1000FE8C56 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTools.swift; sourceTree = "<group>"; };
+		B6421B3C26B3E1F7003F9134 /* CompleteUserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteUserInfoViewController.swift; sourceTree = "<group>"; };
+		B6421B3D26B3E1F7003F9134 /* CompleteUserInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompleteUserInfoViewController.xib; sourceTree = "<group>"; };
 		B64C03452689B21400833354 /* SplitVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVideoViewController.swift; sourceTree = "<group>"; };
 		B64C03462689B21400833354 /* SplitVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplitVideoViewController.xib; sourceTree = "<group>"; };
 		B64C034B268B0E1400833354 /* LoginUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUIView.swift; sourceTree = "<group>"; };
@@ -1762,8 +1766,6 @@
 			children = (
 				158374CDF72240E79C4D8D6B /* amplifytools.xcconfig */,
 				1E1D87B83BC34BB28DFEDE72 /* schema.graphql */,
-				C1DEDD88263746CB00F66A7C /* awsconfiguration.json */,
-				C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */,
 			);
 			name = AmplifyConfig;
 			path = .;
@@ -2189,6 +2191,8 @@
 				B69103CD26381EC0005F2ACD /* LoginSecondViewController.xib */,
 				B69103CF26381EC0005F2ACD /* LoginViewController.swift */,
 				B69103CE26381EC0005F2ACD /* LoginViewController.xib */,
+				B6421B3C26B3E1F7003F9134 /* CompleteUserInfoViewController.swift */,
+				B6421B3D26B3E1F7003F9134 /* CompleteUserInfoViewController.xib */,
 				B6BFDE1F26526602004FC2F1 /* RegisterViewController.swift */,
 				B6BFDE2026526602004FC2F1 /* RegisterViewController.xib */,
 				B6BFDE2626526FCC004FC2F1 /* RegisterConfirmViewController.swift */,
@@ -2822,6 +2826,7 @@
 				DB62D70B574762A391CE325B /* awsconfiguration.json in Resources */,
 				FAB4C594CE94343D38AA3BDF /* amplifyconfiguration.json in Resources */,
 				41CC2CD410890C7AE9580FB7 /* awsconfiguration.json in Resources */,
+				B6421B3F26B3E1F8003F9134 /* CompleteUserInfoViewController.xib in Resources */,
 				354474DA5B49EA2D37C379AB /* amplifyconfiguration.json in Resources */,
 				9D0858FD38833FEE474D8BBC /* awsconfiguration.json in Resources */,
 				4F0A99BEE2BBE49F73DD7076 /* amplifyconfiguration.json in Resources */,
@@ -3186,6 +3191,7 @@
 				6ED3C6F0A08F34D717C17E91 /* UserFavoriteContent+Schema.swift in Sources */,
 				39AA31B113791E7FC23EC779 /* UserFavoriteContent.swift in Sources */,
 				06DD794021EC76FD105DB822 /* UserProfile+Schema.swift in Sources */,
+				B6421B3E26B3E1F8003F9134 /* CompleteUserInfoViewController.swift in Sources */,
 				6A430DBED13206C35F9D4D91 /* UserProfile.swift in Sources */,
 				BE66EAC9F6CCFDE3350D7012 /* UserSubscriptionTrainer+Schema.swift in Sources */,
 				2BAF30190AA743C1894D4FE5 /* UserSubscriptionTrainer.swift in Sources */,
