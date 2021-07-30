@@ -216,6 +216,8 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
                 self.hud?.hide(animated: true)
                 ToastHUD.showMsg(msg:"\(error)", controller: self)
             }
+        } needCreateProfile: {
+            
         }
 
     }

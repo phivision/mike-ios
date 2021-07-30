@@ -12,8 +12,8 @@ import AVKit
 class SplitVideoViewController: BaseViewController {
     //model for before controller
     var videoModel:UserCenterContent!
-    lazy var playerView:UIImageView = {
-        var playerView:UIImageView = UIImageView(frame: CGRect.zero)
+    lazy var playerView:ZFPlayerView = {
+        var playerView:ZFPlayerView = ZFPlayerView(frame: CGRect.zero)
         playerView.backgroundColor = HexRGBAlpha(0x141414,1)
         return playerView
     }()
@@ -146,7 +146,6 @@ class SplitVideoViewController: BaseViewController {
         controlView.autoFadeTimeInterval = 0.5
         controlView.prepareShowLoading = true
         controlView.prepareShowControlView = true
-//        controlView.fullScreenMode = .portrait
         controlView.portraitControlView.fullScreenBtn.isHidden = true
         controlView.portraitControlView.bottomToolView.isHidden = true
         return controlView
@@ -297,8 +296,11 @@ class SplitVideoViewController: BaseViewController {
         }
         let strArr:Array<String> = (self.videoModel.contentName ?? "").components(separatedBy: ".")
         if strArr.count > 0 {
-            let videoUrl:String = strArr.first ?? ""
-//            self.playerManager.assetURL = NSURL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")! as URL
+            var videoUrl:String = strArr.first ?? ""
+            videoUrl = videoUrl.replacingOccurrences(of: "Portrait_", with: "Portrait")
+            videoUrl = videoUrl.replacingOccurrences(of: "Landscape_", with: "Landscape")
+            print("~~~~~~~~~~~~~~~~~~~~~~~~\(videoUrl)")
+//            self.playerManager.assetURL = NSURL(string: "https://d25j79dzaq0do2.cloudfront.net/output/hls/PortraitIMG4733.m3u8")! as URL
             self.playerManager.assetURL = NSURL(string: String(format: "%@%@.m3u8", LoginTools.sharedTools.videoHost,videoUrl))! as URL
             self.videoState = .play
             self.handlePlayBtn(byState: self.videoState)

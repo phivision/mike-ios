@@ -66,7 +66,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         pinpoint = AWSPinpoint(configuration: pinpointConfiguration)
         // Present the user with a request to authorize push notifications
         registerForPushNotifications()
-        AWSDDLog.sharedInstance.logLevel = .all
+        AWSDDLog.sharedInstance.logLevel = .verbose
         AWSDDLog.add(AWSDDTTYLogger.sharedInstance)
         return true
     }

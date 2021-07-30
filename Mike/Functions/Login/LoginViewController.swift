@@ -31,27 +31,71 @@ class LoginViewController: BaseViewController {
         self.navigationController?.pushViewController(secondVC, animated: true)
     }
     @objc func appleLoginPressed(){
-        Amplify.Auth.signOut()
-        LoginBackend.shared.signInWithApple{
+//        let jsonData = try! JSONSerialization.data(withJSONObject: ["email":"729554966@qq.com","firstName":"Test","lastName":"TestLastName"], options: .prettyPrinted)
+//        let request = RESTRequest(apiName: "appleSignIn",path: "/appleSignIn/configureProfile",body:jsonData)
+//        Amplify.API.post(request: request) { result in
+//            switch result {
+//            case .success(let data):
+//                print("Success ")
+//            case .failure(let apiError):
+//                print("Failed", apiError)
+//            }
+//        }
+        Amplify.Auth.signOut { result in
+            DispatchQueue.main.async {
+                self.appleLogin()
+            }
+        }
+    }
+    func appleLogin(){
+        LoginBackend.shared.signInWithApple {
             self.updateDeviceToken()
             DispatchQueue.main.async {
                 let homeVC:HomeTabViewController = HomeTabViewController()
                 self.changeRootController(controller: homeVC)
             }
         } fail: { error in
-            Amplify.Auth.fetchUserAttributes { (result) in
-                                print(result)
-                            }
-//            self.logOut()
-//            DispatchQueue.main.async {
-//                ToastHUD.showMsg(msg:error, controller: self)
-//            }
-        } confirmSignUp: {
+            self.logOut()
             DispatchQueue.main.async {
-                self.resenConfirmCode()
+                ToastHUD.showMsg(msg:error, controller: self)
             }
+        } confirmSignUp: {
             
+        } needCreateProfile: {
+            DispatchQueue.main.async {
+                ToastHUD.showMsg(msg:"Waiting for completing!", controller: self)
+            }
+//            Amplify.Auth.fetchUserAttributes() { result in
+//                switch result {
+//                case .success(let attributes):
+//                    var email = ""
+//                    var sub = ""
+//                    for item in attributes {
+//                        if item.key == .email {
+//                            email = item.value
+//                        }
+//                        if item.key == .unknown("sub") {
+//                            sub = item.value
+//                        }
+//                        print("key value - \(item.key)_____\(item.value)")
+//                    }
+//                    print("User attributes - \(email)_____\(sub)")
+//                    DispatchQueue.main.async {
+//                        self.createUserProfile(email: email, subId: sub)
+//                    }
+//                case .failure(let error):
+//                    print("Fetching user attributes failed with error \(error)")
+//                }
+//            }
         }
+    }
+    func createUserProfile(email:String,subId:String){
+        LoginBackend.shared.createUserProfile(firstname: "test", lastname: "apple", email: email, subId: subId) { suc in
+            
+        } fail: { error in
+            print("\(error)");
+        }
+
     }
     func resenConfirmCode(){
 //        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
