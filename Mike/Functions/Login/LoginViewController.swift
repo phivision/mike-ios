@@ -16,6 +16,7 @@ enum AuthProvider:String {
 class LoginViewController: BaseViewController {
     @IBOutlet weak var loginBtn:UIButton!
     @IBOutlet weak var appleLoginBtn:UIButton!
+    var hub:MBProgressHUD?
     override func viewDidLoad() {
         super.viewDidLoad()
         configView()
@@ -31,44 +32,37 @@ class LoginViewController: BaseViewController {
         self.navigationController?.pushViewController(secondVC, animated: true)
     }
     @objc func appleLoginPressed(){
-        Amplify.Auth.signOut()
-        LoginBackend.shared.signInWithApple{
+        Amplify.Auth.signOut { result in
+            DispatchQueue.main.async {
+                self.appleLogin()
+            }
+        }
+    }
+    func appleLogin(){
+        self.hub = MBProgressHUD.showAdded(to: self.view, animated: true)
+        LoginBackend.shared.signInWithApple {
             self.updateDeviceToken()
             DispatchQueue.main.async {
+                self.hub?.hide(animated: true)
                 let homeVC:HomeTabViewController = HomeTabViewController()
                 self.changeRootController(controller: homeVC)
             }
         } fail: { error in
-            Amplify.Auth.fetchUserAttributes { (result) in
-                                print(result)
-                            }
-//            self.logOut()
-//            DispatchQueue.main.async {
-//                ToastHUD.showMsg(msg:error, controller: self)
-//            }
-        } confirmSignUp: {
+            self.logOut()
             DispatchQueue.main.async {
-                self.resenConfirmCode()
+                self.hub?.hide(animated: true)
+                ToastHUD.showMsg(msg:error, controller: self)
             }
+        } confirmSignUp: {
             
+        } needCreateProfile: {
+            DispatchQueue.main.async {
+                self.hub?.hide(animated: true)
+                ToastHUD.showMsg(msg:"Waiting for completing!", controller: self)
+                let vc = CompleteUserInfoViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
-    }
-    func resenConfirmCode(){
-//        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-//        LoginBackend.shared.resendCodeForSignUp(username: self.userNameText.text ?? "") {
-//            DispatchQueue.main.async {
-//                hud.hide(animated: true)
-//                ToastHUD.showMsg(msg:"Verification code has been sent to your email, please check！", controller: self)
-//                let secondVC = RegisterConfirmViewController()
-//                secondVC.userName = self.userNameText.text
-//                self.navigationController?.pushViewController(secondVC, animated: true)
-//            }
-//        } fail: { error in
-//            DispatchQueue.main.async {
-//                hud.hide(animated: true)
-//                ToastHUD.showMsg(msg:error, controller: self)
-//            }
-//        }
     }
     func updateDeviceToken(){
         if StringUtils.isBlank(value: LoginTools.sharedTools.deviceToken) == false {

@@ -204,6 +204,10 @@
         "subscriptionManager": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
           "s3Key": "amplify-builds/subscriptionManager-4d78334b674359713448-build.zip"
+        },
+        "appleSignIn": {
+          "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
+          "s3Key": "amplify-builds/appleSignIn-63462b4c516c59413956-build.zip"
         }
       },
       "storage": {

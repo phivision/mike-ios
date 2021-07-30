@@ -65,6 +65,8 @@ class LoginSecondViewController: BaseViewController {
                 self.resenConfirmCode()
             }
             
+        } needCreateProfile: {
+            
         }
 
 //        LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {

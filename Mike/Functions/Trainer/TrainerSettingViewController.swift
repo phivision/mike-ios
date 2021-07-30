@@ -84,7 +84,7 @@ class TrainerSettingViewController: BaseViewController {
         if LoginTools.sharedTools.userInfo().userRole == "trainer" {
             TrainerBackend.shared.updateTokenPriceAndSubPrice(tokenPrice: self.tokenPrice, subPrice: self.subPrice) {
                 DispatchQueue.main.async {
-                    ToastHUD.showMsg(msg: "Save Success!", controller: self)
+                    ToastHUD.showMsg(msg: "Save Succeeded!", controller: self)
                     self.fetchTraienrModel()
                 }
             } fail: { error in
@@ -264,7 +264,7 @@ extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{
             case .success:
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg:"Delete Success!", controller: self)
+                    ToastHUD.showMsg(msg:"Delete Succeeded!", controller: self)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
                     self.fetchTrainerList()
                 }
@@ -279,7 +279,7 @@ extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{
 //        UserProfileBackend.shared.delSubscriptionTrainer(subscriptionId: subId) { suc in
 //            DispatchQueue.main.async {
 //                hud.hide(animated: true)
-//                ToastHUD.showMsg(msg:"Delete Success!", controller: self)
+//                ToastHUD.showMsg(msg:"Delete Succeeded!", controller: self)
 //                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
 //                self.fetchTrainerList()
 //            }
