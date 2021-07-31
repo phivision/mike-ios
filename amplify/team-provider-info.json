@@ -47,7 +47,10 @@
         "videoCleanUpFavorite": {},
         "messageGroupSend": {},
         "appStore": {},
-        "mikereactPostConfirmation": {}
+        "mikereactPostConfirmation": {},
+        "subscriptions": {},
+        "subscriptionManager": {},
+        "appleSignIn": {}
       },
       "storage": {
         "mikereact48af3338": {
