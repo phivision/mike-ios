@@ -84,7 +84,7 @@ class TrainerSettingViewController: BaseViewController {
         if LoginTools.sharedTools.userInfo().userRole == "trainer" {
             TrainerBackend.shared.updateTokenPriceAndSubPrice(tokenPrice: self.tokenPrice, subPrice: self.subPrice) {
                 DispatchQueue.main.async {
-                    ToastHUD.showMsg(msg: "Save Succeeded!", controller: self)
+                    ToastHUD.showMsg(msg: "Save succeeded!", controller: self)
                     self.fetchTraienrModel()
                 }
             } fail: { error in

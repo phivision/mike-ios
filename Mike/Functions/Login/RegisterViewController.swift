@@ -108,7 +108,7 @@ class RegisterViewController: BaseViewController {
         } suc: {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Register Success", controller: self)
+                ToastHUD.showMsg(msg:"Register Succeeded", controller: self)
                 self.navigationController?.popViewController(animated: true)
             }
         } fail: { error in

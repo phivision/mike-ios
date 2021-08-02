@@ -33,6 +33,7 @@ class LoginViewController: BaseViewController {
     }
     @objc func appleLoginPressed(){
         Amplify.Auth.signOut { result in
+            LoginTools.sharedTools.trainerModel = nil
             DispatchQueue.main.async {
                 self.appleLogin()
             }
@@ -48,7 +49,6 @@ class LoginViewController: BaseViewController {
                 self.changeRootController(controller: homeVC)
             }
         } fail: { error in
-            self.logOut()
             DispatchQueue.main.async {
                 self.hub?.hide(animated: true)
                 ToastHUD.showMsg(msg:error, controller: self)
@@ -75,7 +75,7 @@ class LoginViewController: BaseViewController {
     }
     func logOut(){
         LoginBackend.shared.signOut {
-            
+            LoginTools.sharedTools.trainerModel = nil
         } fail: {
 
         }

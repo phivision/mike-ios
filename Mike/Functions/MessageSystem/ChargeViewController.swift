@@ -44,6 +44,7 @@ class ChargeViewController: BaseViewController {
     func fetchInAppPList(){
 //        SVProgressHUD.setDefaultMaskType(.black)
 //        SVProgressHUD.show(withStatus: "加载中");
+        let _:MBProgressHUD = MBProgressHUD.showAdded(to: keyWindow!, animated: true)
         var letters = Set<String>()
         letters.insert("Coins0010")
         letters.insert("Coin0001")
@@ -78,7 +79,11 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
             print("无效的商品ID :\(response.invalidProductIdentifiers)")
             //2.0判断当前的支付环境,是否可以支付
 //            SVProgressHUD.dismiss()
+            MBProgressHUD.forView(keyWindow!)?.hide(animated: true)
         }
+    }
+    func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
+        
     }
     //当交易队列列名添加的每一笔交易状态发生变化的时候调用
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
@@ -92,6 +97,7 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
                 print("支付成了＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝\(Thread.current)")
                 DispatchQueue.main.async {
 //                    SVProgressHUD.dismiss()
+                    MBProgressHUD.forView(keyWindow!)?.hide(animated: true)
                 }
                 // 验证购买凭据
                 self.verifyPruchase()
@@ -103,10 +109,12 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
                 print("支付失败＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝\(Thread.current)")
                 DispatchQueue.main.async {
 //                    SVProgressHUD.dismiss()
+                    MBProgressHUD.forView(keyWindow!)?.hide(animated: true)
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
                 break
             case .purchasing:
+                print("支付中＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝\(Thread.current)")
                 break
             case .restored:
                 // 更新界面或者数据，把用户购买得商品交给用户
@@ -114,10 +122,12 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
                 // 将交易从交易队列中删除
                 DispatchQueue.main.async {
 //                    SVProgressHUD.dismiss()
+                    MBProgressHUD.forView(keyWindow!)?.hide(animated: true)
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
                 break
             case .deferred:
+                print("支付＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝The transaction is in the queue, but its final status is pending external action.")
                 break
             default:
                 SKPaymentQueue.default().finishTransaction(transaction)
@@ -140,7 +150,7 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
             */
             let encodeStr = receiptData?.base64EncodedString(options: NSData.Base64EncodingOptions.endLineWithLineFeed)
 //            print(encodeStr)
-            let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+            let _:MBProgressHUD = MBProgressHUD.showAdded(to: keyWindow!, animated: true)
             let jsonData = try! JSONSerialization.data(withJSONObject: ["userID":LoginTools.sharedTools.userId(),"receipt":encodeStr ?? ""], options: .prettyPrinted)
             let request = RESTRequest(apiName: "appStore",path: "/appstore/verify",body:jsonData)
             Amplify.API.post(request: request) { result in
@@ -150,14 +160,14 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
                     self.fetchTokenBalance()
                     DispatchQueue.main.async {
-                        hud.hide(animated: true)
+                        MBProgressHUD.forView(keyWindow!)?.hide(animated: true)
                         self.dismiss(animated: true, completion: nil)
                     }
                     print("Success \(str)")
                 case .failure(let apiError):
                     print("Failed", apiError)
                     DispatchQueue.main.async {
-                        hud.hide(animated: true)
+                        MBProgressHUD.forView(keyWindow!)?.hide(animated: true)
                         ToastHUD.showMsg(msg: apiError.localizedDescription, controller: self)
                     }
                 }
@@ -170,9 +180,12 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
         MessageBackend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
             DispatchQueue.main.async {
                 self.tokenBalanceLab.text = "\(tokenBalance)"
+                MBProgressHUD.forView(keyWindow!)?.hide(animated: true)
             }
         } fail: { error in
-            
+            DispatchQueue.main.async {
+                MBProgressHUD.forView(keyWindow!)?.hide(animated: true)
+            }
         }
 
     }
@@ -197,14 +210,6 @@ extension ChargeViewController:UITableViewDelegate,UITableViewDataSource{
         SKPaymentQueue.default().add(payment)
         //2.3添加交易队列坚挺着,来监听交易状态
         SKPaymentQueue.default().add(self)
-    }
-    func chargeBtnPressed(){
-        if SKPaymentQueue.canMakePayments() {
-//            SVProgressHUD.setDefaultMaskType(.black)
-//            SVProgressHUD.show(withStatus: "支付中")
-//
-
-        }
     }
 }
 

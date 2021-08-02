@@ -28,7 +28,7 @@ class TrainerDetailTopCell: UICollectionViewCell {
         self.avatar.imageView!.clipsToBounds = true
         self.avatar.imageView!.contentMode = .scaleAspectFill
     }
-    func setModel(model:UserCenterModel){
+    func setModel(model:UserCenterModel,hiddenCloseBtn:Bool){
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
                 self.avatar.setImage(UIImage(named: "icon_user_default"), for: .normal)
@@ -39,6 +39,7 @@ class TrainerDetailTopCell: UICollectionViewCell {
         self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         self.userDesc.text = "\(model.descriptionField ?? "")"
         self.isTrainer = false
+        self.closeBtn.isHidden = hiddenCloseBtn
     }
     @IBAction func closeBtnPressed(){
         self.delegate?.closeBtnPressed?()

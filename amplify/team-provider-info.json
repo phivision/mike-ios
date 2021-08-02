@@ -18,11 +18,11 @@
       "function": {
         "stripeAPI": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/stripeAPI-7050716f61726d694149-build.zip"
+          "s3Key": "amplify-builds/stripeAPI-653554456b55356f6772-build.zip"
         },
         "stripeWebhook": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/stripeWebhook-706e6e55386569444f6b-build.zip"
+          "s3Key": "amplify-builds/stripeWebhook-5039357566306e4c4a6d-build.zip"
         },
         "cognitoPostConfirm": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
@@ -30,11 +30,11 @@
         },
         "videoConvertComplete": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/videoConvertComplete-74633378325a5976694b-build.zip"
+          "s3Key": "amplify-builds/videoConvertComplete-7132525a326857493833-build.zip"
         },
         "marketing": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/marketing-793858774a2b32684d34-build.zip"
+          "s3Key": "amplify-builds/marketing-556b2b6b66577a6d446b-build.zip"
         },
         "videoFlutterMove": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
@@ -42,12 +42,40 @@
         },
         "messageTokenTransaction": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/messageTokenTransaction-424e354734507535762b-build.zip"
+          "s3Key": "amplify-builds/messageTokenTransaction-4d6e354a496254796167-build.zip"
         },
-        "videoCleanUpFavorite": {},
-        "messageGroupSend": {},
-        "appStore": {},
-        "mikereactPostConfirmation": {}
+        "videoCleanUpFavorite": {
+          "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
+          "s3Key": "amplify-builds/videoCleanUpFavorite-54714e337946394c7367-build.zip"
+        },
+        "messageGroupSend": {
+          "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
+          "s3Key": "amplify-builds/messageGroupSend-3175544e526442515170-build.zip"
+        },
+        "appStore": {
+          "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
+          "s3Key": "amplify-builds/appStore-4c79334d74794e6d437a-build.zip"
+        },
+        "mikereactPostConfirmation": {
+          "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
+          "s3Key": "amplify-builds/mikereactPostConfirmation-634e62717843382f3966-build.zip"
+        },
+        "subscriptions": {
+          "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
+          "s3Key": "amplify-builds/subscriptions-53595a6448425643535a-build.zip"
+        },
+        "subscriptionManager": {
+          "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
+          "s3Key": "amplify-builds/subscriptionManager-48666a4b4a394c667656-build.zip"
+        },
+        "appleSignIn": {
+          "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
+          "s3Key": "amplify-builds/appleSignIn-6c5a443442677a4e4549-build.zip"
+        },
+        "mikereactPreSignup": {
+          "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
+          "s3Key": "amplify-builds/mikereactPreSignup-6b4b56764e5a454b4d77-build.zip"
+        }
       },
       "storage": {
         "mikereact48af3338": {
@@ -207,8 +235,9 @@
         },
         "appleSignIn": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/appleSignIn-63462b4c516c59413956-build.zip"
-        }
+          "s3Key": "amplify-builds/appleSignIn-4e584d6a6d344d615172-build.zip"
+        },
+        "mikereactPreSignup": {}
       },
       "storage": {
         "mikereact48af3338": {

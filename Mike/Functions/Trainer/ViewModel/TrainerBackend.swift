@@ -125,6 +125,9 @@ class TrainerBackend: NSObject {
         let transferUtility = AWSS3TransferUtility.default()
         let expression = AWSS3TransferUtilityUploadExpression()
         expression.progressBlock = {(task, progress) in
+            print("1~~~~~~~~~~~~~~~~~~~~~~\(progress.completedUnitCount)")
+            print("2~~~~~~~~~~~~~~~~~~~~~~\(progress.totalUnitCount)")
+            print("3~~~~~~~~~~~~~~~~~~~~~~\(progress.fileTotalCount)")
             progressBlock(progress)
         }
         var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
@@ -138,12 +141,13 @@ class TrainerBackend: NSObject {
         transferUtility.uploadData(videoData, key: "input/\(videoKey ?? "")", contentType: "video/*", expression: expression, completionHandler: completionHandler)
     }
     //upload image
-    func uploadImage(imgData:Data!,imgName:String?,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+    func uploadImage(imgData:Data!,imgName:String?,progressBlock:@escaping (_ progress:Progress)->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
         Amplify.Storage.uploadData(
             key: imgName ?? "",
             data: imgData,
             progressListener: { progress in
                 print("Progress: \(progress)")
+                progressBlock(progress)
             }, resultListener: { event in
                 switch event {
                 case .success(let data):

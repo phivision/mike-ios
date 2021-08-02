@@ -53,7 +53,7 @@ class FogotPwdViewController: BaseViewController {
         } suc: {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Reset Password Success", controller: self)
+                ToastHUD.showMsg(msg:"Reset Password Succeeded", controller: self)
                 self.navigationController?.popViewController(animated: true)
             }
         } fail: { error in
