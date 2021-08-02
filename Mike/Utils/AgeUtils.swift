@@ -21,4 +21,16 @@ class AgeUtils: NSObject {
         let age = calcAge.year
         return age ?? 0
     }
+    static func transDate(oldFormat old:String,newFormat new:String,dateValue:String) -> String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = old
+        if let date = formatter.date(from: dateValue) {
+            let dateForm = DateFormatter()
+            dateForm.dateFormat = new
+            let dateStr = dateForm.string(from: date)
+            return dateStr
+        }else{
+            return dateValue
+        }
+    }
 }
