@@ -148,6 +148,41 @@ class LoginBackend: NSObject {
             }
         }
     }
+    
+    
+    func fetchUserList(email:String?, suc:@escaping (_ exist: Bool)->Void){
+        Amplify.API.query(request: .fetchUserList(byEmail: email ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    print("Fetching User List...")
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["listUserProfiles"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = subDic["items"] as? NSArray else {
+                        return
+                    }
+                    suc(itemList.count > 0)
+                case .failure(let error):
+                    print("Got failed result with \(error)")
+                    return
+                }
+            case .failure(let error):
+                print("Got failed result with \(error)")
+                return 
+            }
+        }
+        
+    }
 
     //MARK: - fogotPwd
     func resetPassword(username: String,needConfirm:@escaping ()->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void) {

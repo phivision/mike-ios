@@ -14,6 +14,13 @@ class LoginSecondViewController: BaseViewController {
     @IBOutlet weak var userNameText:UITextField!
     @IBOutlet weak var pwdText:UITextField!
     @IBOutlet weak var inputBg:UIView!
+    @IBOutlet weak var divider: UIImageView!
+    
+    
+    @IBOutlet weak var inputBgHeight: NSLayoutConstraint!
+    
+    var hasEnteredEmail: Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -28,13 +35,45 @@ class LoginSecondViewController: BaseViewController {
         self.userNameText.delegate = self
         self.pwdText.delegate = self
         
+        self.divider.isHidden = true
+        
+        self.pwdText.isHidden = true
+        self.pwdBg.isHidden = true
+        self.hasEnteredEmail = false
+        
+        self.inputBgHeight.constant = 37
+        
         self.loginBtn.layer.cornerRadius = 18.5
     }
     
     @IBAction func backBtnPressed(){
         self.navigationController?.popViewController(animated: true)
     }
+    
     @IBAction func loginBtnPressed(){
+        if hasEnteredEmail == false {
+            if StringUtils.isBlank(value: self.userNameText.text) {
+                ToastHUD.showMsg(msg:"Please Input Username", controller: self)
+                return
+            }
+            LoginBackend.shared.fetchUserList(email: self.userNameText.text) { exist in
+                if exist {
+                    DispatchQueue.main.async {
+                        self.pwdText.isHidden = false
+                        self.pwdBg.isHidden = false
+                        self.hasEnteredEmail = true
+                        self.divider.isHidden = false
+                        self.inputBgHeight.constant = 74
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                    let secondVC = RegisterViewController()
+                    secondVC.userName=self.userNameText.text!
+                    self.navigationController?.pushViewController(secondVC, animated: true)
+                    }
+                }
+            }
+        } else {
         if StringUtils.isBlank(value: self.userNameText.text) {
             ToastHUD.showMsg(msg:"Please Input Username", controller: self)
             return
@@ -46,28 +85,28 @@ class LoginSecondViewController: BaseViewController {
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
 //        Backend.shared.resultProfile(userName: self.userNameText.text)
 
-        LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
-            self.updateDeviceToken()
-            DispatchQueue.main.async {
-                hud.hide(animated: true)
-                let homeVC:HomeTabViewController = HomeTabViewController()
-                self.changeRootController(controller: homeVC)
-            }
-        } fail: { error in
-            self.logOut()
-            DispatchQueue.main.async {
-                hud.hide(animated: true)
-                ToastHUD.showMsg(msg:error.description, controller: self)
-            }
-        } confirmSignUp: {
-            DispatchQueue.main.async {
-                hud.hide(animated: true)
-                self.resenConfirmCode()
-            }
-            
-        } needCreateProfile: {
-            
-        }
+                LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
+                    self.updateDeviceToken()
+                    DispatchQueue.main.async {
+                        hud.hide(animated: true)
+                        let homeVC:HomeTabViewController = HomeTabViewController()
+                        self.changeRootController(controller: homeVC)
+                    }
+                } fail: { error in
+                    self.logOut()
+                    DispatchQueue.main.async {
+                        hud.hide(animated: true)
+                        ToastHUD.showMsg(msg:error.description, controller: self)
+                    }
+                } confirmSignUp: {
+                    DispatchQueue.main.async {
+                        hud.hide(animated: true)
+                        self.resenConfirmCode()
+                    }
+                    
+                } needCreateProfile: {
+                    
+                }
 
 //        LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
 //            self.updateDeviceToken()
@@ -83,7 +122,7 @@ class LoginSecondViewController: BaseViewController {
 //                ToastHUD.showMsg(msg:error, controller: self)
 //            }
 //        }
-
+        }
     }
     func resenConfirmCode(){
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)

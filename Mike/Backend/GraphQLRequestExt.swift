@@ -50,7 +50,7 @@ extension GraphQLRequest{
               }
             }
             """
-            return GraphQLRequest<JSONValue>(document: document,
+            return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                         variables: ["id": id],
                                         responseType: JSONValue.self)
         }
@@ -88,7 +88,7 @@ extension GraphQLRequest{
               }
             }
             """
-            return GraphQLRequest<JSONValue>(document: document,
+            return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                         variables: ["id": id],
                                         responseType: JSONValue.self)
         }
@@ -118,7 +118,7 @@ extension GraphQLRequest{
               }
             }
             """
-            return GraphQLRequest<JSONValue>(document: document,
+            return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                         variables: ["id": id],
                                         responseType: JSONValue.self)
         }
@@ -166,10 +166,29 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                     variables: ["id": id],
                                     responseType: JSONValue.self)
     }
+    
+    static func fetchUserList(byEmail email: String) -> GraphQLRequest<JSONValue> {
+        let document = """
+        query ListUserProfiles(
+            $filter: ModelUserProfileFilterInput
+          ) {
+            listUserProfiles(filter: $filter) {
+              items {
+                id
+              }
+            }
+          }
+
+        """
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify_AWS_IAM", document: document,
+                                         variables: ["filter": ["Email": ["eq": email]]],
+                                    responseType: JSONValue.self)
+    }
+    
     static func fetchUserFavList(byId id: String) -> GraphQLRequest<JSONValue> {
         let document = """
         query getUserProfile($id:ID!) {
@@ -198,7 +217,7 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                     variables: ["id": id],
                                     responseType: JSONValue.self)
     }
@@ -243,7 +262,7 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": LoginTools.sharedTools.userId()],
                                         responseType: JSONValue.self)
     }
@@ -279,7 +298,7 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": LoginTools.sharedTools.userId()],
                                         responseType: JSONValue.self)
     }
@@ -294,7 +313,7 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                     variables: ["id": id],
                                     responseType: JSONValue.self)
     }
@@ -365,7 +384,7 @@ extension GraphQLRequest{
               }
             }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                     variables: ["id": id],
                                     responseType: JSONValue.self)
     }
@@ -396,7 +415,7 @@ extension GraphQLRequest{
               }
             }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                     variables: ["id": id],
                                     responseType: JSONValue.self)
     }
@@ -416,7 +435,7 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                     variables: ["id": id],
                                     responseType: JSONValue.self)
     }
@@ -429,7 +448,7 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                        variables: ["id": id,"userid":LoginTools.sharedTools.userId()],
                                     responseType: JSONValue.self)
     }
@@ -442,7 +461,7 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                        variables: ["id": id],
                                     responseType: JSONValue.self)
     }
@@ -462,7 +481,7 @@ extension GraphQLRequest{
               }
             }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": LoginTools.sharedTools.userId()],
                                     responseType: JSONValue.self)
     }
@@ -475,7 +494,7 @@ extension GraphQLRequest{
                   }
                 }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": LoginTools.sharedTools.userId(),"firstname":firstName,"lastname":lastName,"desc":desc,"userImage":userImage],
                                     responseType: JSONValue.self)
         
@@ -490,7 +509,7 @@ extension GraphQLRequest{
                   }
                 }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["CreatorID": LoginTools.sharedTools.userId(),"ContentName":contentName,"Description":desc,"Segments":segments,"Thumbnail":thumbnail,"Title":title],
                                     responseType: JSONValue.self)
     }
@@ -518,7 +537,7 @@ extension GraphQLRequest{
               }
             }
             """
-            return GraphQLRequest<JSONValue>(document: document,
+            return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                         variables: ["id": userId],
                                         responseType: JSONValue.self)
         }
@@ -546,7 +565,7 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["FromUserID": LoginTools.sharedTools.userId(),"ToUserID":trainerId,"PostMessages":msgContent],
                                     responseType: JSONValue.self)
     }
@@ -575,7 +594,7 @@ extension GraphQLRequest{
         }
         """
         print("\(LoginTools.sharedTools.userId())~~~~~~~~~~~~\(toUserId)~~~~~~~~~~~~~~~~~\(msgContent)")
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["FromUserID": LoginTools.sharedTools.userId(),"ToUserID":toUserId,"PostMessages":msgContent],
                                     responseType: JSONValue.self)
     }
@@ -606,7 +625,7 @@ extension GraphQLRequest{
               }
             }
             """
-            return GraphQLRequest<JSONValue>(document: document,
+            return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                              variables: ["toUserId": toUserId,"fromUserId":fromUserId,"status":status],
                                         responseType: JSONValue.self)
         }else{
@@ -636,7 +655,7 @@ extension GraphQLRequest{
             }
             """
             
-            return GraphQLRequest<JSONValue>(document: document,
+            return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                              variables: ["toUserId": toUserId,"fromUserId":fromUserId,"status":status],
                                         responseType: JSONValue.self)
         }
@@ -668,7 +687,7 @@ extension GraphQLRequest{
           }
         }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["ToUserID": toUserId,"eq":status],
                                     responseType: JSONValue.self)
     }
@@ -696,7 +715,7 @@ extension GraphQLRequest{
                   }
                 }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": msgModel.id ?? "","status":"RESPONDED"],
                                     responseType: JSONValue.self)
     }
@@ -708,7 +727,7 @@ extension GraphQLRequest{
               }
             }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": userId],
                                     responseType: JSONValue.self)
     }
@@ -720,7 +739,7 @@ extension GraphQLRequest{
               }
             }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": trainerId],
                                     responseType: JSONValue.self)
     }
@@ -732,7 +751,7 @@ extension GraphQLRequest{
                   }
                 }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": userId,"DeviceToken":deviceToken],
                                     responseType: JSONValue.self)
     }
@@ -750,7 +769,7 @@ extension GraphQLRequest{
                   }
                 }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["keyword": keyword],
                                     responseType: JSONValue.self)
     }
@@ -777,7 +796,7 @@ extension GraphQLRequest{
                   }
                 }
             """
-            return GraphQLRequest<JSONValue>(document: document,
+            return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                         variables: ["GroupID": groupId],
                                         responseType: JSONValue.self)
         }
@@ -807,7 +826,7 @@ extension GraphQLRequest{
         }
         """
         print("\(LoginTools.sharedTools.userId())~~~~~~~~~~~~\(groupId)~~~~~~~~~~~~~~~~~\(msgContent)")
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["FromUserID": LoginTools.sharedTools.userId(),"ToUserID":LoginTools.sharedTools.userId(),"PostMessages":msgContent,"GroupID":groupId],
                                     responseType: JSONValue.self)
     }
@@ -841,7 +860,7 @@ extension GraphQLRequest{
               }
             }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": trainerId],
                                     responseType: JSONValue.self)
     }
@@ -854,7 +873,7 @@ extension GraphQLRequest{
                       }
                     }
         """
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": subscribeId],
                                     responseType: JSONValue.self)
     }
@@ -867,7 +886,7 @@ extension GraphQLRequest{
                       }
                     }
             """
-            return GraphQLRequest<JSONValue>(document: document,
+            return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                         variables: ["CreatorID": creatorId],
                                         responseType: JSONValue.self)
         }
@@ -881,7 +900,7 @@ extension GraphQLRequest{
                           }
                         }
             """
-            return GraphQLRequest<JSONValue>(document: document,
+            return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                              variables: ["id": LoginTools.sharedTools.userId(),"SubscriptionPrice":subscriptionPrice,"TokenPrice":tPrice],
                                         responseType: JSONValue.self)
         }
@@ -903,7 +922,7 @@ extension GraphQLRequest{
         let dateFormatter:DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateStr = dateFormatter.string(from: Date())
-        return GraphQLRequest<JSONValue>(document: document,
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["id": subId,"owner":subId,"FirstName":firstName,"LastName":lastName,"Email":email,"RegDate":dateStr,"UserRole":"student"],
                                     responseType: JSONValue.self)
     }

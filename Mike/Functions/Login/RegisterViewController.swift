@@ -45,6 +45,7 @@ class RegisterViewController: BaseViewController {
         }//[UITextInputPasswordRules passwordRulesWithDescriptor:@""];
         
         self.userNameText.delegate = self
+        self.userNameText.text = self.userName ?? ""
         self.pwdText.delegate = self
         self.firstNameText.delegate = self
         self.lastNameText.delegate = self
