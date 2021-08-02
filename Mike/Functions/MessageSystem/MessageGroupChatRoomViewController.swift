@@ -29,7 +29,7 @@ class MessageGroupChatRoomViewController: BaseViewController {
         self.configTableView()
         self.configSubscription()
         self.configTextView()
-        self.setNavLeftBtn(imageName: "back_nearBlack")
+        self.setNavLeftBtn(imageName: "icon-back")
         // Do any additional setup after loading the view.
     }
     override func leftButtonPressed() {

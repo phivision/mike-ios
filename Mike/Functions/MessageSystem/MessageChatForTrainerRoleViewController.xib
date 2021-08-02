@@ -26,14 +26,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QkN-eK-juH">
-                    <rect key="frame" x="0.0" y="44" width="414" height="758"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="774"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67C-Ez-bbx">
-                    <rect key="frame" x="15" y="802" width="384" height="60"/>
+                    <rect key="frame" x="15" y="818" width="384" height="44"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yeO-J7-8R6">
-                            <rect key="frame" x="10" y="10" width="289" height="40"/>
+                            <rect key="frame" x="10" y="2" width="289" height="40"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="klU-sE-wdX"/>
@@ -43,7 +43,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jAZ-dc-5yL">
-                            <rect key="frame" x="314" y="15" width="60" height="30"/>
+                            <rect key="frame" x="314" y="7" width="60" height="30"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="HJI-hp-G7c"/>
@@ -62,8 +62,8 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="jAZ-dc-5yL" secondAttribute="trailing" constant="10" id="BKQ-tQ-Nvo"/>
                         <constraint firstItem="jAZ-dc-5yL" firstAttribute="centerY" secondItem="yeO-J7-8R6" secondAttribute="centerY" id="OVs-wa-0pd"/>
-                        <constraint firstItem="yeO-J7-8R6" firstAttribute="top" secondItem="67C-Ez-bbx" secondAttribute="top" constant="10" id="QoG-AG-Ggv"/>
-                        <constraint firstAttribute="bottom" secondItem="yeO-J7-8R6" secondAttribute="bottom" constant="10" id="WOw-zK-USE"/>
+                        <constraint firstItem="yeO-J7-8R6" firstAttribute="top" secondItem="67C-Ez-bbx" secondAttribute="top" constant="2" id="QoG-AG-Ggv"/>
+                        <constraint firstAttribute="bottom" secondItem="yeO-J7-8R6" secondAttribute="bottom" constant="2" id="WOw-zK-USE"/>
                         <constraint firstItem="yeO-J7-8R6" firstAttribute="trailing" secondItem="jAZ-dc-5yL" secondAttribute="leading" constant="-15" id="aI3-Yi-n7k"/>
                         <constraint firstItem="yeO-J7-8R6" firstAttribute="leading" secondItem="67C-Ez-bbx" secondAttribute="leading" constant="10" id="wEL-IY-Mv3"/>
                     </constraints>

@@ -54,7 +54,7 @@
         },
         "appStore": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/appStore-4c79334d74794e6d437a-build.zip"
+          "s3Key": "amplify-builds/appStore-34786661437472795653-build.zip"
         },
         "mikereactPostConfirmation": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
@@ -62,7 +62,7 @@
         },
         "subscriptions": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/subscriptions-53595a6448425643535a-build.zip"
+          "s3Key": "amplify-builds/subscriptions-567a386a786f424b2b7a-build.zip"
         },
         "subscriptionManager": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",

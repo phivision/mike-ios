@@ -14,7 +14,7 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
         var button = UIButton(frame: CGRect(x: 5, y:5, width: tabBar.height-20, height: tabBar.height-20))
         button.clipsToBounds = true
         button.imageView!.contentMode = .scaleAspectFill
-        button.setImage(UIImage(named:"icon_user_default"), for: .normal)
+        button.setImage(UIImage(named:"icon_default_tabbar"), for: .normal)
         button.layer.cornerRadius = (tabBar.height-20)/2
         button.isUserInteractionEnabled = false
         return button
@@ -41,10 +41,10 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
         ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.trainerModel?.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
                 DispatchQueue.main.async {
-                    self.centerBtn.setImage(UIImage(named: "icon_user_default"), for: .normal)
+                    self.centerBtn.setImage(UIImage(named: "icon_default_tabbar"), for: .normal)
                 }
             }else{
-                self.centerBtn.sd_setImage(with: URL(string: imgUrl  ?? "")!, for:.normal,placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
+                self.centerBtn.sd_setImage(with: URL(string: imgUrl  ?? "")!, for:.normal,placeholderImage: UIImage(named: "icon_default_tabbar"), options: .refreshCached, completed: nil)
             }
         }
     }
@@ -105,10 +105,28 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
             }
             if tabBarController.selectedIndex == 2 && self.tabSelectIndex == 2 {
                 let vc = ChangeCurTrainerController()
-                vc.delegate = self
-                vc.view.frame = CGRect.init(x: 0, y: 0, width: kScreenWidth, height: 100)
-                vc.modalPresentationStyle = .overFullScreen
-                self.present(vc, animated: true, completion: nil)
+                UserProfileBackend.shared.fetchSubscriptionTrainerList{ subscriptionList,subIdList in
+                    if subscriptionList.count > 1 {
+                    vc.subscriptionList.removeAll()
+                    vc.subscriptionList.append(contentsOf: subscriptionList)
+                    DispatchQueue.main.async {
+                        vc.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
+                        vc.mainTableView.reloadData()
+                        if CGFloat(55 * vc.subscriptionList.count) > kScreenHeight - 44 - 34{
+                            vc.tableHeight.constant = kScreenHeight - 44 - 34
+                        }else{
+                            vc.tableHeight.constant = CGFloat(75 * vc.subscriptionList.count)
+                        }
+                    }
+                        vc.delegate = self
+                        vc.view.frame = CGRect.init(x: 0, y: 0, width: kScreenWidth, height: 100)
+                        vc.modalPresentationStyle = .overFullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                } fail: { error in
+                    
+                }
+
             }
             self.tabSelectIndex = tabBarController.selectedIndex
         }

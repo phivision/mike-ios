@@ -119,8 +119,11 @@ class UserProfileBackend: NSObject {
                     var subscribeIdList = Array<String>()
                     for item in itemList {
                         if let itemDic = item as? NSDictionary {
+                            var temp = itemDic["Trainer"] as! [String : Any]
+                            temp["ExpireDate"] = itemDic["ExpireDate"] as! String
+                            temp["CancelAtPeriodEnd"] = itemDic["CancelAtPeriodEnd"] as! Bool
                             subscribeIdList.append("\(itemDic["id"] ?? "")")
-                            trainerList.append(UserCenterTrainer(fromDictionary: itemDic["Trainer"] as! [String : Any]))
+                            trainerList.append(UserCenterTrainer(fromDictionary: temp))
                         }
                     }
                     suc(trainerList,subscribeIdList)
