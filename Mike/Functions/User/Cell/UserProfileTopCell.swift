@@ -39,7 +39,8 @@ class UserProfileTopCell: UICollectionViewCell {
                 }
             }
             self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
-            self.userDesc.text = "Joined \(model.regDate ?? "")"
+            let dateStr = AgeUtils.transDate(oldFormat: "yyyy-MM-dd", newFormat: "MMM dd", dateValue: model.regDate)
+            self.userDesc.text = "Joined \(dateStr)"
             self.isTrainer = false
         }else{
             ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.userInfo().userImage) { imgUrl, cannotLoadUrl in
@@ -49,8 +50,22 @@ class UserProfileTopCell: UICollectionViewCell {
                     self.avatar.sd_setImage(with: URL(string: imgUrl  ?? "")!,for:.normal, placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
                 }
             }
+            var regDate: String = "";
+            if let tempDate = LoginTools.sharedTools.userInfo().regDate {
+                let firstIndex = tempDate.index(after: tempDate.firstIndex(of: "-")!)
+                let lastIndex = tempDate.lastIndex(of: "-")!
+                
+                let monthNumber = Int(tempDate[firstIndex..<lastIndex])
+                let monthName = DateFormatter().monthSymbols[monthNumber! - 1]
+            
+                let year = tempDate[..<tempDate.firstIndex(of: "-")!]
+                
+                regDate += monthName + " " + year
+            }
             self.userName.text = "\(LoginTools.sharedTools.userInfo().firstName ?? "") \(LoginTools.sharedTools.userInfo().lastName ?? "")"
-            self.userDesc.text = "Joined \(LoginTools.sharedTools.userInfo().regDate ?? "")"
+//            self.userDesc.text = "Joined \(LoginTools.sharedTools.userInfo().regDate ?? "")"
+            let dateStr = AgeUtils.transDate(oldFormat: "yyyy-MM-dd", newFormat: "MMM dd", dateValue: model.regDate)
+            self.userDesc.text = "Joined \(dateStr)"
             self.isTrainer = false
         }
     }

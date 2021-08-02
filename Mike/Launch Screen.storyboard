@@ -22,40 +22,28 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="SZT-dD-FAC">
-                                <rect key="frame" x="167" y="144" width="80" height="80"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Motion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qll-wt-jEU">
+                                <rect key="frame" x="153" y="426" width="109" height="44"/>
+                                <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="32"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="SZT-dD-FAC">
+                                <rect key="frame" x="167" y="324" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="6rC-eN-aid"/>
                                     <constraint firstAttribute="width" constant="80" id="r7t-dT-FDC"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Motion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qll-wt-jEU">
-                                <rect key="frame" x="57" y="318" width="300" height="44"/>
-                                <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="32"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reach your goals with the best of the best." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYd-Ww-fei">
-                                <rect key="frame" x="57" y="382" width="300" height="49.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="53E-qT-h7i"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="1" green="0.2156862745" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
-                            <constraint firstItem="AYd-Ww-fei" firstAttribute="top" secondItem="qll-wt-jEU" secondAttribute="bottom" constant="20" id="JS2-3C-LAV"/>
                             <constraint firstItem="qll-wt-jEU" firstAttribute="centerX" secondItem="SZT-dD-FAC" secondAttribute="centerX" id="Jke-xb-XvZ"/>
-                            <constraint firstItem="AYd-Ww-fei" firstAttribute="leading" secondItem="qll-wt-jEU" secondAttribute="leading" id="MlU-Rj-lIP"/>
                             <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="20" symbolic="YES" id="SfN-ll-jLj"/>
                             <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
                             <constraint firstItem="SZT-dD-FAC" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="100" id="eNQ-VY-UUI"/>
-                            <constraint firstItem="AYd-Ww-fei" firstAttribute="trailing" secondItem="qll-wt-jEU" secondAttribute="trailing" id="hlE-Ss-waw"/>
                             <constraint firstItem="qll-wt-jEU" firstAttribute="top" secondItem="SZT-dD-FAC" secondAttribute="bottom" constant="94" id="nLs-4x-PqA"/>
                             <constraint firstItem="SZT-dD-FAC" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="pZm-fF-iYR"/>
                         </constraints>

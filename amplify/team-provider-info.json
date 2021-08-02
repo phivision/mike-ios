@@ -235,9 +235,12 @@
         },
         "appleSignIn": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/appleSignIn-4e584d6a6d344d615172-build.zip"
+          "s3Key": "amplify-builds/appleSignIn-6e6f79324a5671667346-build.zip"
         },
-        "mikereactPreSignup": {}
+        "mikereactPreSignup": {
+          "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
+          "s3Key": "amplify-builds/mikereactPreSignup-2f78784e493568775062-build.zip"
+        }
       },
       "storage": {
         "mikereact48af3338": {
