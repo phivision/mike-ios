@@ -61,6 +61,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="deleteBtn" destination="cYB-f2-W7K" id="o9K-xk-kB7"/>
                 <outlet property="nameLab" destination="yD4-Yh-fmN" id="ndN-6t-YCZ"/>
                 <outlet property="subLab" destination="wab-Q4-rv3" id="bqU-hI-hzS"/>
             </connections>

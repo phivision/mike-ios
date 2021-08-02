@@ -29,7 +29,7 @@ class MessageChatForStudentRoleViewController: BaseViewController {
     var trainerTokenPrice:Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setNavLeftBtn(imageName: "back_nearBlack")
+        self.setNavLeftBtn(imageName: "icon-back")
         self.title = toUserName ?? ""
         self.configSubscription()
         self.configTableView()
@@ -104,7 +104,7 @@ class MessageChatForStudentRoleViewController: BaseViewController {
         self.commentText.delegate = self;
         self.commentText.layer.cornerRadius = 10;
         self.commentText.clipsToBounds = true;
-        self.commentText.placeholder = "Input";
+        self.commentText.placeholder = "Message...";
         self.sendBtn.layer.cornerRadius = 6;
         self.sendBtn.clipsToBounds = true;
     }

@@ -29,13 +29,17 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
 	var owner : String!
 	var updatedAt : String!
     var subscriptionPrice: Int!
+    var expireDate: String!
+    var cancelAtPeriodEnd: Bool!
 
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: [String:Any]){
-		bgImage = dictionary["BgImage"] as? String
+		expireDate = dictionary["ExpireDate"] as? String
+        cancelAtPeriodEnd = dictionary["CancelAtPeriodEnd"] as? Bool
+        bgImage = dictionary["BgImage"] as? String
 		bgTitle = dictionary["BgTitle"] as? String
 		biography = dictionary["Biography"] as? String
 		birthday = dictionary["Birthday"] as? String
@@ -67,6 +71,12 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
 	func toDictionary() -> [String:Any]
 	{
 		var dictionary = [String:Any]()
+        if expireDate != nil{
+            dictionary["ExpireDate"] = expireDate
+        }
+        if cancelAtPeriodEnd != nil{
+            dictionary["CancelAtPeriodEnd"] = cancelAtPeriodEnd
+        }
 		if bgImage != nil{
 			dictionary["BgImage"] = bgImage
 		}
@@ -142,6 +152,8 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
+        expireDate = aDecoder.decodeObject(forKey: "ExpireDate") as? String
+        cancelAtPeriodEnd = aDecoder.decodeObject(forKey: "CancelAtPeriodEnd") as? Bool
          bgImage = aDecoder.decodeObject(forKey: "BgImage") as? String
          bgTitle = aDecoder.decodeObject(forKey: "BgTitle") as? String
          biography = aDecoder.decodeObject(forKey: "Biography") as? String
@@ -172,6 +184,12 @@ class UserCenterTrainer : NSObject, NSCoding,NSSecureCoding{
     */
     @objc func encode(with aCoder: NSCoder)
 	{
+        if expireDate != nil{
+            aCoder.encode(expireDate, forKey: "ExpireDate")
+        }
+        if cancelAtPeriodEnd != nil{
+            aCoder.encode(cancelAtPeriodEnd, forKey: "CancelAtPeriodEnd")
+        }
 		if bgImage != nil{
 			aCoder.encode(bgImage, forKey: "BgImage")
 		}

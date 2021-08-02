@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -43,7 +41,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uyK-nX-Gjj">
-                    <rect key="frame" x="25" y="360" width="364" height="148"/>
+                    <rect key="frame" x="25" y="316" width="364" height="148"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7ZS-Pv-ZL2" userLabel="userNameBg">
                             <rect key="frame" x="0.0" y="0.0" width="364" height="37"/>
@@ -74,7 +72,7 @@
                             </constraints>
                         </imageView>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vSN-sS-Qn4">
-                            <rect key="frame" x="10" y="7" width="364" height="23.5"/>
+                            <rect key="frame" x="10" y="8.5" width="364" height="20.5"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="16"/>
                             <textInputTraits key="textInputTraits"/>
@@ -83,7 +81,7 @@
                             </connections>
                         </textField>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2aK-28-lLG">
-                            <rect key="frame" x="10" y="44.5" width="344" height="22"/>
+                            <rect key="frame" x="10" y="46" width="344" height="19"/>
                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="16"/>
@@ -93,7 +91,7 @@
                             </connections>
                         </textField>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="PjE-vh-fIQ">
-                            <rect key="frame" x="10" y="81" width="344" height="23.5"/>
+                            <rect key="frame" x="10" y="82.5" width="344" height="20.5"/>
                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="16"/>
@@ -103,7 +101,7 @@
                             </connections>
                         </textField>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oJF-nd-0dl">
-                            <rect key="frame" x="10" y="118" width="344" height="23.5"/>
+                            <rect key="frame" x="10" y="119.5" width="344" height="20.5"/>
                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="Nunito-Regular" family="Nunito" pointSize="16"/>
@@ -173,7 +171,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rN-bf-Rv3">
-                    <rect key="frame" x="25" y="602" width="364" height="37"/>
+                    <rect key="frame" x="25" y="558" width="364" height="37"/>
                     <color key="backgroundColor" red="1" green="0.2156862745" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="37" id="flj-lF-Me4"/>
@@ -185,26 +183,26 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pEa-qh-KpE">
-                    <rect key="frame" x="25" y="259" width="364" height="44"/>
+                    <rect key="frame" x="25" y="215" width="364" height="44"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="32"/>
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your email." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdZ-aK-Oy3">
-                    <rect key="frame" x="25" y="313" width="364" height="22"/>
+                    <rect key="frame" x="25" y="269" width="364" height="22"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vl8-iW-9Ja">
-                    <rect key="frame" x="22" y="54" width="46" height="46"/>
+                    <rect key="frame" x="22" y="10" width="46" height="46"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="152-So-S4B"/>
                         <constraint firstAttribute="width" constant="46" id="9F2-ow-nbY"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="18"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="10" maxX="20" maxY="10"/>
-                    <state key="normal" image="back_nearBlack">
+                    <state key="normal" image="icon-back">
                         <color key="titleColor" red="0.44705882349999998" green="0.39607843139999999" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -212,7 +210,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTF-9B-y4k">
-                    <rect key="frame" x="25" y="533" width="107" height="44"/>
+                    <rect key="frame" x="25" y="489" width="107" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="DRC-5k-jP1"/>
                         <constraint firstAttribute="width" constant="107" id="YD6-mN-1Zh"/>
@@ -228,7 +226,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kdb-wN-hI2">
-                    <rect key="frame" x="142" y="533" width="107" height="44"/>
+                    <rect key="frame" x="142" y="489" width="107" height="44"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="107" id="3pX-6H-r7i"/>
                         <constraint firstAttribute="height" constant="44" id="DYT-Rj-QJT"/>
@@ -270,9 +268,9 @@
         </view>
     </objects>
     <resources>
-        <image name="back_nearBlack" width="44" height="44"/>
         <image name="btn_select" width="22" height="22"/>
         <image name="btn_unselect" width="22" height="22"/>
+        <image name="icon-back" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

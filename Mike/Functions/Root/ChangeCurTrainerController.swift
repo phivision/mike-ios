@@ -25,10 +25,8 @@ class ChangeCurTrainerController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
-        self.fetchTrainerList()
     }
     func configTableView(){
-
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
@@ -36,23 +34,6 @@ class ChangeCurTrainerController: BaseViewController {
         self.mainTableView.separatorStyle = .none
         self.mainTableView.register(UINib(nibName: "TrainerTabListCell", bundle: nil), forCellReuseIdentifier: "TrainerTabListCell")
         self.mainTableView.tableFooterView = UIView()
-    }
-    func fetchTrainerList(){
-        UserProfileBackend.shared.fetchSubscriptionTrainerList{ subscriptionList,subIdList in
-            self.subscriptionList.removeAll()
-            self.subscriptionList.append(contentsOf: subscriptionList)
-            DispatchQueue.main.async {
-                self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
-                self.mainTableView.reloadData()
-                if CGFloat(55 * self.subscriptionList.count) > kScreenHeight - 44 - 34{
-                    self.tableHeight.constant = kScreenHeight - 44 - 34
-                }else{
-                    self.tableHeight.constant = CGFloat(75 * self.subscriptionList.count)
-                }
-            }
-        } fail: { error in
-            
-        }
     }
     @IBAction func dismiss(){
         self.dismiss(animated: true, completion: nil)

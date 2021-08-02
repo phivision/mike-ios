@@ -24,7 +24,7 @@ class MessageTrainerListCell: UITableViewCell {
         if let lastMsg = UserDefaults.standard.object(forKey: "\(message_lastMsgForStudent)\(model.id ?? "")") {
             self.lastMsgContentLab.text = "\(lastMsg)"
         }else{
-            self.lastMsgContentLab.text = "No records!"
+            self.lastMsgContentLab.text = "No messages yet"
         }
         self.nameLab.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
@@ -42,7 +42,7 @@ class MessageTrainerListCell: UITableViewCell {
         if let lastMsg = UserDefaults.standard.object(forKey: "\(message_lastMsgForTrainer)\(model.id ?? "")") {
             self.lastMsgContentLab.text = "\(lastMsg)"
         }else{
-            self.lastMsgContentLab.text = "No records!"
+            self.lastMsgContentLab.text = "No messages yet"
         }
         self.nameLab.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in

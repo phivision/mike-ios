@@ -19,6 +19,8 @@ class BaseViewController: UIViewController, UIGestureRecognizerDelegate {
             self.navigationController?.navigationItem.hidesBackButton = false
             self.navigationController?.interactivePopGestureRecognizer?.delegate = self
             self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+            self.navigationController?.navigationBar.barTintColor = UIColor.white
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Avenir-Black", size: 18)!]
         }else{
             self.navigationController?.navigationItem.hidesBackButton = true
         }

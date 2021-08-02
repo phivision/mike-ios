@@ -31,8 +31,9 @@ class TrainerSettingViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         if self.isTrainer == false {
             self.fetchTrainerList()
+            self.saveBtn.isHidden = true
         }else{
-            self.fetchTraienrModel()
+            self.fetchTrainerModel()
         }
     }
     @IBAction func backBtnPressed(){
@@ -68,7 +69,7 @@ class TrainerSettingViewController: BaseViewController {
             
         }
     }
-    func fetchTraienrModel(){
+    func fetchTrainerModel(){
         TrainerBackend.shared.fetchTrainerUserProfile(userId: LoginTools.sharedTools.userId()) { trainerModel in
             DispatchQueue.main.async {
                 self.trainerProfileModel = trainerModel
@@ -85,7 +86,7 @@ class TrainerSettingViewController: BaseViewController {
             TrainerBackend.shared.updateTokenPriceAndSubPrice(tokenPrice: self.tokenPrice, subPrice: self.subPrice) {
                 DispatchQueue.main.async {
                     ToastHUD.showMsg(msg: "Save succeeded!", controller: self)
-                    self.fetchTraienrModel()
+                    self.fetchTrainerModel()
                 }
             } fail: { error in
                 DispatchQueue.main.async {

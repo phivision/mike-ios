@@ -12,7 +12,9 @@ import UIKit
 class UserSettingTrainerListCell: UITableViewCell {
     @IBOutlet weak var nameLab:UILabel!
     @IBOutlet weak var subLab:UILabel!
+    @IBOutlet weak var deleteBtn: UIButton!
     var index:IndexPath!
+    var cancelAtPeriodEnd:Bool!
     weak var delegate:UserSettingTrainerListCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,7 +23,12 @@ class UserSettingTrainerListCell: UITableViewCell {
     func setModel(model:UserCenterTrainer,index:IndexPath) {
         self.index = index
         self.nameLab.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
-        self.subLab.text = "Renews on \(TimeFormatUtils.timeStrWithDate(dateStr: model.updatedAt))"
+        let expire = AgeUtils.transDate(oldFormat: "yyyy-MM-dd", newFormat: "MMM dd", dateValue: model.expireDate)
+        self.cancelAtPeriodEnd = model.cancelAtPeriodEnd
+        if self.cancelAtPeriodEnd == true {
+            deleteBtn.isHidden = true
+        }
+        self.subLab.text = model.cancelAtPeriodEnd ? "Expires on \(expire)" : "Renews on \(expire)"
     }
     @IBAction func delBtnPressed(){
         self.delegate?.delSubscriptionTrainer?(index: self.index)

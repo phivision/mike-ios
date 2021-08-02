@@ -27,14 +27,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jYo-Sk-gtV">
-                    <rect key="frame" x="0.0" y="44" width="414" height="758"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="774"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PU5-iD-PPN">
-                    <rect key="frame" x="15" y="802" width="384" height="60"/>
+                    <rect key="frame" x="15" y="818" width="384" height="44"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lcQ-gm-I98">
-                            <rect key="frame" x="10" y="10" width="229" height="40"/>
+                            <rect key="frame" x="10" y="2" width="229" height="40"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="cTK-9s-wFO"/>
@@ -44,7 +44,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahU-qp-tl0">
-                            <rect key="frame" x="259" y="15" width="100" height="30"/>
+                            <rect key="frame" x="259" y="7" width="100" height="30"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="cgB-lY-rHt"/>
@@ -59,7 +59,7 @@
                             </connections>
                         </button>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_coins" translatesAutoresizingMaskIntoConstraints="NO" id="F2B-cR-5Uh">
-                            <rect key="frame" x="361" y="21.5" width="15" height="17"/>
+                            <rect key="frame" x="361" y="13.5" width="15" height="17"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="17" id="NXk-e2-9dP"/>
                                 <constraint firstAttribute="width" constant="15" id="a8R-hx-2uf"/>
@@ -68,8 +68,8 @@
                     </subviews>
                     <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="lcQ-gm-I98" firstAttribute="top" secondItem="PU5-iD-PPN" secondAttribute="top" constant="10" id="IPD-uE-9Ok"/>
-                        <constraint firstAttribute="bottom" secondItem="lcQ-gm-I98" secondAttribute="bottom" constant="10" id="OFB-S4-uG9"/>
+                        <constraint firstItem="lcQ-gm-I98" firstAttribute="top" secondItem="PU5-iD-PPN" secondAttribute="top" constant="2" id="IPD-uE-9Ok"/>
+                        <constraint firstAttribute="bottom" secondItem="lcQ-gm-I98" secondAttribute="bottom" constant="2" id="OFB-S4-uG9"/>
                         <constraint firstAttribute="trailing" secondItem="F2B-cR-5Uh" secondAttribute="trailing" constant="8" id="PdV-WJ-9Qh"/>
                         <constraint firstItem="ahU-qp-tl0" firstAttribute="centerY" secondItem="lcQ-gm-I98" secondAttribute="centerY" id="bko-0y-IBw"/>
                         <constraint firstItem="ahU-qp-tl0" firstAttribute="centerY" secondItem="F2B-cR-5Uh" secondAttribute="centerY" id="c8t-cE-RxQ"/>

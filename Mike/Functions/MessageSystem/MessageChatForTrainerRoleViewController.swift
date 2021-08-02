@@ -35,7 +35,7 @@ class MessageChatForTrainerRoleViewController: BaseViewController {
         self.configSubscription()
         self.configMsgList()
         self.configTextView()
-        self.setNavLeftBtn(imageName: "back_nearBlack")
+        self.setNavLeftBtn(imageName: "icon-back")
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(cancelSub), name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(restartSub), name: NSNotification.Name(rawValue:restartSubscription), object: nil)
@@ -88,7 +88,7 @@ class MessageChatForTrainerRoleViewController: BaseViewController {
         self.commentText.delegate = self;
         self.commentText.layer.cornerRadius = 10;
         self.commentText.clipsToBounds = true;
-        self.commentText.placeholder = "Input";
+        self.commentText.placeholder = "Message...";
         self.sendBtn.layer.cornerRadius = 6;
         self.sendBtn.clipsToBounds = true;
     }

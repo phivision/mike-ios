@@ -209,6 +209,8 @@ extension GraphQLRequest{
               Subscriptions {
                   items {
                     id
+                    ExpireDate
+                    CancelAtPeriodEnd
                     Trainer {
                       BgImage
                       BgTitle
