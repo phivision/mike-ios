@@ -298,37 +298,58 @@ extension ContentUploadSectionConfigViewController{
             return
         }
         let fileData = try! Data(contentsOf: URL(fileURLWithPath: videoUrl.relativePath))
-        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+//        self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         let videoKey = "\(self.videoOrientation)_\(StringUtils.handleVideoKey(filename: videoUrl.lastPathComponent))"
         self.contentName = videoKey
+        
+        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = .annularDeterminate
+        hud.label.text = "UpLoading Video..."
         TrainerBackend.shared.uploadVideo(videoData: fileData, videoKey: videoKey) { progress in
-            print("~~~~~~~~~~~~~~~~~~~~~~\(progress.fractionCompleted)")
+            print("progress~~~~~~~~~~~~~~~~~~~~~~\(Float(progress.completedUnitCount)/Float(progress.totalUnitCount))")
+            DispatchQueue.main.async {
+                MBProgressHUD.forView(self.view)?.progress = Float(progress.completedUnitCount)/Float(progress.totalUnitCount)
+            }
         } suc: {
             DispatchQueue.main.async {
-                hud.hide(animated: true)
-                ToastHUD.showMsg(msg: "Upload Succeeded!", controller: self)
+                MBProgressHUD.forView(self.view)?.hide(animated: true)
+//                self.hud?.hide(animated: true)
+//                ToastHUD.showMsg(msg: "Upload Succeeded!", controller: self)
                 self.uploadVideoCapture()
             }
         } fail: { error in
             DispatchQueue.main.async {
-                hud.hide(animated: true)
+//                self.hud?.hide(animated: true)
+                MBProgressHUD.forView(self.view)?.hide(animated: true)
                 ToastHUD.showMsg(msg: "\(error)", controller: self)
             }
         }
     }
     func uploadVideoCapture(){
         let data = self.videoCapture!.jpegData(compressionQuality: 0.2)!
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         self.thumbnail = StringUtils.thumbnailImgKey()
-        TrainerBackend.shared.uploadImage(imgData: data, imgName: self.thumbnail) {
+        
+        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = .annularDeterminate
+        hud.label.text = "UpLoading Video Capture..."
+        
+        TrainerBackend.shared.uploadImage(imgData: data, imgName: self.thumbnail) {progress in
+            print("~~~~~~~~~~~~~~~~~~~~~~\(progress.fractionCompleted)")
             DispatchQueue.main.async {
-                hud.hide(animated: true)
-                ToastHUD.showMsg(msg: "Upload Succeeded!", controller: self)
+                MBProgressHUD.forView(self.view)?.progress = Float(progress.completedUnitCount)/Float(progress.totalUnitCount)
+            }
+        } suc:{
+            DispatchQueue.main.async {
+                MBProgressHUD.forView(self.view)?.hide(animated: true)
+//                self.hud?.hide(animated: true)
+//                ToastHUD.showMsg(msg: "Upload Succeeded!", controller: self)
                 self.createUserContent()
             }
         } fail: { error in
             DispatchQueue.main.async {
-                hud.hide(animated: true)
+                MBProgressHUD.forView(self.view)?.hide(animated: true)
+//                self.hud?.hide(animated: true)
                 ToastHUD.showMsg(msg: "\(error)", controller: self)
             }
         }

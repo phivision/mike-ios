@@ -236,7 +236,8 @@
         "appleSignIn": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
           "s3Key": "amplify-builds/appleSignIn-4e584d6a6d344d615172-build.zip"
-        }
+        },
+        "mikereactPreSignup": {}
       },
       "storage": {
         "mikereact48af3338": {

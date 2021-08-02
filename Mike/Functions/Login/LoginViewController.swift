@@ -33,6 +33,7 @@ class LoginViewController: BaseViewController {
     }
     @objc func appleLoginPressed(){
         Amplify.Auth.signOut { result in
+            LoginTools.sharedTools.trainerModel = nil
             DispatchQueue.main.async {
                 self.appleLogin()
             }
@@ -74,7 +75,7 @@ class LoginViewController: BaseViewController {
     }
     func logOut(){
         LoginBackend.shared.signOut {
-            
+            LoginTools.sharedTools.trainerModel = nil
         } fail: {
 
         }

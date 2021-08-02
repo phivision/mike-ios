@@ -55,7 +55,7 @@ class FogotConfirmViewController: BaseViewController {
         LoginBackend.shared.confirmResetPassword(username: self.userName, newPassword: self.newPwdValue, confirmationCode: self.codeValue) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Reset Password Success", controller: self)
+                ToastHUD.showMsg(msg:"Reset Password Succeeded", controller: self)
                 self.navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
             }
         } fail: { error in

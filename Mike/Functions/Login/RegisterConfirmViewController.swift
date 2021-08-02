@@ -46,7 +46,7 @@ class RegisterConfirmViewController: BaseViewController {
         LoginBackend.shared.confirmSignUp(for: self.userName, with: self.codeValue) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Register Success", controller: self)
+                ToastHUD.showMsg(msg:"Register Succeeded", controller: self)
                 self.navigationController?.popToRootViewController(animated: true)
             }
         } fail: { error in

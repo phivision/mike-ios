@@ -89,9 +89,9 @@ class UserContentController: BaseViewController {
             self.favRelationDic = relationDic
             DispatchQueue.main.async {
                 if self.favType == 0{
-                    ToastHUD.showMsg(msg: "Delete Favorite Success", controller: self)
+                    ToastHUD.showMsg(msg: "Delete Favorite Succeeded", controller: self)
                 }else if self.favType == 1{
-                    ToastHUD.showMsg(msg: "Add Favorite Success", controller: self)
+                    ToastHUD.showMsg(msg: "Add Favorite Succeeded", controller: self)
                 }
                 hud.hide(animated: true)
                 self.favType = -1
@@ -224,8 +224,12 @@ extension UserContentController:UITableViewDelegate,UITableViewDataSource{
     }
     func validateSubscriptionRelation(){
         if LoginTools.sharedTools.userInfo().userRole == "trainer" {
-            DispatchQueue.main.async {
-                self.enterVideo()
+            if LoginTools.sharedTools.userId() != self.trainerInfoModel?.id {
+                ToastHUD.showMsg(msg: "You haven't subscribed \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
+            }else{
+                DispatchQueue.main.async {
+                    self.enterVideo()
+                }
             }
         }else{
             DispatchQueue.main.async {
@@ -246,27 +250,6 @@ extension UserContentController:UITableViewDelegate,UITableViewDataSource{
             DispatchQueue.main.async {
                 self.present(nav, animated: true, completion: nil)
             }
-            
-//            let vc:VideoViewController = VideoViewController()
-//            vc.videoModel = self.userContentModel
-//            let nav = UINavigationController(rootViewController: vc)
-//            nav.modalPresentationStyle = .fullScreen
-//            DispatchQueue.main.async {
-//                self.present(nav, animated: true, completion: nil)
-//            }
-//            let strArr:Array<String> = (self.userContentModel.contentName ?? "").components(separatedBy: ".")
-//            if strArr.count > 0 {
-//                let videoUrl:String = strArr.first ?? ""
-//                let videoURL = NSURL(string: String(format: "%@%@.m3u8", LoginTools.sharedTools.videoHost,videoUrl))! as URL
-//                let player = AVPlayer(url: videoURL)
-//                player.externalPlaybackVideoGravity = .resizeAspectFill
-//                let playerViewController = AVPlayerViewController()
-//                playerViewController.player = player
-//                self.present(playerViewController, animated: true) {
-//                    playerViewController.player!.play()
-//                }
-//            }
-            
         }else{
             let alertController = UIAlertController(title: "", message: "Waiting for processing",
                                                     preferredStyle: .alert)

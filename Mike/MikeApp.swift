@@ -249,6 +249,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate{
     func signOut(){
         LoginBackend.shared.signOut {
+            LoginTools.sharedTools.trainerModel = nil
             LoginTools.sharedTools.removeUserInfo()
             SubscriptionTools.sharedTools.outterSubscription?.cancel()
             for key in SubscriptionTools.sharedTools.groupSubscription {

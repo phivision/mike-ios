@@ -59,10 +59,12 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
                 addChildVC(childVC: TrainerProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];
         }else{
+            let vc:TrainerDetailViewController = TrainerDetailViewController()
+            vc.hideBackBtn = true
             self.viewControllers = [
                 addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
                 addChildVC(childVC: SearchViewController(), title: "", imageNormal: UIImage(named: "icon_search_N"), imageSelect: UIImage(named: "icon_search_H"),showNavBar: false),
-                addChildVC(childVC: TrainerDetailViewController(), title: "", imageNormal: UIImage(named: ""), imageSelect: UIImage(named: ""),showNavBar: false),
+                addChildVC(childVC: vc, title: "", imageNormal: UIImage(named: ""), imageSelect: UIImage(named: ""),showNavBar: false),
                 addChildVC(childVC: MessageListForStudentRoleViewController(), title: "", imageNormal: UIImage(named: "icon_chat_N"), imageSelect: UIImage(named: "icon_chat_H"),showNavBar: false),
                 addChildVC(childVC: UserProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];

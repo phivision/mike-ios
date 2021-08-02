@@ -119,7 +119,7 @@ class CompleteUserInfoViewController: BaseViewController {
     }
     func logOut(){
         LoginBackend.shared.signOut {
-            
+            LoginTools.sharedTools.trainerModel = nil
         } fail: {
 
         }
