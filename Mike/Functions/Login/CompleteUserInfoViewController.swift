@@ -47,8 +47,7 @@ class CompleteUserInfoViewController: BaseViewController {
             return
         }
         self.hub = MBProgressHUD.showAdded(to: self.view, animated: true)
-//        Backend.shared.resultProfile(userName: self.userNameText.text)
-
+//        Backend.shared.resultProfile(userName: self.userNameText.text)        
         Amplify.Auth.fetchUserAttributes() { result in
             switch result {
             case .success(let attributes):

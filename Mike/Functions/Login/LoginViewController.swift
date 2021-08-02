@@ -48,7 +48,6 @@ class LoginViewController: BaseViewController {
                 self.changeRootController(controller: homeVC)
             }
         } fail: { error in
-            self.logOut()
             DispatchQueue.main.async {
                 self.hub?.hide(animated: true)
                 ToastHUD.showMsg(msg:error, controller: self)
