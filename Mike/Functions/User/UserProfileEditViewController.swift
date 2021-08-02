@@ -172,7 +172,7 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
                 case .success(let data):
                     print("Completed: \(data)")
                     DispatchQueue.main.async {
-                        ToastHUD.showMsg(msg:"Upload Avatar Success", controller: self)
+                        ToastHUD.showMsg(msg:"Upload Succeeded", controller: self)
                         UserDefaults.standard.removeObject(forKey: self.userImage!)
                         self.editUserProfile()
                     }
@@ -216,6 +216,8 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
                 self.hud?.hide(animated: true)
                 ToastHUD.showMsg(msg:"\(error)", controller: self)
             }
+        } needCreateProfile: {
+            
         }
 
     }

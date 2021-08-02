@@ -98,32 +98,11 @@ extension ContentUploadViewController:UITableViewDelegate,UITableViewDataSource{
             cell.delegate = self
             cell.setTitle("Description", textValue: self.videoDescValue, indexPath: indexPath)
             return cell
-//        case 2:
-//            if StringUtils.isBlank(value: self.videoURL?.absoluteString) {
-//                let cell:VideoUploadCell = tableView.dequeueReusableCell(withIdentifier: "VideoUploadCell", for: indexPath) as! VideoUploadCell
-//                cell.delegate = self
-//                return cell
-//            }else{
-//                let cell:SelectVideoCell = tableView.dequeueReusableCell(withIdentifier: "SelectVideoCell", for: indexPath) as! SelectVideoCell
-//                cell.setImage(image: self.videoImage)
-//                cell.delegate = self
-//                return cell
-//            }
         case 2:
             let cell:VideoCaptureUploadCell = tableView.dequeueReusableCell(withIdentifier: "VideoCaptureUploadCell", for: indexPath) as! VideoCaptureUploadCell
             cell.setCaptureImg(image: self.videoCapture)
             cell.delegate = self
             return cell
-//        case 4:
-//            let cell:CheckBoxCell = tableView.dequeueReusableCell(withIdentifier: "CheckBoxCell", for: indexPath) as! CheckBoxCell
-//            cell.delegate = self
-//            cell.setCheckStatus(isCheck: self.isDemoVideo)
-//            return cell
-//        case 4:
-//            let cell:SingleBtnCell = tableView.dequeueReusableCell(withIdentifier: "SingleBtnCell", for: indexPath) as! SingleBtnCell
-//            cell.delegate = self
-//            cell.setBtnTitle(title: "Continue")
-//            return cell
         default:
             return UITableViewCell()
         }

@@ -60,6 +60,7 @@ class Backend {
     func signOut(){
         LoginBackend.shared.signOut {
             self.resetDeviceToken()
+            LoginTools.sharedTools.trainerModel = nil
             LoginTools.sharedTools.removeUserInfo()
             SubscriptionTools.sharedTools.outterSubscription?.cancel()
             DispatchQueue.main.async {

@@ -32,7 +32,7 @@ class LoginBackend: NSObject {
         }
     }
     //  login with userName and password
-    public func login(userName:String!,pwd:String!,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void,confirmSignUp:@escaping ()->Void){
+    public func login(userName:String!,pwd:String!,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void,confirmSignUp:@escaping ()->Void,needCreateProfile:@escaping ()->Void){
 //        signOut()
         _ = Amplify.Auth.signIn(username: userName, password: pwd) { result in
             do {
@@ -77,7 +77,7 @@ class LoginBackend: NSObject {
                 case .done:
                     // Use has successfully signed in to the app
                     print("Sign in succeeded \(result)")
-                    self.fetchSession(suc: suc, fail: fail)
+                    self.fetchSession(suc: suc, fail: fail,needCreateProfile: needCreateProfile)
                 }
             } catch {
                 print ("Sign in failed \(error)")
@@ -205,7 +205,7 @@ class LoginBackend: NSObject {
             }
         }
     }
-    public func fetchSession(suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+    public func fetchSession(suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void,needCreateProfile:@escaping ()->Void){
         Amplify.Auth.fetchAuthSession { result in
             do {
                 let session = try result.get()
@@ -214,7 +214,7 @@ class LoginBackend: NSObject {
                     let usersub = try identityProvider.getUserSub().get()
                     let identityId = try identityProvider.getIdentityId().get()
                     print("User sub - \(usersub) and identity id \(identityId)")
-                    self.fetchUserProfile(userId: usersub, suc: suc, fail: fail)
+                    self.fetchUserProfile(userId: usersub, suc: suc, fail: fail,needCreateProfile: needCreateProfile)
                 }else{
                     print("Fetch auth session failed")
                     fail("Fetch auth session failed")
@@ -225,7 +225,7 @@ class LoginBackend: NSObject {
             }
         }
     }
-    public func fetchUserProfile(userId:String,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+    public func fetchUserProfile(userId:String,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void,needCreateProfile:@escaping ()->Void){
         Amplify.API.query(request: .fetchUserProfile(byId: userId)){
             event in
             switch event {
@@ -242,7 +242,8 @@ class LoginBackend: NSObject {
                     }
                     let dic = d as! NSDictionary
                     guard let subDic = dic["getUserProfile"] as? NSDictionary else {
-                        fail("fetch User Profile Fail");
+//                        fail("fetch User Profile Fail");
+                        needCreateProfile()
                         return
                     }
                     LoginTools.sharedTools.saveUserInfo(dic: subDic as! [String : Any])
@@ -255,6 +256,91 @@ class LoginBackend: NSObject {
             case .failure(let error):
                 print("Got failed event with error \(error)")
                 fail("\(error)");
+            }
+        }
+    }
+    // sign in with apple
+    public func signInWithApple(suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void,confirmSignUp:@escaping ()->Void,needCreateProfile:@escaping ()->Void){
+        Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: keyWindow!,options: AuthWebUISignInRequest.Options(scopes: ["email","openid","aws.cognito.signin.user.admin","profile"], signInQueryParameters: ["ResponseType":"Code"])) { result in
+            do {
+                let signinResult = try result.get()
+                switch signinResult.nextStep {
+                case .confirmSignInWithSMSMFACode(let deliveryDetails, let info):
+                    print("SMS code send to \(deliveryDetails.destination)")
+                    print("Additional info \(String(describing: info))")
+
+                    // Prompt the user to enter the SMSMFA code they received
+                    // Then invoke `confirmSignIn` api with the code
+
+                case .confirmSignInWithCustomChallenge(let info):
+                    print("Custom challenge, additional info \(String(describing: info))")
+
+                    // Prompt the user to enter custom challenge answer
+                    // Then invoke `confirmSignIn` api with the answer
+
+                case .confirmSignInWithNewPassword(let info):
+                    print("New password additional info \(String(describing: info))")
+
+                    // Prompt the user to enter a new password
+                    // Then invoke `confirmSignIn` api with new password
+
+                case .resetPassword(let info):
+                    print("Reset password additional info \(String(describing: info))")
+
+                    // User needs to reset their password.
+                    // Invoke `resetPassword` api to start the reset password
+                    // flow, and once reset password flow completes, invoke
+                    // `signIn` api to trigger signin flow again.
+
+                case .confirmSignUp(let info):
+                    print("Confirm signup additional info \(String(describing: info))")
+                    confirmSignUp()
+                    // User was not confirmed during the signup process.
+                    // Invoke `confirmSignUp` api to confirm the user if
+                    // they have the confirmation code. If they do not have the
+                    // confirmation code, invoke `resendSignUpCode` to send the
+                    // code again.
+                    // After the user is confirmed, invoke the `signIn` api again.
+                case .done:
+                    // Use has successfully signed in to the app
+                    print("Sign in succeeded \(result)")
+                    self.fetchSession(suc: suc, fail: fail,needCreateProfile: needCreateProfile)
+                }
+            } catch {
+                print ("Sign in failed \(error)")
+                fail("\(error)")
+            }
+        }
+    }
+    func createUserProfile(firstname:String?,lastname:String?,email:String?,subId:String?,suc:@escaping (_ isSuc:Bool)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.mutate(request: .createProfile(subId: subId ?? "", firstName: firstname ?? "", lastName: lastname ?? "", email: email ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        fail("Failed")
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        fail("Failed")
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["createUserProfile"] as? NSDictionary {
+                        print("\(subDic)")
+                        suc(true)
+                    }else {
+                        fail("Failed")
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
             }
         }
     }

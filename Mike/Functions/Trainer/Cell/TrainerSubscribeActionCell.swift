@@ -13,6 +13,9 @@ import UIKit
 class TrainerSubscribeActionCell: UICollectionViewCell {
     @IBOutlet weak var subscribeBtn:UIButton!
     @IBOutlet weak var messageBtn:UIButton!
+    @IBOutlet weak var priceLab:UILabel!
+    @IBOutlet weak var iconCoin:UIImageView!
+    @IBOutlet weak var subscribeBtnWidthRatio:NSLayoutConstraint!
     weak var delegate:TrainerSubscribeActionCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,10 +24,14 @@ class TrainerSubscribeActionCell: UICollectionViewCell {
         self.messageBtn.layer.cornerRadius = 6
         self.messageBtn.isHidden = true
         self.subscribeBtn.isHidden = true
+        self.iconCoin.isHidden = true
     }
     func setModel(model:UserCenterModel,isSubscribed:Bool){
         if isSubscribed == true {
+            self.subscribeBtnWidthRatio.constant = -25
             self.subscribeBtn.setTitle("Subscribed", for: .normal)
+            self.priceLab.isHidden = true
+            self.iconCoin.isHidden = true
             self.messageBtn.setTitle("Message Me", for: .normal)
             self.subscribeBtn.layer.borderWidth = 1
             self.subscribeBtn.layer.borderColor = UIColor.black.cgColor
@@ -34,8 +41,13 @@ class TrainerSubscribeActionCell: UICollectionViewCell {
             self.messageBtn.setTitleColor(UIColor.white, for: .normal)
             self.messageBtn.layer.borderWidth = 1
             self.messageBtn.layer.borderColor = orangeColor.cgColor
+            self.messageBtn.isHidden = false
         }else{
-            self.subscribeBtn.setTitle("Subscribe for $\(model.TokenPrice ?? 0)", for: .normal)
+            self.subscribeBtnWidthRatio.constant = 0
+            self.subscribeBtn.setTitle("", for: .normal)
+            self.priceLab.text = "Subscribe for \(model.SubscriptionPrice ?? 0)"
+            self.priceLab.isHidden = false
+            self.iconCoin.isHidden = false
             self.messageBtn.setTitle("Message Me", for: .normal)
             self.messageBtn.layer.borderWidth = 1
             self.messageBtn.layer.borderColor = UIColor.black.cgColor
@@ -43,8 +55,9 @@ class TrainerSubscribeActionCell: UICollectionViewCell {
             self.messageBtn.backgroundColor = UIColor.white
             self.subscribeBtn.backgroundColor = orangeColor
             self.subscribeBtn.setTitleColor(UIColor.white, for: .normal)
+            self.messageBtn.isHidden = true
         }
-        self.messageBtn.isHidden = false
+//        self.messageBtn.isHidden = false
         self.subscribeBtn.isHidden = false
     }
     @IBAction func messageMe(){

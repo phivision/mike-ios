@@ -7,9 +7,11 @@
 
 import UIKit
 import Amplify
+import AVKit
 class UserContentController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     var isFav:Bool = false
+    var isSubscribed:Bool = false
     var trainerId:String!
     var userContentModel:UserCenterContent!
     var trainerInfoModel:UserCenterModel?
@@ -87,9 +89,9 @@ class UserContentController: BaseViewController {
             self.favRelationDic = relationDic
             DispatchQueue.main.async {
                 if self.favType == 0{
-                    ToastHUD.showMsg(msg: "Delete Favorite Success", controller: self)
+                    ToastHUD.showMsg(msg: "Delete Favorite Succeeded", controller: self)
                 }else if self.favType == 1{
-                    ToastHUD.showMsg(msg: "Add Favorite Success", controller: self)
+                    ToastHUD.showMsg(msg: "Add Favorite Succeeded", controller: self)
                 }
                 hud.hide(animated: true)
                 self.favType = -1
@@ -113,6 +115,22 @@ class UserContentController: BaseViewController {
             self.handleFavBtnState()
         }
     }
+    func fetchSubscription(){
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+            var isSubscribed:Bool = false
+            for trainer in subscriptionList{
+                if trainer.trainer.id == self.trainerId {
+                    isSubscribed = true
+                    break
+                }
+            }
+            self.isSubscribed = isSubscribed
+            DispatchQueue.main.async {
+                hud.hide(animated: true)
+            }
+        }
+    }
     func handleFavBtnState(){
         DispatchQueue.main.async {
             self.mainTableView.reloadData()
@@ -128,6 +146,7 @@ class UserContentController: BaseViewController {
     func configTrainerUI(trainerModel:UserCenterModel){
         self.trainerInfoModel = trainerModel
         DispatchQueue.main.async {
+            self.fetchSubscription()
             self.mainTableView.reloadData()
         }
 //        ImageCacheUtils.sharedTools.imageUrl(key: trainerModel.userImage) { imgUrl, cannotLoadUrl in
@@ -198,27 +217,49 @@ extension UserContentController:UITableViewDelegate,UITableViewDataSource{
             if StringUtils.isBlank(value: self.userContentModel.contentName) {
                 return
             }
-            if self.userContentModel.transcodeReady == true || self.userContentModel.transcodeReady == nil{
-                let vc:SplitVideoViewController = SplitVideoViewController()
-                vc.videoModel = self.userContentModel
-                let nav = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .fullScreen
-                DispatchQueue.main.async {
-                    self.present(nav, animated: true, completion: nil)
-                }
-            }else{
-                let alertController = UIAlertController(title: "", message: "Waiting for processing",
-                                                        preferredStyle: .alert)
-                let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
-                
-                }
-                alertController.addAction(sureAction)
-                DispatchQueue.main.async {
-                    self.present(alertController, animated: true, completion: nil)
-                }
-            }
+            self.validateSubscriptionRelation()
         default:
            print("")
+        }
+    }
+    func validateSubscriptionRelation(){
+        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+            if LoginTools.sharedTools.userId() != self.trainerInfoModel?.id {
+                ToastHUD.showMsg(msg: "You haven't subscribed \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
+            }else{
+                DispatchQueue.main.async {
+                    self.enterVideo()
+                }
+            }
+        }else{
+            DispatchQueue.main.async {
+                if self.isSubscribed == true{
+                    self.enterVideo()
+                }else{
+                    ToastHUD.showMsg(msg: "You haven't subscribed \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
+                }
+            }
+        }
+    }
+    func enterVideo(){
+        if self.userContentModel.transcodeReady == true || self.userContentModel.transcodeReady == nil{
+            let vc:SplitVideoViewController = SplitVideoViewController()
+            vc.videoModel = self.userContentModel
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self.present(nav, animated: true, completion: nil)
+            }
+        }else{
+            let alertController = UIAlertController(title: "", message: "Waiting for processing",
+                                                    preferredStyle: .alert)
+            let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
+            
+            }
+            alertController.addAction(sureAction)
+            DispatchQueue.main.async {
+                self.present(alertController, animated: true, completion: nil)
+            }
         }
     }
 }

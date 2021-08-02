@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Amplify
 class TrainerSettingViewController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     @IBOutlet weak var saveBtn:UIButton!
@@ -18,6 +19,9 @@ class TrainerSettingViewController: BaseViewController {
         var subscriptionIdList:Array<String> = Array<String>()
         return subscriptionIdList
     }()
+    var trainerProfileModel:UserCenterTrainer?
+    var tokenPrice:String = "0"
+    var subPrice:String = "0"
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configTableView()
@@ -27,6 +31,8 @@ class TrainerSettingViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         if self.isTrainer == false {
             self.fetchTrainerList()
+        }else{
+            self.fetchTraienrModel()
         }
     }
     @IBAction func backBtnPressed(){
@@ -60,6 +66,32 @@ class TrainerSettingViewController: BaseViewController {
             }
         } fail: { error in
             
+        }
+    }
+    func fetchTraienrModel(){
+        TrainerBackend.shared.fetchTrainerUserProfile(userId: LoginTools.sharedTools.userId()) { trainerModel in
+            DispatchQueue.main.async {
+                self.trainerProfileModel = trainerModel
+                self.tokenPrice = "\(trainerModel.tokenPrice ?? 0)"
+                self.subPrice = "\(trainerModel.subscriptionPrice ?? 0)"
+                self.mainTableView.reloadData()
+            }
+        } fail: { error in
+            
+        }
+    }
+    @IBAction func saveBtnPressed(){
+        if LoginTools.sharedTools.userInfo().userRole == "trainer" {
+            TrainerBackend.shared.updateTokenPriceAndSubPrice(tokenPrice: self.tokenPrice, subPrice: self.subPrice) {
+                DispatchQueue.main.async {
+                    ToastHUD.showMsg(msg: "Save succeeded!", controller: self)
+                    self.fetchTraienrModel()
+                }
+            } fail: { error in
+                DispatchQueue.main.async {
+                    ToastHUD.showMsg(msg: error, controller: self)
+                }
+            }
         }
     }
     /*
@@ -126,6 +158,10 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
         case 0:
             if self.isTrainer == true {
                 let cell:UserSettingSubscribeCell = tableView.dequeueReusableCell(withIdentifier: "UserSettingSubscribeCell", for: indexPath) as! UserSettingSubscribeCell
+                cell.delegate = self
+                if let model = self.trainerProfileModel {
+                    cell.setModel(trainerModel: model)
+                }
                 return cell
             }else{
                 let cell:UserSettingTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "UserSettingTrainerListCell", for: indexPath) as! UserSettingTrainerListCell
@@ -192,6 +228,14 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
         }
     }
 }
+extension TrainerSettingViewController:UserSettingSubscribeCellDelegate{
+    func subscriptionPriceChanged(price: String) {
+        self.subPrice = price
+    }
+    func tokenPriceChanged(price: String) {
+        self.tokenPrice = price
+    }
+}
 extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{
     func delSubscriptionTrainer(index: IndexPath) {
         let trainer = self.subscriptionList[index.row];
@@ -213,19 +257,38 @@ extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{
     func delSub(index:NSInteger){
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         let subId = self.subscriptionIdList[index];
-        UserProfileBackend.shared.delSubscriptionTrainer(subscriptionId: subId) { suc in
-            DispatchQueue.main.async {
-                hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Delete Success!", controller: self)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
-                self.fetchTrainerList()
-            }
-        } fail: { error in
-            DispatchQueue.main.async {
-                hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"\(error)", controller: self)
+        let jsonData = try! JSONSerialization.data(withJSONObject: ["id":subId], options: .prettyPrinted)
+        let request = RESTRequest(apiName: "subscriptions",path: "/sub",body:jsonData)
+        Amplify.API.delete(request: request) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    ToastHUD.showMsg(msg:"Delete Succeeded!", controller: self)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
+                    self.fetchTrainerList()
+                }
+            case .failure(let apiError):
+                print("Failed", apiError)
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    ToastHUD.showMsg(msg:"\(apiError)", controller: self)
+                }
             }
         }
+//        UserProfileBackend.shared.delSubscriptionTrainer(subscriptionId: subId) { suc in
+//            DispatchQueue.main.async {
+//                hud.hide(animated: true)
+//                ToastHUD.showMsg(msg:"Delete Succeeded!", controller: self)
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
+//                self.fetchTrainerList()
+//            }
+//        } fail: { error in
+//            DispatchQueue.main.async {
+//                hud.hide(animated: true)
+//                ToastHUD.showMsg(msg:"\(error)", controller: self)
+//            }
+//        }
     }
 }
 

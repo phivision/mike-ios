@@ -81,9 +81,9 @@ class UserContentDetailViewController: BaseViewController {
             self.favRelationDic = relationDic
             DispatchQueue.main.async {
                 if self.favType == 0{
-                    ToastHUD.showMsg(msg: "Delete Favorite Success", controller: self)
+                    ToastHUD.showMsg(msg: "Delete Favorite Succeeded", controller: self)
                 }else if self.favType == 1{
-                    ToastHUD.showMsg(msg: "Add Favorite Success", controller: self)
+                    ToastHUD.showMsg(msg: "Add Favorite Succeeded", controller: self)
                 }
                 hud.hide(animated: true)
                 self.favType = -1

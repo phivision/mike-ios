@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TrainerSettingViewController" customModule="Mike" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TrainerSettingViewController" customModule="Motion" customModuleProvider="target">
             <connections>
                 <outlet property="mainTableView" destination="ndR-f2-plm" id="AsC-3a-Kee"/>
                 <outlet property="saveBtn" destination="61s-1b-Ruo" id="qsM-8p-ikT"/>
@@ -44,6 +44,9 @@
                     <state key="normal" title="Save">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <connections>
+                        <action selector="saveBtnPressed" destination="-1" eventType="touchUpInside" id="iGJ-0L-5Rn"/>
+                    </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ndR-f2-plm">
                     <rect key="frame" x="0.0" y="147.5" width="414" height="714.5"/>

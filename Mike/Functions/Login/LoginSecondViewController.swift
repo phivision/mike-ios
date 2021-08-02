@@ -57,13 +57,15 @@ class LoginSecondViewController: BaseViewController {
             self.logOut()
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:error, controller: self)
+                ToastHUD.showMsg(msg:error.description, controller: self)
             }
         } confirmSignUp: {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 self.resenConfirmCode()
             }
+            
+        } needCreateProfile: {
             
         }
 
@@ -115,7 +117,7 @@ class LoginSecondViewController: BaseViewController {
     }
     func logOut(){
         LoginBackend.shared.signOut {
-            
+            LoginTools.sharedTools.trainerModel = nil
         } fail: {
 
         }

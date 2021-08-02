@@ -5,11 +5,13 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TrainerDetailViewController" customModule="Motion" customModuleProvider="target">
             <connections>
+                <outlet property="addTrainerModelView" destination="eKW-bT-Q7D" id="bSG-Km-emP"/>
                 <outlet property="mainCollection" destination="zkD-9U-lmQ" id="1jG-1O-kjw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="08o-tc-BI5"/>
             </connections>
@@ -29,16 +31,55 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKW-bT-Q7D">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mNi-HN-9mI">
+                            <rect key="frame" x="22" y="86" width="68" height="68"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="68" id="Tdw-ga-e7B"/>
+                                <constraint firstAttribute="width" constant="68" id="XUq-Ij-yYN"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="addTrainer"/>
+                            <connections>
+                                <action selector="addTraner" destination="-1" eventType="touchUpInside" id="elZ-HS-c8x"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search And Subscribe Trainers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKD-Qd-kga">
+                            <rect key="frame" x="22" y="164" width="257" height="25"/>
+                            <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="CKD-Qd-kga" firstAttribute="top" secondItem="mNi-HN-9mI" secondAttribute="bottom" constant="10" id="DUG-v4-uFl"/>
+                        <constraint firstItem="mNi-HN-9mI" firstAttribute="top" secondItem="eKW-bT-Q7D" secondAttribute="top" constant="86" id="Dbs-ki-NaG"/>
+                        <constraint firstItem="CKD-Qd-kga" firstAttribute="leading" secondItem="mNi-HN-9mI" secondAttribute="leading" id="EuS-Pq-ZkD"/>
+                        <constraint firstItem="mNi-HN-9mI" firstAttribute="leading" secondItem="eKW-bT-Q7D" secondAttribute="leading" constant="22" id="aKC-Ou-yHo"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="eKW-bT-Q7D" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="2iZ-jt-kCX"/>
                 <constraint firstItem="zkD-9U-lmQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5nF-hU-ADF"/>
                 <constraint firstItem="zkD-9U-lmQ" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Fqb-ny-4hn"/>
                 <constraint firstItem="zkD-9U-lmQ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="I7R-dK-Pfc"/>
+                <constraint firstItem="eKW-bT-Q7D" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="RaU-7Z-uK0"/>
                 <constraint firstItem="zkD-9U-lmQ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="aim-TY-Pk0"/>
+                <constraint firstItem="eKW-bT-Q7D" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="faW-vV-yQF"/>
+                <constraint firstItem="eKW-bT-Q7D" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="tx7-HK-6cV"/>
             </constraints>
             <point key="canvasLocation" x="74" y="75"/>
         </view>
     </objects>
+    <resources>
+        <image name="addTrainer" width="68" height="68"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

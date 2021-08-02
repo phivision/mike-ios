@@ -57,9 +57,11 @@
 type UserSubscriptionTrainer @model(subscriptions: null)
 @auth(rules: [{ allow: owner, operations: [create, delete, update] },
   { allow: private, operations: [read]},
-  { allow: public, provider: iam, operations: [read]}]){
+  { allow: public, provider: iam, operations: [read]}])
+@key(name: "subscriptionsByExpire", fields: ["ExpireDate"], queryField: "subscriptionsByExpireDate")
+{
   id: ID!
-  StripeID: String!
+  StripeID: String
   ExpireDate: AWSDate!
   CancelAtPeriodEnd: Boolean!
   Trainer: UserProfile! @connection(name: "bySubscriptedTrainer")
@@ -91,6 +93,7 @@ type UserContent @model(subscriptions: null)
   ContentName: String!
   Description: String
   Title: String
+  Orientation: VideoOrientation
   """
   The level indicates the difficulty of the training course, e.g. 1 => easy, 2=> medium, 3=>hard
   """
@@ -167,6 +170,11 @@ enum MessageType {
   VOICE
   IMAGE
   VIDEO
+}
+
+enum VideoOrientation {
+  LANDSCAPE
+  PORTRAIT
 }
 
 type Subscription {

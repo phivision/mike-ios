@@ -13,7 +13,7 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
     lazy var centerBtn:UIButton = {
         var button = UIButton(frame: CGRect(x: 5, y:5, width: tabBar.height-20, height: tabBar.height-20))
         button.clipsToBounds = true
-        button.contentMode = .scaleAspectFill
+        button.imageView!.contentMode = .scaleAspectFill
         button.setImage(UIImage(named:"icon_user_default"), for: .normal)
         button.layer.cornerRadius = (tabBar.height-20)/2
         button.isUserInteractionEnabled = false
@@ -40,7 +40,9 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
     @objc func updateCenterIcon(){
         ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.trainerModel?.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
-                self.centerBtn.setImage(UIImage(named: "icon_user_default"), for: .normal)
+                DispatchQueue.main.async {
+                    self.centerBtn.setImage(UIImage(named: "icon_user_default"), for: .normal)
+                }
             }else{
                 self.centerBtn.sd_setImage(with: URL(string: imgUrl  ?? "")!, for:.normal,placeholderImage: UIImage(named: "icon_user_default"), options: .refreshCached, completed: nil)
             }
@@ -57,10 +59,12 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
                 addChildVC(childVC: TrainerProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];
         }else{
+            let vc:TrainerDetailViewController = TrainerDetailViewController()
+            vc.hideBackBtn = true
             self.viewControllers = [
                 addChildVC(childVC: HomeListViewController(), title: "", imageNormal: UIImage(named: "icon_home_N"), imageSelect: UIImage(named: "icon_home_H"),showNavBar: false),
                 addChildVC(childVC: SearchViewController(), title: "", imageNormal: UIImage(named: "icon_search_N"), imageSelect: UIImage(named: "icon_search_H"),showNavBar: false),
-                addChildVC(childVC: TrainerDetailViewController(), title: "", imageNormal: UIImage(named: ""), imageSelect: UIImage(named: ""),showNavBar: false),
+                addChildVC(childVC: vc, title: "", imageNormal: UIImage(named: ""), imageSelect: UIImage(named: ""),showNavBar: false),
                 addChildVC(childVC: MessageListForStudentRoleViewController(), title: "", imageNormal: UIImage(named: "icon_chat_N"), imageSelect: UIImage(named: "icon_chat_H"),showNavBar: false),
                 addChildVC(childVC: UserProfileViewController(), title: "", imageNormal: UIImage(named: "icon_user_N"), imageSelect: UIImage(named: "icon_user_H"),showNavBar: false)
             ];

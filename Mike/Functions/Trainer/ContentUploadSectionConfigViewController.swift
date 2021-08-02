@@ -28,6 +28,8 @@ class ContentUploadSectionConfigViewController: BaseViewController {
     var firstIndex:NSInteger = 0
     var secondIndex:NSInteger = 0
     var thirdIndex:NSInteger = 0
+    //video Orientation
+    var videoOrientation:NSString = "Portrait"
     
     @IBOutlet weak var mainTableView:UITableView!
     lazy var segmentList:Array<UserContentSegmentListModel> = {
@@ -153,10 +155,6 @@ extension ContentUploadSectionConfigViewController:VideoUploadCellDelegate,UIIma
         if picker.mediaTypes == ["public.movie"]{
             if let videoURL = info[.mediaURL] as? URL{
                 self.handleVideoUrl(videoURL: videoURL)
-            }else{
-                if let videoURL = info[.referenceURL] as? URL {
-                    self.handleVideoUrl(videoURL: videoURL)
-                }
             }
         }
         //picker dismiss
@@ -165,23 +163,20 @@ extension ContentUploadSectionConfigViewController:VideoUploadCellDelegate,UIIma
     func handleVideoUrl(videoURL:URL!){
         self.videoURL = videoURL
         let avAsset = AVAsset(url: videoURL)
-        print("视频地址：\(videoURL.relativePath)")
 
         //generate image
         let generator = AVAssetImageGenerator(asset: avAsset)
         generator.appliesPreferredTrackTransform = true
         let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
         var actualTime = CMTimeMake(value: 0, timescale: 0)
-        do {
-            if let imageRef = try? generator.copyCGImage(at: time, actualTime: &actualTime) {
-                let frameImg = UIImage(cgImage: imageRef)
-                self.videoImage = frameImg
-                DispatchQueue.main.async {
-                    self.mainTableView.reloadData()
-                }
+        if let imageRef = try? generator.copyCGImage(at: time, actualTime: &actualTime) {
+            let frameImg = UIImage(cgImage: imageRef)
+            self.videoImage = frameImg
+            self.videoOrientation = self.degressFromImage(image: self.videoImage ?? UIImage())
+            print("videoOrientation：\(videoOrientation)")
+            DispatchQueue.main.async {
+                self.mainTableView.reloadData()
             }
-        } catch let error {
-            print("\(error)")
         }
     }
     func delVideoBtnClicked() {
@@ -190,6 +185,35 @@ extension ContentUploadSectionConfigViewController:VideoUploadCellDelegate,UIIma
             self.mainTableView.reloadData()
         }
     }
+    func degressFromImage(image:UIImage) -> NSString{
+        if image.size.width > image.size.height {
+            return "Landscape"
+        }else{
+            return "Portrait"
+        }
+    }
+//    func degressFromVideoFileWithURL(asset:AVAsset) -> NSString {
+//        var degress:NSString = "Portrait"
+//        let tracks:[AVAssetTrack] = asset.tracks(withMediaType: .video)
+//        if(tracks.count > 0) {
+//            let videoTrack = tracks[0]
+//            let t:CGAffineTransform = videoTrack.preferredTransform
+//            if(t.a == 0 && t.b == 1.0 && t.c == -1.0 && t.d == 0){
+//                // Portrait
+//                degress = "Portrait"
+//            }else if(t.a == 0 && t.b == -1.0 && t.c == 1.0 && t.d == 0){
+//                // PortraitUpsideDown
+//                degress = "Portrait"
+//            }else if(t.a == 1.0 && t.b == 0 && t.c == 0 && t.d == 1.0){
+//                // LandscapeRight
+//                degress = "Landscape"
+//            }else if(t.a == -1.0 && t.b == 0 && t.c == 0 && t.d == -1.0){
+//                // LandscapeLeft
+//                degress = "Landscape";
+//            }
+//        }
+//        return degress;
+//    }
 }
 extension ContentUploadSectionConfigViewController:SegmentInputCellDelegate{
     func segmentChanged(textValue: String?, index: IndexPath?) {
@@ -274,37 +298,58 @@ extension ContentUploadSectionConfigViewController{
             return
         }
         let fileData = try! Data(contentsOf: URL(fileURLWithPath: videoUrl.relativePath))
-        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-        let videoKey = StringUtils.handleVideoKey(filename: videoUrl.lastPathComponent)
+//        self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        let videoKey = "\(self.videoOrientation)_\(StringUtils.handleVideoKey(filename: videoUrl.lastPathComponent))"
         self.contentName = videoKey
+        
+        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = .annularDeterminate
+        hud.label.text = "UpLoading Video..."
         TrainerBackend.shared.uploadVideo(videoData: fileData, videoKey: videoKey) { progress in
-            print("~~~~~~~~~~~~~~~~~~~~~~\(progress.fractionCompleted)")
+            print("progress~~~~~~~~~~~~~~~~~~~~~~\(Float(progress.completedUnitCount)/Float(progress.totalUnitCount))")
+            DispatchQueue.main.async {
+                MBProgressHUD.forView(self.view)?.progress = Float(progress.completedUnitCount)/Float(progress.totalUnitCount)
+            }
         } suc: {
             DispatchQueue.main.async {
-                hud.hide(animated: true)
-                ToastHUD.showMsg(msg: "Upload Success!", controller: self)
+                MBProgressHUD.forView(self.view)?.hide(animated: true)
+//                self.hud?.hide(animated: true)
+//                ToastHUD.showMsg(msg: "Upload Succeeded!", controller: self)
                 self.uploadVideoCapture()
             }
         } fail: { error in
             DispatchQueue.main.async {
-                hud.hide(animated: true)
+//                self.hud?.hide(animated: true)
+                MBProgressHUD.forView(self.view)?.hide(animated: true)
                 ToastHUD.showMsg(msg: "\(error)", controller: self)
             }
         }
     }
     func uploadVideoCapture(){
         let data = self.videoCapture!.jpegData(compressionQuality: 0.2)!
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         self.thumbnail = StringUtils.thumbnailImgKey()
-        TrainerBackend.shared.uploadImage(imgData: data, imgName: self.thumbnail) {
+        
+        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = .annularDeterminate
+        hud.label.text = "UpLoading Video Capture..."
+        
+        TrainerBackend.shared.uploadImage(imgData: data, imgName: self.thumbnail) {progress in
+            print("~~~~~~~~~~~~~~~~~~~~~~\(progress.fractionCompleted)")
             DispatchQueue.main.async {
-                hud.hide(animated: true)
-                ToastHUD.showMsg(msg: "Upload Success!", controller: self)
+                MBProgressHUD.forView(self.view)?.progress = Float(progress.completedUnitCount)/Float(progress.totalUnitCount)
+            }
+        } suc:{
+            DispatchQueue.main.async {
+                MBProgressHUD.forView(self.view)?.hide(animated: true)
+//                self.hud?.hide(animated: true)
+//                ToastHUD.showMsg(msg: "Upload Succeeded!", controller: self)
                 self.createUserContent()
             }
         } fail: { error in
             DispatchQueue.main.async {
-                hud.hide(animated: true)
+                MBProgressHUD.forView(self.view)?.hide(animated: true)
+//                self.hud?.hide(animated: true)
                 ToastHUD.showMsg(msg: "\(error)", controller: self)
             }
         }
@@ -322,8 +367,8 @@ extension ContentUploadSectionConfigViewController{
         TrainerBackend.shared.createUserContent(title: self.videoTitleValue, desc: self.videoDescValue,contentName: self.contentName, thumbnail: self.thumbnail, segments: str) { isSuc in
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-//                ToastHUD.showMsg(msg: "Upload Success!", controller: self)
-                let alertController = UIAlertController(title: "", message: "Upload Success,Waiting for processing...",
+//                ToastHUD.showMsg(msg: "Upload Succeeded!", controller: self)
+                let alertController = UIAlertController(title: "", message: "Upload Succeeded,Waiting for processing...",
                                                         preferredStyle: .alert)
                 let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
                     self.navigationController?.popViewController(animated: true)

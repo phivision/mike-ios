@@ -8,9 +8,15 @@
 import UIKit
 import Amplify
 import AWSMobileClientXCF
-class LoginViewController: UIViewController {
+import AWSCognitoAuthPlugin
+import AWSPluginsCore
+enum AuthProvider:String {
+    case signInWithApple
+}
+class LoginViewController: BaseViewController {
     @IBOutlet weak var loginBtn:UIButton!
     @IBOutlet weak var appleLoginBtn:UIButton!
+    var hub:MBProgressHUD?
     override func viewDidLoad() {
         super.viewDidLoad()
         configView()
@@ -25,19 +31,54 @@ class LoginViewController: UIViewController {
         let secondVC = LoginSecondViewController()
         self.navigationController?.pushViewController(secondVC, animated: true)
     }
-    @IBAction func appleLoginPressed(){
-        let hostedUIOptions = HostedUIOptions(identityProvider: "SignInWithApple")
-        AWSMobileClient.default().showSignIn(presentationAnchor: self.view.window!, hostedUIOptions: hostedUIOptions) { userState, error in
-            
+    @objc func appleLoginPressed(){
+        Amplify.Auth.signOut { result in
+            LoginTools.sharedTools.trainerModel = nil
+            DispatchQueue.main.async {
+                self.appleLogin()
+            }
         }
-//        Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!) { result in
-//                switch result {
-//                case .success:
-//                    print("Sign in succeeded")
-//                case .failure(let error):
-//                    print("Sign in failed \(error)")
-//                }
-//            }
+    }
+    func appleLogin(){
+        self.hub = MBProgressHUD.showAdded(to: self.view, animated: true)
+        LoginBackend.shared.signInWithApple {
+            self.updateDeviceToken()
+            DispatchQueue.main.async {
+                self.hub?.hide(animated: true)
+                let homeVC:HomeTabViewController = HomeTabViewController()
+                self.changeRootController(controller: homeVC)
+            }
+        } fail: { error in
+            DispatchQueue.main.async {
+                self.hub?.hide(animated: true)
+                ToastHUD.showMsg(msg:error, controller: self)
+            }
+        } confirmSignUp: {
+            
+        } needCreateProfile: {
+            DispatchQueue.main.async {
+                self.hub?.hide(animated: true)
+                ToastHUD.showMsg(msg:"Waiting for completing!", controller: self)
+                let vc = CompleteUserInfoViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    func updateDeviceToken(){
+        if StringUtils.isBlank(value: LoginTools.sharedTools.deviceToken) == false {
+            MessageBackend.shared.updateUserDeviceToken(deviceToken: LoginTools.sharedTools.deviceToken) {
+                
+            } fail: {
+                
+            }
+        }
+    }
+    func logOut(){
+        LoginBackend.shared.signOut {
+            LoginTools.sharedTools.trainerModel = nil
+        } fail: {
+
+        }
     }
     @IBAction func registerBtnPressed(){
         let secondVC = RegisterViewController()

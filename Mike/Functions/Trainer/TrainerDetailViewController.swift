@@ -22,6 +22,12 @@ class TrainerDetailViewController: BaseViewController{
     var userProfileModel:UserCenterModel?
     var isFeedMode:Bool = true
     var isSubscribed:Bool = false
+    //hide back btn
+    var hideBackBtn:Bool = false
+    //hud
+    var hud:MBProgressHUD?
+    //default view
+    @IBOutlet weak var addTrainerModelView:UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -42,6 +48,9 @@ class TrainerDetailViewController: BaseViewController{
             self.fetchFeedList()
             self.fetchFavList()
             self.configSubscribeStatus()
+            self.addTrainerModelView.isHidden = true
+        }else{
+            self.addTrainerModelView.isHidden = false
         }
     }
     @objc func refreshTrainerId(){
@@ -138,6 +147,10 @@ class TrainerDetailViewController: BaseViewController{
         self.mainCollection.register(UINib(nibName: "FeedOrFavColListCell", bundle: nil), forCellWithReuseIdentifier: "FeedOrFavColListCell")
         self.mainCollection.register(UINib(nibName: "UserProfileSectionTitleView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "UserProfileSectionTitleView")
     }
+    
+    @IBAction func addTraner() {
+        self.tabBarController?.selectedIndex = 1
+    }
 
     /*
     // MARK: - Navigation
@@ -203,7 +216,7 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
             let cell:TrainerDetailTopCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrainerDetailTopCell", for: indexPath) as! TrainerDetailTopCell
             cell.delegate = self
             if let model = self.userProfileModel {
-                cell.setModel(model: model)
+                cell.setModel(model: model,hiddenCloseBtn: self.hideBackBtn)
             }
             return cell
         case 1:
@@ -273,7 +286,7 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
         case 3:
             let vc:UserContentController = UserContentController()
             vc.userContentModel = (self.isFeedMode ? self.contentList[indexPath.row] : self.favList[indexPath.row])
-            vc.trainerId = LoginTools.sharedTools.userId()
+            vc.trainerId = self.curUserId
             let nav:UINavigationController = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             DispatchQueue.main.async {
@@ -345,7 +358,45 @@ extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
     }
     func subscribeBtnClicked() {
         if self.isSubscribed == false {
-            SubscriptionPaymentTools.shared.payForSubscribe(trainerId: self.curUserId)
+            self.hud = MBProgressHUD.showAdded(to: keyWindow?.rootViewController?.view ?? UIView(), animated: true)
+            MessageBackend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalanceForCurUser in
+                if self.userProfileModel?.SubscriptionPrice ?? 0 <= tokenBalanceForCurUser {
+                    DispatchQueue.main.async {
+                        self.subscribe()
+                    }
+                }else{
+                    DispatchQueue.main.async {
+                        self.hud?.hide(animated: true)
+                        ToastHUD.showMsg(msg: "Your tokenbalance is insufficient. Please recharge first！", controller: self)
+                    }
+                }
+            } fail: { error in
+                DispatchQueue.main.async {
+                    self.hud?.hide(animated: true)
+                }
+            }
+        }
+    }
+    func subscribe(){
+        let jsonData = try! JSONSerialization.data(withJSONObject: ["userID":LoginTools.sharedTools.userId(),"trainerID":self.curUserId ?? ""], options: .prettyPrinted)
+        let request = RESTRequest(apiName: "subscriptions",path: "/sub/",body:jsonData)
+        Amplify.API.post(request: request) { result in
+            switch result {
+            case .success(let data):
+                let str = String(decoding: data, as: UTF8.self)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
+                DispatchQueue.main.async {
+                    self.configSubscribeStatus()
+                    self.hud?.hide(animated: true)
+                }
+                print("Success \(str)")
+            case .failure(let apiError):
+                print("Failed", apiError)
+                DispatchQueue.main.async {
+                    self.hud?.hide(animated: true)
+                    ToastHUD.showMsg(msg: apiError.localizedDescription, controller: keyWindow?.rootViewController ?? UIViewController())
+                }
+            }
         }
     }
 }

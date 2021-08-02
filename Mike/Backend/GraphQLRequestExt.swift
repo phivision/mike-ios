@@ -23,6 +23,8 @@ extension GraphQLRequest{
                           LastName
                           FirstName
                           TokenPrice
+                          TokenBalance
+                          SubscriptionPrice
                           Contents(limit: 100) {
                             items {
                                 id
@@ -111,6 +113,8 @@ extension GraphQLRequest{
                 Description
                 Biography
                 TokenPrice
+                TokenBalance
+                SubscriptionPrice
               }
             }
             """
@@ -145,6 +149,8 @@ extension GraphQLRequest{
             owner
             updatedAt
             TokenPrice
+            TokenBalance
+            SubscriptionPrice
             UserMessageGroup {
                 id
             }
@@ -224,6 +230,8 @@ extension GraphQLRequest{
                       owner
                       updatedAt
                       TokenPrice
+                      TokenBalance
+                      SubscriptionPrice
                       UserMessageGroup {
                         id
                       }
@@ -349,6 +357,9 @@ extension GraphQLRequest{
                 Weight
                 createdAt
                 updatedAt
+                TokenPrice
+                TokenBalance
+                SubscriptionPrice
               }
             }
         """
@@ -858,6 +869,42 @@ extension GraphQLRequest{
                                         variables: ["CreatorID": creatorId],
                                         responseType: JSONValue.self)
         }
+    static func updateTokenPriceAndSubPrice(tokenPrice tPrice:String,subPrice subscriptionPrice:String) -> GraphQLRequest<JSONValue> {
+            let document = """
+                        mutation MyMutation($id: ID!, $SubscriptionPrice: Int, $TokenPrice: Int) {
+                          updateUserProfile(input: {id: $id, SubscriptionPrice: $SubscriptionPrice, TokenPrice: $TokenPrice}) {
+                            id
+                            TokenPrice
+                            SubscriptionPrice
+                          }
+                        }
+            """
+            return GraphQLRequest<JSONValue>(document: document,
+                                             variables: ["id": LoginTools.sharedTools.userId(),"SubscriptionPrice":subscriptionPrice,"TokenPrice":tPrice],
+                                        responseType: JSONValue.self)
+        }
     
+    static func createProfile(subId:String,firstName:String,lastName:String,email:String) -> GraphQLRequest<JSONValue>{
+        let document = """
+            mutation MyMutation($FirstName: String, $LastName: String, $RegDate: String!, $UserRole: String!, $id: ID, $owner: String!, $Email: AWSEmail) {
+              createUserProfile(input: {UserRole: $UserRole, id: $id, owner: $owner, RegDate: $RegDate, LastName: $LastName, FirstName: $FirstName, Email: $Email}) {
+                FirstName
+                LastName
+                RegDate
+                id
+                owner
+                UserRole
+                Email
+              }
+            }
+        """
+        let dateFormatter:DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateStr = dateFormatter.string(from: Date())
+        return GraphQLRequest<JSONValue>(document: document,
+                                         variables: ["id": subId,"owner":subId,"FirstName":firstName,"LastName":lastName,"Email":email,"RegDate":dateStr,"UserRole":"student"],
+                                    responseType: JSONValue.self)
+    }
+
     
 }

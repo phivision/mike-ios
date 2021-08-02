@@ -12,8 +12,9 @@ class ToastHUD: NSObject {
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: controller.view, animated: true)
         hud.mode = .text
         hud.detailsLabel.text = msg
+        hud.detailsLabel.font = UIFont.init(name: nAvenirMedium, size: 16)
         hud.removeFromSuperViewOnHide = true
         hud.isUserInteractionEnabled = false
-        hud.hide(animated: true, afterDelay: 1.0)
+        hud.hide(animated: true, afterDelay: 2.0)
     }
 }

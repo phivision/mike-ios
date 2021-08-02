@@ -125,6 +125,9 @@ class TrainerBackend: NSObject {
         let transferUtility = AWSS3TransferUtility.default()
         let expression = AWSS3TransferUtilityUploadExpression()
         expression.progressBlock = {(task, progress) in
+            print("1~~~~~~~~~~~~~~~~~~~~~~\(progress.completedUnitCount)")
+            print("2~~~~~~~~~~~~~~~~~~~~~~\(progress.totalUnitCount)")
+            print("3~~~~~~~~~~~~~~~~~~~~~~\(progress.fileTotalCount)")
             progressBlock(progress)
         }
         var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
@@ -138,12 +141,13 @@ class TrainerBackend: NSObject {
         transferUtility.uploadData(videoData, key: "input/\(videoKey ?? "")", contentType: "video/*", expression: expression, completionHandler: completionHandler)
     }
     //upload image
-    func uploadImage(imgData:Data!,imgName:String?,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+    func uploadImage(imgData:Data!,imgName:String?,progressBlock:@escaping (_ progress:Progress)->Void,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
         Amplify.Storage.uploadData(
             key: imgName ?? "",
             data: imgData,
             progressListener: { progress in
                 print("Progress: \(progress)")
+                progressBlock(progress)
             }, resultListener: { event in
                 switch event {
                 case .success(let data):
@@ -226,5 +230,69 @@ class TrainerBackend: NSObject {
             }
         }
         SubscriptionTools.sharedTools.createContentSubscription = subscription
+    }
+    public func fetchTrainerUserProfile(userId:String,suc:@escaping (_ trainerModel:UserCenterTrainer)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchUserProfile(byId: userId)){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        fail("fetch User Profile Fail");
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        fail("fetch User Profile Fail");
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["getUserProfile"] as? NSDictionary else {
+                        fail("fetch User Profile Fail");
+                        return
+                    }
+                    suc(UserCenterTrainer.init(fromDictionary: subDic as! [String : Any]));
+                    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(LoginTools.sharedTools.userId())");
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)");
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)");
+            }
+        }
+    }
+    func updateTokenPriceAndSubPrice(tokenPrice:String?,subPrice:String?,suc:@escaping ()->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.mutate(request: .updateTokenPriceAndSubPrice(tokenPrice: tokenPrice ?? "", subPrice: subPrice ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        fail("Failed")
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        fail("Failed")
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    if let subDic = dic["updateUserProfile"] as? NSDictionary {
+                        print("\(subDic)")
+                        suc()
+                    }else {
+                        fail("Failed")
+                    }
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
     }
 }
