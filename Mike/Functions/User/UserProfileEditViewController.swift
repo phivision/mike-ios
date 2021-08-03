@@ -27,7 +27,7 @@ class UserProfileEditViewController: BaseViewController {
     var originalFirstName: String?
     var originalLastName: String?
     var originalDescValue: String?
-    var originalUserImage: String?
+    var changedPic: Bool = false
     
     var firstName:String?
     var lastName:String?
@@ -84,7 +84,6 @@ class UserProfileEditViewController: BaseViewController {
         self.originalFirstName = userModel.firstName
         self.originalLastName = userModel.lastName
         self.originalDescValue = userModel.descriptionField
-        self.originalUserImage = userModel.userImage
         
         self.saveBtn.backgroundColor = UIColor(255, 145, 96)
         self.saveBtn.isEnabled = false
@@ -98,7 +97,7 @@ class UserProfileEditViewController: BaseViewController {
     }
 
     @IBAction func textValueChanged(textfield:UITextField){
-        if self.firstNameText.text!.isEmpty || self.lastNameText.text!.isEmpty || (self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && self.userImage == self.originalUserImage){
+        if self.firstNameText.text!.isEmpty || self.lastNameText.text!.isEmpty || (self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && !self.changedPic){
             self.saveBtn.backgroundColor = UIColor(255, 145, 96)
             self.saveBtn.isEnabled = false
         } else {
@@ -168,6 +167,14 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
             return
         }
         self.curAvatar = photos.first!
+        self.changedPic = true
+        if  self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && !self.changedPic{
+            self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+            self.saveBtn.isEnabled = false
+        } else {
+            self.saveBtn.backgroundColor = UIColor(255, 78, 0)
+            self.saveBtn.isEnabled = true
+        }
         self.avatarImg.setImage(self.curAvatar, for: .normal)
     }
     func uploadAvatar(){
@@ -180,7 +187,7 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
         }else{
             self.userImage = "UserImage\(LoginTools.sharedTools.userId())"
         }
-        if  self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && self.userImage == self.originalUserImage{
+        if  self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && !self.changedPic{
             self.saveBtn.backgroundColor = UIColor(255, 145, 96)
             self.saveBtn.isEnabled = false
         } else {
@@ -258,6 +265,14 @@ extension UserProfileEditViewController:UIImagePickerControllerDelegate,UINaviga
             image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage ?? UIImage()
         }
         self.curAvatar = image
+        self.changedPic = true
+        if  self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && !self.changedPic{
+            self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+            self.saveBtn.isEnabled = false
+        } else {
+            self.saveBtn.backgroundColor = UIColor(255, 78, 0)
+            self.saveBtn.isEnabled = true
+        }
         self.avatarImg.setImage(self.curAvatar, for: .normal)
         picker.dismiss(animated: true, completion: nil)
     }
@@ -272,7 +287,7 @@ extension UserProfileEditViewController:UITextFieldDelegate,UITextViewDelegate{
         return true
     }
     func textViewDidChange(_ textView: UITextView) {
-        if  self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && self.userImage == self.originalUserImage{
+        if  self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && !self.changedPic{
             self.saveBtn.backgroundColor = UIColor(255, 145, 96)
             self.saveBtn.isEnabled = false
         } else {
