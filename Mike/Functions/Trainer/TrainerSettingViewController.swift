@@ -121,7 +121,12 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
         case 1:
             return 1
         case 2:
-            return 2
+            if (LoginTools.sharedTools.userInfo().owner ?? "").hasPrefix("signinwithapple") {
+                return 1
+            }else{
+                return 2
+            }
+            
         default:
             return 0
         }
@@ -174,17 +179,26 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
             let cell:UserSettingNotificationCell = tableView.dequeueReusableCell(withIdentifier: "UserSettingNotificationCell", for: indexPath) as! UserSettingNotificationCell
             return cell
         case 2:
-            let cell:UserSettingTextBtnCell = tableView.dequeueReusableCell(withIdentifier: "UserSettingTextBtnCell", for: indexPath) as! UserSettingTextBtnCell
-            if indexPath.row == 0 {
-                cell.textBtn.setTitle("Change Password", for: .normal)
-                cell.textBtn.setTitleColor(UIColor.black, for: .normal)
-                cell.textBtn.addTarget(self, action: #selector(changePwd), for: .touchUpInside)
-            }else{
+            if (LoginTools.sharedTools.userInfo().owner ?? "").hasPrefix("signinwithapple") {
+                let cell:UserSettingTextBtnCell = tableView.dequeueReusableCell(withIdentifier: "UserSettingTextBtnCell", for: indexPath) as! UserSettingTextBtnCell
                 cell.textBtn.setTitle("Log Out", for: .normal)
                 cell.textBtn.setTitleColor(orangeColor, for: .normal)
                 cell.textBtn.addTarget(self, action: #selector(signOut), for: .touchUpInside)
+                return cell
+            }else{
+                let cell:UserSettingTextBtnCell = tableView.dequeueReusableCell(withIdentifier: "UserSettingTextBtnCell", for: indexPath) as! UserSettingTextBtnCell
+                if indexPath.row == 0 {
+                    cell.textBtn.setTitle("Change Password", for: .normal)
+                    cell.textBtn.setTitleColor(UIColor.black, for: .normal)
+                    cell.textBtn.addTarget(self, action: #selector(changePwd), for: .touchUpInside)
+                }else{
+                    cell.textBtn.setTitle("Log Out", for: .normal)
+                    cell.textBtn.setTitleColor(orangeColor, for: .normal)
+                    cell.textBtn.addTarget(self, action: #selector(signOut), for: .touchUpInside)
+                }
+                return cell
             }
-            return cell
+            
         default:
             return UITableViewCell()
         }

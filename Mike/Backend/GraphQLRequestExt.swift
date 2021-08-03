@@ -115,6 +115,7 @@ extension GraphQLRequest{
                 TokenPrice
                 TokenBalance
                 SubscriptionPrice
+                owner
               }
             }
             """
@@ -689,6 +690,37 @@ extension GraphQLRequest{
         """
         return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
                                          variables: ["ToUserID": toUserId,"eq":status],
+                                    responseType: JSONValue.self)
+    }
+    static func fetchMessageByFromUserId(fromUserId:String,status:String) -> GraphQLRequest<JSONValue>{
+        print("\(fromUserId)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\(status)")
+        let document = """
+        query MyQuery2($FromUserID: ID = "", $eq: MessageStatus = UNRESPONDED) {
+          messageByFromUserID(FromUserID: $FromUserID, filter: {Status: {eq: $eq}}, limit: 10000) {
+            items {
+                    id
+                    PostMessages
+                    ToUserID
+                    FromUserID
+                    Status
+                    Type
+                    createdAt
+                    ToUser {
+                      FirstName
+                      LastName
+                      UserImage
+                    }
+                    FromUser {
+                      LastName
+                      FirstName
+                      UserImage
+                    }
+            }
+          }
+        }
+        """
+        return GraphQLRequest<JSONValue>(apiName: "mikeAmplify", document: document,
+                                         variables: ["FromUserID": fromUserId,"eq":status],
                                     responseType: JSONValue.self)
     }
     static func updateMessageStatus(byToMessageModel msgModel:MessageListModel,messageStatus status:String) -> GraphQLRequest<JSONValue>{

@@ -23,6 +23,7 @@ class LoginInfoModel : NSObject, NSCoding, NSSecureCoding{
 	var userRole : String!
 	var weight : Double!
 	var id : String!
+    var owner: String!
 
 
 	/**
@@ -45,6 +46,7 @@ class LoginInfoModel : NSObject, NSCoding, NSSecureCoding{
 		userRole = dictionary["UserRole"] as? String
 		weight = dictionary["Weight"] as? Double
 		id = dictionary["id"] as? String
+        owner = dictionary["owner"] as? String
 	}
 
 	/**
@@ -101,6 +103,9 @@ class LoginInfoModel : NSObject, NSCoding, NSSecureCoding{
 		if id != nil{
 			dictionary["id"] = id
 		}
+        if owner != nil {
+            dictionary["owner"] = owner
+        }
 		return dictionary
 	}
 
@@ -126,7 +131,7 @@ class LoginInfoModel : NSObject, NSCoding, NSSecureCoding{
          userRole = aDecoder.decodeObject(forKey: "UserRole") as? String
          weight = aDecoder.decodeObject(forKey: "Weight") as? Double
          id = aDecoder.decodeObject(forKey: "id") as? String
-
+        owner = aDecoder.decodeObject(forKey: "owner") as? String
 	}
 
     /**
@@ -183,7 +188,9 @@ class LoginInfoModel : NSObject, NSCoding, NSSecureCoding{
 		if id != nil{
 			aCoder.encode(id, forKey: "id")
 		}
-
+        if owner != nil {
+            aCoder.encode(owner,forKey: "owner")
+        }
 	}
 
 }

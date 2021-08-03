@@ -62,6 +62,7 @@
             <constraints>
                 <constraint firstItem="js8-n0-HNj" firstAttribute="centerY" secondItem="UKa-J8-qDG" secondAttribute="centerY" id="0R1-2f-vK1"/>
                 <constraint firstItem="js8-n0-HNj" firstAttribute="centerX" secondItem="KRL-H0-Ouv" secondAttribute="centerX" id="8cG-eM-9PH"/>
+                <constraint firstItem="3bR-03-XjO" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="1:2" constant="-25" id="Ifo-dr-vsE"/>
                 <constraint firstItem="UKa-J8-qDG" firstAttribute="leading" secondItem="js8-n0-HNj" secondAttribute="trailing" constant="5" id="JPc-27-mXs"/>
                 <constraint firstItem="KRL-H0-Ouv" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="1:2" constant="-25" id="KMw-by-8xx"/>
                 <constraint firstItem="KRL-H0-Ouv" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Mdo-VL-Jsw"/>
@@ -69,12 +70,12 @@
                 <constraint firstItem="3bR-03-XjO" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="jFR-pK-cCp"/>
                 <constraint firstItem="js8-n0-HNj" firstAttribute="centerY" secondItem="KRL-H0-Ouv" secondAttribute="centerY" id="sql-Tb-GjE"/>
                 <constraint firstItem="KRL-H0-Ouv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="tzi-UE-9QK"/>
-                <constraint firstItem="3bR-03-XjO" firstAttribute="width" secondItem="KRL-H0-Ouv" secondAttribute="width" id="y0z-bt-ch1"/>
             </constraints>
             <size key="customSize" width="440" height="50"/>
             <connections>
                 <outlet property="iconCoin" destination="UKa-J8-qDG" id="30i-xh-wbB"/>
                 <outlet property="messageBtn" destination="3bR-03-XjO" id="u0P-wY-4B4"/>
+                <outlet property="messageBtnWidthRatio" destination="Ifo-dr-vsE" id="45H-25-1te"/>
                 <outlet property="priceLab" destination="js8-n0-HNj" id="tD8-8G-OI4"/>
                 <outlet property="subscribeBtn" destination="KRL-H0-Ouv" id="BvX-Al-MQO"/>
                 <outlet property="subscribeBtnWidthRatio" destination="KMw-by-8xx" id="a5d-qR-VlM"/>
