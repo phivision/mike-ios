@@ -55,54 +55,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BEDC6914-2BBA-4AB7-B075-6DC321822F60"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Mike/Functions/Trainer/TrainerDetailViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
-            landmarkName = "userContentClicked(model:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "BEDC6914-2BBA-4AB7-B075-6DC321822F60 - 13ffb4314a8e44d1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Motion.TrainerDetailViewController.userContentClicked(model: Motion.UserCenterContent) -&gt; ()"
-                  moduleName = "Motion"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yindan/mike-ios/Mike/Functions/Trainer/TrainerDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "344"
-                  endingLineNumber = "344"
-                  offsetFromSymbolStart = "388">
-               </Location>
-               <Location
-                  uuid = "BEDC6914-2BBA-4AB7-B075-6DC321822F60 - 226458268b1e8c48"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in Motion.TrainerDetailViewController.userContentClicked(model: Motion.UserCenterContent) -&gt; ()"
-                  moduleName = "Motion"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yindan/mike-ios/Mike/Functions/Trainer/TrainerDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "345"
-                  endingLineNumber = "345"
-                  offsetFromSymbolStart = "32">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "B0229D53-9A60-45FD-A278-E88179F3AB87"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -176,7 +128,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "51"
                   endingLineNumber = "51"
-                  offsetFromSymbolStart = "1550">
+                  offsetFromSymbolStart = "1296">
                </Location>
                <Location
                   uuid = "165DD2F8-1A60-43D9-A307-0175842340CE - 9f3df273ff1acb95"
@@ -191,7 +143,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
                   endingLineNumber = "53"
-                  offsetFromSymbolStart = "269">
+                  offsetFromSymbolStart = "320">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -240,7 +192,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "68"
                   endingLineNumber = "68"
-                  offsetFromSymbolStart = "2113">
+                  offsetFromSymbolStart = "1668">
                </Location>
                <Location
                   uuid = "FD1CA3B1-35EB-4FC4-B5FF-8C84246890E1 - a6237aa14ce05219"
@@ -255,7 +207,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "69"
                   endingLineNumber = "69"
-                  offsetFromSymbolStart = "52">
+                  offsetFromSymbolStart = "24">
                </Location>
             </Locations>
          </BreakpointContent>

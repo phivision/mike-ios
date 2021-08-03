@@ -211,6 +211,7 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
     }
     @objc func signOut(){
         LoginBackend.shared.signOut {
+            self.clearDefault()
             Backend.shared.resetDeviceToken()
             LoginTools.sharedTools.removeUserInfo()
             SubscriptionTools.sharedTools.outterSubscription?.cancel()
@@ -226,6 +227,18 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
             }
         } fail: {
 
+        }
+    }
+    func clearDefault(){
+        let defs = UserDefaults.standard
+        let defaults = defs.dictionaryRepresentation()
+        for key in defaults.keys {
+            if key != "firstLaunch" {
+                defs.removeObject(forKey: key)
+                defs.synchronize()
+            }else{
+                print("\(String(describing: defs.object(forKey: key)))")
+            }
         }
     }
 }

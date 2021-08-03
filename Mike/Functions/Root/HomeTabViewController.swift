@@ -35,6 +35,7 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
         commitInitView()
         self.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(updateCenterIcon), name: NSNotification.Name(rawValue: changeTabbarCenterIcon), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeCurTrainerByNoti(notification:)), name: NSNotification.Name(rawValue: changeUserProfileToNew), object: nil)
     }
     
     @objc func updateCenterIcon(){
@@ -123,6 +124,12 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
             }
             self.tabSelectIndex = tabBarController.selectedIndex
         }
+    }
+    
+    @objc func changeCurTrainerByNoti(notification: Notification) {
+        LoginTools.sharedTools.trainerModel = notification.object as? UserCenterTrainer
+        self.updateCenterIcon()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerDetail), object: nil)
     }
     /*
     // MARK: - Navigation
