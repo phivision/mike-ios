@@ -21,6 +21,18 @@ class MessageListForTrainerRoleViewController: BaseViewController {
         var studentList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
         return studentList
     }()
+    lazy var studentIdList:Array<String> = {
+        var studentIdList:Array<String> = Array<String>()
+        return studentIdList
+    }()
+    lazy var unSubUserList:Array<UserCenterTrainer> = {
+        var unSubUserList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
+        return unSubUserList
+    }()
+    lazy var unSubUserIdList:Array<String> = {
+        var unSubUserIdList:Array<String> = Array<String>()
+        return unSubUserIdList
+    }()
     var isRequest:Bool = false
     var curFromUserId:String = ""
     var userProfileModel:UserCenterModel?
@@ -37,12 +49,13 @@ class MessageListForTrainerRoleViewController: BaseViewController {
         super.viewWillAppear(true)
         self.navigationController?.isNavigationBarHidden = true
         self.curFromUserId = ""
-        if self.isRequest == false {
-//            fetchSpeakerList()
-            self.mainTableView.switchRefreshHeader(to: .refreshing)
-        }else{
-            self.fetchMessageList()
-        }
+//        if self.isRequest == false {
+////            fetchSpeakerList()
+//            self.mainTableView.switchRefreshHeader(to: .refreshing)
+//        }else{
+//            self.fetchMessageList()
+//        }
+        self.refreshData()
         self.fetchUserProfile()
         self.fetchTokenBalance()
     }
@@ -64,17 +77,17 @@ class MessageListForTrainerRoleViewController: BaseViewController {
         self.mainTableView.register(UINib(nibName: "MessageGroupListCell", bundle: nil), forCellReuseIdentifier: "MessageGroupListCell")
         self.mainTableView.register(UINib(nibName: "MessageTrainerListCell", bundle: nil), forCellReuseIdentifier: "MessageTrainerListCell")
         self.mainTableView.register(UINib(nibName: "MessageEmptyCell", bundle: nil), forCellReuseIdentifier: "MessageEmptyCell")
+        self.mainTableView.register(UINib(nibName: "UserContentSectionTitleView", bundle: nil), forHeaderFooterViewReuseIdentifier: "UserContentSectionTitleView")
         self.mainTableView.estimatedRowHeight = 88;
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
         let header = ElasticRefreshHeader()
         self.mainTableView.configRefreshHeader(with: header,container:self){ [weak self] in
-            self?.fetchUserList()
+            self?.refreshData()
         }
     }
     
     @objc func refreshData(){
-        self.studentList.removeAll()
         self.fetchUserList()
     }
     func fetchUserProfile(){
@@ -101,7 +114,11 @@ class MessageListForTrainerRoleViewController: BaseViewController {
     func fetchUserList(){
         UserProfileBackend.shared.fetchSubscriptionUserList { userList in
             self.studentList.removeAll()
+            self.studentIdList.removeAll()
             self.studentList.append(contentsOf: userList)
+            for item in userList{
+                self.studentIdList.append(item.id)
+            }
             DispatchQueue.main.async {
                 self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
                 self.mainTableView.reloadData()
@@ -133,6 +150,11 @@ class MessageListForTrainerRoleViewController: BaseViewController {
                 UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
                 UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
                 UserDefaults.standard.synchronize()
+                
+                self.unSubUserList.removeAll()
+                self.unSubUserIdList.removeAll()
+                //filter unsub user
+                self.handleUnSubUserMsgModel(msgModel: msgModel)
             }
             DispatchQueue.main.async {
                 self.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
@@ -150,6 +172,7 @@ class MessageListForTrainerRoleViewController: BaseViewController {
                 UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
                 UserDefaults.standard.synchronize()
                 DispatchQueue.main.async {
+                    self.handleUnSubUserMsgModel(msgModel: msgModel)
                     self.mainTableView.reloadData()
                 }
             }
@@ -166,6 +189,24 @@ class MessageListForTrainerRoleViewController: BaseViewController {
             }
         }
     }
+    func handleUnSubUserMsgModel(msgModel:MessageListModel){
+        if msgModel.fromUserID != msgModel.toUserID {
+            if !self.studentIdList.contains(msgModel.fromUserID) {
+                if !self.unSubUserIdList.contains(msgModel.fromUserID) {
+                    self.unSubUserIdList.append(msgModel.fromUserID)
+                    var dic = Dictionary<String,Any>()
+                    for itemKey in msgModel.fromUser.toDictionary().keys {
+                        dic[itemKey] = msgModel.fromUser.toDictionary()[itemKey]
+                    }
+                    dic["id"] = msgModel.fromUserID
+                    self.unSubUserList.append(UserCenterTrainer(fromDictionary: dic))
+                    UserDefaults.standard.setValue(true, forKey: "\(message_msgForTrainerUnRead)\(msgModel.fromUserID ?? "")")
+                    UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForTrainer)\(msgModel.fromUserID ?? "")")
+                    UserDefaults.standard.synchronize()
+                }
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 
@@ -179,7 +220,28 @@ class MessageListForTrainerRoleViewController: BaseViewController {
 }
 extension MessageListForTrainerRoleViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+       return 26
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header:UserContentSectionTitleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "UserContentSectionTitleView") as! UserContentSectionTitleView
+        header.titleLab.font = UIFont.init(name: nAvenirBlack, size: 18)
+        switch section {
+        case 0:
+            header.titleLab.text = "Subscription Group"
+            break
+        case 1:
+            header.titleLab.text = "Subscriptions"
+            break
+        case 2:
+            header.titleLab.text = "Unsubscriptions"
+            break
+        default:
+            break
+        }
+        return header
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -191,6 +253,8 @@ extension MessageListForTrainerRoleViewController:UITableViewDelegate,UITableVie
             }
         case 1:
             return self.studentList.count
+        case 2:
+            return self.unSubUserList.count
         default:
              return 0
         }
@@ -208,6 +272,10 @@ extension MessageListForTrainerRoleViewController:UITableViewDelegate,UITableVie
         case 1:
             let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
             cell.setModelForTrainer(model: self.studentList[indexPath.row])
+            return cell
+        case 2:
+            let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
+            cell.setModelForTrainer(model: self.unSubUserList[indexPath.row])
             return cell
         default:
              return UITableViewCell()
@@ -228,6 +296,17 @@ extension MessageListForTrainerRoleViewController:UITableViewDelegate,UITableVie
                 return
             }
             let model = self.studentList[indexPath.row]
+            self.curFromUserId = model.id
+            let vc:MessageChatForTrainerRoleViewController = MessageChatForTrainerRoleViewController()
+            vc.toUserId = model.id
+            vc.toUserName =  "\(model.firstName ?? "") \(model.lastName ?? "")"
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        case 2:
+            if self.unSubUserList.count == 0 {
+                return
+            }
+            let model = self.unSubUserList[indexPath.row]
             self.curFromUserId = model.id
             let vc:MessageChatForTrainerRoleViewController = MessageChatForTrainerRoleViewController()
             vc.toUserId = model.id

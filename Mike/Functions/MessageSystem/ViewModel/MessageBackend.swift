@@ -242,6 +242,44 @@ class MessageBackend: NSObject {
             }
         }
     }
+    func fetchMessageListByFromUserId(fromUserId:String?,status:String?,suc:@escaping (_ list:Array<MessageListModel>)->Void,fail:@escaping (_ msg:String)->Void){
+        Amplify.API.query(request: .fetchMessageByFromUserId(fromUserId: fromUserId ?? "", status: status ?? "")){
+            event in
+            switch event {
+            case .success(let result):
+                switch result {
+                case .success(let data):
+                    guard let postData = try? JSONEncoder().encode(data) else {
+                        return
+                    }
+                    guard  let d = try? JSONSerialization.jsonObject(with: postData, options: .mutableContainers) else {
+                        return
+                    }
+                    let dic = d as! NSDictionary
+                    guard let subDic = dic["messageByFromUserID"] as? NSDictionary else {
+                        return
+                    }
+                    guard let itemList = subDic["items"] as? NSArray else {
+                        return
+                    }
+                    print("~~~~~~~~~~~~\(itemList)")
+                    var contentList = Array<MessageListModel>()
+                    for item in itemList {
+                        if let itemDic = item as? NSDictionary {
+                            contentList.append(MessageListModel(fromDictionary: itemDic as! [String : Any]))
+                        }
+                    }
+                    suc(contentList)
+                case .failure(let error):
+                    print("Got failed result with \(error.errorDescription)")
+                    fail("\(error.errorDescription)")
+                }
+            case .failure(let error):
+                print("Got failed event with error \(error)")
+                fail("\(error)")
+            }
+        }
+    }
     //updateMessage status
     func updateMessageStatus(messageModel:MessageListModel,status:String,suc:@escaping ()->Void,fail:@escaping ()->Void) {
         Amplify.API.mutate(request: .updateMessageStatus(byToMessageModel: messageModel, messageStatus: status)){

@@ -350,13 +350,13 @@ extension TrainerDetailViewController:UserProfileFavHorizonListCellDelegate{
 }
 extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
     func messageMeBtnClicked() {
-        if self.isSubscribed == true {
+//        if self.isSubscribed == true {
             let vc:MessageChatForStudentRoleViewController = MessageChatForStudentRoleViewController()
             vc.toUserId = self.curUserId
             vc.toUserName =  "\(self.userProfileModel?.firstName ?? "") \(self.userProfileModel?.lastName ?? "")"
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
-        }
+//        }
     }
     func subscribeBtnClicked() {
         if self.isSubscribed == false {

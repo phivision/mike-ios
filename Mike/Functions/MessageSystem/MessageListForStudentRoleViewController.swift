@@ -21,9 +21,21 @@ class MessageListForStudentRoleViewController: BaseViewController {
         var trainerList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
         return trainerList
     }()
+    lazy var trainerIdList:Array<String> = {
+        var trainerIdList:Array<String> = Array<String>()
+        return trainerIdList
+    }()
     lazy var groupList:Array<UserCenterTrainer> = {
         var groupList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
         return groupList
+    }()
+    lazy var unSubTrainerList:Array<UserCenterTrainer> = {
+        var unSubTrainerList:Array<UserCenterTrainer> = Array<UserCenterTrainer>()
+        return unSubTrainerList
+    }()
+    lazy var unSubTrainerIdList:Array<String> = {
+        var unSubTrainerList:Array<String> = Array<String>()
+        return unSubTrainerList
     }()
     var isRequest:Bool = false
     var curFromUserId:String = ""
@@ -41,7 +53,7 @@ class MessageListForStudentRoleViewController: BaseViewController {
         self.curFromUserId = ""
         self.fetchTokenBalance()
 //        if self.isRequest == false {
-            self.fetchTrainerList()
+            self.refreshData()
 //        }else{
 //            self.fetchMessageList()
 //        }
@@ -65,18 +77,21 @@ class MessageListForStudentRoleViewController: BaseViewController {
         self.mainTableView.register(UINib(nibName: "MessageTrainerListCell", bundle: nil), forCellReuseIdentifier: "MessageTrainerListCell")
         self.mainTableView.register(UINib(nibName: "MessageEmptyCell", bundle: nil), forCellReuseIdentifier: "MessageEmptyCell")
         self.mainTableView.register(UINib(nibName: "MessageGroupListCell", bundle: nil), forCellReuseIdentifier: "MessageGroupListCell")
+        self.mainTableView.register(UINib(nibName: "UserContentSectionTitleView", bundle: nil), forHeaderFooterViewReuseIdentifier: "UserContentSectionTitleView")
         self.mainTableView.estimatedRowHeight = 88;
         self.mainTableView.separatorStyle = .none
         self.mainTableView.tableFooterView = UIView()
         let header = ElasticRefreshHeader()
         self.mainTableView.configRefreshHeader(with: header,container:self){ [weak self] in
-            self?.fetchTrainerList()
+            self?.refreshData()
         }
     }
     
     @objc func refreshData(){
-        self.trainerList.removeAll()
-        self.fetchTrainerList()
+        DispatchQueue.main.async {
+            self.mainTableView.reloadData()
+            self.fetchTrainerList()
+        }
     }
     func fetchTokenBalance(){
         MessageBackend.shared.fetchTokenBalance(userId: LoginTools.sharedTools.userId()) { tokenBalance in
@@ -91,8 +106,13 @@ class MessageListForStudentRoleViewController: BaseViewController {
     func fetchTrainerList(){
         UserProfileBackend.shared.fetchSubscriptionTrainerList { trainerList,subIdList in
             self.trainerList.removeAll()
+            self.trainerIdList.removeAll()
             self.groupList.removeAll()
+    
             self.trainerList.append(contentsOf: trainerList)
+            for item in trainerList{
+                self.trainerIdList.append(item.id)
+            }
             for trainerModel in self.trainerList{
                 if !StringUtils.isBlank(value: trainerModel.userMessageGroup?.id) {
                     self.groupList.append(trainerModel)
@@ -129,6 +149,57 @@ class MessageListForStudentRoleViewController: BaseViewController {
                 UserDefaults.standard.setValue(true, forKey: "\(message_msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
                 UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForStudent)\(msgModel.fromUserID ?? "")")
                 UserDefaults.standard.synchronize()
+                
+                self.unSubTrainerIdList.removeAll()
+                self.unSubTrainerList.removeAll()
+                if msgModel.fromUserID != msgModel.toUserID {
+                    if !self.trainerIdList.contains(msgModel.fromUserID) {
+                        if !self.unSubTrainerIdList.contains(msgModel.fromUserID) {
+                            self.unSubTrainerIdList.append(msgModel.fromUserID)
+                            var dic = Dictionary<String,Any>()
+                            for itemKey in msgModel.fromUser.toDictionary().keys {
+                                dic[itemKey] = msgModel.fromUser.toDictionary()[itemKey]
+                            }
+                            dic["id"] = msgModel.fromUserID
+                            self.unSubTrainerList.append(UserCenterTrainer(fromDictionary: dic))
+                            UserDefaults.standard.setValue(true, forKey: "\(message_msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
+                            UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForStudent)\(msgModel.fromUserID ?? "")")
+                            UserDefaults.standard.synchronize()
+                        }
+                    }
+                }
+            }
+            self.fetchUnResponseList()
+            DispatchQueue.main.async {
+                self.mainTableView.reloadData()
+            }
+        } fail: { error in
+            
+        }
+    }
+    func fetchUnResponseList(){
+        MessageBackend.shared.fetchMessageListByFromUserId(fromUserId:LoginTools.sharedTools.userId(), status:"UNRESPONDED") { msgList in
+            for msgModel in msgList{
+                let result = UserDefaults.standard.bool(forKey: "\(message_msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
+                if result == false {
+                    UserDefaults.standard.setValue(true, forKey: "\(message_msgForStudentUnRead)\(msgModel.fromUserID ?? "")")
+                    UserDefaults.standard.synchronize()
+                }
+                if msgModel.fromUserID != msgModel.toUserID {
+                    if !self.trainerIdList.contains(msgModel.toUserID) {
+                        if !self.unSubTrainerIdList.contains(msgModel.toUserID) {
+                            self.unSubTrainerIdList.append(msgModel.toUserID)
+                            var dic = Dictionary<String,Any>()
+                            for itemKey in msgModel.toUser.toDictionary().keys {
+                                dic[itemKey] = msgModel.toUser.toDictionary()[itemKey]
+                            }
+                            dic["id"] = msgModel.toUserID
+                            self.unSubTrainerList.append(UserCenterTrainer(fromDictionary: dic))
+                            UserDefaults.standard.setValue(msgModel.postMessages, forKey: "\(message_lastMsgForStudent)\(msgModel.toUserID ?? "")")
+                            UserDefaults.standard.synchronize()
+                        }
+                    }
+                }
             }
             DispatchQueue.main.async {
                 self.mainTableView.reloadData()
@@ -183,30 +254,66 @@ class MessageListForStudentRoleViewController: BaseViewController {
 }
 extension MessageListForStudentRoleViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+       return 26
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header:UserContentSectionTitleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "UserContentSectionTitleView") as! UserContentSectionTitleView
+        header.titleLab.font = UIFont.init(name: nAvenirBlack, size: 18)
+        switch section {
+        case 0:
+            header.titleLab.text = "Subscriptions"
+            break
+        case 1:
+            header.titleLab.text = "Subscription Groups"
+            break
+        case 2:
+            header.titleLab.text = "Unsubscriptions"
+            break
+        default:
+            break
+        }
+        return header
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        switch section {
+        case 0:
             return self.trainerList.count
+        case 1:
+            return self.groupList.count
+        case 2:
+            return self.unSubTrainerList.count
+        default:
+            return 0
         }
-        return self.groupList.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
             cell.setModelForStudent(model: self.trainerList[indexPath.row])
             return cell
+        case 1:
+            let cell:MessageGroupListCell = tableView.dequeueReusableCell(withIdentifier: "MessageGroupListCell", for: indexPath) as! MessageGroupListCell
+            cell.setGroupModel(model: self.groupList[indexPath.row])
+            return cell
+        case 2:
+            let cell:MessageTrainerListCell = tableView.dequeueReusableCell(withIdentifier: "MessageTrainerListCell", for: indexPath) as! MessageTrainerListCell
+            cell.setModelForStudent(model: self.unSubTrainerList[indexPath.row])
+            return cell
+        default:
+            return UITableViewCell()
         }
-        let cell:MessageGroupListCell = tableView.dequeueReusableCell(withIdentifier: "MessageGroupListCell", for: indexPath) as! MessageGroupListCell
-        cell.setGroupModel(model: self.groupList[indexPath.row])
-        return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             if self.trainerList.count == 0 {
                 return
             }
@@ -217,7 +324,8 @@ extension MessageListForStudentRoleViewController:UITableViewDelegate,UITableVie
             vc.toUserName =  "\(model.firstName ?? "") \(model.lastName ?? "")"
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
-        }else{
+            break
+        case 1:
             let model = self.groupList[indexPath.row]
             let vc:MessageGroupChatRoomViewController = MessageGroupChatRoomViewController()
             vc.groupId = model.userMessageGroup?.id ?? ""
@@ -225,6 +333,21 @@ extension MessageListForStudentRoleViewController:UITableViewDelegate,UITableVie
             vc.trainerName = model.firstName ?? ""
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
+            break
+        case 2:
+            if self.unSubTrainerList.count == 0 {
+                return
+            }
+            let model = self.unSubTrainerList[indexPath.row]
+            self.curFromUserId = model.id
+            let vc:MessageChatForStudentRoleViewController = MessageChatForStudentRoleViewController()
+            vc.toUserId = model.id
+            vc.toUserName =  "\(model.firstName ?? "") \(model.lastName ?? "")"
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+        default:
+            break
         }
     }
 }

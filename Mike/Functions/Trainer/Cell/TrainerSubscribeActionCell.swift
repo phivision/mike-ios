@@ -16,6 +16,7 @@ class TrainerSubscribeActionCell: UICollectionViewCell {
     @IBOutlet weak var priceLab:UILabel!
     @IBOutlet weak var iconCoin:UIImageView!
     @IBOutlet weak var subscribeBtnWidthRatio:NSLayoutConstraint!
+    @IBOutlet weak var messageBtnWidthRatio:NSLayoutConstraint!
     weak var delegate:TrainerSubscribeActionCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +30,7 @@ class TrainerSubscribeActionCell: UICollectionViewCell {
     func setModel(model:UserCenterModel,isSubscribed:Bool){
         if isSubscribed == true {
             self.subscribeBtnWidthRatio.constant = -25
+            self.messageBtnWidthRatio.constant = -25
             self.subscribeBtn.setTitle("Subscribed", for: .normal)
             self.priceLab.isHidden = true
             self.iconCoin.isHidden = true
@@ -44,6 +46,7 @@ class TrainerSubscribeActionCell: UICollectionViewCell {
             self.messageBtn.isHidden = false
         }else{
             self.subscribeBtnWidthRatio.constant = 0
+            self.messageBtnWidthRatio.constant = -50
             self.subscribeBtn.setTitle("", for: .normal)
             self.priceLab.text = "Subscribe for \(model.SubscriptionPrice ?? 0)"
             self.priceLab.isHidden = false
@@ -55,7 +58,7 @@ class TrainerSubscribeActionCell: UICollectionViewCell {
             self.messageBtn.backgroundColor = UIColor.white
             self.subscribeBtn.backgroundColor = orangeColor
             self.subscribeBtn.setTitleColor(UIColor.white, for: .normal)
-            self.messageBtn.isHidden = true
+            self.messageBtn.isHidden = false
         }
 //        self.messageBtn.isHidden = false
         self.subscribeBtn.isHidden = false
