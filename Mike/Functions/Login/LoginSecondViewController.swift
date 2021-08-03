@@ -11,6 +11,8 @@ class LoginSecondViewController: BaseViewController {
     @IBOutlet weak var loginBtn:UIButton!
     @IBOutlet weak var userNameBg:UIImageView!
     @IBOutlet weak var pwdBg:UIImageView!
+    @IBOutlet weak var header: UILabel!
+    @IBOutlet weak var subHeader: UILabel!
     @IBOutlet weak var userNameText:UITextField!
     @IBOutlet weak var pwdText:UITextField!
     @IBOutlet weak var inputBg:UIView!
@@ -19,7 +21,8 @@ class LoginSecondViewController: BaseViewController {
     
     @IBOutlet weak var inputBgHeight: NSLayoutConstraint!
     
-    var hasEnteredEmail: Bool!
+    var hasEnteredEmail: Bool! = false
+    var username: String! = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,21 +34,51 @@ class LoginSecondViewController: BaseViewController {
         self.inputBg.layer.borderWidth = 1
         self.inputBg.layer.borderColor = HexRGBAlpha(0xF4F4F4,1).cgColor
         self.inputBg.layer.cornerRadius = 5
-        
         self.userNameText.delegate = self
         self.pwdText.delegate = self
         
-        self.divider.isHidden = true
-        
-        self.pwdText.isHidden = true
-        self.pwdBg.isHidden = true
-        self.hasEnteredEmail = false
-        
-        self.inputBgHeight.constant = 37
-        
+        if !hasEnteredEmail {
+            self.divider.isHidden = true
+            self.pwdText.isHidden = true
+            self.pwdBg.isHidden = true
+            self.inputBgHeight.constant = 37
+            self.header.text = "Welcome"
+            self.subHeader.text = "Please enter your email"
+        } else {
+            self.pwdText.isHidden = false
+            self.pwdBg.isHidden = false
+            self.divider.isHidden = false
+            self.inputBgHeight.constant = 74
+            self.header.text = "Welcome back"
+            self.subHeader.text = "Please enter your password"
+        }
         self.loginBtn.layer.cornerRadius = 18.5
+        self.loginBtn.backgroundColor = UIColor(255, 145, 96)
+        self.loginBtn.isEnabled = false
+        if !self.username.isEmpty {
+            self.userNameText.text = self.username
+        }
     }
     
+    @IBAction func textChanged(_ sender: Any) {
+        if self.hasEnteredEmail{
+            if !self.pwdText.text!.isEmpty && !self.userNameText.text!.isEmpty {
+                self.loginBtn.backgroundColor = UIColor(255, 78, 0)
+                self.loginBtn.isEnabled = true
+            } else {
+                self.loginBtn.backgroundColor = UIColor(255, 145, 96)
+                self.loginBtn.isEnabled = false
+            }
+        } else {
+            if !self.userNameText.text!.isEmpty {
+                self.loginBtn.backgroundColor = UIColor(255,78,0)
+                self.loginBtn.isEnabled = true
+            } else {
+                self.loginBtn.backgroundColor = UIColor(255, 145, 96)
+                self.loginBtn.isEnabled = false
+            }
+        }
+    }
     @IBAction func backBtnPressed(){
         self.navigationController?.popViewController(animated: true)
     }
@@ -59,11 +92,11 @@ class LoginSecondViewController: BaseViewController {
             LoginBackend.shared.fetchUserList(email: self.userNameText.text) { exist in
                 if exist {
                     DispatchQueue.main.async {
-                        self.pwdText.isHidden = false
-                        self.pwdBg.isHidden = false
-                        self.hasEnteredEmail = true
-                        self.divider.isHidden = false
-                        self.inputBgHeight.constant = 74
+                        let secondVC = LoginSecondViewController()
+                        secondVC.username = self.userNameText.text!
+                        secondVC.hasEnteredEmail = true
+                        
+                        self.navigationController?.pushViewController(secondVC, animated: true)
                     }
                 } else {
                     DispatchQueue.main.async {

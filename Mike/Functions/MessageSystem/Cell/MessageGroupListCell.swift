@@ -37,6 +37,13 @@ class MessageGroupListCell: UITableViewCell {
         let result = UserDefaults.standard.bool(forKey: "\(message_groupMsg_unread)\(model.id ?? "")")
         print("trainer~~~~~~~~~~~~~~~~~~~~~~~~~\(result)")
         self.dotImg.isHidden = !result
+        if result {
+            nameLab.font = UIFont(name: "Avenir-Black", size: 16)
+            lastMsgContentLab.font = UIFont(name: "Avenir-Black", size: 16)
+        } else {
+            nameLab.font = UIFont(name: "Avenir-Medium", size: 16)
+            lastMsgContentLab.font = UIFont(name: "Avenir-Medium", size: 16)
+        }
     }
     func setGroupModelforTrainer(model:UserCenterModel){
         if let lastMsg = UserDefaults.standard.object(forKey: "\(message_lastGroupMsg)\(model.id ?? "")") {
@@ -55,6 +62,13 @@ class MessageGroupListCell: UITableViewCell {
         let result = UserDefaults.standard.bool(forKey: "\(message_groupMsg_unread)\(model.id ?? "")")
         print("trainer~~~~~~~~~~~~~~~~~~~~~~~~~\(result)")
         self.dotImg.isHidden = !result
+        if result {
+            nameLab.font = UIFont(name: "Avenir-Black", size: 16)
+            lastMsgContentLab.font = UIFont(name: "Avenir-Black", size: 16)
+        } else {
+            nameLab.font = UIFont(name: "Avenir-Medium", size: 16)
+            lastMsgContentLab.font = UIFont(name: "Avenir-Medium", size: 16)
+        }
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
