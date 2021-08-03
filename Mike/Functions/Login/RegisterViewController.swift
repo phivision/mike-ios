@@ -25,7 +25,7 @@ class RegisterViewController: BaseViewController {
     var pwd:String = ""
     var firstName:String = ""
     var lastName:String = ""
-    var isTrainer:Bool = true
+    var isTrainer:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -54,8 +54,11 @@ class RegisterViewController: BaseViewController {
         
         self.registerBtn.layer.cornerRadius = 18.5
         
-        self.userRoleTrainerBtn.isSelected = true
-        self.userRoleStudentBtn.isSelected = false
+        self.userRoleTrainerBtn.isSelected = false
+        self.userRoleStudentBtn.isSelected = true
+        
+        self.registerBtn.backgroundColor = UIColor(255, 145, 96)
+        self.registerBtn.isEnabled = false
     }
     
     @IBAction func userRoleChanged(sender:UIButton!){
@@ -121,6 +124,15 @@ class RegisterViewController: BaseViewController {
     }
     
     @IBAction func textValueChanged(textfield:UITextField){
+        if !self.userNameText.text!.isEmpty && !self.pwdText.text!.isEmpty && !self.firstNameText.text!.isEmpty && !self.lastNameText.text!.isEmpty {
+            self.registerBtn.backgroundColor = UIColor(255, 78, 0)
+            self.registerBtn.isEnabled = true
+        } else {
+            self.registerBtn.backgroundColor = UIColor(255, 145, 96)
+            self.registerBtn.isEnabled = false
+        }
+        
+        
         if textfield == self.userNameText {
             self.userName = textfield.text ?? ""
         }else if textfield == self.pwdText{
