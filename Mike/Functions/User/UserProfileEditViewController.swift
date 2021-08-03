@@ -24,6 +24,11 @@ class UserProfileEditViewController: BaseViewController {
     @IBOutlet weak var descText:UITextView!
     var hud:MBProgressHUD?
     
+    var originalFirstName: String?
+    var originalLastName: String?
+    var originalDescValue: String?
+    var originalUserImage: String?
+    
     var firstName:String?
     var lastName:String?
     var descValue:String?
@@ -75,6 +80,14 @@ class UserProfileEditViewController: BaseViewController {
         self.lastName = userModel.lastName
         self.descValue = userModel.descriptionField
         self.userImage = userModel.userImage
+        
+        self.originalFirstName = userModel.firstName
+        self.originalLastName = userModel.lastName
+        self.originalDescValue = userModel.descriptionField
+        self.originalUserImage = userModel.userImage
+        
+        self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+        self.saveBtn.isEnabled = false
     }
     
     func hanldeBgCornerAndShadow(bgView:UIImageView){
@@ -85,6 +98,13 @@ class UserProfileEditViewController: BaseViewController {
     }
 
     @IBAction func textValueChanged(textfield:UITextField){
+        if self.firstNameText.text!.isEmpty || self.lastNameText.text!.isEmpty || (self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && self.userImage == self.originalUserImage){
+            self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+            self.saveBtn.isEnabled = false
+        } else {
+            self.saveBtn.backgroundColor = UIColor(255, 78, 0)
+            self.saveBtn.isEnabled = true
+        }
         if textfield == self.firstNameText{
             self.firstName = textfield.text ?? ""
         }else if textfield == self.lastNameText{
@@ -160,6 +180,13 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
         }else{
             self.userImage = "UserImage\(LoginTools.sharedTools.userId())"
         }
+        if  self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && self.userImage == self.originalUserImage{
+            self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+            self.saveBtn.isEnabled = false
+        } else {
+            self.saveBtn.backgroundColor = UIColor(255, 78, 0)
+            self.saveBtn.isEnabled = true
+        }
         let data = self.curAvatar!.jpegData(compressionQuality: 0.2)!
         self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         Amplify.Storage.uploadData(
@@ -180,7 +207,7 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
                     print("Failed: \(storageError.errorDescription). \(storageError.recoverySuggestion)")
                     DispatchQueue.main.async {
                         self.hud?.hide(animated: true)
-                        ToastHUD.showMsg(msg:"\(storageError.errorDescription)", controller: self)
+                        ToastHUD.showMsg(msg:"Error loading profile. Please try again later.", controller: self)
                     }
                 }
             }
@@ -200,7 +227,7 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
         } fail: { error in
             DispatchQueue.main.async {
                 self.hud?.hide(animated: true)
-                ToastHUD.showMsg(msg:"\(error)", controller: self)
+                ToastHUD.showMsg(msg:"Error loading profile. Please try again later.", controller: self)
             }
         }
     }
@@ -214,7 +241,7 @@ extension UserProfileEditViewController:TZImagePickerControllerDelegate{
         } fail: { error in
             DispatchQueue.main.async {
                 self.hud?.hide(animated: true)
-                ToastHUD.showMsg(msg:"\(error)", controller: self)
+                ToastHUD.showMsg(msg:"Error loading profile. Please try again later.", controller: self)
             }
         } needCreateProfile: {
             
@@ -245,6 +272,13 @@ extension UserProfileEditViewController:UITextFieldDelegate,UITextViewDelegate{
         return true
     }
     func textViewDidChange(_ textView: UITextView) {
+        if  self.firstNameText.text! == self.originalFirstName && self.lastNameText.text! == self.originalLastName && self.descText.text! == self.originalDescValue && self.userImage == self.originalUserImage{
+            self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+            self.saveBtn.isEnabled = false
+        } else {
+            self.saveBtn.backgroundColor = UIColor(255, 78, 0)
+            self.saveBtn.isEnabled = true
+        }
         self.descValue = textView.text ?? ""
     }
 }

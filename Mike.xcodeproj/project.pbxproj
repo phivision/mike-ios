@@ -275,6 +275,7 @@
 		3389D72611D9A2973EADABD1 /* UserFavoriteContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C47EA47CB640F9BD028AEE /* UserFavoriteContent+Schema.swift */; };
 		33EE8D6DC9C181FBA36BC34C /* UserContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */; };
 		33FA5ED0B4145E13595BE377 /* UserFavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397087124EE4DEA8E0A9DB8 /* UserFavoriteContent.swift */; };
+		34289211B455927A1FA801DD /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */; };
 		3437B71F63D8D4DFE26A709D /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C68B47895EF48EFA9E65034 /* AmplifyModels.swift */; };
 		343C53023E3D51D774B249FE /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
 		34C08F012E87111179C7AE1C /* UserSubscriptionTrainer+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */; };
@@ -438,6 +439,7 @@
 		56FFE6AAE0B5288C85B4F312 /* UserContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */; };
 		5723604C66549E232ACA0417 /* UserFavoriteContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C47EA47CB640F9BD028AEE /* UserFavoriteContent+Schema.swift */; };
 		5749D35DE9C12081CC2213D7 /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
+		5759CC39B4B1CCC3990E8429 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C1DEDD88263746CB00F66A7C /* awsconfiguration.json */; };
 		5785D2E0DA14550AE43620F7 /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
 		583AB07DBDA8AAA2E1350556 /* UserProfile+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C26378F98444C59A7F5AE6F /* UserProfile+Schema.swift */; };
 		58AC6EE94C45D349B46A499F /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
@@ -1885,8 +1887,6 @@
 			children = (
 				158374CDF72240E79C4D8D6B /* amplifytools.xcconfig */,
 				1E1D87B83BC34BB28DFEDE72 /* schema.graphql */,
-				C1DEDD88263746CB00F66A7C /* awsconfiguration.json */,
-				C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */,
 			);
 			name = AmplifyConfig;
 			path = .;
@@ -3084,6 +3084,8 @@
 				9D382D1FA5765B5D17BAD9B5 /* amplifyconfiguration.json in Resources */,
 				9BF2215FCC7C28EDE82DE221 /* awsconfiguration.json in Resources */,
 				FDC64442FAD236F72E08C088 /* amplifyconfiguration.json in Resources */,
+				5759CC39B4B1CCC3990E8429 /* awsconfiguration.json in Resources */,
+				34289211B455927A1FA801DD /* amplifyconfiguration.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4403,7 +4405,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7.0;
+				CURRENT_PROJECT_VERSION = 11.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = KC37C9ZJH4;
 				ENABLE_PREVIEWS = YES;
@@ -4432,7 +4434,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7.0;
+				CURRENT_PROJECT_VERSION = 11.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = KC37C9ZJH4;
 				ENABLE_PREVIEWS = YES;

@@ -119,7 +119,7 @@ extension SubscriptionPaymentTools:SKProductsRequestDelegate,SKPaymentTransactio
                     print("Failed", apiError)
                     DispatchQueue.main.async {
                         hud.hide(animated: true)
-                        ToastHUD.showMsg(msg: apiError.localizedDescription, controller: keyWindow?.rootViewController ?? UIViewController())
+                        ToastHUD.showMsg(msg: "Error. PLease try again later", controller: keyWindow?.rootViewController ?? UIViewController())
                     }
                 }
             }

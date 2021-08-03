@@ -277,12 +277,12 @@ extension ContentUploadSectionConfigViewController:SegmentSectionHeaderViewDeleg
         for segmentModel:UserContentSegmentListModel in self.segmentList {
             if StringUtils.isBlank(value: segmentModel.name) {
                 canContinue = false
-                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
+                ToastHUD.showMsg(msg: "Please complete the required fields", controller: self)
                 break
             }
             if StringUtils.isBlank(value: segmentModel.timestamp) {
                 canContinue = false
-                ToastHUD.showMsg(msg: "Please Complete The Information!", controller: self)
+                ToastHUD.showMsg(msg: "Please complete the required fields", controller: self)
                 break
             }
         }
@@ -321,7 +321,7 @@ extension ContentUploadSectionConfigViewController{
             DispatchQueue.main.async {
 //                self.hud?.hide(animated: true)
                 MBProgressHUD.forView(self.view)?.hide(animated: true)
-                ToastHUD.showMsg(msg: "\(error)", controller: self)
+                ToastHUD.showMsg(msg: "Error. Please try again later.", controller: self)
             }
         }
     }
@@ -350,7 +350,7 @@ extension ContentUploadSectionConfigViewController{
             DispatchQueue.main.async {
                 MBProgressHUD.forView(self.view)?.hide(animated: true)
 //                self.hud?.hide(animated: true)
-                ToastHUD.showMsg(msg: "\(error)", controller: self)
+                ToastHUD.showMsg(msg: "Error. Please try again later.", controller: self)
             }
         }
     }
@@ -383,7 +383,7 @@ extension ContentUploadSectionConfigViewController{
         } fail: { error in
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg: "\(error)", controller: self)
+                ToastHUD.showMsg(msg: "Error. Please try again later.", controller: self)
             }
         }
     }

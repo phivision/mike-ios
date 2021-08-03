@@ -47,7 +47,6 @@ class FogotPwdViewController: BaseViewController {
         LoginBackend.shared.resetPassword(username: self.userName) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Verification code has been sent to your email, please check！", controller: self)
                 let vc:FogotConfirmViewController = FogotConfirmViewController()
                 vc.userName = self.userName
                 self.navigationController?.pushViewController(vc, animated: true)
@@ -55,13 +54,12 @@ class FogotPwdViewController: BaseViewController {
         } suc: {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Reset Password Succeeded", controller: self)
                 self.navigationController?.popViewController(animated: true)
             }
         } fail: { error in
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:error, controller: self)
+                ToastHUD.showMsg(msg:"Reset password unsuccessful", controller: self)
             }
         }
     }

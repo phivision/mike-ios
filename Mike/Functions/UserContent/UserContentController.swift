@@ -88,11 +88,6 @@ class UserContentController: BaseViewController {
             print("\(relationDic)")
             self.favRelationDic = relationDic
             DispatchQueue.main.async {
-                if self.favType == 0{
-                    ToastHUD.showMsg(msg: "Delete Favorite Succeeded", controller: self)
-                }else if self.favType == 1{
-                    ToastHUD.showMsg(msg: "Add Favorite Succeeded", controller: self)
-                }
                 hud.hide(animated: true)
                 self.favType = -1
             }
@@ -225,7 +220,7 @@ extension UserContentController:UITableViewDelegate,UITableViewDataSource{
     func validateSubscriptionRelation(){
         if LoginTools.sharedTools.userInfo().userRole == "trainer" {
             if LoginTools.sharedTools.userId() != self.trainerInfoModel?.id {
-                ToastHUD.showMsg(msg: "You haven't subscribed \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
+                ToastHUD.showMsg(msg: "You haven't subscribed to \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
             }else{
                 DispatchQueue.main.async {
                     self.enterVideo()
@@ -236,7 +231,7 @@ extension UserContentController:UITableViewDelegate,UITableViewDataSource{
                 if self.isSubscribed == true{
                     self.enterVideo()
                 }else{
-                    ToastHUD.showMsg(msg: "You haven't subscribed \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
+                    ToastHUD.showMsg(msg: "You haven't subscribed to \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
                 }
             }
         }
@@ -281,7 +276,7 @@ extension UserContentController:UserContentTrainerInfoCellDelegate{
             } fail: { error in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg:"\(error)", controller: self)
+                    ToastHUD.showMsg(msg:"Error. PLease try again later", controller: self)
                 }
             }
         }else{
@@ -298,7 +293,7 @@ extension UserContentController:UserContentTrainerInfoCellDelegate{
             } fail: { error in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg:"\(error)", controller: self)
+                    ToastHUD.showMsg(msg:"Error. PLease try again later", controller: self)
                 }
             }
         }
@@ -338,7 +333,7 @@ extension UserContentController:UserContentTrainerInfoCellDelegate{
                 print("Failed", apiError)
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg: apiError.localizedDescription, controller: self)
+                    ToastHUD.showMsg(msg: "Error. PLease try again later", controller: self)
                 }
             }
         }

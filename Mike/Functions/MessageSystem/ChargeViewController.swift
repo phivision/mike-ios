@@ -168,7 +168,7 @@ extension ChargeViewController:SKProductsRequestDelegate,SKPaymentTransactionObs
                     print("Failed", apiError)
                     DispatchQueue.main.async {
                         MBProgressHUD.forView(keyWindow!)?.hide(animated: true)
-                        ToastHUD.showMsg(msg: apiError.localizedDescription, controller: self)
+                        ToastHUD.showMsg(msg: "Error. Please try again later", controller: self)
                     }
                 }
             }

@@ -50,11 +50,11 @@ class CompleteUserInfoViewController: BaseViewController {
     }
     @IBAction func nextBtnPressed(){
         if StringUtils.isBlank(value: self.firstNameText.text) {
-            ToastHUD.showMsg(msg:"Please Input FirstName", controller: self)
+            ToastHUD.showMsg(msg:"Please enter your first name", controller: self)
             return
         }
         if StringUtils.isBlank(value: self.lastNameText.text) {
-            ToastHUD.showMsg(msg:"Please Input LastName", controller: self)
+            ToastHUD.showMsg(msg:"Please enter your last name", controller: self)
             return
         }
         self.hub = MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -113,7 +113,7 @@ class CompleteUserInfoViewController: BaseViewController {
             self.logOut()
             DispatchQueue.main.async {
                 self.hub?.hide(animated: true)
-                ToastHUD.showMsg(msg:error, controller: self)
+                ToastHUD.showMsg(msg:"Registration unsuccessful", controller: self)
             }
         } needCreateProfile: {
             

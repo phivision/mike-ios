@@ -369,7 +369,7 @@ extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
                 }else{
                     DispatchQueue.main.async {
                         self.hud?.hide(animated: true)
-                        ToastHUD.showMsg(msg: "Your tokenbalance is insufficient. Please recharge first！", controller: self)
+                        ToastHUD.showMsg(msg: "Insufficient tokens. Please recharge your account first.", controller: self)
                     }
                 }
             } fail: { error in
@@ -397,7 +397,7 @@ extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
                 print("Failed", apiError)
                 DispatchQueue.main.async {
                     self.hud?.hide(animated: true)
-                    ToastHUD.showMsg(msg: apiError.localizedDescription, controller: keyWindow?.rootViewController ?? UIViewController())
+                    ToastHUD.showMsg(msg: "Error. Please try again later", controller: keyWindow?.rootViewController ?? UIViewController())
                 }
             }
         }

@@ -46,19 +46,18 @@ class FogotConfirmViewController: BaseViewController {
     }
     @IBAction func confirmBtnPressed(){
         if StringUtils.isBlank(value: self.codeValue) {
-            ToastHUD.showMsg(msg:"Please Input Verification Code", controller: self)
+            ToastHUD.showMsg(msg:"Please enter your verification code", controller: self)
             return
         }
         if StringUtils.isBlank(value: self.newPwdValue) {
-            ToastHUD.showMsg(msg:"Please Input New Password", controller: self)
+            ToastHUD.showMsg(msg:"Please enter a new password", controller: self)
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         LoginBackend.shared.confirmResetPassword(username: self.userName, newPassword: self.newPwdValue, confirmationCode: self.codeValue) {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Reset Password Succeeded", controller: self)
-                self.navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
+                self.navigationController?.popToViewController(self.navigationController!.viewControllers[0], animated: true)
             }
         } fail: { error in
             DispatchQueue.main.async {

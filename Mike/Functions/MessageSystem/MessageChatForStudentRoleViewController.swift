@@ -215,11 +215,11 @@ class MessageChatForStudentRoleViewController: BaseViewController {
     // MARK: - send msg to trainer
     @IBAction func sendMsgBtnPressed(){
         if self.tokenBalance < self.trainerTokenPrice {
-            ToastHUD.showMsg(msg: "There is not enough tokenBalance. Please recharge it first!", controller: self)
+            ToastHUD.showMsg(msg: "Insufficient tokens. Please recharge your account first.", controller: self)
             return
         }
         if StringUtils.isBlank(value: self.commentText.text) {
-            ToastHUD.showMsg(msg: "Please Input Message!", controller: self)
+            ToastHUD.showMsg(msg: "Please enter a message", controller: self)
             return
         }
         MessageBackend.shared.sendMsgToTrainer(trainerId: self.toUserId ?? "", msgContent: self.commentText.text) { msgModel in
