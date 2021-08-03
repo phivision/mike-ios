@@ -25,6 +25,9 @@ class RegisterConfirmViewController: BaseViewController {
         self.hanldeBgCornerAndShadow(bgView: self.codeBg)
         
         self.confirmBtn.layer.cornerRadius = 18.5
+        
+        self.confirmBtn.backgroundColor = UIColor(255, 145, 96)
+        self.confirmBtn.isEnabled = false
     }
     
     func hanldeBgCornerAndShadow(bgView:UIImageView){
@@ -58,6 +61,13 @@ class RegisterConfirmViewController: BaseViewController {
     }
     
     @IBAction func textValueChanged(textfield:UITextField){
+        if self.codeText.text!.count == 6 {
+            self.confirmBtn.backgroundColor = UIColor(255, 78, 0)
+            self.confirmBtn.isEnabled = true
+        } else {
+            self.confirmBtn.backgroundColor = UIColor(255, 145, 96)
+            self.confirmBtn.isEnabled = false
+        }
         if textfield == self.codeText {
             self.codeValue = textfield.text ?? ""
         }

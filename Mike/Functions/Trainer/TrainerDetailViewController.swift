@@ -217,6 +217,8 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
             cell.delegate = self
             if let model = self.userProfileModel {
                 cell.setModel(model: model,hiddenCloseBtn: self.hideBackBtn)
+            }else{
+                cell.clearValue()
             }
             return cell
         case 1:
@@ -384,6 +386,7 @@ extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
             switch result {
             case .success(let data):
                 let str = String(decoding: data, as: UTF8.self)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: changeUserProfileToNew), object: UserCenterTrainer(fromDictionary: self.userProfileModel?.toDictionary() ?? [:]))
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerContentList), object: nil)
                 DispatchQueue.main.async {
                     self.configSubscribeStatus()

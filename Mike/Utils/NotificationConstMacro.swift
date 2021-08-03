@@ -16,4 +16,5 @@ let restartSubscription:String = "restartSubscription"
 let refreshTrainerContentList:String = "refreshTrainerContentList"
 let clearUploadPage:String = "clearUploadPage"
 let changeTabbarCenterIcon:String = "changeTabbarCenterIcon"
+let changeUserProfileToNew:String = "changeUserProfileToNew"
 

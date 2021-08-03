@@ -41,6 +41,13 @@ class TrainerDetailTopCell: UICollectionViewCell {
         self.isTrainer = false
         self.closeBtn.isHidden = hiddenCloseBtn
     }
+    func clearValue(){
+        self.avatar.setImage(UIImage(named: "icon_user_default"), for: .normal)
+        self.userName.text = ""
+        self.userDesc.text = ""
+        self.isTrainer = false
+        self.closeBtn.isHidden = true
+    }
     @IBAction func closeBtnPressed(){
         self.delegate?.closeBtnPressed?()
     }

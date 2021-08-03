@@ -32,8 +32,19 @@ class CompleteUserInfoViewController: BaseViewController {
         self.lastNameText.delegate = self
         
         self.loginBtn.layer.cornerRadius = 18.5
+        self.loginBtn.backgroundColor = UIColor(255, 145, 96)
+        self.loginBtn.isEnabled = false
     }
     
+    @IBAction func textChanged(_ sender: Any) {
+        if !self.firstNameText.text!.isEmpty && !self.lastNameText.text!.isEmpty {
+            self.loginBtn.backgroundColor = UIColor(255, 78, 0)
+            self.loginBtn.isEnabled = true
+        } else {
+            self.loginBtn.backgroundColor = UIColor(255, 145, 96)
+            self.loginBtn.isEnabled = false
+        }
+    }
     @IBAction func backBtnPressed(){
         self.navigationController?.popViewController(animated: true)
     }

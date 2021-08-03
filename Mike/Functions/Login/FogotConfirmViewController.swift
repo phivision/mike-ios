@@ -30,6 +30,8 @@ class FogotConfirmViewController: BaseViewController {
         self.hanldeBgCornerAndShadow(bgView: self.inputBg)
         
         self.confirmBtn.layer.cornerRadius = 18.5
+        self.confirmBtn.backgroundColor = UIColor(255, 145, 96)
+        self.confirmBtn.isEnabled = false
     }
     
     func hanldeBgCornerAndShadow(bgView:UIView){
@@ -67,6 +69,14 @@ class FogotConfirmViewController: BaseViewController {
     }
     
     @IBAction func textValueChanged(textfield:UITextField){
+        if !self.newPwdText.text!.isEmpty && self.codeText.text!.count == 6 {
+            self.confirmBtn.backgroundColor = UIColor(255, 78, 0)
+            self.confirmBtn.isEnabled = true
+        } else {
+            self.confirmBtn.backgroundColor = UIColor(255, 145, 96)
+            self.confirmBtn.isEnabled = false
+        }
+        
         if textfield == self.codeText {
             self.codeValue = textfield.text ?? ""
         }else if textfield == self.newPwdText{

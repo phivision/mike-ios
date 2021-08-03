@@ -27,21 +27,9 @@
                         <constraint firstAttribute="height" constant="44" id="GAv-kq-NC7"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
-                    <state key="normal" title="Or sign in with email"/>
+                    <state key="normal" title="Sign in with Email"/>
                     <connections>
                         <action selector="loginBtnPressed" destination="-1" eventType="touchUpInside" id="dNt-jb-sYR"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bFp-gB-s7y">
-                    <rect key="frame" x="68" y="646.5" width="278" height="44"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="6E4-zI-9Fg"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
-                    <state key="normal" title="Sign up"/>
-                    <connections>
-                        <action selector="registerBtnPressed" destination="-1" eventType="touchUpInside" id="KCP-RG-Y1s"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gq-La-sdJ">
@@ -90,11 +78,8 @@
                 <constraint firstItem="7gq-La-sdJ" firstAttribute="centerX" secondItem="wUN-UW-JWZ" secondAttribute="centerX" id="9RL-8J-xvc"/>
                 <constraint firstItem="M5f-Pw-0Sa" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-68" id="DBt-Xi-HEX"/>
                 <constraint firstItem="wUN-UW-JWZ" firstAttribute="trailing" secondItem="fq0-wu-bsf" secondAttribute="trailing" id="Et1-pb-gQx"/>
-                <constraint firstItem="bFp-gB-s7y" firstAttribute="leading" secondItem="M5f-Pw-0Sa" secondAttribute="leading" id="FG1-ak-lzA"/>
                 <constraint firstItem="7gq-La-sdJ" firstAttribute="top" secondItem="wUN-UW-JWZ" secondAttribute="bottom" constant="107" id="Jal-11-UzI"/>
                 <constraint firstItem="wUN-UW-JWZ" firstAttribute="top" secondItem="fq0-wu-bsf" secondAttribute="bottom" constant="20" id="Q5r-0c-y0e"/>
-                <constraint firstItem="bFp-gB-s7y" firstAttribute="top" secondItem="M5f-Pw-0Sa" secondAttribute="bottom" id="SvX-Yd-ZD0"/>
-                <constraint firstItem="bFp-gB-s7y" firstAttribute="trailing" secondItem="M5f-Pw-0Sa" secondAttribute="trailing" id="WP3-qp-ggd"/>
                 <constraint firstItem="fq0-wu-bsf" firstAttribute="top" secondItem="sTe-bH-yul" secondAttribute="bottom" constant="94" id="WPC-Xf-thU"/>
                 <constraint firstItem="wUN-UW-JWZ" firstAttribute="leading" secondItem="fq0-wu-bsf" secondAttribute="leading" id="d2F-Gk-FNN"/>
                 <constraint firstItem="sTe-bH-yul" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="fcQ-dh-MjN"/>

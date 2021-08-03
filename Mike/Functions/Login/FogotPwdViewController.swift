@@ -24,6 +24,8 @@ class FogotPwdViewController: BaseViewController {
         self.hanldeBgCornerAndShadow(bgView: self.userNameBg)
         
         self.continueBtn.layer.cornerRadius = 18.5
+        self.continueBtn.backgroundColor = UIColor(255, 145, 96)
+        self.continueBtn.isEnabled = false
     }
     
     func hanldeBgCornerAndShadow(bgView:UIImageView){
@@ -38,7 +40,7 @@ class FogotPwdViewController: BaseViewController {
     }
     @IBAction func confirmBtnPressed(){
         if StringUtils.isBlank(value: self.userName) {
-            ToastHUD.showMsg(msg:"Please Input Your UserName", controller: self)
+            ToastHUD.showMsg(msg:"Please enter your email", controller: self)
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -65,6 +67,13 @@ class FogotPwdViewController: BaseViewController {
     }
     
     @IBAction func textValueChanged(textfield:UITextField){
+        if !self.userNameText.text!.isEmpty {
+            self.continueBtn.backgroundColor = UIColor(255, 78, 0)
+            self.continueBtn.isEnabled = true
+        } else {
+            self.continueBtn.backgroundColor = UIColor(255, 145, 96)
+            self.continueBtn.isEnabled = false
+        }
         if textfield == self.userNameText {
             self.userName = textfield.text ?? ""
         }

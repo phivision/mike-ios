@@ -40,11 +40,11 @@ class MessageListForStudentRoleViewController: BaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.curFromUserId = ""
         self.fetchTokenBalance()
-        if self.isRequest == false {
+//        if self.isRequest == false {
             self.fetchTrainerList()
-        }else{
-            self.fetchMessageList()
-        }
+//        }else{
+//            self.fetchMessageList()
+//        }
     }
     @objc func cancelSub(){
         SubscriptionTools.sharedTools.outterSubscription?.cancel()

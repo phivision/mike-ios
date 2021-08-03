@@ -35,6 +35,7 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
         commitInitView()
         self.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(updateCenterIcon), name: NSNotification.Name(rawValue: changeTabbarCenterIcon), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeCurTrainerByNoti(notification:)), name: NSNotification.Name(rawValue: changeUserProfileToNew), object: nil)
     }
     
     @objc func updateCenterIcon(){
@@ -104,24 +105,17 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
                 self.centerBorderImg.layer.borderColor = UIColor.clear.cgColor
             }
             if tabBarController.selectedIndex == 2 && self.tabSelectIndex == 2 {
-                let vc = ChangeCurTrainerController()
                 UserProfileBackend.shared.fetchSubscriptionTrainerList{ subscriptionList,subIdList in
                     if subscriptionList.count > 1 {
-                    vc.subscriptionList.removeAll()
-                    vc.subscriptionList.append(contentsOf: subscriptionList)
-                    DispatchQueue.main.async {
-                        vc.mainTableView.switchRefreshHeader(to: .normal(.none, 0.0))
-                        vc.mainTableView.reloadData()
-                        if CGFloat(55 * vc.subscriptionList.count) > kScreenHeight - 44 - 34{
-                            vc.tableHeight.constant = kScreenHeight - 44 - 34
-                        }else{
-                            vc.tableHeight.constant = CGFloat(75 * vc.subscriptionList.count)
+                        DispatchQueue.main.async {
+                            let vc = ChangeCurTrainerController()
+                            vc.delegate = self
+                            vc.tmpSubscriptionList = subscriptionList
+                            vc.view.frame = CGRect.init(x: 0, y: 0, width: kScreenWidth, height: 100)
+                            vc.modalPresentationStyle = .pageSheet
+                            vc.preferredContentSize = CGSize(width: kScreenWidth, height: kScreenHeight)
+                            self.present(vc, animated: true, completion: nil)
                         }
-                    }
-                        vc.delegate = self
-                        vc.view.frame = CGRect.init(x: 0, y: 0, width: kScreenWidth, height: 100)
-                        vc.modalPresentationStyle = .overFullScreen
-                        self.present(vc, animated: true, completion: nil)
                     }
                 } fail: { error in
                     
@@ -130,6 +124,12 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
             }
             self.tabSelectIndex = tabBarController.selectedIndex
         }
+    }
+    
+    @objc func changeCurTrainerByNoti(notification: Notification) {
+        LoginTools.sharedTools.trainerModel = notification.object as? UserCenterTrainer
+        self.updateCenterIcon()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshTrainerDetail), object: nil)
     }
     /*
     // MARK: - Navigation
