@@ -62,10 +62,42 @@
             filePath = "Mike/Functions/Trainer/TrainerDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
             landmarkName = "userContentClicked(model:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BEDC6914-2BBA-4AB7-B075-6DC321822F60 - 13ffb4314a8e44d1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Motion.TrainerDetailViewController.userContentClicked(model: Motion.UserCenterContent) -&gt; ()"
+                  moduleName = "Motion"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yindan/mike-ios/Mike/Functions/Trainer/TrainerDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "344"
+                  endingLineNumber = "344"
+                  offsetFromSymbolStart = "388">
+               </Location>
+               <Location
+                  uuid = "BEDC6914-2BBA-4AB7-B075-6DC321822F60 - 226458268b1e8c48"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in Motion.TrainerDetailViewController.userContentClicked(model: Motion.UserCenterContent) -&gt; ()"
+                  moduleName = "Motion"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yindan/mike-ios/Mike/Functions/Trainer/TrainerDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "345"
+                  endingLineNumber = "345"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -80,7 +112,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "331"
             endingLineNumber = "331"
-            landmarkName = "createUserProfile(firstname:lastname:email:subId:suc:fail:)"
+            landmarkName = "signInWithApple(suc:fail:confirmSignUp:needCreateProfile:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

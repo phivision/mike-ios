@@ -217,6 +217,8 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
             cell.delegate = self
             if let model = self.userProfileModel {
                 cell.setModel(model: model,hiddenCloseBtn: self.hideBackBtn)
+            }else{
+                cell.clearValue()
             }
             return cell
         case 1:

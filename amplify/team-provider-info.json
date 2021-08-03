@@ -227,7 +227,7 @@
         },
         "subscriptions": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",
-          "s3Key": "amplify-builds/subscriptions-39514432554634757a70-build.zip"
+          "s3Key": "amplify-builds/subscriptions-6e426d4331714c673453-build.zip"
         },
         "subscriptionManager": {
           "deploymentBucketName": "amplify-mikereact-feature-135143-deployment",

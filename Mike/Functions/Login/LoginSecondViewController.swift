@@ -74,54 +74,53 @@ class LoginSecondViewController: BaseViewController {
                 }
             }
         } else {
-        if StringUtils.isBlank(value: self.userNameText.text) {
-            ToastHUD.showMsg(msg:"Please Input Username", controller: self)
-            return
-        }
-        if StringUtils.isBlank(value: self.pwdText.text) {
-            ToastHUD.showMsg(msg:"Please Input Password", controller: self)
-            return
-        }
-        let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
-//        Backend.shared.resultProfile(userName: self.userNameText.text)
+            if StringUtils.isBlank(value: self.userNameText.text) {
+                ToastHUD.showMsg(msg:"Please Input Username", controller: self)
+                return
+            }
+            if StringUtils.isBlank(value: self.pwdText.text) {
+                ToastHUD.showMsg(msg:"Please Input Password", controller: self)
+                return
+            }
+            let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+    //        Backend.shared.resultProfile(userName: self.userNameText.text)
+                    LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
+                        self.updateDeviceToken()
+                        DispatchQueue.main.async {
+                            hud.hide(animated: true)
+                            let homeVC:HomeTabViewController = HomeTabViewController()
+                            self.changeRootController(controller: homeVC)
+                        }
+                    } fail: { error in
+                        self.logOut()
+                        DispatchQueue.main.async {
+                            hud.hide(animated: true)
+                            ToastHUD.showMsg(msg:error.description, controller: self)
+                        }
+                    } confirmSignUp: {
+                        DispatchQueue.main.async {
+                            hud.hide(animated: true)
+                            self.resenConfirmCode()
+                        }
+                        
+                    } needCreateProfile: {
+                        
+                    }
 
-                LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
-                    self.updateDeviceToken()
-                    DispatchQueue.main.async {
-                        hud.hide(animated: true)
-                        let homeVC:HomeTabViewController = HomeTabViewController()
-                        self.changeRootController(controller: homeVC)
-                    }
-                } fail: { error in
-                    self.logOut()
-                    DispatchQueue.main.async {
-                        hud.hide(animated: true)
-                        ToastHUD.showMsg(msg:error.description, controller: self)
-                    }
-                } confirmSignUp: {
-                    DispatchQueue.main.async {
-                        hud.hide(animated: true)
-                        self.resenConfirmCode()
-                    }
-                    
-                } needCreateProfile: {
-                    
-                }
-
-//        LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
-//            self.updateDeviceToken()
-//            DispatchQueue.main.async {
-//                hud.hide(animated: true)
-//                let homeVC:HomeTabViewController = HomeTabViewController()
-//                self.changeRootController(controller: homeVC)
-//            }
-//        } fail: { error in
-//            self.logOut()
-//            DispatchQueue.main.async {
-//                hud.hide(animated: true)
-//                ToastHUD.showMsg(msg:error, controller: self)
-//            }
-//        }
+    //        LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
+    //            self.updateDeviceToken()
+    //            DispatchQueue.main.async {
+    //                hud.hide(animated: true)
+    //                let homeVC:HomeTabViewController = HomeTabViewController()
+    //                self.changeRootController(controller: homeVC)
+    //            }
+    //        } fail: { error in
+    //            self.logOut()
+    //            DispatchQueue.main.async {
+    //                hud.hide(animated: true)
+    //                ToastHUD.showMsg(msg:error, controller: self)
+    //            }
+    //        }
         }
     }
     func resenConfirmCode(){

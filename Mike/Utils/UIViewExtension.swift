@@ -119,5 +119,11 @@ extension UIView
         rect.size.height *= scale
         self.frame = rect
     }
-    
+    func addCorner(conrners: UIRectCorner , radius: CGFloat) {
+           let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: conrners, cornerRadii: CGSize(width: radius, height: radius))
+           let maskLayer = CAShapeLayer()
+           maskLayer.frame = self.bounds
+           maskLayer.path = maskPath.cgPath
+           self.layer.mask = maskLayer
+       }
 }
