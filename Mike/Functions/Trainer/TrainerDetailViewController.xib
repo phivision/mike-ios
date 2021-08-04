@@ -35,7 +35,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mNi-HN-9mI">
-                            <rect key="frame" x="22" y="86" width="68" height="68"/>
+                            <rect key="frame" x="173" y="380" width="68" height="68"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="68" id="Tdw-ga-e7B"/>
                                 <constraint firstAttribute="width" constant="68" id="XUq-Ij-yYN"/>
@@ -45,8 +45,8 @@
                                 <action selector="addTraner" destination="-1" eventType="touchUpInside" id="elZ-HS-c8x"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search And Subscribe Trainers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKD-Qd-kga">
-                            <rect key="frame" x="22" y="164" width="257" height="25"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No subscriptions yet" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKD-Qd-kga">
+                            <rect key="frame" x="119" y="317" width="176" height="25"/>
                             <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="18"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -54,10 +54,10 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="CKD-Qd-kga" firstAttribute="top" secondItem="mNi-HN-9mI" secondAttribute="bottom" constant="10" id="DUG-v4-uFl"/>
-                        <constraint firstItem="mNi-HN-9mI" firstAttribute="top" secondItem="eKW-bT-Q7D" secondAttribute="top" constant="86" id="Dbs-ki-NaG"/>
-                        <constraint firstItem="CKD-Qd-kga" firstAttribute="leading" secondItem="mNi-HN-9mI" secondAttribute="leading" id="EuS-Pq-ZkD"/>
-                        <constraint firstItem="mNi-HN-9mI" firstAttribute="leading" secondItem="eKW-bT-Q7D" secondAttribute="leading" constant="22" id="aKC-Ou-yHo"/>
+                        <constraint firstItem="mNi-HN-9mI" firstAttribute="top" secondItem="CKD-Qd-kga" secondAttribute="bottom" constant="38" id="DUG-v4-uFl"/>
+                        <constraint firstItem="mNi-HN-9mI" firstAttribute="top" secondItem="eKW-bT-Q7D" secondAttribute="top" constant="380" id="Dbs-ki-NaG"/>
+                        <constraint firstItem="CKD-Qd-kga" firstAttribute="centerX" secondItem="mNi-HN-9mI" secondAttribute="centerX" id="EuS-Pq-ZkD"/>
+                        <constraint firstItem="mNi-HN-9mI" firstAttribute="centerX" secondItem="eKW-bT-Q7D" secondAttribute="centerX" id="aKC-Ou-yHo"/>
                     </constraints>
                 </view>
             </subviews>

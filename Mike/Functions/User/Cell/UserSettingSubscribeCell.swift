@@ -16,6 +16,9 @@ class UserSettingSubscribeCell: UITableViewCell,UITextFieldDelegate {
     @IBOutlet weak var subscriptionPrice:UITextField!
     @IBOutlet weak var perMessagePrice:UITextField!
     weak var delegate:UserSettingSubscribeCellDelegate?
+    
+//    var checkTextNull: ((_ isNull: Bool) -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

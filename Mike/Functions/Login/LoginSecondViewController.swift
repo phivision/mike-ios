@@ -86,7 +86,7 @@ class LoginSecondViewController: BaseViewController {
     @IBAction func loginBtnPressed(){
         if hasEnteredEmail == false {
             if StringUtils.isBlank(value: self.userNameText.text) {
-                ToastHUD.showMsg(msg:"Please Input Username", controller: self)
+                ToastHUD.showMsg(msg:"Please enter your email", controller: self)
                 return
             }
             LoginBackend.shared.fetchUserList(email: self.userNameText.text) { exist in
@@ -108,11 +108,11 @@ class LoginSecondViewController: BaseViewController {
             }
         } else {
             if StringUtils.isBlank(value: self.userNameText.text) {
-                ToastHUD.showMsg(msg:"Please Input Username", controller: self)
+                ToastHUD.showMsg(msg:"Please enter your email", controller: self)
                 return
             }
             if StringUtils.isBlank(value: self.pwdText.text) {
-                ToastHUD.showMsg(msg:"Please Input Password", controller: self)
+                ToastHUD.showMsg(msg:"Please enter your password", controller: self)
                 return
             }
             let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -128,7 +128,7 @@ class LoginSecondViewController: BaseViewController {
                         self.logOut()
                         DispatchQueue.main.async {
                             hud.hide(animated: true)
-                            ToastHUD.showMsg(msg:error.description, controller: self)
+                            ToastHUD.showMsg(msg:"Login unsuccessful", controller: self)
                         }
                     } confirmSignUp: {
                         DispatchQueue.main.async {
@@ -161,7 +161,6 @@ class LoginSecondViewController: BaseViewController {
         LoginBackend.shared.resendCodeForSignUp(username: self.userNameText.text ?? "") {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Verification code has been sent to your email, please check！", controller: self)
                 let secondVC = RegisterConfirmViewController()
                 secondVC.userName = self.userNameText.text
                 self.navigationController?.pushViewController(secondVC, animated: true)
@@ -169,7 +168,7 @@ class LoginSecondViewController: BaseViewController {
         } fail: { error in
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:error, controller: self)
+                ToastHUD.showMsg(msg:"Login unsuccessful", controller: self)
             }
         }
     }

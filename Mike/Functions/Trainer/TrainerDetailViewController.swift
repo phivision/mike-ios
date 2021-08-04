@@ -22,6 +22,7 @@ class TrainerDetailViewController: BaseViewController{
     var userProfileModel:UserCenterModel?
     var isFeedMode:Bool = true
     var isSubscribed:Bool = false
+    var isExpired:Bool = false
     //hide back btn
     var hideBackBtn:Bool = false
     //hud
@@ -113,17 +114,39 @@ class TrainerDetailViewController: BaseViewController{
         }
     }
     func configSubscribeStatus(){
-        HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
-            for trainer in subscriptionList{
-                if trainer.trainer.id == self.curUserId {
-                    self.isSubscribed = true
-                    DispatchQueue.main.async {
-                        self.mainCollection.reloadData()
+        UserProfileBackend.shared.fetchSubscriptionTrainerList{ subscriptionList,subIdList in
+            for subItem in subscriptionList{
+                if subItem.id == self.curUserId {
+                    let dateFormatter:DateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    if let date:Date = dateFormatter.date(from: subItem.expireDate ?? ""){
+                        if date.timeIntervalSince1970 > Date().timeIntervalSince1970 {
+                            self.isExpired = false
+                        }else{
+                            self.isExpired = true
+                        }
                     }
+                    self.isSubscribed = true
                     break
                 }
             }
+            DispatchQueue.main.async {
+                self.mainCollection.reloadData()
+            }
+        } fail: { error in
+            
         }
+//        HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+//            for trainer in subscriptionList{
+//                if trainer.trainer.id == self.curUserId {
+//                    self.isSubscribed = true
+//                    DispatchQueue.main.async {
+//                        self.mainCollection.reloadData()
+//                    }
+//                    break
+//                }
+//            }
+//        }
     }
     func fetchTrainerList(){
         HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
@@ -225,7 +248,7 @@ extension TrainerDetailViewController:UICollectionViewDelegate,UICollectionViewD
             let cell:TrainerSubscribeActionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrainerSubscribeActionCell", for: indexPath) as! TrainerSubscribeActionCell
             cell.delegate = self
             if let model = self.userProfileModel {
-                cell.setModel(model:model, isSubscribed: self.isSubscribed)
+                cell.setModel(model:model, isSubscribed: self.isSubscribed && (self.isExpired == false))
             }
             return cell
         case 2:
@@ -369,7 +392,7 @@ extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
                 }else{
                     DispatchQueue.main.async {
                         self.hud?.hide(animated: true)
-                        ToastHUD.showMsg(msg: "Your tokenbalance is insufficient. Please recharge first！", controller: self)
+                        ToastHUD.showMsg(msg: "Insufficient tokens. Please recharge your account first.", controller: self)
                     }
                 }
             } fail: { error in
@@ -397,7 +420,7 @@ extension TrainerDetailViewController:TrainerSubscribeActionCellDelegate{
                 print("Failed", apiError)
                 DispatchQueue.main.async {
                     self.hud?.hide(animated: true)
-                    ToastHUD.showMsg(msg: apiError.localizedDescription, controller: keyWindow?.rootViewController ?? UIViewController())
+                    ToastHUD.showMsg(msg: "Error. Please try again later", controller: keyWindow?.rootViewController ?? UIViewController())
                 }
             }
         }

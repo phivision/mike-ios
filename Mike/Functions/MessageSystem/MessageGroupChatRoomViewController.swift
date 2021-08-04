@@ -17,6 +17,7 @@ class MessageGroupChatRoomViewController: BaseViewController {
         var msgList:Array<MessageListModel> = Array<MessageListModel>()
         return msgList
     }()
+    
     //MARK: - comment relation
     @IBOutlet weak var inputAreaBottomMargin:NSLayoutConstraint!
     @IBOutlet weak var commentTextHeight:NSLayoutConstraint!
@@ -32,6 +33,7 @@ class MessageGroupChatRoomViewController: BaseViewController {
         self.setNavLeftBtn(imageName: "icon-back")
         // Do any additional setup after loading the view.
     }
+    
     override func leftButtonPressed() {
         self.navigationController?.popViewController(animated: true)
         SubscriptionTools.sharedTools.innderSubscription?.cancel()
@@ -127,7 +129,7 @@ class MessageGroupChatRoomViewController: BaseViewController {
     //MARK: - send msg to other
     @IBAction func sendMsgBtnPressed(){
         if StringUtils.isBlank(value: self.commentText.text) {
-            ToastHUD.showMsg(msg: "Please Input Message!", controller: self)
+            ToastHUD.showMsg(msg: "Please enter a message", controller: self)
             return
         }
         MessageBackend.shared.sendMsgToGroup(groupId: self.groupId, msgContent: self.commentText.text) { msgModel in
@@ -141,7 +143,7 @@ class MessageGroupChatRoomViewController: BaseViewController {
             }
         } fail: { errorMsg in
             DispatchQueue.main.async {
-                ToastHUD.showMsg(msg: errorMsg, controller: self)
+                ToastHUD.showMsg(msg: "Error. Please try again later", controller: self)
             }
         }
     }

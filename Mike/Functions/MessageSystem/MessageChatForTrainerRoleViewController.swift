@@ -222,7 +222,7 @@ class MessageChatForTrainerRoleViewController: BaseViewController {
     //MARK: - send msg to other
     @IBAction func sendMsgBtnPressed(){
         if StringUtils.isBlank(value: self.commentText.text) {
-            ToastHUD.showMsg(msg: "Please Input Message!", controller: self)
+            ToastHUD.showMsg(msg: "Please enter a message", controller: self)
             return
         }
         MessageBackend.shared.sendMsgToUser(toUserId: self.toUserId ?? "", msgContent: self.commentText.text) { msgModel in
@@ -238,7 +238,7 @@ class MessageChatForTrainerRoleViewController: BaseViewController {
             }
         } fail: { errorMsg in
             DispatchQueue.main.async {
-                ToastHUD.showMsg(msg: errorMsg, controller: self)
+                ToastHUD.showMsg(msg: "Please try again later", controller: self)
             }
         }
 

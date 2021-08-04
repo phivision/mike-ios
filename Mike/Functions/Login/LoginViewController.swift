@@ -51,14 +51,13 @@ class LoginViewController: BaseViewController {
         } fail: { error in
             DispatchQueue.main.async {
                 self.hub?.hide(animated: true)
-                ToastHUD.showMsg(msg:error, controller: self)
+                ToastHUD.showMsg(msg:"Login unsuccessful", controller: self)
             }
         } confirmSignUp: {
             
         } needCreateProfile: {
             DispatchQueue.main.async {
                 self.hub?.hide(animated: true)
-                ToastHUD.showMsg(msg:"Waiting for completing!", controller: self)
                 let vc = CompleteUserInfoViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
             }

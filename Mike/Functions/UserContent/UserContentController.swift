@@ -12,9 +12,10 @@ class UserContentController: BaseViewController {
     @IBOutlet weak var mainTableView:UITableView!
     var isFav:Bool = false
     var isSubscribed:Bool = false
+    var isExpired:Bool = false
     var trainerId:String!
     var userContentModel:UserCenterContent!
-    var trainerInfoModel:UserCenterModel?
+    var trainerInfoModel:UserCenterTrainer?
     lazy var segList:Array<UserContentSegmentListModel> = {
         var segList:Array<UserContentSegmentListModel> = Array<UserContentSegmentListModel>()
         return segList
@@ -30,7 +31,7 @@ class UserContentController: BaseViewController {
         self.configData()
         self.configView()
         self.configTableView()
-        self.fetchTrainerInfo()
+        self.fetchTrainerList()
         self.fetchIsFav()
         self.fetchFavRelationIdList()
         self.setNavLeftBtn(imageName: "icon-back")
@@ -88,11 +89,6 @@ class UserContentController: BaseViewController {
             print("\(relationDic)")
             self.favRelationDic = relationDic
             DispatchQueue.main.async {
-                if self.favType == 0{
-                    ToastHUD.showMsg(msg: "Delete Favorite Succeeded", controller: self)
-                }else if self.favType == 1{
-                    ToastHUD.showMsg(msg: "Add Favorite Succeeded", controller: self)
-                }
                 hud.hide(animated: true)
                 self.favType = -1
             }
@@ -115,52 +111,67 @@ class UserContentController: BaseViewController {
             self.handleFavBtnState()
         }
     }
-    func fetchSubscription(){
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
-            var isSubscribed:Bool = false
-            for trainer in subscriptionList{
-                if trainer.trainer.id == self.trainerId {
-                    isSubscribed = true
-                    break
-                }
-            }
-            self.isSubscribed = isSubscribed
-            DispatchQueue.main.async {
-                hud.hide(animated: true)
-            }
-        }
-    }
+//    func fetchSubscription(){
+//        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//        HomeBackend.shared.fetchSubscriptionList(userId: LoginTools.sharedTools.userId()) { subscriptionList in
+//            var isSubscribed:Bool = false
+//            for trainer in subscriptionList{
+//                if trainer.trainer.id == self.trainerId {
+//                    isSubscribed = true
+//                    break
+//                }
+//            }
+//            self.isSubscribed = isSubscribed
+//            let dateFormatter:DateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "yyyy-MM-dd"
+////            let date:Date = dateFormatter.date(from: self.trainerInfoModel)
+//            DispatchQueue.main.async {
+//                hud.hide(animated: true)
+//            }
+//        }
+//    }
     func handleFavBtnState(){
         DispatchQueue.main.async {
             self.mainTableView.reloadData()
         }
     }
-    func fetchTrainerInfo(){
-        TrainerBackend.shared.fetchTrainerSimpleInfo(userId: self.trainerId) { trainerModel in
-            self.configTrainerUI(trainerModel: trainerModel)
+    func fetchTrainerList(){
+        UserProfileBackend.shared.fetchSubscriptionTrainerList{ subscriptionList,subIdList in
+            for subItem in subscriptionList{
+                if subItem.id == self.trainerId {
+                    self.isSubscribed = true
+                    self.configTrainerUI(trainerModel: subItem)
+                    break
+                }
+            }
+            if self.isSubscribed == false {
+                self.fetchTrainerInfo()
+            }
         } fail: { error in
             
         }
     }
-    func configTrainerUI(trainerModel:UserCenterModel){
+    func fetchTrainerInfo(){
+        TrainerBackend.shared.fetchTrainerSimpleInfo(userId: self.trainerId) { trainerModel in
+            self.configTrainerUI(trainerModel: UserCenterTrainer(fromDictionary: trainerModel.toDictionary()))
+        } fail: { error in
+
+        }
+    }
+    func configTrainerUI(trainerModel:UserCenterTrainer){
         self.trainerInfoModel = trainerModel
+        let dateFormatter:DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        if let date:Date = dateFormatter.date(from: self.trainerInfoModel?.expireDate ?? ""){
+            if date.timeIntervalSince1970 > Date().timeIntervalSince1970 {
+                self.isExpired = false
+            }else{
+                self.isExpired = true
+            }
+        }
         DispatchQueue.main.async {
-            self.fetchSubscription()
             self.mainTableView.reloadData()
         }
-//        ImageCacheUtils.sharedTools.imageUrl(key: trainerModel.userImage) { imgUrl, cannotLoadUrl in
-//            if cannotLoadUrl == true{
-//                DispatchQueue.main.async {
-//                    self.trainerAvatar.image = UIImage(named: "logo")
-//                }
-//            }else{
-//                self.trainerAvatar.sd_setImage(with: URL(string: imgUrl ?? "")!, placeholderImage: UIImage(named: "logo"), options: .refreshCached, completed: nil)
-//            }
-//        }
-//        DispatchQueue.main.async {
-//            self.trainerNameLab.text = "\(trainerModel.firstName ?? "") \(trainerModel.lastName ?? "")"
-//        }
     }
     @IBAction func dismissBtnClicked(){
         self.dismiss(animated: true, completion: nil)
@@ -225,7 +236,7 @@ extension UserContentController:UITableViewDelegate,UITableViewDataSource{
     func validateSubscriptionRelation(){
         if LoginTools.sharedTools.userInfo().userRole == "trainer" {
             if LoginTools.sharedTools.userId() != self.trainerInfoModel?.id {
-                ToastHUD.showMsg(msg: "You haven't subscribed \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
+                ToastHUD.showMsg(msg: "You haven't subscribed to \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
             }else{
                 DispatchQueue.main.async {
                     self.enterVideo()
@@ -234,9 +245,13 @@ extension UserContentController:UITableViewDelegate,UITableViewDataSource{
         }else{
             DispatchQueue.main.async {
                 if self.isSubscribed == true{
-                    self.enterVideo()
+                    if self.isExpired == true {
+                        ToastHUD.showMsg(msg: "Your subscription to \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") is Expired", controller: self)
+                    }else{
+                        self.enterVideo()
+                    }
                 }else{
-                    ToastHUD.showMsg(msg: "You haven't subscribed \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
+                    ToastHUD.showMsg(msg: "You haven't subscribed to \(self.trainerInfoModel?.firstName ?? "") \(self.trainerInfoModel?.lastName ?? "") yet", controller: self)
                 }
             }
         }
@@ -281,7 +296,7 @@ extension UserContentController:UserContentTrainerInfoCellDelegate{
             } fail: { error in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg:"\(error)", controller: self)
+                    ToastHUD.showMsg(msg:"Error. PLease try again later", controller: self)
                 }
             }
         }else{
@@ -298,7 +313,7 @@ extension UserContentController:UserContentTrainerInfoCellDelegate{
             } fail: { error in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg:"\(error)", controller: self)
+                    ToastHUD.showMsg(msg:"Error. PLease try again later", controller: self)
                 }
             }
         }
@@ -338,7 +353,7 @@ extension UserContentController:UserContentTrainerInfoCellDelegate{
                 print("Failed", apiError)
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg: apiError.localizedDescription, controller: self)
+                    ToastHUD.showMsg(msg: "Error. PLease try again later", controller: self)
                 }
             }
         }

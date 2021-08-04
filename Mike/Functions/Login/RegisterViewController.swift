@@ -85,26 +85,25 @@ class RegisterViewController: BaseViewController {
     }
     @IBAction func registerBtnPressed(){
         if StringUtils.isBlank(value: self.userName) {
-            ToastHUD.showMsg(msg:"Please Input Username", controller: self)
+            ToastHUD.showMsg(msg:"Please enter your email", controller: self)
             return
         }
         if StringUtils.isBlank(value: self.pwd) {
-            ToastHUD.showMsg(msg:"Please Input Password", controller: self)
+            ToastHUD.showMsg(msg:"Please enter a password", controller: self)
             return
         }
         if StringUtils.isBlank(value: self.firstName) {
-            ToastHUD.showMsg(msg:"Please Input First Name", controller: self)
+            ToastHUD.showMsg(msg:"Please enter your first name", controller: self)
             return
         }
         if StringUtils.isBlank(value: self.lastName) {
-            ToastHUD.showMsg(msg:"Please Input Last Name", controller: self)
+            ToastHUD.showMsg(msg:"Please enter your last name", controller: self)
             return
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         LoginBackend.shared.signUp(username: self.userName, password: self.pwd, firstName: self.firstName,lastName: self.lastName,userRole: self.isTrainer == true ? "trainer" : "student") {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Verification code has been sent to your email, please check！", controller: self)
                 let secondVC = RegisterConfirmViewController()
                 secondVC.userName = self.userName
                 self.navigationController?.pushViewController(secondVC, animated: true)
@@ -112,13 +111,12 @@ class RegisterViewController: BaseViewController {
         } suc: {
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:"Register Succeeded", controller: self)
                 self.navigationController?.popViewController(animated: true)
             }
         } fail: { error in
             DispatchQueue.main.async {
                 hud.hide(animated: true)
-                ToastHUD.showMsg(msg:error, controller: self)
+                ToastHUD.showMsg(msg:"Registration unsuccessful", controller: self)
             }
         }
     }

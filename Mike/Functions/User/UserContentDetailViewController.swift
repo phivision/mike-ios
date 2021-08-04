@@ -80,11 +80,6 @@ class UserContentDetailViewController: BaseViewController {
             print("\(relationDic)")
             self.favRelationDic = relationDic
             DispatchQueue.main.async {
-                if self.favType == 0{
-                    ToastHUD.showMsg(msg: "Delete Favorite Succeeded", controller: self)
-                }else if self.favType == 1{
-                    ToastHUD.showMsg(msg: "Add Favorite Succeeded", controller: self)
-                }
                 hud.hide(animated: true)
                 self.favType = -1
             }
@@ -150,7 +145,7 @@ class UserContentDetailViewController: BaseViewController {
             } fail: { error in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg:"\(error)", controller: self)
+                    ToastHUD.showMsg(msg:"Error. Please try again later.", controller: self)
                 }
             }
         }else{
@@ -167,7 +162,7 @@ class UserContentDetailViewController: BaseViewController {
             } fail: { error in
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg:"\(error)", controller: self)
+                    ToastHUD.showMsg(msg:"Error. Please try again later.", controller: self)
                 }
             }
         }

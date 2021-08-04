@@ -22,6 +22,14 @@ class TrainerSettingViewController: BaseViewController {
     var trainerProfileModel:UserCenterTrainer?
     var tokenPrice:String = "0"
     var subPrice:String = "0"
+    
+    var notificationBool: Bool?
+    
+    var originalNotificationBool: Bool?
+    
+    var originalTokenPrice: String = "0"
+    var originalSubPrice: String = "0"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configTableView()
@@ -35,6 +43,8 @@ class TrainerSettingViewController: BaseViewController {
         }else{
             self.fetchTrainerModel()
         }
+        self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+        self.saveBtn.isEnabled = false
     }
     @IBAction func backBtnPressed(){
         self.dismiss(animated: true, completion: nil)
@@ -74,7 +84,9 @@ class TrainerSettingViewController: BaseViewController {
             DispatchQueue.main.async {
                 self.trainerProfileModel = trainerModel
                 self.tokenPrice = "\(trainerModel.tokenPrice ?? 0)"
+                self.originalTokenPrice = "\(trainerModel.tokenPrice ?? 0)"
                 self.subPrice = "\(trainerModel.subscriptionPrice ?? 0)"
+                self.originalSubPrice = "\(trainerModel.subscriptionPrice ?? 0)"
                 self.mainTableView.reloadData()
             }
         } fail: { error in
@@ -85,12 +97,14 @@ class TrainerSettingViewController: BaseViewController {
         if LoginTools.sharedTools.userInfo().userRole == "trainer" {
             TrainerBackend.shared.updateTokenPriceAndSubPrice(tokenPrice: self.tokenPrice, subPrice: self.subPrice) {
                 DispatchQueue.main.async {
-                    ToastHUD.showMsg(msg: "Save succeeded!", controller: self)
+                    self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+                    self.saveBtn.isEnabled = false
                     self.fetchTrainerModel()
                 }
             } fail: { error in
+                print(error)
                 DispatchQueue.main.async {
-                    ToastHUD.showMsg(msg: error, controller: self)
+                    ToastHUD.showMsg(msg: "Error. Please try again later.", controller: self)
                 }
             }
         }
@@ -177,6 +191,7 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
             }
         case 1:
             let cell:UserSettingNotificationCell = tableView.dequeueReusableCell(withIdentifier: "UserSettingNotificationCell", for: indexPath) as! UserSettingNotificationCell
+            cell.delegate = self
             return cell
         case 2:
             if (LoginTools.sharedTools.userInfo().owner ?? "").hasPrefix("signinwithapple") {
@@ -256,11 +271,31 @@ extension TrainerSettingViewController:UITableViewDelegate,UITableViewDataSource
         }
     }
 }
+extension TrainerSettingViewController:UserSettingNotificationCellDelegate{
+    func changeNotification(_ value: Bool) {
+        self.notificationBool = value
+    }
+}
+
 extension TrainerSettingViewController:UserSettingSubscribeCellDelegate{
     func subscriptionPriceChanged(price: String) {
+        if price == self.originalSubPrice && self.tokenPrice == self.originalTokenPrice{
+            self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+            self.saveBtn.isEnabled = false
+        } else {
+            self.saveBtn.backgroundColor = UIColor(255, 78, 0)
+            self.saveBtn.isEnabled = true
+        }
         self.subPrice = price
     }
     func tokenPriceChanged(price: String) {
+        if price == self.originalTokenPrice && self.subPrice == self.originalSubPrice{
+            self.saveBtn.backgroundColor = UIColor(255, 145, 96)
+            self.saveBtn.isEnabled = false
+        } else {
+            self.saveBtn.backgroundColor = UIColor(255, 78, 0)
+            self.saveBtn.isEnabled = true
+        }
         self.tokenPrice = price
     }
 }
@@ -292,7 +327,7 @@ extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{
             case .success:
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg:"Delete Succeeded!", controller: self)
+                    ToastHUD.showMsg(msg:"Deletion successful.", controller: self)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
                     self.fetchTrainerList()
                 }
@@ -300,7 +335,7 @@ extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{
                 print("Failed", apiError)
                 DispatchQueue.main.async {
                     hud.hide(animated: true)
-                    ToastHUD.showMsg(msg:"\(apiError)", controller: self)
+                    ToastHUD.showMsg(msg:"Error. Please try again later.", controller: self)
                 }
             }
         }

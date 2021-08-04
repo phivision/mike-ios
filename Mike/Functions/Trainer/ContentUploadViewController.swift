@@ -51,8 +51,11 @@ class ContentUploadViewController: BaseViewController {
     
     func configTableView(){
         self.continueBtn.layer.borderWidth = 1
-        self.continueBtn.layer.borderColor = orangeColor.cgColor
+        self.continueBtn.layer.borderColor = UIColor(255, 145, 96).cgColor
         self.continueBtn.layer.cornerRadius = 18.5
+        
+        self.continueBtn.setTitleColor(UIColor(255, 145, 96), for: .normal)
+        self.continueBtn.isEnabled = false
 
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
@@ -119,6 +122,15 @@ extension ContentUploadViewController:VideoUploadCellDelegate,VideoTitleInputCel
     //MARK: - contentInputCellDelegate
     func inputTextChanged(textValue: String?) {
         self.videoTitleValue = textValue ?? ""
+        if self.videoCapture != nil &&  !self.videoTitleValue!.isEmpty {
+            self.continueBtn.setTitleColor(UIColor(255, 78, 0),for: .normal)
+            self.continueBtn.layer.borderColor = UIColor(255, 78, 0).cgColor
+            self.continueBtn.isEnabled = true
+        } else {
+            self.continueBtn.setTitleColor(UIColor(255, 145, 96), for: .normal)
+            self.continueBtn.layer.borderColor = UIColor(255, 145, 96).cgColor
+            self.continueBtn.isEnabled = false
+        }
     }
     func descTextChanged(textValue: String?) {
         self.videoDescValue = textValue ?? ""
@@ -137,6 +149,15 @@ extension ContentUploadViewController:VideoUploadCellDelegate,VideoTitleInputCel
     }
     func delCaptureBtnClicked() {
         self.videoCapture = nil
+        if self.videoCapture != nil &&  !self.videoTitleValue!.isEmpty {
+            self.continueBtn.setTitleColor(UIColor(255, 78, 0),for: .normal)
+            self.continueBtn.layer.borderColor = UIColor(255, 78, 0).cgColor
+            self.continueBtn.isEnabled = true
+        } else {
+            self.continueBtn.setTitleColor(UIColor(255, 145, 96), for: .normal)
+            self.continueBtn.layer.borderColor = UIColor(255, 145, 96).cgColor
+            self.continueBtn.isEnabled = false
+        }
         DispatchQueue.main.async {
             self.mainTableView.reloadData()
         }
@@ -148,21 +169,17 @@ extension ContentUploadViewController:VideoUploadCellDelegate,VideoTitleInputCel
     //MARK: - singleBtnDelegate
     @IBAction func continueBtnClicked() {
         if StringUtils.isBlank(value: self.videoTitleValue) {
-            ToastHUD.showMsg(msg: "Please Input Title!", controller: self)
-            return
-        }
-        if StringUtils.isBlank(value: self.videoDescValue) {
-            ToastHUD.showMsg(msg: "Please Input Description!", controller: self)
+            ToastHUD.showMsg(msg: "Please enter a title", controller: self)
             return
         }
         if self.videoCapture == nil {
-            ToastHUD.showMsg(msg: "Please Select Video Capture!", controller: self)
+            ToastHUD.showMsg(msg: "Please upload a photo", controller: self)
             return
         }
         let vc:ContentUploadSectionConfigViewController = ContentUploadSectionConfigViewController()
 //        vc.videoURL = self.videoURL
         vc.videoTitleValue = self.videoTitleValue
-        vc.videoDescValue = self.videoDescValue
+        vc.videoDescValue = self.videoDescValue ?? ""
         vc.videoCapture = self.videoCapture
 //        vc.isDemoVideo = self.isDemoVideo
 //        if self.videoCapture == nil {
@@ -227,6 +244,15 @@ extension ContentUploadViewController:UIImagePickerControllerDelegate,UINavigati
         }else{
             let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
             self.videoCapture = pickedImage
+            if self.videoCapture != nil &&  !self.videoTitleValue!.isEmpty {
+                self.continueBtn.setTitleColor(UIColor(255, 78, 0),for: .normal)
+                self.continueBtn.layer.borderColor = UIColor(255, 78, 0).cgColor
+                self.continueBtn.isEnabled = true
+            } else {
+                self.continueBtn.setTitleColor(UIColor(255, 145, 96), for: .normal)
+                self.continueBtn.layer.borderColor = UIColor(255, 145, 96).cgColor
+                self.continueBtn.isEnabled = false
+            }
             self.mainTableView.reloadData()
         }
         

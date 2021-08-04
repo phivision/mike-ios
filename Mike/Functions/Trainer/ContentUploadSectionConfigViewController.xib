@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContentUploadSectionConfigViewController" customModule="Mike" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContentUploadSectionConfigViewController" customModule="Motion" customModuleProvider="target">
             <connections>
                 <outlet property="mainTableView" destination="eUF-Ja-dhk" id="U9f-5Q-jol"/>
                 <outlet property="postBtn" destination="ya3-vp-Vrw" id="BEJ-HR-TWg"/>
@@ -20,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ya3-vp-Vrw">
-                    <rect key="frame" x="307" y="4.5" width="97" height="37"/>
+                    <rect key="frame" x="307" y="90.5" width="97" height="37"/>
                     <color key="backgroundColor" red="1" green="0.30588235289999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="37" id="WlP-dg-e4b"/>
@@ -35,7 +37,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPO-tE-8LB">
-                    <rect key="frame" x="10" y="0.0" width="46" height="46"/>
+                    <rect key="frame" x="10" y="86" width="46" height="46"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="46" id="Gk0-3e-3xC"/>
                         <constraint firstAttribute="height" constant="46" id="jyw-1l-Xn1"/>
@@ -47,7 +49,7 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="eUF-Ja-dhk">
-                    <rect key="frame" x="24" y="88" width="366" height="808"/>
+                    <rect key="frame" x="24" y="178" width="366" height="684"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>
@@ -56,9 +58,9 @@
             <constraints>
                 <constraint firstItem="ya3-vp-Vrw" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-10" id="9zo-ZI-Pl4"/>
                 <constraint firstItem="BPO-tE-8LB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="LIA-1t-UR1"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="BPO-tE-8LB" secondAttribute="top" id="ZwM-BZ-3ae"/>
+                <constraint firstItem="BPO-tE-8LB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="86" id="ZwM-BZ-3ae"/>
                 <constraint firstItem="eUF-Ja-dhk" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-24" id="fQS-pP-Pd7"/>
-                <constraint firstItem="eUF-Ja-dhk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="88" id="iAQ-xi-dcZ"/>
+                <constraint firstItem="eUF-Ja-dhk" firstAttribute="top" secondItem="BPO-tE-8LB" secondAttribute="bottom" constant="46" id="iAQ-xi-dcZ"/>
                 <constraint firstItem="ya3-vp-Vrw" firstAttribute="centerY" secondItem="BPO-tE-8LB" secondAttribute="centerY" id="jCq-WY-tcz"/>
                 <constraint firstItem="eUF-Ja-dhk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="mgf-Fe-lOm"/>
                 <constraint firstItem="eUF-Ja-dhk" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="pPP-OL-IOu"/>
@@ -67,7 +69,7 @@
         </view>
     </objects>
     <resources>
-        <image name="icon-back" width="128" height="128"/>
+        <image name="icon-back" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
