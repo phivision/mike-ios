@@ -29,7 +29,7 @@ class UserContentTrainerInfoCell: UITableViewCell {
         self.avatar.clipsToBounds = true
         self.avatar.imageView?.layer.cornerRadius = 10
     }
-    func setModel(model:UserCenterModel,contentModel:UserCenterContent,isFav:Bool){
+    func setModel(model:UserCenterTrainer,contentModel:UserCenterContent,isFav:Bool){
         self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         self.titleText.text = "\(contentModel.title ?? "")"
         self.descText.text = "\(contentModel.descriptionField ?? "")"

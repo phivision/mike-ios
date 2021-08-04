@@ -119,6 +119,12 @@ class MessageChatForStudentRoleViewController: BaseViewController {
             
         }
     }
+    func handleTokenBalance(){
+        self.tokenBalance = self.tokenBalance - self.trainerTokenPrice
+        DispatchQueue.main.async {
+            self.setNavRightIcon(tokenBalance: self.tokenBalance)
+        }
+    }
     //MARK: - token price
     func fetchTokenPrice(){
         MessageBackend.shared.fetchTokenPrice(trainerId: self.toUserId) { tokenPrice in
@@ -230,9 +236,9 @@ class MessageChatForStudentRoleViewController: BaseViewController {
                 self.saveLastMsg(msg: msgModel.postMessages)
                 self.commentText.text = ""
                 self.commentTextHeight.constant = 40
-                self.tokenBalance = self.tokenBalance - self.trainerTokenPrice
                 self.scrollTableViewToBottom(animated: true)
-                self.fetchTokenBalance()
+//                self.fetchTokenBalance()
+                self.handleTokenBalance()
             }
         } fail: { errorMsg in
             DispatchQueue.main.async {
