@@ -45,10 +45,16 @@ class RegisterViewController: BaseViewController {
         }//[UITextInputPasswordRules passwordRulesWithDescriptor:@""];
         
         self.userNameText.delegate = self
-        self.userNameText.text = self.userName ?? ""
+        self.userNameText.text = self.userName
         self.pwdText.delegate = self
         self.firstNameText.delegate = self
         self.lastNameText.delegate = self
+        
+        self.userNameText.textContentType = .emailAddress
+        self.userNameText.keyboardType = .emailAddress
+        self.pwdText.textContentType = .newPassword
+        self.firstNameText.textContentType = .givenName
+        self.lastNameText.textContentType = .familyName
         
         self.hanldeBgCornerAndShadow(bgView: self.inputBg)
         
@@ -106,6 +112,7 @@ class RegisterViewController: BaseViewController {
                 hud.hide(animated: true)
                 let secondVC = RegisterConfirmViewController()
                 secondVC.userName = self.userName
+                secondVC.password = self.pwd
                 self.navigationController?.pushViewController(secondVC, animated: true)
             }
         } suc: {

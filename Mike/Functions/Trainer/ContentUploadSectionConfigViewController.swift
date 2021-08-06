@@ -304,7 +304,7 @@ extension ContentUploadSectionConfigViewController{
         
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.mode = .annularDeterminate
-        hud.label.text = "UpLoading Video..."
+        hud.label.text = "Uploading your video..."
         TrainerBackend.shared.uploadVideo(videoData: fileData, videoKey: videoKey) { progress in
             print("progress~~~~~~~~~~~~~~~~~~~~~~\(Float(progress.completedUnitCount)/Float(progress.totalUnitCount))")
             DispatchQueue.main.async {
@@ -332,7 +332,7 @@ extension ContentUploadSectionConfigViewController{
         
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.mode = .annularDeterminate
-        hud.label.text = "UpLoading Video Capture..."
+        hud.label.text = "Uploading your thumbnail..."
         
         TrainerBackend.shared.uploadImage(imgData: data, imgName: self.thumbnail) {progress in
             print("~~~~~~~~~~~~~~~~~~~~~~\(progress.fractionCompleted)")
@@ -368,9 +368,8 @@ extension ContentUploadSectionConfigViewController{
             DispatchQueue.main.async {
                 hud.hide(animated: true)
 //                ToastHUD.showMsg(msg: "Upload Succeeded!", controller: self)
-                let alertController = UIAlertController(title: "", message: "Upload Succeeded,Waiting for processing...",
-                                                        preferredStyle: .alert)
-                let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
+                let alertController = UIAlertController(title: "", message: "Upload successful. Video processing...", preferredStyle: .alert)
+                let sureAction = UIAlertAction(title:  "Done", style: .default) { (alertAction) in
                     self.navigationController?.popViewController(animated: true)
                 }
                 alertController.addAction(sureAction)

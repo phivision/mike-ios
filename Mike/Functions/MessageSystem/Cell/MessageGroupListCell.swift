@@ -26,7 +26,7 @@ class MessageGroupListCell: UITableViewCell {
         }else{
             self.lastMsgContentLab.text = "No messages yet"
         }
-        self.nameLab.text = "Group: \(model.firstName ?? "") \(model.lastName ?? "")"
+        self.nameLab.text = "\(model.firstName ?? "") \(model.lastName ?? "")'s Room"
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
                 self.avatarImg.image = UIImage(named: "icon_user_default")
@@ -51,7 +51,7 @@ class MessageGroupListCell: UITableViewCell {
         }else{
             self.lastMsgContentLab.text = "No messages yet"
         }
-        self.nameLab.text = "Group: \(model.firstName ?? "") \(model.lastName ?? "")"
+        self.nameLab.text = "\(model.firstName ?? "") \(model.lastName ?? "")'s Room"
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
                 self.avatarImg.image = UIImage(named: "icon_user_default")

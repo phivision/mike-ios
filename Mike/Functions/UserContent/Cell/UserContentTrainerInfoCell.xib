@@ -45,7 +45,7 @@
                         <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yk5-9x-iNC">
-                        <rect key="frame" x="18" y="72" width="149" height="0.0"/>
+                        <rect key="frame" x="18" y="72" width="202" height="0.0"/>
                         <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="31"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -67,19 +67,8 @@
                             <action selector="delBtnClicked" destination="KGk-i7-Jjw" eventType="touchUpInside" id="R6o-19-sfZ"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vqe-cP-5oC">
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZg-3x-8P6">
                         <rect key="frame" x="230" y="72" width="40" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="40" id="egG-w8-PQv"/>
-                            <constraint firstAttribute="height" constant="44" id="gTy-Oa-KnC"/>
-                        </constraints>
-                        <state key="normal" image="icon_edit"/>
-                        <connections>
-                            <action selector="editBtnClicked" destination="KGk-i7-Jjw" eventType="touchUpInside" id="RSZ-Dc-gRK"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZg-3x-8P6">
-                        <rect key="frame" x="177" y="72" width="40" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="DgN-Sa-Flc"/>
                             <constraint firstAttribute="height" constant="44" id="T2Y-0h-Zau"/>
@@ -94,11 +83,9 @@
                 <constraints>
                     <constraint firstItem="DXT-T1-e64" firstAttribute="centerY" secondItem="4yM-UN-qwP" secondAttribute="centerY" id="3DF-Rg-aLx"/>
                     <constraint firstItem="Zg1-dO-evP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="66P-Sj-vXu"/>
-                    <constraint firstItem="vqe-cP-5oC" firstAttribute="centerY" secondItem="dZg-3x-8P6" secondAttribute="centerY" id="8as-Wu-nlt"/>
                     <constraint firstAttribute="trailing" secondItem="ojK-0l-lCA" secondAttribute="trailing" constant="18" id="B2q-zs-5tb"/>
                     <constraint firstItem="4yM-UN-qwP" firstAttribute="trailing" secondItem="DXT-T1-e64" secondAttribute="leading" constant="-10" id="BxU-qO-MXb"/>
-                    <constraint firstItem="vqe-cP-5oC" firstAttribute="trailing" secondItem="pPt-qM-GnM" secondAttribute="leading" id="Hvq-Kp-BHN"/>
-                    <constraint firstItem="dZg-3x-8P6" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-103" id="I7O-Cj-u9x"/>
+                    <constraint firstItem="pPt-qM-GnM" firstAttribute="leading" secondItem="dZg-3x-8P6" secondAttribute="trailing" id="I7O-Cj-u9x"/>
                     <constraint firstAttribute="trailing" secondItem="pPt-qM-GnM" secondAttribute="trailing" constant="10" id="J1a-SM-kY8"/>
                     <constraint firstItem="4yM-UN-qwP" firstAttribute="leading" secondItem="Zg1-dO-evP" secondAttribute="trailing" constant="6" id="RuV-q1-Knt"/>
                     <constraint firstAttribute="bottom" secondItem="ojK-0l-lCA" secondAttribute="bottom" constant="20" id="U8s-S8-QET"/>
@@ -106,7 +93,6 @@
                     <constraint firstItem="yk5-9x-iNC" firstAttribute="trailing" secondItem="dZg-3x-8P6" secondAttribute="leading" constant="-10" id="YkU-Je-J7V"/>
                     <constraint firstItem="yk5-9x-iNC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="f7l-8y-cCN"/>
                     <constraint firstItem="yk5-9x-iNC" firstAttribute="top" secondItem="Zg1-dO-evP" secondAttribute="bottom" constant="12" id="guW-2n-mTG"/>
-                    <constraint firstItem="vqe-cP-5oC" firstAttribute="centerY" secondItem="pPt-qM-GnM" secondAttribute="centerY" id="lHQ-dl-eIy"/>
                     <constraint firstItem="Zg1-dO-evP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="n4Z-m9-FFk"/>
                     <constraint firstItem="ojK-0l-lCA" firstAttribute="leading" secondItem="yk5-9x-iNC" secondAttribute="leading" id="sIX-at-tja"/>
                     <constraint firstItem="pPt-qM-GnM" firstAttribute="top" secondItem="yk5-9x-iNC" secondAttribute="top" id="vua-Cx-0FU"/>
@@ -118,7 +104,6 @@
                 <outlet property="avatar" destination="Zg1-dO-evP" id="Ev5-AP-MFg"/>
                 <outlet property="delBtn" destination="pPt-qM-GnM" id="opr-5y-8jk"/>
                 <outlet property="descText" destination="ojK-0l-lCA" id="Zwp-St-bLO"/>
-                <outlet property="editBtn" destination="vqe-cP-5oC" id="TmO-Dw-XCC"/>
                 <outlet property="favBtn" destination="dZg-3x-8P6" id="4V1-Fm-GUp"/>
                 <outlet property="favBtnRightMargin" destination="I7O-Cj-u9x" id="4nO-vy-Vrn"/>
                 <outlet property="timeLab" destination="DXT-T1-e64" id="ag1-BZ-FMS"/>
@@ -129,7 +114,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon_edit" width="25.5" height="26"/>
         <image name="icon_fav_H" width="24" height="24"/>
         <image name="icon_fav_orange" width="24" height="21.5"/>
         <image name="icon_trash" width="23" height="27"/>

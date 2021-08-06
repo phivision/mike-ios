@@ -26,7 +26,7 @@ class MessageGroupChatRoomViewController: BaseViewController {
     @IBOutlet weak var sendBtn:UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Group: \(self.trainerName ?? "")"
+        self.title = "\(self.trainerName ?? "")'s Room"
         self.configTableView()
         self.configSubscription()
         self.configTextView()
