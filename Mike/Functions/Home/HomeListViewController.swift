@@ -17,7 +17,6 @@ class HomeListViewController: BaseViewController {
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return refreshControl
     }()
-    @IBOutlet weak var userName:UILabel!
 //    @IBOutlet weak var timeLab:UILabel!
     lazy var subscriptionList:Array<UserSubscriptionTrainerListModel> = {
         var subscriptionList:Array<UserSubscriptionTrainerListModel> = Array<UserSubscriptionTrainerListModel>()
@@ -27,7 +26,6 @@ class HomeListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configTableView()
-        self.configTopView()
         NotificationCenter.default.addObserver(self, selector: #selector(fetchTrainerList), name: NSNotification.Name(rawValue:refreshHomeList), object: nil)
         // Do any additional setup after loading the view.
     }
@@ -43,20 +41,11 @@ class HomeListViewController: BaseViewController {
         }
     }
     
-    func configTopView(){
-        self.userName.text = "Hi, \(LoginTools.sharedTools.userInfo().firstName ?? "")"
-//        let date = Date()
-//        let timeFormatter = DateFormatter()
-//        //日期显示格式，可按自己需求显示
-//        timeFormatter.dateFormat = "EEEE MMM dd"
-//        let strNowTime = timeFormatter.string(from: date) as String
-//        self.timeLab.text = "\(strNowTime)"
-    }
-    
     func configTableView(){
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
+        self.mainTableView.register(UINib(nibName: "TrainerHomeTopCell", bundle: nil), forCellReuseIdentifier: "TrainerHomeTopCell")
         self.mainTableView.register(UINib(nibName: "HomeListCell", bundle: nil), forCellReuseIdentifier: "HomeListCell")
         self.mainTableView.register(UINib(nibName: "TrainerListCell", bundle: nil), forCellReuseIdentifier: "TrainerListCell")
         self.mainTableView.estimatedRowHeight = 88;
@@ -102,13 +91,15 @@ class HomeListViewController: BaseViewController {
 }
 extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1 + self.subscriptionList.count
+        return 2 + self.subscriptionList.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
+        }else if section == 1{
+            return 1
         }else{
-            let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[section-1]
+            let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[section-2]
             return trainerModel.trainer.contents.items.count
         }
     }
@@ -118,12 +109,16 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
+            let cell:TrainerHomeTopCell = tableView.dequeueReusableCell(withIdentifier: "TrainerHomeTopCell", for: indexPath) as! TrainerHomeTopCell
+            cell.titleLab.text = "Hi, \(LoginTools.sharedTools.userInfo().firstName ?? "")"
+            return cell
+        }else if indexPath.section == 1 {
             let cell:TrainerListCell = tableView.dequeueReusableCell(withIdentifier: "TrainerListCell", for: indexPath) as! TrainerListCell
             cell.setTrainerList(trainerList: self.subscriptionList)
             cell.delegate = self
             return cell
         }else{
-            let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section-1]
+            let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section-2]
             let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
             let cell:HomeListCell = tableView.dequeueReusableCell(withIdentifier: "HomeListCell", for: indexPath) as! HomeListCell
             cell.setItemModel(model: contentModel,sectionModel: trainerModel.trainer)
@@ -134,8 +129,10 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             
+        }else if indexPath.section == 1 {
+            
         }else{
-            let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section-1]
+            let trainerModel:UserSubscriptionTrainerListModel = self.subscriptionList[indexPath.section-2]
             let contentModel:UserSubscriptionTrainerListItem = trainerModel.trainer.contents.items[indexPath.row]
             let vc:UserContentController = UserContentController()
             vc.userContentModel = UserCenterContent(fromDictionary: contentModel.toDictionary())

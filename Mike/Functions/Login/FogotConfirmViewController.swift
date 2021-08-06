@@ -27,6 +27,8 @@ class FogotConfirmViewController: BaseViewController {
         self.codeText.delegate = self
         self.newPwdText.delegate = self
         
+        self.newPwdText.textContentType = .newPassword
+        
         self.hanldeBgCornerAndShadow(bgView: self.inputBg)
         
         self.confirmBtn.layer.cornerRadius = 18.5

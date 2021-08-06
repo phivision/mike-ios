@@ -268,7 +268,7 @@ extension UserContentController:UITableViewDelegate,UITableViewDataSource{
         }else{
             let alertController = UIAlertController(title: "", message: "Waiting for processing",
                                                     preferredStyle: .alert)
-            let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
+            let sureAction = UIAlertAction(title:  "Done", style: .default) { (alertAction) in
             
             }
             alertController.addAction(sureAction)
@@ -322,12 +322,11 @@ extension UserContentController:UserContentTrainerInfoCellDelegate{
         
     }
     func delBtnPressed() {
-        let alertController = UIAlertController(title: "", message: "Do you want to remove this content?",
-                                                preferredStyle: .alert)
+        let alertController = UIAlertController(title: "", message: "Are you sure you want to delete this post?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title:  "Cancel", style: .cancel) { (alertAction) in
 
         }
-        let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
+        let sureAction = UIAlertAction(title:  "Delete", style: .destructive) { (alertAction) in
             self.delContent()
         }
         alertController.addAction(cancelAction)

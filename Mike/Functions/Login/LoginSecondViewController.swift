@@ -37,6 +37,11 @@ class LoginSecondViewController: BaseViewController {
         self.userNameText.delegate = self
         self.pwdText.delegate = self
         
+        self.userNameText.keyboardType = .emailAddress
+        self.userNameText.textContentType = .emailAddress
+        
+        self.pwdText.textContentType = .password
+        
         if !hasEnteredEmail {
             self.divider.isHidden = true
             self.pwdText.isHidden = true
@@ -139,21 +144,6 @@ class LoginSecondViewController: BaseViewController {
                     } needCreateProfile: {
                         
                     }
-
-    //        LoginBackend.shared.login(userName: self.userNameText.text, pwd: self.pwdText.text) {
-    //            self.updateDeviceToken()
-    //            DispatchQueue.main.async {
-    //                hud.hide(animated: true)
-    //                let homeVC:HomeTabViewController = HomeTabViewController()
-    //                self.changeRootController(controller: homeVC)
-    //            }
-    //        } fail: { error in
-    //            self.logOut()
-    //            DispatchQueue.main.async {
-    //                hud.hide(animated: true)
-    //                ToastHUD.showMsg(msg:error, controller: self)
-    //            }
-    //        }
         }
     }
     func resenConfirmCode(){
@@ -163,6 +153,7 @@ class LoginSecondViewController: BaseViewController {
                 hud.hide(animated: true)
                 let secondVC = RegisterConfirmViewController()
                 secondVC.userName = self.userNameText.text
+                secondVC.password = self.pwdText.text
                 self.navigationController?.pushViewController(secondVC, animated: true)
             }
         } fail: { error in

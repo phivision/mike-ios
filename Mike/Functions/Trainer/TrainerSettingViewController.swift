@@ -304,10 +304,10 @@ extension TrainerSettingViewController:UserSettingTrainerListCellDelegate{
         let trainer = self.subscriptionList[index.row];
         let alertController = UIAlertController(title: "", message: "Are you sure you want to unsubscribe \(trainer.firstName ?? "") \(trainer.lastName ?? "")?",
                                                 preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title:  "CANCEL", style: .cancel) { (alertAction) in
+        let cancelAction = UIAlertAction(title:  "Cancel", style: .cancel) { (alertAction) in
             
         }
-        let sureAction = UIAlertAction(title:  "OK", style: .default) { (alertAction) in
+        let sureAction = UIAlertAction(title:  "Unsubscribe", style: .destructive) { (alertAction) in
             self.delSub(index: index.row)
         }
         alertController.addAction(cancelAction)

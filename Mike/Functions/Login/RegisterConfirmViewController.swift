@@ -9,6 +9,7 @@ import UIKit
 
 class RegisterConfirmViewController: BaseViewController {
     var userName:String!
+    var password:String!
     @IBOutlet weak var confirmBtn:UIButton!
     @IBOutlet weak var codeBg:UIImageView!
     @IBOutlet weak var codeText:UITextField!
@@ -47,15 +48,48 @@ class RegisterConfirmViewController: BaseViewController {
         }
         let hud:MBProgressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         LoginBackend.shared.confirmSignUp(for: self.userName, with: self.codeValue) {
-            DispatchQueue.main.async {
-                hud.hide(animated: true)
-                self.navigationController?.popToRootViewController(animated: true)
+            LoginBackend.shared.login(userName: self.userName, pwd: self.password) {
+                self.updateDeviceToken()
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    let homeVC:HomeTabViewController = HomeTabViewController()
+                    self.changeRootController(controller: homeVC)
+                }
+            } fail: { error in
+                self.logOut()
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    ToastHUD.showMsg(msg:"Login unsuccessful", controller: self)
+                }
+            } confirmSignUp: {
+                
+            } needCreateProfile: {
+                
             }
         } fail: { error in
             DispatchQueue.main.async {
                 hud.hide(animated: true)
                 ToastHUD.showMsg(msg:error, controller: self)
             }
+        }
+    }
+    
+    
+    func updateDeviceToken(){
+        if StringUtils.isBlank(value: LoginTools.sharedTools.deviceToken) == false {
+            MessageBackend.shared.updateUserDeviceToken(deviceToken: LoginTools.sharedTools.deviceToken) {
+                
+            } fail: {
+                
+            }
+        }
+    }
+    
+    func logOut(){
+        LoginBackend.shared.signOut {
+            LoginTools.sharedTools.trainerModel = nil
+        } fail: {
+
         }
     }
     

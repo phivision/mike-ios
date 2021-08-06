@@ -18,7 +18,6 @@ class UserContentTrainerInfoCell: UITableViewCell {
     @IBOutlet weak var titleText:UILabel!
     @IBOutlet weak var descText:UILabel!
     @IBOutlet weak var favBtn:UIButton!
-    @IBOutlet weak var editBtn:UIButton!
     @IBOutlet weak var delBtn:UIButton!
     @IBOutlet weak var favBtnRightMargin:NSLayoutConstraint!
     weak var delegate:UserContentTrainerInfoCellDelegate?
@@ -33,6 +32,8 @@ class UserContentTrainerInfoCell: UITableViewCell {
         self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
         self.titleText.text = "\(contentModel.title ?? "")"
         self.descText.text = "\(contentModel.descriptionField ?? "")"
+        self.descText.lineBreakMode = NSLineBreakMode.byWordWrapping
+        self.descText.numberOfLines = 0
         ImageCacheUtils.sharedTools.imageUrl(key: model.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
                 self.avatar.setImage(UIImage(named: "logo"), for: .normal)
@@ -43,20 +44,15 @@ class UserContentTrainerInfoCell: UITableViewCell {
         self.timeLab.text = "\(TimeFormatUtils.timeStrWithDate(dateStr: contentModel.createdAt ?? ""))"
         self.favBtn.isSelected = isFav
         if LoginTools.sharedTools.userId() == model.id{
-            self.editBtn.isHidden = false
             self.delBtn.isHidden = false
             self.favBtnRightMargin.constant = -103
         }else{
-            self.editBtn.isHidden = true
             self.delBtn.isHidden = true
             self.favBtnRightMargin.constant = -15
         }
     }
     @IBAction func favBtnClicked(){
         self.delegate?.favBtnPressed?()
-    }
-    @IBAction func editBtnClicked(){
-        self.delegate?.editBtnPressed?()
     }
     @IBAction func delBtnClicked(){
         self.delegate?.delBtnPressed?()

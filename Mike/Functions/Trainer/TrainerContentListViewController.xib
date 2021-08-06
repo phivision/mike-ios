@@ -9,10 +9,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TrainerContentListViewController" customModule="Mike" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TrainerContentListViewController" customModule="Motion" customModuleProvider="target">
             <connections>
                 <outlet property="mainTableView" destination="7ol-Tj-HGd" id="bzm-hc-QqA"/>
-                <outlet property="userName" destination="lEc-KM-QDb" id="JEK-9a-TrV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,24 +21,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7ol-Tj-HGd">
-                    <rect key="frame" x="0.0" y="184" width="414" height="678"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi,Grace" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lEc-KM-QDb">
-                    <rect key="frame" x="24" y="130" width="131" height="44"/>
-                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="32"/>
-                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="7ol-Tj-HGd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="2k1-qu-dhI"/>
-                <constraint firstItem="lEc-KM-QDb" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="86" id="DcS-UZ-oE0"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="7ol-Tj-HGd" secondAttribute="top" id="Avc-rS-USg"/>
                 <constraint firstItem="7ol-Tj-HGd" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="IPo-zE-e7t"/>
-                <constraint firstItem="7ol-Tj-HGd" firstAttribute="top" secondItem="lEc-KM-QDb" secondAttribute="bottom" constant="10" id="PJQ-Av-for"/>
                 <constraint firstItem="7ol-Tj-HGd" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Wyg-3l-sSH"/>
-                <constraint firstItem="lEc-KM-QDb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="wSc-Ff-ezx"/>
             </constraints>
             <point key="canvasLocation" x="139" y="86"/>
         </view>

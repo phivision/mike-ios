@@ -41,6 +41,7 @@ class UserProfileTopCell: UICollectionViewCell {
             self.userName.text = "\(model.firstName ?? "") \(model.lastName ?? "")"
             let dateStr = AgeUtils.transDate(oldFormat: "yyyy-MM-dd", newFormat: "MMM dd", dateValue: model.regDate)
             self.userDesc.text = "Joined \(dateStr)"
+            self.userDesc.lineBreakMode = NSLineBreakMode.byWordWrapping
             self.isTrainer = false
         }else{
             ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.userInfo().userImage) { imgUrl, cannotLoadUrl in

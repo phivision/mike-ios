@@ -8,10 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeListViewController" customModule="Mike" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeListViewController" customModule="Motion" customModuleProvider="target">
             <connections>
                 <outlet property="mainTableView" destination="7cB-gV-DIy" id="ppt-6K-tDb"/>
-                <outlet property="userName" destination="qzH-tz-lLL" id="xlt-A2-aHd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,23 +20,15 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7cB-gV-DIy">
-                    <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi,Grace." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzH-tz-lLL">
-                    <rect key="frame" x="24" y="86" width="140.5" height="44"/>
-                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="32"/>
-                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="qzH-tz-lLL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="2Xb-EU-kmZ"/>
                 <constraint firstItem="7cB-gV-DIy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Jc2-Hw-Clw"/>
-                <constraint firstItem="7cB-gV-DIy" firstAttribute="top" secondItem="qzH-tz-lLL" secondAttribute="bottom" constant="10" id="MRM-Sm-w2Q"/>
+                <constraint firstItem="7cB-gV-DIy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="duY-WI-XQg"/>
                 <constraint firstItem="7cB-gV-DIy" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="kTj-Tx-lI2"/>
-                <constraint firstItem="qzH-tz-lLL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="86" id="rqd-44-2yA"/>
                 <constraint firstItem="7cB-gV-DIy" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="wHT-5l-19O"/>
             </constraints>
             <point key="canvasLocation" x="139" y="87"/>

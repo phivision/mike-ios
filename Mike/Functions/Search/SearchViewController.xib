@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController" customModule="Mike" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController" customModule="Motion" customModuleProvider="target">
             <connections>
                 <outlet property="mainTableView" destination="BZj-F1-Lhe" id="GrQ-TV-j0E"/>
                 <outlet property="searchBg" destination="76S-cB-rVO" id="qIR-JS-FAy"/>
@@ -42,7 +42,7 @@
                         <constraint firstAttribute="width" constant="20" id="V7n-S4-Qf3"/>
                     </constraints>
                 </imageView>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search trainers…" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dex-Hf-Y0n">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search creators..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dex-Hf-Y0n">
                     <rect key="frame" x="62" y="158" width="328" height="36"/>
                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                     <textInputTraits key="textInputTraits" returnKeyType="search"/>

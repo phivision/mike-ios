@@ -21,14 +21,17 @@ class FogotPwdViewController: BaseViewController {
     func configView(){
         self.userNameText.delegate = self
         
-        self.hanldeBgCornerAndShadow(bgView: self.userNameBg)
+        self.userNameText.textContentType = .emailAddress
+        self.userNameText.keyboardType = .emailAddress
+        
+        self.handleBgCornerAndShadow(bgView: self.userNameBg)
         
         self.continueBtn.layer.cornerRadius = 18.5
         self.continueBtn.backgroundColor = UIColor(255, 145, 96)
         self.continueBtn.isEnabled = false
     }
     
-    func hanldeBgCornerAndShadow(bgView:UIImageView){
+    func handleBgCornerAndShadow(bgView:UIImageView){
         bgView.clipsToBounds = true
         bgView.layer.cornerRadius = 5
         bgView.layer.borderWidth = 1

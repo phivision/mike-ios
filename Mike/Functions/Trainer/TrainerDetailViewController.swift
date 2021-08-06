@@ -173,6 +173,7 @@ class TrainerDetailViewController: BaseViewController{
     
     @IBAction func addTraner() {
         self.tabBarController?.selectedIndex = 1
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: changeTabbarCenterIconStatus), object: nil)
     }
 
     /*

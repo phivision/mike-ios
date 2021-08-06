@@ -34,6 +34,9 @@ class CompleteUserInfoViewController: BaseViewController {
         self.loginBtn.layer.cornerRadius = 18.5
         self.loginBtn.backgroundColor = UIColor(255, 145, 96)
         self.loginBtn.isEnabled = false
+        
+        self.firstNameText.textContentType = .givenName
+        self.lastNameText.textContentType = .familyName
     }
     
     @IBAction func textChanged(_ sender: Any) {

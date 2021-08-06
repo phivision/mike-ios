@@ -18,11 +18,11 @@
       "function": {
         "stripeAPI": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/stripeAPI-653554456b55356f6772-build.zip"
+          "s3Key": "amplify-builds/stripeAPI-6a6c7332426b4f42596d-build.zip"
         },
         "stripeWebhook": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/stripeWebhook-5039357566306e4c4a6d-build.zip"
+          "s3Key": "amplify-builds/stripeWebhook-51454c653851444a414a-build.zip"
         },
         "cognitoPostConfirm": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
@@ -30,11 +30,11 @@
         },
         "videoConvertComplete": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/videoConvertComplete-7132525a326857493833-build.zip"
+          "s3Key": "amplify-builds/videoConvertComplete-5264707552586c516932-build.zip"
         },
         "marketing": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/marketing-556b2b6b66577a6d446b-build.zip"
+          "s3Key": "amplify-builds/marketing-34474d4451724672514e-build.zip"
         },
         "videoFlutterMove": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
@@ -42,39 +42,39 @@
         },
         "messageTokenTransaction": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/messageTokenTransaction-4d6e354a496254796167-build.zip"
+          "s3Key": "amplify-builds/messageTokenTransaction-51426839492b536a786d-build.zip"
         },
         "videoCleanUpFavorite": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/videoCleanUpFavorite-54714e337946394c7367-build.zip"
+          "s3Key": "amplify-builds/videoCleanUpFavorite-4b676b68675a58324c33-build.zip"
         },
         "messageGroupSend": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/messageGroupSend-3175544e526442515170-build.zip"
+          "s3Key": "amplify-builds/messageGroupSend-3662397a2b6b77554578-build.zip"
         },
         "appStore": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/appStore-34786661437472795653-build.zip"
+          "s3Key": "amplify-builds/appStore-707a594c5743705a702f-build.zip"
         },
         "mikereactPostConfirmation": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/mikereactPostConfirmation-634e62717843382f3966-build.zip"
+          "s3Key": "amplify-builds/mikereactPostConfirmation-326d2b4231564c655052-build.zip"
         },
         "subscriptions": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/subscriptions-567a386a786f424b2b7a-build.zip"
+          "s3Key": "amplify-builds/subscriptions-6e426d4331714c673453-build.zip"
         },
         "subscriptionManager": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/subscriptionManager-48666a4b4a394c667656-build.zip"
+          "s3Key": "amplify-builds/subscriptionManager-4d78334b674359713448-build.zip"
         },
         "appleSignIn": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/appleSignIn-6c5a443442677a4e4549-build.zip"
+          "s3Key": "amplify-builds/appleSignIn-6e6f79324a5671667346-build.zip"
         },
         "mikereactPreSignup": {
           "deploymentBucketName": "amplify-mike-react-dev-150010-deployment",
-          "s3Key": "amplify-builds/mikereactPreSignup-6b4b56764e5a454b4d77-build.zip"
+          "s3Key": "amplify-builds/mikereactPreSignup-4e5a752f4f2f36724835-build.zip"
         }
       },
       "storage": {
