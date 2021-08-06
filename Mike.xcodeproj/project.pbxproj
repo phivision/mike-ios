@@ -907,6 +907,8 @@
 		B5543C0206DBCEC3E37D955C /* UserContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */; };
 		B5663CB0C0785131E68BD700 /* UserFavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397087124EE4DEA8E0A9DB8 /* UserFavoriteContent.swift */; };
 		B5DD790E5B764A49A7E59CB1 /* UserContent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */; };
+		B61F6DE226BD640D00F9CE91 /* TrainerHomeTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61F6DE026BD640D00F9CE91 /* TrainerHomeTopCell.swift */; };
+		B61F6DE326BD640D00F9CE91 /* TrainerHomeTopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B61F6DE126BD640D00F9CE91 /* TrainerHomeTopCell.xib */; };
 		B62AEA0926BA95A000BBBAD2 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = B62AEA0826BA95A000BBBAD2 /* Amplify */; };
 		B62AEA0B26BA95A000BBBAD2 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B62AEA0A26BA95A000BBBAD2 /* AWSCognitoAuthPlugin */; };
 		B62AEA0D26BA95A000BBBAD2 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = B62AEA0C26BA95A000BBBAD2 /* AWSS3StoragePlugin */; };
@@ -1569,6 +1571,8 @@
 		96F9A5450EF24BFA96BC4FFF /* UserSubscriptionTrainer+Schema.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "UserSubscriptionTrainer+Schema.swift"; path = "amplify/generated/models/UserSubscriptionTrainer+Schema.swift"; sourceTree = "<group>"; };
 		9FF8DCBE2F2D4E6CB29B2574 /* UserContent.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = UserContent.swift; path = amplify/generated/models/UserContent.swift; sourceTree = "<group>"; };
 		ABC3466D4D8345B69DEDEE78 /* UserContent+Schema.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "UserContent+Schema.swift"; path = "amplify/generated/models/UserContent+Schema.swift"; sourceTree = "<group>"; };
+		B61F6DE026BD640D00F9CE91 /* TrainerHomeTopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerHomeTopCell.swift; sourceTree = "<group>"; };
+		B61F6DE126BD640D00F9CE91 /* TrainerHomeTopCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainerHomeTopCell.xib; sourceTree = "<group>"; };
 		B631AFB326799A0700C907B2 /* get_video_endpoints.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_video_endpoints.sh; sourceTree = "<group>"; };
 		B631AFB426799A0700C907B2 /* video_endpoints.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = video_endpoints.json; sourceTree = "<group>"; };
 		B631AFB726799EC700C907B2 /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonHelper.swift; sourceTree = "<group>"; };
@@ -2073,6 +2077,8 @@
 				B6D4289E26A0287F0080695E /* TrainerMessageMeCell.xib */,
 				B6D428A126A02D690080695E /* TrainerSubscribeActionCell.swift */,
 				B6D428A226A02D690080695E /* TrainerSubscribeActionCell.xib */,
+				B61F6DE026BD640D00F9CE91 /* TrainerHomeTopCell.swift */,
+				B61F6DE126BD640D00F9CE91 /* TrainerHomeTopCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2868,6 +2874,7 @@
 				B637497B26444D9F00502913 /* UserProfileTopCell.xib in Resources */,
 				B631AFB526799A0700C907B2 /* get_video_endpoints.sh in Resources */,
 				B69103D426381EC0005F2ACD /* HomeSeeAllCoursesView.xib in Resources */,
+				B61F6DE326BD640D00F9CE91 /* TrainerHomeTopCell.xib in Resources */,
 				B682631626424C6A00A32D5C /* Nunito-Light.ttf in Resources */,
 				B6A285292684341100E40B3B /* MessageChatForTrainerRoleViewController.xib in Resources */,
 				B67D8569269D6D460097DBF9 /* FeedOrFavColListCell.xib in Resources */,
@@ -3495,6 +3502,7 @@
 				C3641D81778D951B47870C59 /* UserProfile+Schema.swift in Sources */,
 				316B4425FA14C2D9A3CD552D /* UserProfile.swift in Sources */,
 				8C2C432A325AC4D20FC143B1 /* UserSubscriptionTrainer+Schema.swift in Sources */,
+				B61F6DE226BD640D00F9CE91 /* TrainerHomeTopCell.swift in Sources */,
 				E5297AEA890CB04F0C7DEB35 /* UserSubscriptionTrainer.swift in Sources */,
 				A94EF5A2FE851E546B86EE3E /* AmplifyModels.swift in Sources */,
 				993850308386960A9E4AEC4F /* UserContent+Schema.swift in Sources */,

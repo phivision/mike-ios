@@ -17,7 +17,6 @@ class TrainerContentListViewController: BaseViewController {
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return refreshControl
     }()
-    @IBOutlet weak var userName:UILabel!
     lazy var contentList:Array<UserCenterContent> = {
         var contentList:Array<UserCenterContent> = Array<UserCenterContent>()
         return contentList
@@ -26,7 +25,6 @@ class TrainerContentListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configTableView()
-        self.configTopView()
         if LoginTools.sharedTools.userInfo().userRole == "trainer" {
             self.handleSubscription()
             NotificationCenter.default.addObserver(self, selector: #selector(cancelSub), name: NSNotification.Name(rawValue:cancelSubscription), object: nil)
@@ -44,21 +42,11 @@ class TrainerContentListViewController: BaseViewController {
             self.isRequest = true
         }
     }
-    
-    func configTopView(){
-        self.userName.text = "Hi, \(LoginTools.sharedTools.userInfo().firstName ?? "")"
-//        let date = Date()
-//        let timeFormatter = DateFormatter()
-//        //日期显示格式，可按自己需求显示
-//        timeFormatter.dateFormat = "EEEE MMM dd"
-//        let strNowTime = timeFormatter.string(from: date) as String
-//        self.timeLab.text = "\(strNowTime)"
-    }
-    
     func configTableView(){
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
         self.mainTableView.backgroundColor = .white
+        self.mainTableView.register(UINib(nibName: "TrainerHomeTopCell", bundle: nil), forCellReuseIdentifier: "TrainerHomeTopCell")
         self.mainTableView.register(UINib(nibName: "TrainerContentListCell", bundle: nil), forCellReuseIdentifier: "TrainerContentListCell")
         self.mainTableView.estimatedRowHeight = 88;
         self.mainTableView.separatorStyle = .none
@@ -114,9 +102,12 @@ class TrainerContentListViewController: BaseViewController {
 }
 extension TrainerContentListViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
         return self.contentList.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -124,11 +115,19 @@ extension TrainerContentListViewController:UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell:TrainerHomeTopCell = tableView.dequeueReusableCell(withIdentifier: "TrainerHomeTopCell", for: indexPath) as! TrainerHomeTopCell
+            cell.titleLab.text = "Hi, \(LoginTools.sharedTools.userInfo().firstName ?? "")"
+            return cell
+        }
         let cell:TrainerContentListCell = tableView.dequeueReusableCell(withIdentifier: "TrainerContentListCell", for: indexPath) as! TrainerContentListCell
         cell.setContentModel(model: self.contentList[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            return
+        }
         let vc:UserContentController = UserContentController()
         vc.userContentModel = self.contentList[indexPath.row]
         vc.trainerId = LoginTools.sharedTools.userId()

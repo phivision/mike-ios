@@ -36,8 +36,15 @@ class HomeTabViewController:UITabBarController, UITabBarControllerDelegate{
         self.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(updateCenterIcon), name: NSNotification.Name(rawValue: changeTabbarCenterIcon), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeCurTrainerByNoti(notification:)), name: NSNotification.Name(rawValue: changeUserProfileToNew), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeCenterIconSelectState), name: NSNotification.Name(rawValue: changeTabbarCenterIconStatus), object: nil)
     }
-    
+    @objc func changeCenterIconSelectState(){
+        if self.selectedIndex == 2 {
+            self.centerBorderImg.layer.borderColor = orangeColor.cgColor
+        }else{
+            self.centerBorderImg.layer.borderColor = UIColor.clear.cgColor
+        }
+    }
     @objc func updateCenterIcon(){
         ImageCacheUtils.sharedTools.imageUrl(key: LoginTools.sharedTools.trainerModel?.userImage) { imgUrl, cannotLoadUrl in
             if cannotLoadUrl == true{
