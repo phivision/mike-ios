@@ -67,7 +67,7 @@
                             <action selector="delBtnClicked" destination="KGk-i7-Jjw" eventType="touchUpInside" id="R6o-19-sfZ"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZg-3x-8P6">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZg-3x-8P6">
                         <rect key="frame" x="230" y="72" width="40" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="DgN-Sa-Flc"/>
@@ -85,10 +85,11 @@
                     <constraint firstItem="Zg1-dO-evP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="66P-Sj-vXu"/>
                     <constraint firstAttribute="trailing" secondItem="ojK-0l-lCA" secondAttribute="trailing" constant="18" id="B2q-zs-5tb"/>
                     <constraint firstItem="4yM-UN-qwP" firstAttribute="trailing" secondItem="DXT-T1-e64" secondAttribute="leading" constant="-10" id="BxU-qO-MXb"/>
-                    <constraint firstItem="pPt-qM-GnM" firstAttribute="leading" secondItem="dZg-3x-8P6" secondAttribute="trailing" id="I7O-Cj-u9x"/>
+                    <constraint firstAttribute="trailing" secondItem="dZg-3x-8P6" secondAttribute="trailing" constant="50" id="I7O-Cj-u9x"/>
                     <constraint firstAttribute="trailing" secondItem="pPt-qM-GnM" secondAttribute="trailing" constant="10" id="J1a-SM-kY8"/>
                     <constraint firstItem="4yM-UN-qwP" firstAttribute="leading" secondItem="Zg1-dO-evP" secondAttribute="trailing" constant="6" id="RuV-q1-Knt"/>
                     <constraint firstAttribute="bottom" secondItem="ojK-0l-lCA" secondAttribute="bottom" constant="20" id="U8s-S8-QET"/>
+                    <constraint firstItem="dZg-3x-8P6" firstAttribute="top" secondItem="yk5-9x-iNC" secondAttribute="top" id="V2Z-gH-HEb"/>
                     <constraint firstItem="ojK-0l-lCA" firstAttribute="top" secondItem="yk5-9x-iNC" secondAttribute="bottom" constant="10" id="VI6-gm-Cqe"/>
                     <constraint firstItem="yk5-9x-iNC" firstAttribute="trailing" secondItem="dZg-3x-8P6" secondAttribute="leading" constant="-10" id="YkU-Je-J7V"/>
                     <constraint firstItem="yk5-9x-iNC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="f7l-8y-cCN"/>

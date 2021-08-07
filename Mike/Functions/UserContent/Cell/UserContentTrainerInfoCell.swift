@@ -45,10 +45,10 @@ class UserContentTrainerInfoCell: UITableViewCell {
         self.favBtn.isSelected = isFav
         if LoginTools.sharedTools.userId() == model.id{
             self.delBtn.isHidden = false
-            self.favBtnRightMargin.constant = -103
+            self.favBtnRightMargin.constant = 50
         }else{
             self.delBtn.isHidden = true
-            self.favBtnRightMargin.constant = -15
+            self.favBtnRightMargin.constant = 10
         }
     }
     @IBAction func favBtnClicked(){

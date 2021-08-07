@@ -257,20 +257,44 @@ extension MessageListForStudentRoleViewController:UITableViewDelegate,UITableVie
         return 3
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-       return 26
+        switch section {
+        case 0:
+            return self.trainerList.count > 0 ? 26
+                : CGFloat.leastNonzeroMagnitude
+        case 1:
+            return self.groupList.count > 0 ? 26
+                : CGFloat.leastNonzeroMagnitude
+        case 2:
+            return self.unSubTrainerList.count > 0 ? 26
+                : CGFloat.leastNonzeroMagnitude
+        default:
+            return CGFloat.leastNonzeroMagnitude
+        }
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header:UserContentSectionTitleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "UserContentSectionTitleView") as! UserContentSectionTitleView
         header.titleLab.font = UIFont.init(name: nAvenirBlack, size: 18)
         switch section {
         case 0:
-            header.titleLab.text = "Subscriptions"
+            if self.trainerList.count > 0 {
+                header.titleLab.text = "Following"
+            } else {
+                header.titleLab.text = nil
+            }
             break
         case 1:
-            header.titleLab.text = "Subscription Groups"
+            if self.groupList.count > 0 {
+                header.titleLab.text = "Groups"
+            } else {
+                header.titleLab.text = nil
+            }
             break
         case 2:
-            header.titleLab.text = "Unsubscriptions"
+            if self.unSubTrainerList.count > 0 {
+                header.titleLab.text = "Not Following"
+            } else {
+                header.titleLab.text = nil
+            }
             break
         default:
             break

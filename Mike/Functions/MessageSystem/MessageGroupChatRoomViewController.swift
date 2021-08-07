@@ -74,7 +74,7 @@ class MessageGroupChatRoomViewController: BaseViewController {
         self.commentText.delegate = self;
         self.commentText.layer.cornerRadius = 10;
         self.commentText.clipsToBounds = true;
-        self.commentText.placeholder = "Input";
+        self.commentText.placeholder = "Message...";
         self.sendBtn.layer.cornerRadius = 6;
         self.sendBtn.clipsToBounds = true;
     }
