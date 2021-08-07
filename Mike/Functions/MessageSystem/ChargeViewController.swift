@@ -47,7 +47,11 @@ class ChargeViewController: BaseViewController {
         let _:MBProgressHUD = MBProgressHUD.showAdded(to: keyWindow!, animated: true)
         var letters = Set<String>()
         letters.insert("Coins0010")
-        letters.insert("Coin0001")
+        letters.insert("Coins0050")
+        letters.insert("Coins0100")
+        letters.insert("Coins0150")
+        letters.insert("Coins0500")
+        letters.insert("Coins1000")
         let request:SKProductsRequest = SKProductsRequest(productIdentifiers:letters)
         request.delegate = self
         request.start()
