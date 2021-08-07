@@ -62,7 +62,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // Instantiate Pinpoint
         let pinpointConfiguration = AWSPinpointConfiguration.defaultPinpointConfiguration(launchOptions: launchOptions)
         // Set debug mode to use APNS sandbox, make sure to toggle for your production app
-        pinpointConfiguration.debug = true
+        pinpointConfiguration.debug = false
         pinpoint = AWSPinpoint(configuration: pinpointConfiguration)
         // Present the user with a request to authorize push notifications
         registerForPushNotifications()

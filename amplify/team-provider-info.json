@@ -146,12 +146,32 @@
         "marketing": {
           "deploymentBucketName": "amplify-mikereact-prod-93157-deployment",
           "s3Key": "amplify-builds/marketing-364c45596f6c55736c43-build.zip"
-        }
+        },
+        "videoFlutterMove": {
+          "deploymentBucketName": "amplify-mikereact-prod-93157-deployment",
+          "s3Key": "amplify-builds/videoFlutterMove-3378536f55673042754d-build.zip"
+        },
+        "messageTokenTransaction": {},
+        "messageGroupSend": {},
+        "appStore": {},
+        "mikereactPostConfirmation": {},
+        "videoCleanUpFavorite": {},
+        "subscriptions": {},
+        "subscriptionManager": {},
+        "appleSignIn": {},
+        "mikereactPreSignup": {}
       },
       "storage": {
         "mikereact48af3338": {
           "bucketName": "mike-vod-prod",
           "region": "us-east-1"
+        }
+      },
+      "notifications": {
+        "Pinpoint": {
+          "Name": "iosMessagePush",
+          "Id": "37d7798ba9c3470ab88013ce41fe5714",
+          "Region": "us-east-1"
         }
       }
     }
