@@ -45,6 +45,8 @@ class ContentUploadSectionConfigViewController: BaseViewController {
     func configTableView(){
         self.postBtn.layer.cornerRadius = 18.5
         
+        self.postBtn.backgroundColor = UIColor(255, 145, 96)
+        self.postBtn.isEnabled = false
         
         self.mainTableView.delegate = self
         self.mainTableView.dataSource = self
@@ -157,6 +159,15 @@ extension ContentUploadSectionConfigViewController:VideoUploadCellDelegate,UIIma
                 self.handleVideoUrl(videoURL: videoURL)
             }
         }
+        
+        if let _ = self.videoURL {
+            self.postBtn.backgroundColor = UIColor(255, 78, 0)
+            self.postBtn.isEnabled = true
+        } else {
+            self.postBtn.backgroundColor = UIColor(255, 145, 96)
+            self.postBtn.isEnabled = false
+        }
+        
         //picker dismiss
         self.dismiss(animated: true, completion: {})
     }

@@ -19,7 +19,7 @@ class ChargeListCell: UITableViewCell {
         self.listBg.backgroundColor = lightGreyColor
     }
     func setProduct(product:SKProduct){
-        self.priceLab.text = "\(product.price)"
+        self.priceLab.text = "$\(product.price)"
         self.coinNumLab.text = "\(product.localizedTitle)"
         let coinCount = Decimal(string: String(product.localizedTitle[..<product.localizedTitle.firstIndex(of: " ")!]))!
         let discount = (1 - (product.price as Decimal/coinCount)/0.2)*100

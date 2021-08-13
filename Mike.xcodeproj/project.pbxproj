@@ -926,8 +926,6 @@
 		B637496F264446CE00502913 /* UserProfileSectionTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B637496D264446CE00502913 /* UserProfileSectionTitleView.xib */; };
 		B63749722644479C00502913 /* UserProfileFavoriteListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63749702644479C00502913 /* UserProfileFavoriteListCell.swift */; };
 		B63749732644479C00502913 /* UserProfileFavoriteListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63749712644479C00502913 /* UserProfileFavoriteListCell.xib */; };
-		B6374976264447AE00502913 /* UserProfileHealthKitListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6374974264447AE00502913 /* UserProfileHealthKitListCell.swift */; };
-		B6374977264447AE00502913 /* UserProfileHealthKitListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6374975264447AE00502913 /* UserProfileHealthKitListCell.xib */; };
 		B637497A26444D9F00502913 /* UserProfileTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B637497826444D9F00502913 /* UserProfileTopCell.swift */; };
 		B637497B26444D9F00502913 /* UserProfileTopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B637497926444D9F00502913 /* UserProfileTopCell.xib */; };
 		B637498F2644F83400502913 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = B637498E2644F83400502913 /* SQLite */; };
@@ -957,7 +955,6 @@
 		B64C0351268B3A1F00833354 /* HomeTabUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64C0350268B3A1F00833354 /* HomeTabUIView.swift */; };
 		B65C8BFB3168D9BD2D73AEBA /* UserFavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3397087124EE4DEA8E0A9DB8 /* UserFavoriteContent.swift */; };
 		B66377D526555A93001AB98B /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = B66377D326555A93001AB98B /* UITextView+Placeholder.m */; };
-		B67716072647DE3C0035A50C /* UserMatricsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716062647DE3C0035A50C /* UserMatricsListModel.swift */; };
 		B677160A2647EFF90035A50C /* UserContentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67716082647EFF90035A50C /* UserContentDetailViewController.swift */; };
 		B677160B2647EFF90035A50C /* UserContentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67716092647EFF90035A50C /* UserContentDetailViewController.xib */; };
 		B677160E2647F4F80035A50C /* UserContentDetailTopTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B677160C2647F4F80035A50C /* UserContentDetailTopTabCell.swift */; };
@@ -1583,8 +1580,6 @@
 		B637496D264446CE00502913 /* UserProfileSectionTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileSectionTitleView.xib; sourceTree = "<group>"; };
 		B63749702644479C00502913 /* UserProfileFavoriteListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileFavoriteListCell.swift; sourceTree = "<group>"; };
 		B63749712644479C00502913 /* UserProfileFavoriteListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileFavoriteListCell.xib; sourceTree = "<group>"; };
-		B6374974264447AE00502913 /* UserProfileHealthKitListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHealthKitListCell.swift; sourceTree = "<group>"; };
-		B6374975264447AE00502913 /* UserProfileHealthKitListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileHealthKitListCell.xib; sourceTree = "<group>"; };
 		B637497826444D9F00502913 /* UserProfileTopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTopCell.swift; sourceTree = "<group>"; };
 		B637497926444D9F00502913 /* UserProfileTopCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileTopCell.xib; sourceTree = "<group>"; };
 		B63749E22645820300502913 /* UserProfileFavHorizonListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileFavHorizonListCell.swift; sourceTree = "<group>"; };
@@ -1610,7 +1605,6 @@
 		B64C0350268B3A1F00833354 /* HomeTabUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabUIView.swift; sourceTree = "<group>"; };
 		B66377D326555A93001AB98B /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		B66377D426555A93001AB98B /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
-		B67716062647DE3C0035A50C /* UserMatricsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMatricsListModel.swift; sourceTree = "<group>"; };
 		B67716082647EFF90035A50C /* UserContentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentDetailViewController.swift; sourceTree = "<group>"; };
 		B67716092647EFF90035A50C /* UserContentDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserContentDetailViewController.xib; sourceTree = "<group>"; };
 		B677160C2647F4F80035A50C /* UserContentDetailTopTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContentDetailTopTabCell.swift; sourceTree = "<group>"; };
@@ -1949,8 +1943,6 @@
 				B637496D264446CE00502913 /* UserProfileSectionTitleView.xib */,
 				B63749702644479C00502913 /* UserProfileFavoriteListCell.swift */,
 				B63749712644479C00502913 /* UserProfileFavoriteListCell.xib */,
-				B6374974264447AE00502913 /* UserProfileHealthKitListCell.swift */,
-				B6374975264447AE00502913 /* UserProfileHealthKitListCell.xib */,
 				B637497826444D9F00502913 /* UserProfileTopCell.swift */,
 				B637497926444D9F00502913 /* UserProfileTopCell.xib */,
 				B63749E22645820300502913 /* UserProfileFavHorizonListCell.swift */,
@@ -1984,7 +1976,6 @@
 			children = (
 				B6D428B226A172440080695E /* UserCenterUserMessageGroup.swift */,
 				B6E4FFB1264ABB960020F636 /* UserContentSegmentListModel.swift */,
-				B67716062647DE3C0035A50C /* UserMatricsListModel.swift */,
 				B63749EA264596EA00502913 /* UserCenterContent.swift */,
 				B63749E8264596EA00502913 /* UserCenterFavorite.swift */,
 				B63749E7264596EA00502913 /* UserCenterItem.swift */,
@@ -2832,7 +2823,6 @@
 				B6BFDE2926526FCD004FC2F1 /* RegisterConfirmViewController.xib in Resources */,
 				B682631A26424C6A00A32D5C /* Nunito-BoldItalic.ttf in Resources */,
 				B682631C26424C6A00A32D5C /* Nunito-ExtraLight.ttf in Resources */,
-				B6374977264447AE00502913 /* UserProfileHealthKitListCell.xib in Resources */,
 				B6AE0B6C268D4C0300911A38 /* Launch Screen.storyboard in Resources */,
 				B682631326424C6A00A32D5C /* Nunito-ExtraBoldItalic.ttf in Resources */,
 				B63749732644479C00502913 /* UserProfileFavoriteListCell.xib in Resources */,
@@ -3243,7 +3233,6 @@
 				B637496E264446CE00502913 /* UserProfileSectionTitleView.swift in Sources */,
 				B685E7E1266084B2008246A2 /* SingleBtnCell.swift in Sources */,
 				B69103D826381EC0005F2ACD /* HomeSeeAllCoursesView.swift in Sources */,
-				B6374976264447AE00502913 /* UserProfileHealthKitListCell.swift in Sources */,
 				B6BFDE312652ABB9004FC2F1 /* FogotConfirmViewController.swift in Sources */,
 				B6E4FFFA264C0C510020F636 /* ZFLandscapeWindow.m in Sources */,
 				503E02E0497E4EFF9D9BD770 /* UserContent+Schema.swift in Sources */,
@@ -3287,7 +3276,6 @@
 				B6E4FFB2264ABB960020F636 /* UserContentSegmentListModel.swift in Sources */,
 				B6E40014264C0C510020F636 /* ZFPortraitControlView.m in Sources */,
 				A690E02738114B2F88B979ED /* UserSubscriptionTrainer.swift in Sources */,
-				B67716072647DE3C0035A50C /* UserMatricsListModel.swift in Sources */,
 				B63749EE264596EA00502913 /* UserCenterTrainer.swift in Sources */,
 				B6F365402653FCE300539B5E /* TZAssetCell.swift in Sources */,
 				B6E40010264C0C510020F636 /* ZFPlayerControlView.m in Sources */,
@@ -4483,7 +4471,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22.0;
+				CURRENT_PROJECT_VERSION = 27.0.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = KC37C9ZJH4;
 				ENABLE_PREVIEWS = YES;
@@ -4497,11 +4485,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mike.ios;
 				PRODUCT_NAME = Motion;
 				SWIFT_OBJC_BRIDGING_HEADER = "Mike-bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -4512,7 +4501,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22.0;
+				CURRENT_PROJECT_VERSION = 27.0.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = KC37C9ZJH4;
 				ENABLE_PREVIEWS = YES;
@@ -4526,11 +4515,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mike.ios;
 				PRODUCT_NAME = Motion;
 				SWIFT_OBJC_BRIDGING_HEADER = "Mike-bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

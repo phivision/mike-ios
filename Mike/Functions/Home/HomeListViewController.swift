@@ -110,11 +110,13 @@ extension HomeListViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell:TrainerHomeTopCell = tableView.dequeueReusableCell(withIdentifier: "TrainerHomeTopCell", for: indexPath) as! TrainerHomeTopCell
+            cell.selectionStyle = .none
             cell.titleLab.text = "Hi, \(LoginTools.sharedTools.userInfo().firstName ?? "")"
             return cell
         }else if indexPath.section == 1 {
             let cell:TrainerListCell = tableView.dequeueReusableCell(withIdentifier: "TrainerListCell", for: indexPath) as! TrainerListCell
             cell.setTrainerList(trainerList: self.subscriptionList)
+            cell.selectionStyle = .none
             cell.delegate = self
             return cell
         }else{

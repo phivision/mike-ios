@@ -185,6 +185,7 @@ class MessageBackend: NSObject {
                     guard let itemList = subDic["items"] as? NSArray else {
                         return
                     }
+                    print("1")
                     print("~~~~~~~~~~~~\(itemList)")
                     var contentList = Array<MessageListModel>()
                     for item in itemList {
@@ -224,7 +225,6 @@ class MessageBackend: NSObject {
                     guard let itemList = subDic["items"] as? NSArray else {
                         return
                     }
-                    print("~~~~~~~~~~~~\(itemList)")
                     var contentList = Array<MessageListModel>()
                     for item in itemList {
                         if let itemDic = item as? NSDictionary {
@@ -262,7 +262,6 @@ class MessageBackend: NSObject {
                     guard let itemList = subDic["items"] as? NSArray else {
                         return
                     }
-                    print("~~~~~~~~~~~~\(itemList)")
                     var contentList = Array<MessageListModel>()
                     for item in itemList {
                         if let itemDic = item as? NSDictionary {
@@ -554,6 +553,7 @@ class MessageBackend: NSObject {
                     guard let itemList = thirdDic["items"] as? NSArray else {
                         return
                     }
+                    print("3")
                     print("~~~~~~~~~~~~\(itemList)")
                     var contentList = Array<MessageListModel>()
                     for item in itemList {
