@@ -7,7 +7,6 @@
 
 import UIKit
 import Amplify
-import HealthKit
 
 class UserProfileViewController: BaseViewController {
     @IBOutlet weak var mainCollection:UICollectionView!

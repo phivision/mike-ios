@@ -39,16 +39,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Use the camera to correct the posture</string>
-	<key>NSHealthShareUsageDescription</key>
-	<string>Using healthkit to display health data</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>Using healthkit to display health data</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Using photoKit to select avatar</string>
-	<key>Privacy – Health Share Usage Description</key>
-	<string>Using healthkit to display health data</string>
-	<key>Privacy – Health Update Usage Description</key>
-	<string>Using healthkit to display health data</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Nunito-Black.ttf</string>

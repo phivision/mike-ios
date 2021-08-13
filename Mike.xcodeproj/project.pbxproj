@@ -945,7 +945,6 @@
 		B63C3F1526611BEA00A3D08C /* SegmentSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63C3F1326611BEA00A3D08C /* SegmentSectionHeaderView.xib */; };
 		B63C3F1626611BEA00A3D08C /* SegmentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */; };
 		B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B641F8072646AD1000FE8C56 /* HealthKit.framework */; };
-		B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */; };
 		B6421B3E26B3E1F8003F9134 /* CompleteUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6421B3C26B3E1F7003F9134 /* CompleteUserInfoViewController.swift */; };
 		B6421B3F26B3E1F8003F9134 /* CompleteUserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6421B3D26B3E1F7003F9134 /* CompleteUserInfoViewController.xib */; };
 		B6421B5126B7B227003F9134 /* PullToRefreshKit in Frameworks */ = {isa = PBXBuildFile; productRef = B6421B5026B7B227003F9134 /* PullToRefreshKit */; };
@@ -1602,7 +1601,6 @@
 		B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentSectionHeaderView.swift; sourceTree = "<group>"; };
 		B641F8062646AD0F00FE8C56 /* Mike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mike.entitlements; sourceTree = "<group>"; };
 		B641F8072646AD1000FE8C56 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
-		B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTools.swift; sourceTree = "<group>"; };
 		B6421B3C26B3E1F7003F9134 /* CompleteUserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteUserInfoViewController.swift; sourceTree = "<group>"; };
 		B6421B3D26B3E1F7003F9134 /* CompleteUserInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompleteUserInfoViewController.xib; sourceTree = "<group>"; };
 		B64C03452689B21400833354 /* SplitVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVideoViewController.swift; sourceTree = "<group>"; };
@@ -2135,7 +2133,6 @@
 				B68262BA2639B16100A32D5C /* UIViewExtension.swift */,
 				B682632C264280EE00A32D5C /* DateExtention.swift */,
 				B63749F1264694C800502913 /* TimeFormatUtils.swift */,
-				B641F8092646B9AB00FE8C56 /* HealthKitTools.swift */,
 				B677162B264A21B20035A50C /* AgeUtils.swift */,
 				B6E4FFAF264AB8A40020F636 /* JSONUtils.swift */,
 				B6E4FFB3264AC01B0020F636 /* ImageCacheUtils.swift */,
@@ -3195,7 +3192,6 @@
 				B64C03472689B21400833354 /* SplitVideoViewController.swift in Sources */,
 				B6E40013264C0C510020F636 /* ZFSpeedLoadingView.m in Sources */,
 				B6E4FFFC264C0C510020F636 /* ZFPlayerLogManager.m in Sources */,
-				B641F80A2646B9AB00FE8C56 /* HealthKitTools.swift in Sources */,
 				B64C0351268B3A1F00833354 /* HomeTabUIView.swift in Sources */,
 				B682632B2642729200A32D5C /* HomeListViewController.swift in Sources */,
 				B6CDCFCC26610C9D0096875B /* ContentUploadSectionConfigViewController.swift in Sources */,
