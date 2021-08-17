@@ -942,7 +942,6 @@
 		B63749F626469C1700502913 /* UserProfileSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63749F426469C1700502913 /* UserProfileSettingViewController.xib */; };
 		B63C3F1526611BEA00A3D08C /* SegmentSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B63C3F1326611BEA00A3D08C /* SegmentSectionHeaderView.xib */; };
 		B63C3F1626611BEA00A3D08C /* SegmentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63C3F1426611BEA00A3D08C /* SegmentSectionHeaderView.swift */; };
-		B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B641F8072646AD1000FE8C56 /* HealthKit.framework */; };
 		B6421B3E26B3E1F8003F9134 /* CompleteUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6421B3C26B3E1F7003F9134 /* CompleteUserInfoViewController.swift */; };
 		B6421B3F26B3E1F8003F9134 /* CompleteUserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6421B3D26B3E1F7003F9134 /* CompleteUserInfoViewController.xib */; };
 		B6421B5126B7B227003F9134 /* PullToRefreshKit in Frameworks */ = {isa = PBXBuildFile; productRef = B6421B5026B7B227003F9134 /* PullToRefreshKit */; };
@@ -1907,7 +1906,6 @@
 				B6421B5A26B7B43C003F9134 /* Starscream in Frameworks */,
 				B62AEA1326BA95A000BBBAD2 /* AWSDataStorePlugin in Frameworks */,
 				B6BFDE25265268EB004FC2F1 /* IQKeyboardManagerSwift in Frameworks */,
-				B641F8082646AD1000FE8C56 /* HealthKit.framework in Frameworks */,
 				B62AEA0F26BA95A000BBBAD2 /* AWSPluginsCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1920,6 +1918,8 @@
 			children = (
 				158374CDF72240E79C4D8D6B /* amplifytools.xcconfig */,
 				1E1D87B83BC34BB28DFEDE72 /* schema.graphql */,
+				C1DEDD88263746CB00F66A7C /* awsconfiguration.json */,
+				C1DEDD87263746CB00F66A7C /* amplifyconfiguration.json */,
 			);
 			name = AmplifyConfig;
 			path = .;
@@ -4471,7 +4471,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27.0.0;
+				CURRENT_PROJECT_VERSION = 28.0.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = KC37C9ZJH4;
 				ENABLE_PREVIEWS = YES;
@@ -4501,7 +4501,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Mike/Mike.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27.0.0;
+				CURRENT_PROJECT_VERSION = 28.0.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Mike/Preview Content\"";
 				DEVELOPMENT_TEAM = KC37C9ZJH4;
 				ENABLE_PREVIEWS = YES;
